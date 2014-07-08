@@ -1,0 +1,50 @@
+{
+  "functions": {
+    "addUser": ["GET"],
+    "blockUser": ["GET"],
+    "addAppointment": ["GET"],
+    "/reckonings/*": ["GET"],
+    "/index.html": ["GET"]
+  },
+
+
+  "functionSets": {
+
+    "userAdministration": {
+      "addUser": ["GET"],
+      "blockUser": ["GET"]
+    },
+
+    "reckonings": {
+      "/reckonings/*": ["GET"]
+    },
+
+    "allowAll": {
+      "/index.html": ["GET"]
+    }
+  },
+
+
+  "permissions": {
+
+    "reckonings": [
+      // zezwolenie na wszystkie operacje
+      "reckonings"
+    ],
+
+    // zarządca kliniki
+    "companyAdministrator": [
+      "userAdministrator",
+      "addAppointment"
+    ],
+
+    "registration": [
+      "addAppointment"
+    ],
+
+    "GUEST": [
+      "allowAll"
+    ]
+  }
+}
+
