@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 import static javax.persistence.CascadeType.*;

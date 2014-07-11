@@ -4,7 +4,6 @@ import pl.matsuo.core.model.AbstractEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import static javax.persistence.EnumType.*;

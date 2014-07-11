@@ -20,7 +20,6 @@ import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.web.controller.exception.RestProcessingException;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 

@@ -21,7 +21,7 @@ import pl.matsuo.core.web.mvc.MvcConfig;
 import java.util.function.Consumer;
 
 import static org.springframework.http.MediaType.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 

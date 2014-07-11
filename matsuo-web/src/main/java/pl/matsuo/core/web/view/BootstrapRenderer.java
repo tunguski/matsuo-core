@@ -2,7 +2,6 @@ package pl.matsuo.core.web.view;
 
 import com.google.common.base.Joiner;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import pl.matsuo.core.model.validation.EntityReference;
 
 import javax.annotation.PostConstruct;

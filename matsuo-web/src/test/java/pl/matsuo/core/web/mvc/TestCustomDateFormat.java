@@ -1,6 +1,5 @@
 package pl.matsuo.core.web.mvc;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.ParsePosition;

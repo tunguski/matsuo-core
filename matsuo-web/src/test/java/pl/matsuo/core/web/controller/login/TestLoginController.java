@@ -5,26 +5,18 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import pl.matsuo.core.conf.DbConfig;
-import pl.matsuo.core.conf.TestDataExecutionConfig;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.OrganizationUnit;
 import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.organization.address.Address;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.model.user.User;
-import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.permission.PermissionService;
-import pl.matsuo.core.service.session.SessionState;
-import pl.matsuo.core.test.data.TestSessionState;
-import pl.matsuo.core.test.data.UserTestData;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
 import pl.matsuo.core.web.controller.exception.RestProcessingException;
-import pl.matsuo.core.web.mvc.MvcConfig;
 
 import java.util.List;
 
