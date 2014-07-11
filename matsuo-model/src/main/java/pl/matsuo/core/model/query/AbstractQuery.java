@@ -161,23 +161,32 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   }
 
 
+  protected ThreadLocal<Integer> idBucket = new ThreadLocal();
+
+
   @Override
-  public List<E> query() {
-    String queryString = printQuery();
-    // wyszukaj w bazie danych
+  public List<E> query(Integer idBucketValue) {
     try {
-      List<E> result = sessionFactory.getCurrentSession().createQuery(queryString).list();
+      idBucket.set(idBucketValue);
+      String queryString = printQuery();
 
-      for (E element : result) {
-        for (Initializer<? super E> initializer : initializers) {
-          initializer.init(element);
+      // wyszukaj w bazie danych
+      try {
+        List<E> result = sessionFactory.getCurrentSession().createQuery(queryString).list();
+
+        for (E element : result) {
+          for (Initializer<? super E> initializer : initializers) {
+            initializer.init(element);
+          }
         }
-      }
 
-      return result;
-    } catch (RuntimeException e) {
-      logger.error("Error in query: " + queryString);
-      throw e;
+        return result;
+      } catch (RuntimeException e) {
+        logger.error("Error in query: " + queryString);
+        throw e;
+      }
+    } finally {
+      idBucket.set(null);
     }
   }
 
@@ -208,6 +217,8 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
     List<Condition> conditions = removeNulls(merge(CollectionUtil.<Condition>collect(from, "joinCondition"), where));
 
+    boolean hasWhere = false;
+
     // where ...
     if (!conditions.isEmpty()) {
       sb.append(" WHERE ");
@@ -217,6 +228,13 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
       }
 
       sb.delete(sb.length() -5, sb.length());
+
+      hasWhere = true;
+    }
+
+    if (idBucket.get() != null) {
+      sb.append(hasWhere ? " AND " : " WHERE ");
+      sb.append("idBucket = " + idBucket.get());
     }
 
     // group by ...

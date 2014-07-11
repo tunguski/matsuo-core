@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.Initializer;
 import pl.matsuo.core.model.query.Query;
+import pl.matsuo.core.service.session.SessionState;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -48,9 +49,7 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
 
     Assert.notNull(element);
 
-    for (Initializer<? super E> initializer : initializers) {
-      initializer.init(element);
-    }
+    initializeEntity(element, initializers);
 
     return element;
   }
@@ -61,12 +60,28 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
     List<E> list = new ArrayList(new HashSet(session().createCriteria(clazz).list()));
 
     for (E element : list) {
-      for (Initializer<? super E> initializer : initializers) {
-        initializer.init(element);
-      }
+      initializeEntity(element, initializers);
     }
 
     return list;
+  }
+
+
+  protected <E extends AbstractEntity> void initializeEntity(E element, Initializer<? super E> ... initializers) {
+    try {
+      SessionState sessionState = beanFactory.getBean(SessionState.class);
+      if (sessionState != null
+          && sessionState.getIdBucket() != null
+          && sessionState.getIdBucket() != element.getIdBucket()) {
+        throw new RuntimeException("Unauthorized data access");
+      }
+    } catch (BeansException e) {
+      // do nothin'
+    }
+
+    for (Initializer<? super E> initializer : initializers) {
+      initializer.init(element);
+    }
   }
 
 
@@ -107,7 +122,15 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
   @Override
   public <E extends AbstractEntity> List<E> find(Query<E> query) {
     beanFactory.autowireBeanProperties(query, AUTOWIRE_NO, true);
-    return query.query();
+
+    Integer idBucket = null;
+
+    try {
+      idBucket = beanFactory.getBean(SessionState.class).getIdBucket();
+    } catch (BeansException e) {
+      // do nothin'
+    }
+    return query.query(idBucket);
   }
 
 

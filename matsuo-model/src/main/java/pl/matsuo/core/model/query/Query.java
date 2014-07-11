@@ -8,6 +8,6 @@ import java.util.List;
 public interface Query<E extends AbstractEntity> {
 
 
-  List<E> query();
+  List<E> query(Integer idBucket);
 }
 

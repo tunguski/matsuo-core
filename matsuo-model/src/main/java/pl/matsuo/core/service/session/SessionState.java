@@ -51,6 +51,15 @@ public class SessionState {
   }
 
 
+  public Integer getIdBucket() {
+    if (user != null) {
+      return user.getIdBucket();
+    } else {
+      return null;
+    }
+  }
+
+
   public boolean isInGroup(String groupName) {
     return userGroups.contains(groupName);
   }
