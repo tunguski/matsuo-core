@@ -22,6 +22,7 @@ public class SessionState {
 
 
   private User user;
+  private Integer idBucket;
   private long lastRequestTime;
   private long loginTime;
   private Set<String> userGroups = new HashSet<>();
@@ -34,6 +35,7 @@ public class SessionState {
 
   public void setUser(User user) {
     this.user = user;
+    idBucket = user != null ? user.getIdBucket() : null;
 
     userGroups.clear();
     if (user == null) {
@@ -52,11 +54,7 @@ public class SessionState {
 
 
   public Integer getIdBucket() {
-    if (user != null) {
-      return user.getIdBucket();
-    } else {
-      return null;
-    }
+    return idBucket;
   }
 
 
@@ -77,8 +75,8 @@ public class SessionState {
   public long getLoginTime() {
     return loginTime;
   }
-  public void setLoginTime(long loginTime) {
-    this.loginTime = loginTime;
+  public void setIdBucket(Integer idBucket) {
+    this.idBucket = idBucket;
   }
 }
 

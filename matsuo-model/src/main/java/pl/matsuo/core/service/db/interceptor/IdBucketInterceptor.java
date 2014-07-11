@@ -10,7 +10,7 @@ public class IdBucketInterceptor extends AbstractEntityInterceptor {
   private static final long serialVersionUID = 1L;
 
 
-  Supplier<Object> idBucketSupplier = () -> sessionState.getUser().getIdBucket();
+  Supplier<Object> idBucketSupplier = () -> sessionState != null ? sessionState.getIdBucket() : null;
 
 
   @Override

@@ -121,6 +121,11 @@ public class LoginController {
     organizationUnit.setNip(createAccountData.getCompanyNip());
     database.create(organizationUnit);
     Assert.notNull(organizationUnit.getId());
+    // update idBucket for newly created organization
+    organizationUnit.setIdBucket(organizationUnit.getId());
+    database.update(organizationUnit);
+
+    sessionState.setIdBucket(organizationUnit.getId());
 
     Person person = new Person();
     database.create(person);

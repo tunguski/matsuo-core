@@ -11,6 +11,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.matsuo.core.conf.DbConfig;
 import pl.matsuo.core.conf.TestDataExecutionConfig;
+import pl.matsuo.core.model.AbstractEntity;
+import pl.matsuo.core.model.organization.OrganizationUnit;
+import pl.matsuo.core.model.organization.Person;
+import pl.matsuo.core.model.organization.address.Address;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.db.Database;
@@ -21,6 +25,8 @@ import pl.matsuo.core.test.data.UserTestData;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
 import pl.matsuo.core.web.controller.exception.RestProcessingException;
 import pl.matsuo.core.web.mvc.MvcConfig;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
@@ -106,20 +112,20 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
 
-  @Test(expected = RestProcessingException.class)
+  @Test
   public void testActivateAccount() throws Exception {
     CreateAccountData createAccountData = new CreateAccountData();
-    createAccountData.setUsername("kryspin");
-    createAccountData.setPassword("kryspin");
-    createAccountData.setCompanyName("kryspin");
-    createAccountData.setCompanyShortName("kryspin");
+    createAccountData.setUsername("tristan");
+    createAccountData.setPassword("tristan");
+    createAccountData.setCompanyName("tristan");
+    createAccountData.setCompanyShortName("tristan");
     createAccountData.setCompanyNip("692-000-00-13");
 
     String result = controller.createAccount(createAccountData);
     logger.info(result);
     assertFalse(result.isEmpty());
 
-    User user = database.findOne(query(User.class, eq("username", "kryspin")));
+    User user = database.findOne(query(User.class, eq("username", "tristan")));
 
     try {
       controller.activateAccount(user.getUnblockTicket());
@@ -127,11 +133,29 @@ public class TestLoginController extends AbstractControllerTest {
       throw new RuntimeException(e);
     }
 
-    user = database.findOne(query(User.class, eq("username", "kryspin")));
+    user = database.findOne(query(User.class, eq("username", "tristan")));
     assertFalse(user.getBlocked());
     assertNull(user.getUnblockTicket());
+    assertNotNull(user.getIdBucket());
 
-    controller.activateAccount(user.getUnblockTicket());
+    checkEntitiesCountForBucket(user.getIdBucket(), 1, OrganizationUnit.class);
+    checkEntitiesCountForBucket(user.getIdBucket(), 1, Person.class);
+    checkEntitiesCountForBucket(user.getIdBucket(), 1, Address.class);
+
+    try {
+      controller.activateAccount(user.getUnblockTicket());
+    } catch (Exception e) {
+      return;
+    }
+
+    fail();
+  }
+
+
+  protected void checkEntitiesCountForBucket(Integer idBucket, Integer size, Class<? extends AbstractEntity> clazz) {
+    List<AbstractEntity> entities =
+        database.find(query((Class<AbstractEntity>) clazz, eq("idBucket", idBucket)));
+    assertEquals(1, entities.size());
   }
 
 
