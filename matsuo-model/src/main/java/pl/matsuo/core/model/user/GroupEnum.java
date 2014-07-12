@@ -10,6 +10,10 @@ public enum GroupEnum {
    */
   ADMIN,
   /**
+   * User that has full access to company's data.
+   */
+  SUPERVISOR,
+  /**
    * Logged user. Added by default to all logged users. It's not recommended to save it in db.
    */
   USER,
