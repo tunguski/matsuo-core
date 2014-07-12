@@ -1,14 +1,15 @@
 package pl.matsuo.core.service.db.interceptor;
 
 import org.hibernate.type.Type;
+import pl.matsuo.core.model.interceptor.InterceptorComponent;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.function.Supplier;
 
 
+@InterceptorComponent
 public class AuditTrailInterceptor extends AbstractEntityInterceptor {
-  private static final long serialVersionUID = 1L;
 
 
   Supplier<Object> idUserSupplier = () -> sessionState.getUser().getId();

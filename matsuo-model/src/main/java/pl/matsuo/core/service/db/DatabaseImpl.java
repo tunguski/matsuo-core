@@ -74,7 +74,7 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
       SessionState sessionState = beanFactory.getBean(SessionState.class);
       if (sessionState != null
           && sessionState.getIdBucket() != null
-          && sessionState.getIdBucket() != element.getIdBucket()) {
+          && !sessionState.getIdBucket().equals(element.getIdBucket())) {
         throw new RuntimeException("Unauthorized data access");
       }
     } catch (BeansException e) {

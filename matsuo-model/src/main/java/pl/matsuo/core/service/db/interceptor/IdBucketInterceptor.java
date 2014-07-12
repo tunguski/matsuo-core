@@ -1,16 +1,24 @@
 package pl.matsuo.core.service.db.interceptor;
 
 import org.hibernate.type.Type;
+import org.springframework.beans.factory.BeanCreationException;
+import pl.matsuo.core.model.interceptor.InterceptorComponent;
 
 import java.io.Serializable;
 import java.util.function.Supplier;
 
 
+@InterceptorComponent
 public class IdBucketInterceptor extends AbstractEntityInterceptor {
-  private static final long serialVersionUID = 1L;
 
 
-  Supplier<Object> idBucketSupplier = () -> sessionState != null ? sessionState.getIdBucket() : null;
+  Supplier<Object> idBucketSupplier = () -> {
+    try {
+      return sessionState != null ? sessionState.getIdBucket() : null;
+    } catch (BeanCreationException e) {
+      return null;
+    }
+  };
 
 
   @Override

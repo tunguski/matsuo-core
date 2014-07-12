@@ -12,7 +12,6 @@ import java.util.function.Supplier;
 import static java.util.Arrays.*;
 
 
-@InterceptorComponent
 public abstract class AbstractEntityInterceptor extends EmptyInterceptor {
   private static final long serialVersionUID = 1L;
 
