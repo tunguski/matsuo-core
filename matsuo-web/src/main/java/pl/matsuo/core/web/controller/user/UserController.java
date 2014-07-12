@@ -11,7 +11,7 @@ import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.web.controller.AbstractSimpleController;
-import pl.matsuo.core.web.controller.exception.RestProcessingException;
+import pl.matsuo.core.exception.RestProcessingException;
 
 import java.util.Date;
 import java.util.List;

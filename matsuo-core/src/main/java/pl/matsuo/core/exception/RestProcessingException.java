@@ -1,4 +1,4 @@
-package pl.matsuo.core.web.controller.exception;
+package pl.matsuo.core.exception;
 
 import java.util.ArrayList;
 import java.util.HashMap;

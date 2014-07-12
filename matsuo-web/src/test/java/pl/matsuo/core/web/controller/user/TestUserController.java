@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
-import pl.matsuo.core.web.controller.exception.RestProcessingException;
+import pl.matsuo.core.exception.RestProcessingException;
 
 import java.util.HashMap;
 

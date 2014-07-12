@@ -8,15 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import pl.matsuo.core.exception.UnauthorizedException;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.OrganizationUnit;
 import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.organization.address.Address;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.model.user.User;
+import pl.matsuo.core.service.login.CreateAccountData;
+import pl.matsuo.core.service.login.ILoginServiceExtension;
+import pl.matsuo.core.service.login.LoginData;
+import pl.matsuo.core.service.login.LoginService;
 import pl.matsuo.core.service.permission.PermissionService;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
-import pl.matsuo.core.web.controller.exception.RestProcessingException;
+import pl.matsuo.core.exception.RestProcessingException;
 
 import java.util.List;
 
@@ -30,13 +35,16 @@ import static pl.matsuo.core.model.user.GroupEnum.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { LoginController.class, PermissionService.class })
+@ContextConfiguration(classes = { LoginController.class, LoginService.class, PermissionService.class,
+                                  TestLoginController.LoginServiceExtension.class })
 public class TestLoginController extends AbstractControllerTest {
   private static final Logger logger = LoggerFactory.getLogger(TestLoginController.class);
 
 
   @Autowired
   LoginController controller;
+  @Autowired
+  TestLoginController.LoginServiceExtension loginServiceExtension;
 
 
   @Test
@@ -63,7 +71,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
 
-  @Test(expected = LoginController.UnauthorizedException.class)
+  @Test(expected = UnauthorizedException.class)
   public void testFalseLogin() throws Exception {
     LoginData loginData = new LoginData();
     loginData.setUsername("test");
@@ -151,7 +159,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
 
-  @Test(expected = RestProcessingException.class)
+  @Test
   public void testCreateAccount() throws Exception {
     CreateAccountData createAccountData = new CreateAccountData();
     createAccountData.setUsername("kryspin");
@@ -160,11 +168,34 @@ public class TestLoginController extends AbstractControllerTest {
     createAccountData.setCompanyShortName("kryspin");
     createAccountData.setCompanyNip("692-000-00-13");
 
+    loginServiceExtension.counter = 0;
+
     String result = controller.createAccount(createAccountData);
     logger.info(result);
     assertFalse(result.isEmpty());
+    assertEquals(1, loginServiceExtension.counter);
 
-    controller.createAccount(createAccountData);
+    try {
+      controller.createAccount(createAccountData);
+    } catch (RestProcessingException e) {
+      return;
+    }
+
+    fail();
+  }
+
+
+
+  static class LoginServiceExtension implements ILoginServiceExtension {
+
+
+    public int counter = 0;
+
+
+    @Override
+    public void createAccount(OrganizationUnit organizationUnit, User user) {
+      counter++;
+    }
   }
 
 

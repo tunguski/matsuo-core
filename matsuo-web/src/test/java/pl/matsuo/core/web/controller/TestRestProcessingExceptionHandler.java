@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import pl.matsuo.core.web.controller.exception.RestProcessingException;
+import pl.matsuo.core.exception.RestProcessingException;
 import pl.matsuo.core.web.controller.exception.RestProcessingExceptionHandler;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

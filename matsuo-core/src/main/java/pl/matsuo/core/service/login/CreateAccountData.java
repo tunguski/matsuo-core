@@ -1,4 +1,4 @@
-package pl.matsuo.core.web.controller.login;
+package pl.matsuo.core.service.login;
 
 
 /**

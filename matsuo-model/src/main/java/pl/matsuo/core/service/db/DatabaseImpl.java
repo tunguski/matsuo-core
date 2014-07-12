@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.Initializer;
 import pl.matsuo.core.model.query.Query;
+import pl.matsuo.core.model.query.QueryBuilder;
 import pl.matsuo.core.service.session.SessionState;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import static org.springframework.beans.factory.config.AutowireCapableBeanFactory.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 
 @Repository
@@ -57,7 +59,7 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
 
   @Override
   public <E extends AbstractEntity> List<E> findAll(Class<E> clazz, Initializer<? super E> ... initializers) {
-    List<E> list = new ArrayList(new HashSet(session().createCriteria(clazz).list()));
+    List<E> list = find(query(clazz));
 
     for (E element : list) {
       initializeEntity(element, initializers);
@@ -131,6 +133,13 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
       // do nothin'
     }
     return query.query(idBucket);
+  }
+
+
+  @Override
+  public <E extends AbstractEntity> List<E> findAsAdmin(Query<E> query) {
+    beanFactory.autowireBeanProperties(query, AUTOWIRE_NO, true);
+    return query.query(null);
   }
 
 

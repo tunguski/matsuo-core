@@ -10,9 +10,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.util.NestedServletException;
 import pl.matsuo.core.model.user.User;
+import pl.matsuo.core.service.login.CreateAccountData;
+import pl.matsuo.core.service.login.LoginData;
+import pl.matsuo.core.service.login.LoginService;
 import pl.matsuo.core.service.permission.PermissionService;
 import pl.matsuo.core.web.controller.AbstractDbControllerRequestTest;
-import pl.matsuo.core.web.controller.exception.RestProcessingException;
+import pl.matsuo.core.exception.RestProcessingException;
 
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -24,7 +27,7 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { LoginController.class, PermissionService.class })
+@ContextConfiguration(classes = { LoginController.class, LoginService.class, PermissionService.class })
 public class TestLoginControllerRequest extends AbstractDbControllerRequestTest {
   private static final Logger logger = LoggerFactory.getLogger(TestLoginControllerRequest.class);
 
