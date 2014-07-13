@@ -130,7 +130,7 @@ abstract class AbstractPrintGeneratingTest<E> implements PrintMethods {
           return method.getName();
         }
       } catch (Exception e) {
-        // nie ma metody, szukamy dalej
+        // no method found, looking deeper
       }
     }
 

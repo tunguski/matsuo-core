@@ -38,7 +38,7 @@ public class NumerationTestData extends AbstractTestData {
 
   private Numeration createNumeration(String code, String pattern) {
     Numeration numeration = new Numeration();
-    numeration.setIdEntity(mediq.getId());
+    numeration.setIdBucket(mediq.getId());
     numeration.setValue(1);
     numeration.setMinValue(1);
     numeration.setCode(code);

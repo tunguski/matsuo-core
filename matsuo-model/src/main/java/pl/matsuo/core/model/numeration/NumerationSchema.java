@@ -3,18 +3,14 @@ package pl.matsuo.core.model.numeration;
 import pl.matsuo.core.model.AbstractEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-
-import static javax.persistence.TemporalType.DATE;
 
 
 /**
- * Created by tunguski on 15.09.13.
+ * Created by tunguski on 2014-07-13
  */
 @Entity
-public class Numeration extends AbstractEntity {
+public class NumerationSchema extends AbstractEntity {
 
 
   protected Integer value;
@@ -23,8 +19,6 @@ public class Numeration extends AbstractEntity {
   protected Integer maxValue;
   protected String code;
   protected String pattern;
-  @Temporal(DATE)
-  private Date identificationDate;
 
 
   public Integer getValue() {
@@ -56,12 +50,6 @@ public class Numeration extends AbstractEntity {
   }
   public void setMinValue(Integer minValue) {
     this.minValue = minValue;
-  }
-  public Date getIdentificationDate() {
-    return identificationDate;
-  }
-  public void setIdentificationDate(Date identificationDate) {
-    this.identificationDate = identificationDate;
   }
 }
 
