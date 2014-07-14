@@ -43,7 +43,7 @@ public abstract class AbstractParty extends AbstractEntity {
     return nip;
   }
   public void setNip(String nip) {
-    this.nip = nip.replace("-", "");
+    this.nip = nip != null ? nip.replace("-", "") : null;
   }
   public Address getAddress() {
     return address;
