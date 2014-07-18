@@ -1,6 +1,7 @@
 package pl.matsuo.core.exception;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class RestProcessingException extends RuntimeException {
 
 
   public RestProcessingException(String ... globalErrors) {
+    super(Arrays.toString(globalErrors));
     this.globalErrors.addAll(asList(globalErrors));
   }
 

@@ -116,16 +116,16 @@ public class PrintController {
   @RequestMapping(method = GET)
   public List<KeyValuePrint> list(IPrintsReportParams params) {
     // FIXME! przemyśleć referencję do Appointment - czy to wydzielić do oddzielnego kontrolera, czy coś innego z tym zrobić?
-    List<KeyValuePrint> prints = findPrints(params, "appointment.idPatient",
-        new LeftJoinElement("appointment",
-            "pl.matsuo.clinic.model.medical.appointment.Appointment", cond("appointment.id = keyValuePrint.idEntity")));
+//    List<KeyValuePrint> prints3 = findPrints(params, "appointment.idPatient",
+//        new LeftJoinElement("appointment",
+//            "pl.matsuo.clinic.model.medical.appointment.Appointment", cond("appointment.id = keyValuePrint.idEntity")));
     // Przypadek KP
     List<KeyValuePrint> prints2 = findPrints(params, "keyValuePrint.fields['buyer.id']", isNull("keyValuePrint.idEntity"));
     // prints connected directly to somebody
-    List<KeyValuePrint> prints3 = findPrints(params, "keyValuePrint.idEntity");
+    List<KeyValuePrint> prints = findPrints(params, "keyValuePrint.idEntity");
 
     Map<Integer, KeyValuePrint> printsMap = new HashMap<>();
-    asList(prints, prints2, prints3).forEach(collection ->
+    asList(prints, prints2).forEach(collection ->
         collection.forEach(print -> printsMap.put(print.getId(), print)));
 
     return new ArrayList<>(printsMap.values());
