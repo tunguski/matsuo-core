@@ -12,7 +12,8 @@ import java.util.function.Supplier;
 public class AuditTrailInterceptor extends AbstractEntityInterceptor {
 
 
-  Supplier<Object> idUserSupplier = () -> sessionState.getUser().getId();
+  Supplier<Object> idUserSupplier = () -> sessionState != null && sessionState.getUser() != null
+      ? sessionState.getUser().getId() : null;
 
 
   @Override

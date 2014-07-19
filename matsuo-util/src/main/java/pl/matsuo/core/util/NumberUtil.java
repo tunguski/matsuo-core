@@ -41,6 +41,14 @@ public class NumberUtil {
 
 
   /**
+   * Tworzy nowego {@link BigDecimal}a.
+   */
+  public static final BigDecimal bd(Integer value) {
+    return BigDecimal.valueOf(value);
+  }
+
+
+  /**
    * Tworzy nowego {@link Integer}a.
    */
   public static final Integer i(String value) {
