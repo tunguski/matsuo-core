@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.matsuo.core.conf.DbConfig;
+import pl.matsuo.core.web.scope.ScopeConfig;
 import pl.matsuo.core.conf.TestDataExecutionConfig;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;

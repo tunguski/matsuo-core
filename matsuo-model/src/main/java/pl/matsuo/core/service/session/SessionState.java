@@ -17,7 +17,7 @@ import static pl.matsuo.core.model.user.GroupEnum.*;
  * Created by tunguski on 16.09.13.
  */
 @Component
-@Scope(value = "session", proxyMode = TARGET_CLASS)
+@Scope(value = "wideSession")
 public class SessionState {
 
 
