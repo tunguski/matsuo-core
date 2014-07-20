@@ -29,6 +29,8 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
   @Autowired
   protected SessionFactory sessionFactory;
   protected AutowireCapableBeanFactory beanFactory;
+  @Autowired
+  protected SessionState sessionState;
 
 
   private Session session() {
@@ -67,15 +69,10 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
 
 
   protected <E extends AbstractEntity> void initializeEntity(E element, Initializer<? super E> ... initializers) {
-    try {
-      SessionState sessionState = beanFactory.getBean(SessionState.class);
-      if (sessionState != null
-          && sessionState.getIdBucket() != null
-          && !sessionState.getIdBucket().equals(element.getIdBucket())) {
-        throw new RuntimeException("Unauthorized data access");
-      }
-    } catch (BeansException e) {
-      // do nothin'
+    if (sessionState != null
+        && sessionState.getIdBucket() != null
+        && !sessionState.getIdBucket().equals(element.getIdBucket())) {
+      throw new RuntimeException("Unauthorized data access");
     }
 
     for (Initializer<? super E> initializer : initializers) {
@@ -121,15 +118,7 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
   @Override
   public <E extends AbstractEntity> List<E> find(Query<E> query) {
     beanFactory.autowireBeanProperties(query, AUTOWIRE_NO, true);
-
-    Integer idBucket = null;
-
-    try {
-      idBucket = beanFactory.getBean(SessionState.class).getIdBucket();
-    } catch (BeansException e) {
-      // do nothin'
-    }
-    return query.query(idBucket);
+    return query.query(sessionState.getIdBucket());
   }
 
 
