@@ -11,7 +11,6 @@ import pl.matsuo.core.conf.TestDataExecutionConfig;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.db.Database;
-import pl.matsuo.core.test.data.TestSessionState;
 import pl.matsuo.core.test.data.UserTestData;
 import pl.matsuo.core.web.mvc.MvcConfig;
 
@@ -23,8 +22,7 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { DbConfig.class, MvcConfig.class, TestDataExecutionConfig.class,
-                                  UserTestData.class, TestSessionState.class })
+@ContextConfiguration(classes = { DbConfig.class, MvcConfig.class, TestDataExecutionConfig.class, UserTestData.class })
 public abstract class AbstractDbControllerRequestTest extends AbstractControllerRequestTest {
 
 

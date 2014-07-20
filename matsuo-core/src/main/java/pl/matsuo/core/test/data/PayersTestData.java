@@ -3,6 +3,7 @@ package pl.matsuo.core.test.data;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import pl.matsuo.core.conf.DiscoverTypes;
 import pl.matsuo.core.model.organization.OrganizationUnit;
 import pl.matsuo.core.model.organization.Person;
 
@@ -10,14 +11,15 @@ import java.util.Collections;
 import java.util.List;
 
 import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.test.data.MediqTestData.*;
 
 
 @Component
 @Order(10)
-public class PayersTestData extends AbstractTestData {
+@DiscoverTypes({ MediqTestData.class })
+public class PayersTestData extends AbstractMediqTestData {
 
 
-  public static final String MEDIQ = "MEDIQ";
   public static final String ONET = "ONET";
   public static final String GETIN = "Getin";
   public static final String DELL = "DELL";
@@ -34,9 +36,7 @@ public class PayersTestData extends AbstractTestData {
 
 
   @Override
-  public void execute() {
-    createCompany("Mediq sp. z o.o.", MEDIQ, "Legionowo", "Piłsudskiego 20", "5361188849",
-        "010313501", "53041429507", "73020514008", "58021940250");
+  public void internalExecute() {
     createCompany("Mediq - Sejf", MEDIQ, "Legionowo", "Piłsudskiego 20", "5361188849", "010313501");
 
     createCompany(KOMBATANCI, KOMBATANCI, "Legionowo", "Piłsudskiego 20", "5361188849",
@@ -82,7 +82,7 @@ public class PayersTestData extends AbstractTestData {
   }
 
 
-  private void createCompany(String fullName, String code, String town, String street, String nip,
+  private OrganizationUnit createCompany(String fullName, String code, String town, String street, String nip,
       String regon, String ... patientPesels) {
     OrganizationUnit organizationUnit = new OrganizationUnit();
 
@@ -98,7 +98,7 @@ public class PayersTestData extends AbstractTestData {
         : Collections.<Person>emptyList();
 
     organizationUnit.getEmployees().addAll(employees);
-    database.create(organizationUnit);
+    return database.create(organizationUnit);
   }
 
 

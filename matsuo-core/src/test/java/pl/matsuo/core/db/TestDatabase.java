@@ -1,18 +1,17 @@
 package pl.matsuo.core.db;
 
 import org.hibernate.Interceptor;
-import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.matsuo.core.conf.DbConfig;
-import pl.matsuo.core.model.query.QueryBuilder;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.db.EntityInterceptorService;
 import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
+import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 import pl.matsuo.core.test.data.TestSessionState;
 
 import javax.transaction.Transactional;
@@ -37,8 +36,20 @@ public class TestDatabase {
   @Test
   public void testEntityInterceptor() throws Exception {
     List<Interceptor> interceptors = getValue(entityInterceptorService, "interceptors");
-    assertEquals(1, interceptors.size());
-    assertTrue(interceptors.get(0).getClass().equals(AuditTrailInterceptor.class));
+    assertEquals(2, interceptors.size());
+
+    boolean containsAuditTrailInterceptor = false;
+    boolean containsIdBucketInterceptor = false;
+
+    for (Interceptor interceptor : interceptors) {
+      containsAuditTrailInterceptor = containsAuditTrailInterceptor
+          || interceptor.getClass().equals(AuditTrailInterceptor.class);
+      containsIdBucketInterceptor = containsIdBucketInterceptor
+          || interceptor.getClass().equals(IdBucketInterceptor.class);
+    }
+
+    assertTrue(containsAuditTrailInterceptor);
+    assertTrue(containsIdBucketInterceptor);
   }
 
 

@@ -3,7 +3,7 @@ package pl.matsuo.core.exception;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * Created by marek on 12.07.14.

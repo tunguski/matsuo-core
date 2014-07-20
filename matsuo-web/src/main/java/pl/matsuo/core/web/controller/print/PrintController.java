@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.matsuo.core.model.print.IPrintFacade;
 import pl.matsuo.core.model.print.KeyValuePrint;
 import pl.matsuo.core.model.print.initializer.PrintInitializer;
-import pl.matsuo.core.model.query.condition.LeftJoinElement;
 import pl.matsuo.core.model.query.condition.QueryPart;
 import pl.matsuo.core.model.report.IPrintsReportParams;
 import pl.matsuo.core.service.db.Database;

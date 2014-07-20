@@ -4,9 +4,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.conf.DiscoverTypes;
 import pl.matsuo.core.model.numeration.Numeration;
-import pl.matsuo.core.model.organization.OrganizationUnit;
-
-import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 
 /**
@@ -15,16 +12,11 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
 @Component
 @Order(20)
 @DiscoverTypes({ PayersTestData.class })
-public class NumerationTestData extends AbstractTestData {
-
-
-  protected OrganizationUnit mediq;
+public class NumerationTestData extends AbstractMediqTestData {
 
 
   @Override
-  public void execute() {
-    mediq = database.findOne(query(OrganizationUnit.class, eq("code", PayersTestData.MEDIQ)));
-
+  public void internalExecute() {
     createNumeration("INVOICE", "FV/2013/$");
     createNumeration("RECEIPT", "PAR/2013/$");
 
@@ -38,7 +30,6 @@ public class NumerationTestData extends AbstractTestData {
 
   private Numeration createNumeration(String code, String pattern) {
     Numeration numeration = new Numeration();
-    numeration.setIdBucket(mediq.getId());
     numeration.setValue(1);
     numeration.setMinValue(1);
     numeration.setCode(code);

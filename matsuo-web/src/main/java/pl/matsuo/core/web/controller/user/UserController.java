@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import pl.matsuo.core.exception.RestProcessingException;
 import pl.matsuo.core.model.Initializer;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.web.controller.AbstractSimpleController;
-import pl.matsuo.core.exception.RestProcessingException;
 
 import java.util.Date;
 import java.util.List;

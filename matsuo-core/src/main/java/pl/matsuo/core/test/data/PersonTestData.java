@@ -11,11 +11,11 @@ import static pl.matsuo.core.util.NumberUtil.*;
 
 
 @Component
-public class PersonTestData extends AbstractTestData {
+public class PersonTestData extends AbstractMediqTestData {
 
 
   @Override
-  public void execute() {
+  public void internalExecute() {
     insertPatient("Iwo", "Kaczmarek", "42041428579");
     insertPatient("Miłosz", "Majewski", "50062107713");
     insertPatient("Serafin", "Borkowski", "72051422953");

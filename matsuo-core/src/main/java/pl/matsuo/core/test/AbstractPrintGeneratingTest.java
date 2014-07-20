@@ -15,6 +15,7 @@ import pl.matsuo.core.service.facade.IFacadeBuilder;
 import pl.matsuo.core.service.i18n.I18nServiceImpl;
 import pl.matsuo.core.service.print.PrintMethods;
 import pl.matsuo.core.service.print.PrintsRendererService;
+import pl.matsuo.core.test.data.TestSessionState;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,7 +34,7 @@ import static org.apache.commons.io.IOUtils.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { GeneralConfig.class, FacadeBuilder.class, I18nServiceImpl.class })
+@ContextConfiguration(classes = { GeneralConfig.class, FacadeBuilder.class, I18nServiceImpl.class, TestSessionState.class })
 abstract class AbstractPrintGeneratingTest<E> implements PrintMethods {
 
 

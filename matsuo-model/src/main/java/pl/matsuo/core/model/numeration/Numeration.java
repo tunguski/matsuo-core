@@ -7,7 +7,7 @@ import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-import static javax.persistence.TemporalType.DATE;
+import static javax.persistence.TemporalType.*;
 
 
 /**

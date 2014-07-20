@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.matsuo.core.conf.DbConfig;
-import pl.matsuo.core.web.scope.ScopeConfig;
 import pl.matsuo.core.conf.TestDataExecutionConfig;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.db.EntityInterceptorService;
-import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.facade.FacadeBuilderMethods;
 import pl.matsuo.core.service.facade.IFacadeBuilder;
@@ -29,8 +27,7 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { DbConfig.class, TestDataExecutionConfig.class, FacadeBuilder.class,
-                                  EntityInterceptorService.class, IdBucketInterceptor.class,
-                                  TestSessionState.class, UserTestData.class })
+                                  EntityInterceptorService.class, TestSessionState.class, UserTestData.class })
 public abstract class AbstractControllerTest implements FacadeBuilderMethods {
 
 

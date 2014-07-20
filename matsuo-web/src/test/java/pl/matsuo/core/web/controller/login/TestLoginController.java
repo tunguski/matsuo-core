@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import pl.matsuo.core.exception.RestProcessingException;
 import pl.matsuo.core.exception.UnauthorizedException;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.OrganizationUnit;
@@ -21,7 +22,6 @@ import pl.matsuo.core.service.login.LoginData;
 import pl.matsuo.core.service.login.LoginService;
 import pl.matsuo.core.service.permission.PermissionService;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
-import pl.matsuo.core.exception.RestProcessingException;
 
 import java.util.List;
 

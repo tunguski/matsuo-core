@@ -13,11 +13,8 @@ import org.springframework.util.Assert;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.Initializer;
 import pl.matsuo.core.model.query.Query;
-import pl.matsuo.core.model.query.QueryBuilder;
 import pl.matsuo.core.service.session.SessionState;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.springframework.beans.factory.config.AutowireCapableBeanFactory.*;

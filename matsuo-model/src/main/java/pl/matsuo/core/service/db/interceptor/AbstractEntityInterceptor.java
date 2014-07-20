@@ -3,7 +3,6 @@ package pl.matsuo.core.service.db.interceptor;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.matsuo.core.model.interceptor.InterceptorComponent;
 import pl.matsuo.core.service.session.SessionState;
 
 import java.io.Serializable;

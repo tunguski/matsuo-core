@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import pl.matsuo.core.service.db.DatabaseImpl;
 import pl.matsuo.core.service.db.EntityInterceptorService;
 import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
+import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -66,7 +67,7 @@ public class DbConfig {
 
   @Bean public static BeanFactoryPostProcessor database() {
     return new ClassesAddingBeanFactoryPostProcessor(DatabaseImpl.class, EntityInterceptorService.class,
-        AuditTrailInterceptor.class);
+        AuditTrailInterceptor.class, IdBucketInterceptor.class);
   }
 }
 

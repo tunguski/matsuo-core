@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.lang.System.*;
-import static org.springframework.context.annotation.ScopedProxyMode.*;
 import static pl.matsuo.core.model.user.GroupEnum.*;
 
 
