@@ -16,6 +16,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import pl.matsuo.core.model.execution.Execution;
 import pl.matsuo.core.service.db.Database;
+import pl.matsuo.core.service.session.SessionState;
 
 import java.util.Collections;
 import java.util.Date;
@@ -42,6 +43,8 @@ public class ExecutionServiceImpl implements ApplicationListener<ContextRefreshe
   Database database;
   @Autowired
   PlatformTransactionManager transactionManager;
+  @Autowired
+  SessionState sessionState;
   ApplicationContext applicationContext;
 
 
@@ -88,6 +91,8 @@ public class ExecutionServiceImpl implements ApplicationListener<ContextRefreshe
           } catch (Exception e) {
             // TODO: zapisanie informacji o błędzie wykonania
             logger.error("Error while processing execution: " + executeServiceName, e);
+          } finally {
+            sessionState.setUser(null);
           }
 
           database.create(execution);
