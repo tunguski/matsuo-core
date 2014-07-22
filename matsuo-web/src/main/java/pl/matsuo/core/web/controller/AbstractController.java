@@ -93,7 +93,15 @@ public abstract class AbstractController<E extends AbstractEntity, P extends IQu
    */
   @RequestMapping(method = GET)
   public List<E> list(P params) {
-    return database.find(listQuery(params));
+    List<E> list = database.find(listQuery(params));
+
+    // fixme: it should be done on database query level!
+    if (params.getLimit() != null && params.getLimit() > 0) {
+      int offset = params.getOffset() != null && params.getOffset() > 0 ? params.getOffset() : 0;
+      list = list.subList(Math.min(list.size(), offset), Math.min(list.size(), offset + params.getLimit()));
+    }
+
+    return list;
   }
 
 
