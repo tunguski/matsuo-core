@@ -1,6 +1,7 @@
 package pl.matsuo.core.util;
 
 import com.google.common.base.Joiner;
+import org.springframework.core.ResolvableType;
 import pl.matsuo.core.util.function.Failure;
 import pl.matsuo.core.util.function.Success;
 import pl.matsuo.core.util.function.Try;
@@ -19,6 +20,11 @@ import static org.springframework.util.StringUtils.*;
 
 @SuppressWarnings("unchecked")
 public class ReflectUtil {
+
+
+  public static <X> Class<X> resolveType(Class<?> clazz, Class<?> superClazz, int index) {
+    return (Class<X>) ResolvableType.forClass(clazz).as(superClazz).resolveGeneric(index);
+  }
 
 
   interface EFunction<T, R> {

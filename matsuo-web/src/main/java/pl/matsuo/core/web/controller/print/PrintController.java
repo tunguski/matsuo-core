@@ -19,6 +19,7 @@ import pl.matsuo.core.service.print.IPrintsRendererService;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +128,15 @@ public class PrintController {
     asList(prints, prints2).forEach(collection ->
         collection.forEach(print -> printsMap.put(print.getId(), print)));
 
-    return new ArrayList<>(printsMap.values());
+    List<KeyValuePrint> result = new ArrayList<>(printsMap.values());
+    // reversed order!
+    Collections.sort(result, (a, b) -> b.getCreatedTime().compareTo(a.getCreatedTime()));
+
+    if (params.getLimit() != null) {
+      result = result.subList(0, params.getLimit());
+    }
+
+    return result;
   }
 
 

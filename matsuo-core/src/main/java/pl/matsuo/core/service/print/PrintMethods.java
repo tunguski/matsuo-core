@@ -51,7 +51,7 @@ public interface PrintMethods {
 
 
   default <E extends IPrintFacade<F>, F extends IPrintElementFacade, P extends KeyValuePrint> P initializePrint(
-      P print, Class<E> printClass, Consumer<E> initializePrint, Consumer<? super F> ... elementInitializations) {
+      P print, Class<E> printClass, Consumer<? super E> initializePrint, Consumer<? super F> ... elementInitializations) {
     getFacadeBuilder().doWithFacade(print, printClass, facade -> {
       // first add all positions
       addElements(print, facade, elementInitializations);

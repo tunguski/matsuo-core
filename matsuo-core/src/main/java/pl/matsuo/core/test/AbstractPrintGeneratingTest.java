@@ -31,6 +31,7 @@ import static java.lang.Thread.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 import static org.apache.commons.io.IOUtils.*;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -77,15 +78,15 @@ abstract class AbstractPrintGeneratingTest<E> implements PrintMethods {
             ".ftl", "-" + lookupTestName() + ".pdf"));
 
     try (FileOutputStream fos = new FileOutputStream(outputFile)) {
-      Assert.assertNotNull("Cold not find resource!", getClass().getResource(htmlInputPath));
+      assertNotNull("Cold not find resource!", getClass().getResource(htmlInputPath));
 
       byte[] renderedFile = printsRendererService.renderHtml(htmlInputPath, dataModel);
 
-      Assert.assertNotNull("File not found: renderedFile is null!", renderedFile);
+      assertNotNull("File not found: renderedFile is null!", renderedFile);
 
       byte[] pdf = printsRendererService.createPDF(renderedFile, getResourceUrl(htmlInputPath));
 
-      Assert.assertTrue("Created PDF size is 0!", pdf.length > 0);
+      assertTrue("Created PDF size is 0!", pdf.length > 0);
 
       write(pdf, fos);
 

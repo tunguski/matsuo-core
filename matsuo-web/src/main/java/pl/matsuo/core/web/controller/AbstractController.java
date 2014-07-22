@@ -2,7 +2,6 @@ package pl.matsuo.core.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ResolvableType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,11 +27,11 @@ import java.util.List;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 import static org.hibernate.criterion.MatchMode.*;
-import static org.springframework.core.GenericTypeResolver.*;
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.util.ReflectUtil.*;
 import static pl.matsuo.core.util.StringUtil.*;
 
 
@@ -47,8 +46,7 @@ public abstract class AbstractController<E extends AbstractEntity, P extends IQu
 
 
   @SuppressWarnings("unchecked")
-  protected final Class<E> entityType =
-      (Class<E>) resolveTypeArguments(getClass(), AbstractController.class)[0];
+  protected final Class<E> entityType = resolveType(getClass(), AbstractController.class, 0);
 
 
   /**
@@ -199,11 +197,6 @@ public abstract class AbstractController<E extends AbstractEntity, P extends IQu
     public EntityNotFoundException(Integer id) {
       super("Entity '" + id + "' not found.");
     }
-  }
-
-
-  protected <X> Class<X> resolvePrintType(Class<?> iface, int index) {
-    return (Class<X>) ResolvableType.forClass(getClass()).as(iface).resolveGeneric(index);
   }
 
 
