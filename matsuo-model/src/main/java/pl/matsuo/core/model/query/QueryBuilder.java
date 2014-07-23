@@ -3,7 +3,6 @@ package pl.matsuo.core.model.query;
 import com.google.common.base.Joiner;
 import org.hibernate.criterion.MatchMode;
 import pl.matsuo.core.model.AbstractEntity;
-import pl.matsuo.core.model.query.condition.AbstractCondition;
 import pl.matsuo.core.model.query.condition.AbstractQueryFunction;
 import pl.matsuo.core.model.query.condition.ComplexCondition;
 import pl.matsuo.core.model.query.condition.Condition;
@@ -68,33 +67,38 @@ public class QueryBuilder {
   }
 
 
+  protected static Condition operator(String fieldName, String operator, Object value) {
+    return query -> value == null ? "1 = 1" : fieldName + " " + operator + " " + query.propertyValue(value);
+  }
+
+
   public static Condition eq(String fieldName, Object value) {
-    return new AbstractCondition(fieldName, "=", value);
+    return operator(fieldName, "=", value);
   }
 
 
   public static Condition ne(String fieldName, Object value) {
-    return new AbstractCondition(fieldName, "!=", value);
+    return operator(fieldName, "!=", value);
   }
 
 
   public static Condition gt(String fieldName, Object value) {
-    return new AbstractCondition(fieldName, ">", value);
+    return operator(fieldName, ">", value);
   }
 
 
   public static Condition ge(String fieldName, Object value) {
-    return new AbstractCondition(fieldName, ">=", value);
+    return operator(fieldName, ">=", value);
   }
 
 
   public static Condition lt(String fieldName, Object value) {
-    return new AbstractCondition(fieldName, "<", value);
+    return operator(fieldName, "<", value);
   }
 
 
   public static Condition le(String fieldName, Object value) {
-    return new AbstractCondition(fieldName, "<=", value);
+    return operator(fieldName, "<=", value);
   }
 
 
@@ -104,8 +108,7 @@ public class QueryBuilder {
 
 
   public static Condition ilike(String fieldName, Object value, MatchMode matchMode) {
-    return new AbstractCondition("lower(" + fieldName + ")",
-                                    "like", matchMode.toMatchString(value.toString().toLowerCase()));
+    return operator("lower(" + fieldName + ")", "like", matchMode.toMatchString(value.toString().toLowerCase()));
   }
 
 
@@ -174,7 +177,7 @@ public class QueryBuilder {
 
 
   public static Condition memberOf(String fieldName, Object value) {
-    return new AbstractCondition(fieldName, "MEMBER OF", value);
+    return operator(fieldName, "MEMBER OF", value);
   }
 
 
