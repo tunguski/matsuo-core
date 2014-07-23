@@ -1,7 +1,7 @@
 package pl.matsuo.core.service.db;
 
 import pl.matsuo.core.model.AbstractEntity;
-import pl.matsuo.core.model.Initializer;
+import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.Query;
 
 import java.util.List;

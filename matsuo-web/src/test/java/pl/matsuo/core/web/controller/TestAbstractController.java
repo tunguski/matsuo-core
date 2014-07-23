@@ -3,7 +3,7 @@ package pl.matsuo.core.web.controller;
 import org.junit.Before;
 import org.junit.Test;
 import pl.matsuo.core.IQueryRequestParams;
-import pl.matsuo.core.model.Initializer;
+import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.AbstractQuery;
 import pl.matsuo.core.model.query.Query;
 import pl.matsuo.core.model.user.User;

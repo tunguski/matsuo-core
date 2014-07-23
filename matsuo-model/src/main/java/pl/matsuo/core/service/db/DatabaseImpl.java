@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import pl.matsuo.core.model.AbstractEntity;
-import pl.matsuo.core.model.Initializer;
+import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.Query;
 import pl.matsuo.core.service.session.SessionState;
 

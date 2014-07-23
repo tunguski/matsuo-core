@@ -1,5 +1,7 @@
 package pl.matsuo.core.model;
 
+import pl.matsuo.core.model.api.HasId;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;

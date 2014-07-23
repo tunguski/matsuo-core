@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriTemplate;
 import pl.matsuo.core.IQueryRequestParams;
 import pl.matsuo.core.model.AbstractEntity;
-import pl.matsuo.core.model.Initializer;
+import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.AbstractQuery;
 import pl.matsuo.core.model.query.condition.Condition;
 import pl.matsuo.core.service.db.Database;

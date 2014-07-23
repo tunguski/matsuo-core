@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.print.initializer;
 
-import pl.matsuo.core.model.Initializer;
+import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.print.KeyValuePrint;
 import pl.matsuo.core.model.print.KeyValuePrintElement;
 

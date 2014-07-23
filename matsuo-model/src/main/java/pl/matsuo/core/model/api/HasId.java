@@ -1,4 +1,4 @@
-package pl.matsuo.core.model;
+package pl.matsuo.core.model.api;
 
 public interface HasId {
 

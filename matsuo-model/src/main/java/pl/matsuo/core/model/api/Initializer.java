@@ -1,4 +1,4 @@
-package pl.matsuo.core.model;
+package pl.matsuo.core.model.api;
 
 /**
  * Created by tunguski on 19.09.13.

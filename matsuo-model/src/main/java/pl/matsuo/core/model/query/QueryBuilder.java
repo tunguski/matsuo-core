@@ -110,22 +110,15 @@ public class QueryBuilder {
 
 
   public static <E extends Collection<?>> Condition in(final String fieldName, final E value) {
-
-
-    return new Condition() {
-
-
-      @Override
-      public String print(AbstractQuery query) {
-        List<String> properties = new ArrayList<>();
-        for (Object o : value) {
-          if (o != null) {
-            properties.add(query.propertyValue(o));
-          }
+    return query -> {
+      List<String> properties = new ArrayList<>();
+      for (Object o : value) {
+        if (o != null) {
+          properties.add(query.propertyValue(o));
         }
-
-        return fieldName + " in (" + Joiner.on(", ").join(properties) + ")";
       }
+
+      return fieldName + " in (" + Joiner.on(", ").join(properties) + ")";
     };
   }
 
@@ -141,38 +134,17 @@ public class QueryBuilder {
 
 
   public static Condition between(final String fieldName, final Object min, final Object max) {
-    return new Condition() {
-
-
-      @Override
-      public String print(AbstractQuery query) {
-        return fieldName + " between " + query.propertyValue(min) + " AND " + query.propertyValue(max);
-      }
-    };
+    return query -> fieldName + " between " + query.propertyValue(min) + " AND " + query.propertyValue(max);
   }
 
 
   public static Condition isNull(final String fieldName) {
-    return new Condition() {
-
-
-      @Override
-      public String print(AbstractQuery query) {
-        return fieldName + " IS NULL";
-      }
-    };
+    return query -> fieldName + " IS NULL";
   }
 
 
   public static Condition isNotNull(final String fieldName) {
-    return new Condition() {
-
-
-      @Override
-      public String print(AbstractQuery query) {
-        return fieldName + " IS NOT NULL";
-      }
-    };
+    return query -> fieldName + " IS NOT NULL";
   }
 
 
@@ -192,26 +164,12 @@ public class QueryBuilder {
 
 
   public static Condition not(final Condition condition) {
-    return new Condition() {
-
-
-      @Override
-      public String print(AbstractQuery query) {
-        return "NOT " + condition.print(query);
-      }
-    };
+    return query -> "NOT " + condition.print(query);
   }
 
 
   public static Condition cond(final String condition) {
-    return new Condition() {
-
-
-      @Override
-      public String print(AbstractQuery query) {
-        return "(" + condition + ")";
-      }
-    };
+    return query -> "(" + condition + ")";
   }
 
 

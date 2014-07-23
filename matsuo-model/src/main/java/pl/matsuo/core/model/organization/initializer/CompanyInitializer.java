@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.organization.initializer;
 
-import pl.matsuo.core.model.Initializer;
+import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.organization.OrganizationUnit;
 
 

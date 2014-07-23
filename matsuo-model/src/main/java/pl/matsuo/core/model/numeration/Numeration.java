@@ -24,7 +24,8 @@ public class Numeration extends AbstractEntity {
   protected String code;
   protected String pattern;
   @Temporal(DATE)
-  private Date identificationDate;
+  private Date startDate;
+  private Date endDate;
 
 
   public Integer getValue() {
@@ -56,12 +57,6 @@ public class Numeration extends AbstractEntity {
   }
   public void setMinValue(Integer minValue) {
     this.minValue = minValue;
-  }
-  public Date getIdentificationDate() {
-    return identificationDate;
-  }
-  public void setIdentificationDate(Date identificationDate) {
-    this.identificationDate = identificationDate;
   }
 }
 

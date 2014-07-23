@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.matsuo.core.model.AbstractEntity;
-import pl.matsuo.core.model.Initializer;
+import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.condition.Condition;
 import pl.matsuo.core.model.query.condition.FromPart;
 import pl.matsuo.core.model.query.condition.QueryFunction;
