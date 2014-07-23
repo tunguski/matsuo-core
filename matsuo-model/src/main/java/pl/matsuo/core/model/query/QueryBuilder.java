@@ -8,6 +8,9 @@ import pl.matsuo.core.model.query.condition.ComplexCondition;
 import pl.matsuo.core.model.query.condition.Condition;
 import pl.matsuo.core.model.query.condition.FromPart;
 import pl.matsuo.core.model.query.condition.LeftJoinElement;
+import pl.matsuo.core.model.query.condition.LimitQueryPart;
+import pl.matsuo.core.model.query.condition.OffsetQueryPart;
+import pl.matsuo.core.model.query.condition.OrderBy;
 import pl.matsuo.core.model.query.condition.QueryFunction;
 import pl.matsuo.core.model.query.condition.QueryPart;
 import pl.matsuo.core.model.query.condition.SelectPart;
@@ -173,6 +176,27 @@ public class QueryBuilder {
 
   public static Condition cond(final String condition) {
     return query -> "(" + condition + ")";
+  }
+
+
+  public static OrderBy orderBy(final String orderBy) {
+    return query -> orderBy;
+  }
+
+  public static OrderBy asc(final String orderBy) {
+    return query -> orderBy;
+  }
+
+  public static OrderBy desc(final String orderBy) {
+    return query -> orderBy + " DESC";
+  }
+
+
+  public static LimitQueryPart limit(final Integer limit) {
+    return query -> "" + limit;
+  }
+  public static OffsetQueryPart offset(final Integer offset) {
+    return query -> "" + offset;
   }
 
 
