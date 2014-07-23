@@ -11,12 +11,22 @@ import java.text.ParsePosition;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.YearMonth;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.IsoFields;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalField;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static java.time.temporal.IsoFields.*;
 import static java.util.Calendar.*;
 
 
@@ -196,6 +206,24 @@ public class DateUtil {
 
   public static LocalDate localDate(Date date) {
     return LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault()).toLocalDate();
+  }
+
+
+  public static Date getQuaterStart(Date date) {
+    Calendar cal = cal(date);
+    int quater = cal.get(MONTH) / 3;
+    cal.set(MONTH, quater * 3);
+    cal.set(DATE, 1);
+    return cal.getTime();
+  }
+
+
+  public static Date getQuaterEnd(Date date) {
+    Calendar cal = cal(date);
+    int quater = cal.get(MONTH) / 3 + 1;
+    cal.set(MONTH, quater * 3 - 1);
+    cal.set(DATE, cal.getActualMaximum(DATE));
+    return cal.getTime();
   }
 }
 
