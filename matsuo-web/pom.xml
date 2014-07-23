@@ -67,11 +67,16 @@
       <version>${el-ri.version}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>com.jayway.jsonpath</groupId>
       <artifactId>json-path</artifactId>
       <version>${json-path.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>pl.matsuo</groupId>
+      <artifactId>matsuo-core</artifactId>
+      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
 

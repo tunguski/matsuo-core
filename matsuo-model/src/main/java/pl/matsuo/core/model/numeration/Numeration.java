@@ -1,6 +1,7 @@
 package pl.matsuo.core.model.numeration;
 
 import pl.matsuo.core.model.AbstractEntity;
+import pl.matsuo.core.model.api.TemporalEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
@@ -14,17 +15,21 @@ import static javax.persistence.TemporalType.*;
  * Created by tunguski on 15.09.13.
  */
 @Entity
-public class Numeration extends AbstractEntity {
+public class Numeration extends AbstractEntity implements TemporalEntity {
 
 
+  @NotNull
   protected Integer value;
   @NotNull
   protected Integer minValue;
   protected Integer maxValue;
+  @NotNull
   protected String code;
+  @NotNull
   protected String pattern;
   @Temporal(DATE)
   private Date startDate;
+  @Temporal(DATE)
   private Date endDate;
 
 
@@ -57,6 +62,18 @@ public class Numeration extends AbstractEntity {
   }
   public void setMinValue(Integer minValue) {
     this.minValue = minValue;
+  }
+  public Date getStartDate() {
+    return startDate;
+  }
+  public void setStartDate(Date startDate) {
+    this.startDate = startDate;
+  }
+  public Date getEndDate() {
+    return endDate;
+  }
+  public void setEndDate(Date endDate) {
+    this.endDate = endDate;
   }
 }
 

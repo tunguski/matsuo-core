@@ -22,7 +22,7 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { DbConfig.class, MvcConfig.class, TestDataExecutionConfig.class, UserTestData.class })
+@ContextConfiguration(classes = { DbConfig.class, TestDataExecutionConfig.class, UserTestData.class })
 public abstract class AbstractDbControllerRequestTest extends AbstractControllerRequestTest {
 
 

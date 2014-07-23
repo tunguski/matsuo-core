@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.report.DataModelBuilder;
 
 import java.util.Map;
@@ -25,7 +26,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { MvcConfig.class, FacadeBuilderHandlerMethodArgumentResolverTestController.class })
+@ContextConfiguration(classes = { MvcConfig.class, FacadeBuilder.class,
+    FacadeBuilderHandlerMethodArgumentResolverTestController.class })
 public class TestFacadeBuilderHandlerMethodArgumentResolver {
 
 

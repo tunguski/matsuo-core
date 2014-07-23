@@ -19,6 +19,10 @@ public class NumerationSchema extends AbstractEntity {
   protected Integer maxValue;
   protected String code;
   protected String pattern;
+  /**
+   * How not numeration instances should be created basing on data contained in this schema.
+   */
+  protected String creationStrategy;
 
 
   public Integer getValue() {
@@ -50,6 +54,12 @@ public class NumerationSchema extends AbstractEntity {
   }
   public void setMinValue(Integer minValue) {
     this.minValue = minValue;
+  }
+  public String getCreationStrategy() {
+    return creationStrategy;
+  }
+  public void setCreationStrategy(String creationStrategy) {
+    this.creationStrategy = creationStrategy;
   }
 }
 

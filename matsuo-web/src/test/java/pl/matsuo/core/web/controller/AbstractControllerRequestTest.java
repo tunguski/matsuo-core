@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { MvcConfig.class, TestSessionState.class })
+@ContextConfiguration(classes = { MvcConfig.class, FacadeBuilder.class, TestSessionState.class })
 public abstract class AbstractControllerRequestTest {
 
 

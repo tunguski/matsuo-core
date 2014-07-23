@@ -4,9 +4,13 @@ import org.junit.Test;
 import pl.matsuo.core.model.numeration.Numeration;
 import pl.matsuo.core.model.query.Query;
 import pl.matsuo.core.service.db.Database;
+import pl.matsuo.core.util.DateUtil;
+
+import java.util.Date;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static pl.matsuo.core.util.DateUtil.*;
 
 
 /**
@@ -22,14 +26,16 @@ public class TestNumerationServiceImpl {
     Database database = mock(Database.class);
 
     Numeration numeration = new Numeration();
-    numeration.setPattern("TEST/$");
-    numeration.setValue(20);
+    numeration.setPattern("FV/${numerationYear}/${numerationMonth}/${value}");
+    // such a big number to check proper formating
+    numeration.setValue(254350);
+    numeration.setStartDate(date(2014, 7, 1));
 
     when(database.findOne(any(Query.class))).thenReturn(numeration);
 
     numerationService.database = database;
 
-    assertEquals("TEST/20", numerationService.getNumber("INVOICE"));
+    assertEquals("FV/2014/8/254350", numerationService.getNumber("INVOICE", new Date(), true));
   }
 }
 

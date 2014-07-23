@@ -2,6 +2,7 @@ package pl.matsuo.core.web.mvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
@@ -32,14 +33,19 @@ public class MvcConfig extends WebMvcConfigurationSupport implements Application
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
     RequestMappingHandlerAdapter adapter = event.getApplicationContext().getBean(RequestMappingHandlerAdapter.class);
-    FacadeBuilderHandlerMethodArgumentResolver facadeBuilderHandlerMethodArgumentResolver =
-      event.getApplicationContext().getBean(FacadeBuilderHandlerMethodArgumentResolver.class);
 
-    List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<>(adapter.getArgumentResolvers());
-    List<HandlerMethodArgumentResolver> customResolvers = adapter.getCustomArgumentResolvers();
-    argumentResolvers.remove(facadeBuilderHandlerMethodArgumentResolver);
-    argumentResolvers.add(0, facadeBuilderHandlerMethodArgumentResolver);
-    adapter.setArgumentResolvers(argumentResolvers);
+    try {
+      FacadeBuilderHandlerMethodArgumentResolver facadeBuilderHandlerMethodArgumentResolver =
+          event.getApplicationContext().getBean(FacadeBuilderHandlerMethodArgumentResolver.class);
+
+      List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<>(adapter.getArgumentResolvers());
+      List<HandlerMethodArgumentResolver> customResolvers = adapter.getCustomArgumentResolvers();
+      argumentResolvers.remove(facadeBuilderHandlerMethodArgumentResolver);
+      argumentResolvers.add(0, facadeBuilderHandlerMethodArgumentResolver);
+      adapter.setArgumentResolvers(argumentResolvers);
+    } catch (BeansException e) {
+      //e.printStackTrace();
+    }
   }
 
 
@@ -74,8 +80,8 @@ public class MvcConfig extends WebMvcConfigurationSupport implements Application
 
   @Bean
   public BeanFactoryPostProcessor mvcServices() {
-    return new ClassesAddingBeanFactoryPostProcessor(BootstrapRenderer.class, FacadeBuilder.class,
-                                                      FacadeBuilderHandlerMethodArgumentResolver.class);
+    return new ClassesAddingBeanFactoryPostProcessor(BootstrapRenderer.class,
+        FacadeBuilderHandlerMethodArgumentResolver.class);
   }
 }
 
