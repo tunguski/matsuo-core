@@ -14,7 +14,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import pl.matsuo.core.conf.ClassesAddingBeanFactoryPostProcessor;
-import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.web.annotation.WebConfiguration;
 import pl.matsuo.core.web.view.BootstrapRenderer;
 

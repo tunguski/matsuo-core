@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.springframework.core.GenericTypeResolver.*;
+import static org.springframework.core.GenericTypeResolver.resolveType;
 import static pl.matsuo.core.util.ReflectUtil.*;
 
 

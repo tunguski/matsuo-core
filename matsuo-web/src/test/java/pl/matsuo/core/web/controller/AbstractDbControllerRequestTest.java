@@ -12,7 +12,6 @@ import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.test.data.UserTestData;
-import pl.matsuo.core.web.mvc.MvcConfig;
 
 import static pl.matsuo.core.model.query.QueryBuilder.*;
 

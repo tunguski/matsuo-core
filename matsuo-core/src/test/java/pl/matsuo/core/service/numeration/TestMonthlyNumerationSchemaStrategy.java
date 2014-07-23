@@ -7,7 +7,7 @@ import pl.matsuo.core.model.numeration.NumerationSchema;
 import java.util.Date;
 
 import static org.junit.Assert.*;
-import static pl.matsuo.core.util.DateUtil.date;
+import static pl.matsuo.core.util.DateUtil.*;
 
 public class TestMonthlyNumerationSchemaStrategy {
 

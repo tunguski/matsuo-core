@@ -1,8 +1,5 @@
 package pl.matsuo.core;
 
-import pl.matsuo.core.IRequestParams;
-
-
 public interface ISearchRequestParams extends  IRequestParams {
 
   /**

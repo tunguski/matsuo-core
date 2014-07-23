@@ -4,7 +4,6 @@ import org.junit.Test;
 import pl.matsuo.core.model.numeration.Numeration;
 import pl.matsuo.core.model.query.Query;
 import pl.matsuo.core.service.db.Database;
-import pl.matsuo.core.util.DateUtil;
 
 import java.util.Date;
 
