@@ -9,9 +9,6 @@ import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.condition.Condition;
 import pl.matsuo.core.model.query.condition.FromPart;
-import pl.matsuo.core.model.query.condition.LimitQueryPart;
-import pl.matsuo.core.model.query.condition.OffsetQueryPart;
-import pl.matsuo.core.model.query.condition.OrderBy;
 import pl.matsuo.core.model.query.condition.QueryFunction;
 import pl.matsuo.core.model.query.condition.QueryPart;
 import pl.matsuo.core.model.query.condition.SelectPart;
@@ -50,10 +47,10 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   private List<Condition> where = new ArrayList<>();
   private List<String> groupBy = new ArrayList<>();
   private List<Condition> having = new ArrayList<>();
-  private List<OrderBy> orderBy = new ArrayList<>();
+  private List<String> orderBy = new ArrayList<>();
   private List<Initializer<? super E>> initializers = new ArrayList<>();
-  private LimitQueryPart limit;
-  private OffsetQueryPart offset;
+  private Integer limit;
+  private Integer offset;
 
 
 
@@ -101,12 +98,6 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
         from((FromPart) queryPart);
       } else if (SelectPart.class.isAssignableFrom(queryPart.getClass())) {
         select((SelectPart) queryPart);
-      } else if (OrderBy.class.isAssignableFrom(queryPart.getClass())) {
-        orderBy((OrderBy) queryPart);
-      } else if (LimitQueryPart.class.isAssignableFrom(queryPart.getClass())) {
-        limit((LimitQueryPart) queryPart);
-      } else if (OffsetQueryPart.class.isAssignableFrom(queryPart.getClass())) {
-        offset((OffsetQueryPart) queryPart);
       } else {
         throw new RuntimeException("Not implemented yet");
       }
@@ -117,7 +108,6 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
 
   public AbstractQuery<E> groupBy(String fieldName) {
-    // should work without knowing query
     groupBy.add(fieldName);
     return this;
   }
@@ -129,32 +119,19 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   }
 
 
-  public AbstractQuery<E> orderBy(OrderBy order) {
-    // should work without knowing query
-    orderBy.add(order);
+  public AbstractQuery<E> orderBy(String fieldName) {
+    orderBy.add(fieldName);
     return this;
   }
 
 
   public AbstractQuery<E> limit(Integer limit) {
-    this.limit = query -> "" + limit;
-    return this;
-  }
-
-
-  public AbstractQuery<E> offset(Integer offset) {
-    this.offset = query -> "" + offset;
-    return this;
-  }
-
-
-  public AbstractQuery<E> limit(LimitQueryPart limit) {
     this.limit = limit;
     return this;
   }
 
 
-  public AbstractQuery<E> offset(OffsetQueryPart offset) {
+  public AbstractQuery<E> offset(Integer offset) {
     this.offset = offset;
     return this;
   }
@@ -278,21 +255,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
     // order by ...
     if (!orderBy.isEmpty()) {
-      sb.append(" ORDER BY ");
-
-      for (OrderBy order : orderBy) {
-        sb.append(order.print(this) + ", ");
-      }
-
-      sb.delete(sb.length() - 2, sb.length());
-    }
-
-    if (limit != null) {
-      sb.append(" LIMIT " + limit.print(this));
-    }
-
-    if (offset != null) {
-      sb.append(" OFFSET " + offset.print(this));
+      sb.append(" ORDER BY " + Joiner.on(", ").join(orderBy));
     }
 
     return sb.toString().trim();
