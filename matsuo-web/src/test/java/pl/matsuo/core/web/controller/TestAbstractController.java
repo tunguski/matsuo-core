@@ -1,5 +1,7 @@
 package pl.matsuo.core.web.controller;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import pl.matsuo.core.IQueryRequestParams;
@@ -9,6 +11,7 @@ import pl.matsuo.core.model.query.Query;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.db.Database;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
@@ -73,41 +76,40 @@ public class TestAbstractController {
 
 
   @Test
-  public void testList_limit() throws Exception {
+  public void testList_limitAndOffset() throws Exception {
     IQueryRequestParams params = mock(IQueryRequestParams.class);
     when(params.getQuery()).thenReturn("some text");
     when(params.getLimit()).thenReturn(20);
     when(params.getOffset()).thenReturn(10);
 
-    when(database.find(any(Query.class))).thenReturn(Collections.nCopies(100, new User()));
+    when(database.find(any(Query.class))).then(invocation -> {
 
-    assertEquals(20, controller.list(params).size());
-  }
+      SessionFactory sessionFactory = mock(SessionFactory.class);
+      org.hibernate.Query hQuery = mock(org.hibernate.Query.class);
+      Session session = mock(Session.class);
 
+      when(sessionFactory.getCurrentSession()).thenReturn(session);
+      when(session.createQuery(anyString())).thenReturn(hQuery);
 
-  @Test
-  public void testList_limitHigherThanDbResult() throws Exception {
-    IQueryRequestParams params = mock(IQueryRequestParams.class);
-    when(params.getQuery()).thenReturn("some text");
-    when(params.getLimit()).thenReturn(20);
-    when(params.getOffset()).thenReturn(10);
+      AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
 
-    when(database.find(any(Query.class))).thenReturn(Collections.nCopies(15, new User()));
+      Field field = query.getClass().getDeclaredField("sessionFactory");
+      try {
+        field.setAccessible(true);
+        field.set(query, sessionFactory);
+      } finally {
+        field.setAccessible(false);
+      }
+
+      query.query(null);
+
+      verify(hQuery).setMaxResults(20);
+      verify(hQuery).setFirstResult(10);
+
+      return Collections.nCopies(5, new User());
+    });
 
     assertEquals(5, controller.list(params).size());
-  }
-
-
-  @Test
-  public void testList_offsetHigherThanDbResult() throws Exception {
-    IQueryRequestParams params = mock(IQueryRequestParams.class);
-    when(params.getQuery()).thenReturn("some text");
-    when(params.getLimit()).thenReturn(20);
-    when(params.getOffset()).thenReturn(30);
-
-    when(database.find(any(Query.class))).thenReturn(Collections.nCopies(15, new User()));
-
-    assertEquals(0, controller.list(params).size());
   }
 
 

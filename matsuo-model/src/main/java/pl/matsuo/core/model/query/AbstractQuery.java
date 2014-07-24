@@ -172,7 +172,14 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
       // wyszukaj w bazie danych
       try {
-        List<E> result = sessionFactory.getCurrentSession().createQuery(queryString).list();
+        org.hibernate.Query query = sessionFactory.getCurrentSession().createQuery(queryString);
+        if (limit != null && limit >= 0) {
+          query.setMaxResults(limit);
+        }
+        if (offset != null && offset >= 0) {
+          query.setFirstResult(offset);
+        }
+        List<E> result = query.list();
 
         for (E element : result) {
           for (Initializer<? super E> initializer : initializers) {
