@@ -20,6 +20,10 @@ public class Numeration extends AbstractEntity implements TemporalEntity {
 
   @NotNull
   protected Integer value;
+  /**
+   * Owning entity id. May be null if this numeration is 'general' (depending on the context).
+   */
+  protected Integer idEntity;
   @NotNull
   protected Integer minValue;
   protected Integer maxValue;
@@ -74,6 +78,12 @@ public class Numeration extends AbstractEntity implements TemporalEntity {
   }
   public void setEndDate(Date endDate) {
     this.endDate = endDate;
+  }
+  public Integer getIdEntity() {
+    return idEntity;
+  }
+  public void setIdEntity(Integer idEntity) {
+    this.idEntity = idEntity;
   }
 }
 
