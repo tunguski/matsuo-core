@@ -133,8 +133,8 @@ public class BootstrapRenderer {
   private HtmlPart createInput(Class<?> fieldType, AnnotatedElement annotatedElement, String fullFieldName,
                                Class<?> entityType, String fieldName, BootstrapRenderingBuilder builder,
                                String... cssClasses) {
+    boolean addFormControlStyle = true;
     HtmlElement el;
-
     String ngModel = fullFieldName;
 
     if (Enum.class.isAssignableFrom(fieldType)) {
@@ -165,8 +165,11 @@ public class BootstrapRenderer {
         ngModel = joinDot(lastNameElement, "value");
       }
     } else if (boolean.class.isAssignableFrom(fieldType) || Boolean.class.isAssignableFrom(fieldType)) {
-      el = el("input", asList(""))
-          .attr("type", "checkbox");
+      el = el("label", asList(""),
+                el("input", asList("")).attr("type", "checkbox"),
+                text("&nbsp;"));
+
+      addFormControlStyle = false;
     } else {
       el = el("input", asList(""))
           .attr("type", "text");
@@ -180,8 +183,11 @@ public class BootstrapRenderer {
       .attr("name", fullFieldName.replaceAll("\\.", "_"))
       .attr("ng-model", ngModel)
       .attr("placeholder", "{{ '" + fullFieldName + "' | translate }}")
-      .style(cssClasses)
-      .style("form-control");
+      .style(cssClasses);
+
+    if (addFormControlStyle) {
+      el.style("form-control");
+    }
 
     addFieldValidation(fieldType, entityType, el, fieldName);
 
