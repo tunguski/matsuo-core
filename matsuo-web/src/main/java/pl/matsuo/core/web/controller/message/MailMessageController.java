@@ -15,7 +15,7 @@ public class MailMessageController extends AbstractMessageController<MailMessage
 
   @Override
   protected MailMessage copyMessage(MailMessage message) {
-    return null;
+    return message;
   }
 }
 

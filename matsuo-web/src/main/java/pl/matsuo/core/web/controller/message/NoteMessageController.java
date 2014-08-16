@@ -15,7 +15,7 @@ public class NoteMessageController extends AbstractMessageController<NoteMessage
 
   @Override
   protected NoteMessage copyMessage(NoteMessage message) {
-    return null;
+    return message;
   }
 }
 

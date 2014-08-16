@@ -15,7 +15,7 @@ public class SmsMessageController extends AbstractMessageController<SmsMessage> 
 
   @Override
   protected SmsMessage copyMessage(SmsMessage message) {
-    return null;
+    return message;
   }
 }
 
