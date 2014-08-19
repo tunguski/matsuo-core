@@ -48,7 +48,8 @@ public class TestBootstrapRenderer {
   @Test
   public void testBooleanRendering() throws Exception {
     checkConstraints(TestModel.class, "bool",
-        rendered -> assertTrue(rendered, rendered.contains("type=\"checkbox\"")));
+        rendered -> assertTrue(rendered, rendered.contains("type=\"checkbox\"")),
+        rendered -> assertTrue(rendered, rendered.contains("class=\" col-sm-6 checkbox\"")));
   }
 
 

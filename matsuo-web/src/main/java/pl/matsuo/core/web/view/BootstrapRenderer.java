@@ -110,7 +110,7 @@ public class BootstrapRenderer {
   private HtmlElement createControls(Class<?> fieldType, AnnotatedElement annotatedElement, String fieldName,
                                      Class<?> entityType, String fullFieldName, BootstrapRenderingBuilder builder,
                                      String... cssClasses) {
-    return div(asList("col-sm-6"),
+    return div(asList("col-sm-6", isCheckbox(fieldType) ? "checkbox" : ""),
         createInput(fieldType, annotatedElement, fullFieldName, entityType, fieldName, builder, cssClasses),
         el("span", asList("help-inline", bindServerErrorPath(fullFieldName, " ? '' : 'hide'")),
             text(bindServerErrorPath(fullFieldName, ""))));
@@ -124,6 +124,11 @@ public class BootstrapRenderer {
     }
 
     return lastNameElement;
+  }
+
+
+  private boolean isCheckbox(Class<?> fieldType) {
+    return boolean.class.isAssignableFrom(fieldType) || Boolean.class.isAssignableFrom(fieldType);
   }
 
 
@@ -164,7 +169,7 @@ public class BootstrapRenderer {
       if (fieldType.equals(Integer.class)) {
         ngModel = joinDot(lastNameElement, "value");
       }
-    } else if (boolean.class.isAssignableFrom(fieldType) || Boolean.class.isAssignableFrom(fieldType)) {
+    } else if (isCheckbox(fieldType)) {
       el = el("label", asList(""),
                 el("input", asList("")).attr("type", "checkbox"),
                 text("&nbsp;"));
