@@ -2,14 +2,18 @@ package pl.matsuo.core.service.report;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.matsuo.core.model.organization.OrganizationUnit;
+import pl.matsuo.core.model.query.QueryBuilder;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.i18n.I18nService;
+import pl.matsuo.core.service.session.SessionState;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.util.StringUtils.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 
 /**
@@ -25,6 +29,8 @@ public abstract class AbstractReportService<E> implements IReportService<E> {
   protected Database database;
   @Autowired
   protected I18nService i18nService;
+  @Autowired
+  protected SessionState sessionState;
   /**
    * Default template file name. It is lowercased class name with "Service" cut from the end.
    */
@@ -42,6 +48,9 @@ public abstract class AbstractReportService<E> implements IReportService<E> {
     dataModel.put("params", params);
     dataModel.put("messages", i18nService);
     dataModel.put("generationTime", new Date());
+    if (dataModel.get("company") == null) {
+      dataModel.put("company", database.findOne(query(OrganizationUnit.class, eq("id", sessionState.getIdBucket()))));
+    }
 
     return dataModel;
   }

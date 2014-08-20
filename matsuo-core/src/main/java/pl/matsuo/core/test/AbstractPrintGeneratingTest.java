@@ -1,5 +1,6 @@
 package pl.matsuo.core.test;
 
+import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Version;
@@ -52,14 +53,15 @@ abstract class AbstractPrintGeneratingTest<E> implements PrintMethods {
 
     try {
       freeMarkerConfiguration = new Configuration();
-      freeMarkerConfiguration.setDirectoryForTemplateLoading(new File(templateDirectory).getAbsoluteFile());
+      freeMarkerConfiguration.setTemplateLoader(new ClassTemplateLoader(Class.class, "/"));
+      //freeMarkerConfiguration.setDirectoryForTemplateLoading(new File(templateDirectory).getAbsoluteFile());
       freeMarkerConfiguration.setObjectWrapper(new DefaultObjectWrapper());
       freeMarkerConfiguration.setDefaultEncoding("UTF-8");
       freeMarkerConfiguration.setTemplateExceptionHandler(HTML_DEBUG_HANDLER);
       freeMarkerConfiguration.setIncompatibleImprovements(new Version(2, 3, 20));
 
       printsRendererService.setFreeMarkerConfiguration(freeMarkerConfiguration);
-    } catch (IOException e) {
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
