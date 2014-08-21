@@ -64,9 +64,7 @@ public class TestBootstrapRenderer {
     checkConstraints(TestModel.class, "date", rendered -> {
       assertContains(rendered, "input");
       assertContains(rendered, "type=\"text\"");
-      assertContains(rendered, "datepicker-popup=\"yyyy-MM-dd\"");
-      assertContains(rendered, "datepicker-options=\"dateOptions\"");
-      assertContains(rendered, "datepicker-append-to-body=\"true\"");
+      assertContains(rendered, "mt-datepicker=\"datepickerOptions\"");
     });
   }
 

@@ -155,9 +155,7 @@ public class BootstrapRenderer {
     } else if (Date.class.isAssignableFrom(fieldType)) {
       el = el("input", asList("input-size-date"))
           .attr("type", "text")
-          .attr("datepicker-popup", "yyyy-MM-dd")
-          .attr("datepicker-options", "dateOptions")
-          .attr("datepicker-append-to-body", "true");
+          .attr("mt-datepicker", "datepickerOptions");
     } else if (isAnnotationPresent(annotatedElement, ManyToOne.class, EntityReference.class, OneToOne.class)) {
       String[] splitted = fullFieldName.split("[.]");
       String lastNameElement = lastNameElement(splitted);
