@@ -51,11 +51,6 @@ public class MediqTestData extends AbstractTestData {
 
 
   public void withIdBucket(Runnable runnable) {
-    sessionState.setIdBucket(idMediq);
-    try {
-      runnable.run();
-    } finally {
-      sessionState.setIdBucket(null);
-    }
+    withIdBucket(sessionState, idMediq, runnable);
   }
 }
