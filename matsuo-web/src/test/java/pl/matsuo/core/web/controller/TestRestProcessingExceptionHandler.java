@@ -70,14 +70,7 @@ public class TestRestProcessingExceptionHandler {
   @Test
   public void testHandleException() throws Exception {
     mockMvc.perform(get("/tests/exception"))
-        .andExpect(new ResultMatcher() {
-
-
-          @Override
-          public void match(MvcResult result) throws Exception {
-            result.getResponse().getContentAsString().contains("global_error_test");
-          }
-        })
+        .andExpect(result -> result.getResponse().getContentAsString().contains("global_error_test"))
         .andExpect(status().isBadRequest());
   }
 }
