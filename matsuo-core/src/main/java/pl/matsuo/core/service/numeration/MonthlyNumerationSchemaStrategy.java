@@ -3,6 +3,7 @@ package pl.matsuo.core.service.numeration;
 import org.springframework.stereotype.Service;
 import pl.matsuo.core.model.numeration.Numeration;
 import pl.matsuo.core.model.numeration.NumerationSchema;
+import pl.matsuo.core.util.DateUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,8 +27,7 @@ public class MonthlyNumerationSchemaStrategy implements NumerationSchemaStrategy
     numeration.setMaxValue(numerationSchema.getMaxValue());
     numeration.setPattern(numerationSchema.getPattern());
 
-    Calendar cal = getInstance();
-    cal.setTime(date);
+    Calendar cal = DateUtil.cal(date, 0, 0);
     cal.set(DATE, 1);
 
     numeration.setStartDate(cal.getTime());

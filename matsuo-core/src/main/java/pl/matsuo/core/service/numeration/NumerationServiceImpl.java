@@ -76,7 +76,7 @@ public class NumerationServiceImpl implements NumerationService {
 
   protected Numeration getOrCreateNumeration(String numerationCode, Date date) {
     Numeration numeration = database.findOne(query(Numeration.class, eq("code", numerationCode),
-        or(isNull("startDate"), gt("startDate", date)), or(isNull("endDate"), gt("endDate", date))));
+        or(isNull("startDate"), le("startDate", date)), or(isNull("endDate"), ge("endDate", date))));
 
     return numeration != null ? numeration : createNumeration(numerationCode, date);
   }
@@ -97,6 +97,7 @@ public class NumerationServiceImpl implements NumerationService {
     return createNumerationInstance(numerationSchema, date);
   }
 
+
   protected Numeration createNumerationInstance(NumerationSchema numerationSchema, Date date) {
     String creationStrategy = numerationSchema.getCreationStrategy();
     NumerationSchemaStrategy numerationSchemaStrategy = numerationSchemaStrategies.stream()
@@ -111,3 +112,4 @@ public class NumerationServiceImpl implements NumerationService {
     return numeration;
   }
 }
+
