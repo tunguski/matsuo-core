@@ -4,7 +4,9 @@ import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.api.TemporalEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -15,6 +17,9 @@ import static javax.persistence.TemporalType.*;
  * Created by tunguski on 15.09.13.
  */
 @Entity
+@Table(uniqueConstraints={
+    @UniqueConstraint(columnNames={ "idBucket", "code", "startDate" })
+})
 public class Numeration extends AbstractEntity implements TemporalEntity {
 
 
