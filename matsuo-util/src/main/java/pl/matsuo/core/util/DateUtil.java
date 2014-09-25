@@ -200,7 +200,7 @@ public class DateUtil {
 
 
   public static Date getQuaterStart(Date date) {
-    Calendar cal = cal(date);
+    Calendar cal = cal(date, 0, 0);
     int quater = cal.get(MONTH) / 3;
     cal.set(MONTH, quater * 3);
     cal.set(DATE, 1);
@@ -209,7 +209,7 @@ public class DateUtil {
 
 
   public static Date getQuaterEnd(Date date) {
-    Calendar cal = cal(date);
+    Calendar cal = cal(date, 0, 0);
     int quater = cal.get(MONTH) / 3 + 1;
     cal.set(MONTH, quater * 3 - 1);
     cal.set(DATE, cal.getActualMaximum(DATE));
