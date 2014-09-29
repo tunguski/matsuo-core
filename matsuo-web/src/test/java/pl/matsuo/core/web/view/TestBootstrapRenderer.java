@@ -46,6 +46,13 @@ public class TestBootstrapRenderer {
 
 
   @Test
+  public void testPasswordRendering() throws Exception {
+    checkConstraints(TestModel.class, "password",
+        rendered -> assertTrue(rendered, rendered.contains("type=\"password\"")));
+  }
+
+
+  @Test
   public void testBooleanRendering() throws Exception {
     checkConstraints(TestModel.class, "bool",
         rendered -> assertTrue(rendered, rendered.contains("type=\"checkbox\"")),

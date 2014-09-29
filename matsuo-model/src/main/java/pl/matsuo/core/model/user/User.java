@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.Person;
+import pl.matsuo.core.model.validation.PasswordField;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class User extends AbstractEntity {
   @NotNull
   @Column(unique = true)
   private String username;
-  @NotNull
+  @NotNull @PasswordField
   private String password;
   private Date lastLoginTime;
   private Date lastPasswordChangeTime;

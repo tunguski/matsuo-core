@@ -2,17 +2,22 @@ package pl.matsuo.core.web.controller.user;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.matsuo.core.exception.RestProcessingException;
 import pl.matsuo.core.model.api.Initializer;
+import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.web.controller.AbstractSimpleController;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +44,26 @@ public class UserController extends AbstractSimpleController<User> {
   @Override
   protected List<? extends Initializer<User>> entityInitializers() {
     return asList(new UserInitializer());
+  }
+
+
+  @RequestMapping(method = POST, consumes = {APPLICATION_JSON_VALUE})
+  @ResponseStatus(CREATED)
+  public HttpEntity<User> create(@RequestBody @Valid User entity,
+                              @Value("#{request.requestURL}") StringBuffer parentUri) {
+    Person person = database.create(entity.getPerson());
+    entity.setPerson(person);
+
+    if (entity.getPassword().length() < minimalPasswordLength) {
+      throw new RestProcessingException("password_too_short");
+    }
+
+    entity.setPassword(passwordHash(entity.getPassword()));
+
+    entity = database.create(entity);
+    HttpHeaders headers = new HttpHeaders();
+    headers.setLocation(childLocation(parentUri, entity.getId()));
+    return new HttpEntity<User>(headers);
   }
 
 
@@ -85,6 +110,9 @@ public class UserController extends AbstractSimpleController<User> {
   @ResponseStatus(NO_CONTENT)
   public void update(@RequestBody User entity) {
     User user = database.findById(User.class, entity.getId());
+
+    database.evict(user);
+
     // update does not change password!
     entity.setPassword(user.getPassword());
     database.update(entity);

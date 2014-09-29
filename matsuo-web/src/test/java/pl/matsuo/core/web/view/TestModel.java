@@ -1,6 +1,7 @@
 package pl.matsuo.core.web.view;
 
 import pl.matsuo.core.model.validation.EntityReference;
+import pl.matsuo.core.model.validation.PasswordField;
 
 import javax.persistence.EnumType;
 import javax.persistence.ManyToOne;
@@ -17,6 +18,8 @@ public class TestModel {
   public TestReferenceModel subModel;
   public Integer duration;
   public String text;
+  @PasswordField
+  public String password;
   public Date date;
   public Time time;
   public EnumType enumValue;
@@ -71,6 +74,12 @@ public class TestModel {
   }
   public void setEnumValue(EnumType enumValue) {
     this.enumValue = enumValue;
+  }
+  public String getPassword() {
+    return password;
+  }
+  public void setPassword(String password) {
+    this.password = password;
   }
 }
 

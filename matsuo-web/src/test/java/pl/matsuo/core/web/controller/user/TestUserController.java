@@ -3,17 +3,21 @@ package pl.matsuo.core.web.controller.user;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import pl.matsuo.core.exception.RestProcessingException;
+import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
+import pl.matsuo.core.web.controller.ControllerTestUtil;
 
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
 import static pl.matsuo.core.util.SecurityUtil.*;
+import static pl.matsuo.core.web.controller.ControllerTestUtil.*;
 
 
 @ContextConfiguration(classes = { UserController.class })
@@ -30,6 +34,28 @@ public class TestUserController extends AbstractControllerTest {
   @Before
   public void setup() {
     user = database.findAll(User.class, new UserInitializer()).get(0);
+  }
+
+
+  @Test
+  public void testCreateUser() throws Exception {
+    Person person = new Person();
+    person.setFirstName("Ryszard");
+    person.setLastName("Monty");
+
+    User user = new User();
+    user.setUsername("username");
+    user.setPassword("password");
+    user.setPerson(person);
+
+    Integer idUser = idFromLocation(userController.create(user, new StringBuffer("")));
+
+    user = database.findById(User.class, idUser);
+
+    assertEquals("Ryszard", user.getPerson().getFirstName());
+    assertEquals("Monty", user.getPerson().getLastName());
+    assertEquals("username", user.getUsername());
+    assertEquals(passwordHash("password"), user.getPassword());
   }
 
 

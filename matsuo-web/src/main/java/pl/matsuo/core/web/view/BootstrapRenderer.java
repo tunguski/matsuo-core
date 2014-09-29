@@ -3,6 +3,7 @@ package pl.matsuo.core.web.view;
 import com.google.common.base.Joiner;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.validation.EntityReference;
+import pl.matsuo.core.model.validation.PasswordField;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.ManyToOne;
@@ -179,6 +180,10 @@ public class BootstrapRenderer {
 
       if (Number.class.isAssignableFrom(fieldType)) {
         pattern(el, "[0-9]+([.,][0-9]+)?");
+      }
+
+      if (isAnnotationPresent(annotatedElement, PasswordField.class)) {
+        el.attr("type", "password");
       }
     }
 
