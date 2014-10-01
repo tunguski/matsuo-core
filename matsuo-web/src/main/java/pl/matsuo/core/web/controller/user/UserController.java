@@ -111,10 +111,9 @@ public class UserController extends AbstractSimpleController<User> {
   public void update(@RequestBody User entity) {
     User user = database.findById(User.class, entity.getId());
 
-    database.evict(user);
-
     // update does not change password!
     entity.setPassword(user.getPassword());
+    database.update(entity.getPerson());
     database.update(entity);
   }
 }
