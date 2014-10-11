@@ -133,6 +133,22 @@ public class BootstrapRenderer {
   }
 
 
+  protected HtmlElement createSelect(String lastNameElement, String constantValues) {
+    HtmlElement element = el("ui-select", asList(""),
+          el("ui-select-match", asList(""),
+              text("{{ formatElement($select.selected) }}"))
+              .attr("placeholder", "{{ placeholderText() }}"),
+          el("ui-select-choices", asList(""),
+            div(asList(""))
+              .attr("ng-bind-html", "formatElement(item)"))
+            .attr("repeat", "item in " + constantValues + " | filter: $select.search")
+            .attr("refresh", "searchElements($select.search)"))
+        .attr("options", joinDot(lastNameElement, "options"))
+        .attr("ng-disabled", joinDot(lastNameElement, "options.disabled"));
+    return element;
+  }
+
+
   /**
    * Tworzy kontrolkę formularza.
    */
@@ -145,9 +161,8 @@ public class BootstrapRenderer {
 
     if (Enum.class.isAssignableFrom(fieldType)) {
       el = el("select", asList(""),
-            getEnumValuesElements((Class<? extends Enum<?>>) fieldType,
-                                  !isAnnotationPresent(annotatedElement, NotNull.class)))
-          .attr("ui-select2", null);
+          getEnumValuesElements((Class<? extends Enum<?>>) fieldType,
+              !isAnnotationPresent(annotatedElement, NotNull.class)));
     } else if (Time.class.isAssignableFrom(fieldType)) {
       el = el("input", asList("input-size-time", "timepicker"))
           .attr("type", "text")
@@ -161,13 +176,12 @@ public class BootstrapRenderer {
       String[] splitted = fullFieldName.split("[.]");
       String lastNameElement = lastNameElement(splitted);
 
-      el = el("input", asList(""))
-          .attr("ui-select2", joinDot(lastNameElement, "options"))
-          .attr("ng-disabled", joinDot(lastNameElement, "options.disabled"));
+      el = createSelect(lastNameElement, "$select.elements");
 
       if (fieldType.equals(Integer.class)) {
         ngModel = joinDot(lastNameElement, "value");
       }
+      addFormControlStyle = false;
     } else if (isCheckbox(fieldType)) {
       el = el("label", asList(""),
                 el("input", asList("")).attr("type", "checkbox"),
@@ -289,8 +303,8 @@ public class BootstrapRenderer {
 
     for (Enum<?> enumElement : propertyType.getEnumConstants()) {
       elements.add(el("option", asList(""))
-                     .attr("translate", joinDot("enum", propertyType.getSimpleName(), enumElement.toString()))
-                     .attr("value", enumElement.name()));
+          .attr("translate", joinDot("enum", propertyType.getSimpleName(), enumElement.toString()))
+          .attr("value", enumElement.name()));
     }
 
     return elements.toArray(new HtmlPart[0]);

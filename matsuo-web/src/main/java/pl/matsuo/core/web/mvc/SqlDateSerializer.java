@@ -1,6 +1,5 @@
 package pl.matsuo.core.web.mvc;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
@@ -24,8 +23,7 @@ public class SqlDateSerializer extends StdSerializer<Date> {
 
 
   @Override
-  public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider)
-      throws IOException, JsonGenerationException {
+  public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
     jgen.writeString(dateFormat.format(value));
   }
 }

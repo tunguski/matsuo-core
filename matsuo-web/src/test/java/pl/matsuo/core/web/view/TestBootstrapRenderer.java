@@ -3,6 +3,8 @@ package pl.matsuo.core.web.view;
 import org.junit.Test;
 import pl.matsuo.core.util.function.ThrowingExceptionsConsumer;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 
@@ -37,6 +39,11 @@ public class TestBootstrapRenderer {
   }
 
 
+  protected ThrowingExceptionsConsumer<String> containsAssertions(String ... parts) {
+    return rendered -> Arrays.asList(parts).forEach(part -> assertContains(rendered, part));
+  }
+
+
   @Test
   public void testRendering() throws Exception {
     checkConstraints(renderer.create(TestModel.class).render("date", "time", "enumValue"));
@@ -47,99 +54,76 @@ public class TestBootstrapRenderer {
 
   @Test
   public void testPasswordRendering() throws Exception {
-    checkConstraints(TestModel.class, "password",
-        rendered -> assertTrue(rendered, rendered.contains("type=\"password\"")));
+    checkConstraints(TestModel.class, "password", containsAssertions("type=\"password\""));
   }
 
 
   @Test
   public void testBooleanRendering() throws Exception {
-    checkConstraints(TestModel.class, "bool",
-        rendered -> assertTrue(rendered, rendered.contains("type=\"checkbox\"")),
-        rendered -> assertTrue(rendered, rendered.contains("class=\" col-sm-6 checkbox\"")));
+    checkConstraints(TestModel.class, "bool", containsAssertions("type=\"checkbox\"", "class=\" col-sm-6 checkbox\""));
   }
 
 
   @Test
   public void testRenderingBasedOnInterface() throws Exception {
-    checkConstraints(renderer.create(ITestModel.class).render("date", "time", "enumValue"));
+    checkConstraints(renderer.create(ITestModel.class).render("date", "time", "enumValue"),
+        containsAssertions("<option "));
   }
 
 
   @Test
   public void testDateRendering() throws Exception {
-    checkConstraints(TestModel.class, "date", rendered -> {
-      assertContains(rendered, "input");
-      assertContains(rendered, "type=\"text\"");
-      assertContains(rendered, "mt-datepicker=\"datepickerOptions\"");
-    });
+    checkConstraints(TestModel.class, "date", containsAssertions("input", "type=\"text\"", "mt-datepicker=\"datepickerOptions\""));
   }
 
 
   @Test
   public void testStringRendering() throws Exception {
-    checkConstraints(TestModel.class, "text", rendered -> {
-      assertContains(rendered, "input");
-      assertContains(rendered, "type=\"text\"");
-    });
+    checkConstraints(TestModel.class, "text", containsAssertions("input", "type=\"text\""));
   }
 
 
   @Test
   public void testIntegerRendering() throws Exception {
     checkConstraints(TestModel.class, "duration", rendered -> {
-      assertContains(rendered, "input");
-      assertContains(rendered, "type=\"text\"");
-      assertContains(rendered, "ng-pattern=\"/^([0-9]+([.,][0-9]+)?)?$/\"");
+      containsAssertions("input", "type=\"text\"", "ng-pattern=\"/^([0-9]+([.,][0-9]+)?)?$/\"").accept(rendered);
 
-      assertFalse(rendered.contains("ui-select2"));
+      assertFalse(rendered.contains("ui-select"));
     });
   }
 
 
   @Test
   public void testIdRendering() throws Exception {
-    checkConstraints(TestModel.class, "subModel.id", rendered -> {
-      assertTrue(rendered, rendered.contains("ui-select2=\"idSubModel."));
-    });
+    checkConstraints(TestModel.class, "subModel.id", containsAssertions("ui-select"));
   }
 
 
   @Test
   public void testPatternOnAnnotationRendering() throws Exception {
-    checkConstraints(TestModel.class, "duration", rendered -> {
-      assertContains(rendered, "input");
-      assertContains(rendered, "type=\"text\"");
-      assertContains(rendered, "ng-pattern=\"/^([0-9]+([.,][0-9]+)?)?$/\"");
-    });
+    checkConstraints(TestModel.class, "duration",
+        containsAssertions("input", "type=\"text\"", "ng-pattern=\"/^([0-9]+([.,][0-9]+)?)?$/\""));
   }
 
 
   @Test
   public void testGenereSelectForReferenceId() throws Exception {
-    checkConstraints(TestModel.class, "reference", rendered -> {
-      assertContains(rendered, "ui-select2=\"reference.options\"");
-      assertContains(rendered, "ng-model=\"reference.value\"");
-      assertContains(rendered, "ng-disabled=\"reference.options.disabled\"");
-    });
+    checkConstraints(TestModel.class, "reference", containsAssertions(
+        "ui-select", "ng-model=\"reference.value\"", "ng-disabled=\"reference.options.disabled\""));
   }
 
 
   @Test
   public void testGenereSelectForReference() throws Exception {
-    checkConstraints(TestModel.class, "subModel", rendered -> {
-      assertContains(rendered, "ui-select2=\"subModel.options\"");
-      assertContains(rendered, "ng-model=\"entity.subModel\"");
-      assertContains(rendered, "ng-disabled=\"subModel.options.disabled\"");
-    });
+    checkConstraints(TestModel.class, "subModel", containsAssertions(
+        "ui-select", "ng-model=\"entity.subModel\"", "ng-disabled=\"subModel.options.disabled\""));
   }
 
 
   @Test
   public void testRenderingWithCustomName() throws Exception {
-    checkConstraints(renderer.create(TestModel.class).entityName("customEntityName").render("date"), rendered -> {
-      assertContains(rendered, "ng-model=\"customEntityName.date\"");
-    });
+    checkConstraints(renderer.create(TestModel.class).entityName("customEntityName").render("date"),
+        containsAssertions("ng-model=\"customEntityName.date\""));
   }
 
 
