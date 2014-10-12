@@ -3,7 +3,6 @@ package pl.matsuo.core.web.controller.user;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import pl.matsuo.core.exception.RestProcessingException;
@@ -11,7 +10,6 @@ import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
-import pl.matsuo.core.web.controller.ControllerTestUtil;
 
 import java.util.HashMap;
 

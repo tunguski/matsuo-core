@@ -3,7 +3,6 @@ package pl.matsuo.core.service.report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.matsuo.core.model.organization.OrganizationUnit;
-import pl.matsuo.core.model.query.QueryBuilder;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.i18n.I18nService;
 import pl.matsuo.core.service.session.SessionState;

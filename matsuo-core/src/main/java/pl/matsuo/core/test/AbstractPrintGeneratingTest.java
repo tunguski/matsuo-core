@@ -19,7 +19,6 @@ import pl.matsuo.core.test.data.TestSessionState;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.util.List;

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.matsuo.core.model.message.NoteMessage;
 import pl.matsuo.core.model.message.NoteStatus;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 import static pl.matsuo.core.model.message.NoteStatus.*;
 
 
