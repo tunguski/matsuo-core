@@ -245,7 +245,7 @@
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
         <artifactId>wagon-ssh</artifactId>
-        <version>2.6</version>
+        <version>2.7</version>
       </extension>
     </extensions>
   </build>
@@ -368,10 +368,17 @@
     </dependencies>
   </dependencyManagement>
 
+  <repositories>
+    <repository>
+      <id>repo.matsuo-it.com</id>
+      <url>http://repo.matsuo-it.com/</url>
+    </repository>
+  </repositories>
+
   <distributionManagement>
     <repository>
       <id>matsuo-it</id>
-      <url>scp://matsuo-it.com//var/www/repo/</url>
+      <url>scp://matsuo-it.com//var/www/html/repo/</url>
     </repository>
   </distributionManagement>
 </project>
