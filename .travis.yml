@@ -1,6 +1,4 @@
 language: java
 script: mvn package
-after_success:
-  - mvn -fn cobertura:cobertura coveralls:cobertura
 jdk:
   - oraclejdk8
