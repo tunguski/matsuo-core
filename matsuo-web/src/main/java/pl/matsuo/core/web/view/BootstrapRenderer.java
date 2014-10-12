@@ -137,13 +137,13 @@ public class BootstrapRenderer {
     HtmlElement element = el("ui-select", asList(""),
           el("ui-select-match", asList(""),
               text("{{ formatElement($select.selected) }}"))
-              .attr("placeholder", "{{ placeholderText() }}"),
+              .attr("placeholder", "{{ opts.placeholderText | translate }}"),
           el("ui-select-choices", asList(""),
             div(asList(""))
               .attr("ng-bind-html", "formatElement(item)"))
             .attr("repeat", "item in " + constantValues + " | filter: $select.search")
             .attr("refresh", "searchElements($select.search)"))
-        .attr("options", joinDot(lastNameElement, "options"))
+        .attr("mt-select-options", joinDot(lastNameElement, "options"))
         .attr("ng-disabled", joinDot(lastNameElement, "options.disabled"));
     return element;
   }
