@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.validation.EntityReference;
 import pl.matsuo.core.model.validation.PasswordField;
+import pl.matsuo.core.util.function.FunctionalUtil;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.ManyToOne;
@@ -157,6 +158,7 @@ public class BootstrapRenderer {
                                String... cssClasses) {
     boolean addFormControlStyle = true;
     HtmlElement el;
+    HtmlElement inputIfNotEl = null;
     String ngModel = fullFieldName;
 
     if (Enum.class.isAssignableFrom(fieldType)) {
@@ -183,8 +185,9 @@ public class BootstrapRenderer {
       }
       addFormControlStyle = false;
     } else if (isCheckbox(fieldType)) {
+      inputIfNotEl = el("input", asList("")).attr("type", "checkbox");
       el = el("label", asList(""),
-                el("input", asList("")).attr("type", "checkbox"),
+                inputIfNotEl,
                 text("&nbsp;"));
 
       addFormControlStyle = false;
@@ -201,21 +204,22 @@ public class BootstrapRenderer {
       }
     }
 
-    el.attr("id", fullFieldName)
-      .attr("name", fullFieldName.replaceAll("\\.", "_"))
-      .attr("ng-model", ngModel)
-      .attr("placeholder", "{{ '" + fullFieldName + "' | translate }}")
-      .style(cssClasses);
+    addFieldValidation(fieldType, entityType, el, fieldName);
+    HtmlElement val = inputIfNotEl != null ? inputIfNotEl : el;
+
+    val.attr("id", fullFieldName)
+        .attr("name", fullFieldName.replaceAll("\\.", "_"))
+        .attr("ng-model", ngModel)
+        .attr("placeholder", "{{ '" + fullFieldName + "' | translate }}")
+        .style(cssClasses);
 
     if (addFormControlStyle) {
-      el.style("form-control");
+      val.style("form-control");
     }
-
-    addFieldValidation(fieldType, entityType, el, fieldName);
 
     if (builder != null) {
       for (String attr : builder.attributes.keySet()) {
-        el.attr(attr, builder.attributes.get(attr));
+        val.attr(attr, builder.attributes.get(attr));
       }
     }
 
