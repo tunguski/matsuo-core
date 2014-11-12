@@ -22,7 +22,7 @@
     <downloadJavadocs>true</downloadJavadocs>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <spring.version>4.1.1.RELEASE</spring.version>
+    <spring.version>4.1.2.RELEASE</spring.version>
     <selenium.version>2.44.0</selenium.version>
     <jackson-2.version>2.4.3</jackson-2.version>
     <flying-saucer.version>9.0.7</flying-saucer.version>
@@ -31,10 +31,10 @@
     <commons-io.version>2.4</commons-io.version>
     <commons-lang3.version>3.3.2</commons-lang3.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
-    <commons-codec.version>1.9</commons-codec.version>
+    <commons-codec.version>1.10</commons-codec.version>
     <guava.version>18.0</guava.version>
     <mockito.version>1.10.8</mockito.version>
-    <junit.version>4.12-beta-2</junit.version>
+    <junit.version>4.12-beta-3</junit.version>
     <poi.version>3.11-beta2</poi.version>
     <super-csv.version>2.2.0</super-csv.version>
     <freemarker.version>2.3.21</freemarker.version>
