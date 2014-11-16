@@ -205,7 +205,7 @@ public class QueryBuilder {
 
 
   public static FromPart join(String alias, String joinPath) {
-    return new FromPart("", alias, joinPath);
+    return new FromPart("join", alias, joinPath);
   }
 
 
