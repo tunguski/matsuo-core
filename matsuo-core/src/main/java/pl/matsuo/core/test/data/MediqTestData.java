@@ -1,9 +1,7 @@
 package pl.matsuo.core.test.data;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.organization.OrganizationUnit;
-import pl.matsuo.core.service.session.SessionState;
 
 /**
  * Created by marek on 20.07.14.
@@ -16,10 +14,6 @@ public class MediqTestData extends AbstractTestData {
 
 
   public static final String MEDIQ = "MEDIQ";
-
-
-  @Autowired
-  protected SessionState sessionState;
 
 
   @Override
@@ -51,6 +45,6 @@ public class MediqTestData extends AbstractTestData {
 
 
   public void withIdBucket(Runnable runnable) {
-    withIdBucket(sessionState, idMediq, runnable);
+    withIdBucket(idMediq, runnable);
   }
 }
