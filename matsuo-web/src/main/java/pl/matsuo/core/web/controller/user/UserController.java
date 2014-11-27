@@ -42,6 +42,12 @@ public class UserController extends AbstractSimpleController<User> {
 
 
   @Override
+  protected List<String> queryMatchers() {
+    return asList("username", "person.firstName", "person.lastName");
+  }
+
+
+  @Override
   protected List<? extends Initializer<User>> entityInitializers() {
     return asList(new UserInitializer());
   }
