@@ -6,12 +6,16 @@ import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.organization.address.Address;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.model.user.User;
+import pl.matsuo.core.util.DateUtil;
+import pl.matsuo.core.util.function.FunctionalUtil;
 
 import java.util.List;
 import java.util.Objects;
 
 import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.util.DateUtil.*;
 import static pl.matsuo.core.util.SecurityUtil.*;
+import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
 
 @DiscoverTypes({ GroupTestData.class })
@@ -25,10 +29,14 @@ public abstract class AbstractUserTestData extends AbstractTestData {
       person.setFirstName(firstName);
       person.setLastName(lastName);
       person.setPesel("00000000000");
+      person.setBirthDate(date(1972, 4, 21));
 
-      person.setAddress(new Address());
-      person.getAddress().setStreet("TEST");
-      person.getAddress().setTown("TEST");
+      person.setAddress(with(new Address(), address -> {
+        address.setStreet("Wałbrzyska");
+        address.setApartmentNumber("20");
+        address.setHouseNumber("32");
+        address.setTown("Warszawa");
+      }));
     }
 
     database.create(person);
