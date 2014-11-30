@@ -94,8 +94,9 @@ public class FunctionalUtil {
   /**
    * Invoke consumer with object as parameter.
    */
-  public static <E> void with(E object, Consumer<E> invoke) {
+  public static <E> E with(E object, Consumer<E> invoke) {
     invoke.accept(object);
+    return object;
   }
 
 
