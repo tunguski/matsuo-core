@@ -4,7 +4,6 @@ import com.google.common.base.Joiner;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.validation.EntityReference;
 import pl.matsuo.core.model.validation.PasswordField;
-import pl.matsuo.core.util.function.FunctionalUtil;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.ManyToOne;
