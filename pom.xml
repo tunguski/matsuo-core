@@ -34,7 +34,7 @@
     <commons-codec.version>1.10</commons-codec.version>
     <guava.version>18.0</guava.version>
     <mockito.version>1.10.8</mockito.version>
-    <junit.version>4.12-beta-3</junit.version>
+    <junit.version>4.12</junit.version>
     <poi.version>3.11-beta3</poi.version>
     <super-csv.version>2.2.0</super-csv.version>
     <freemarker.version>2.3.21</freemarker.version>
