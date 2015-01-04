@@ -102,9 +102,9 @@ public class PrintController {
   }
 
 
-  protected List<KeyValuePrint> findPrints(IPrintsReportParams params, String patientProperty, QueryPart... queryParts) {
+  protected List<KeyValuePrint> findPrints(IPrintsReportParams params, String personProperty, QueryPart... queryParts) {
     return database.find(query(KeyValuePrint.class, select("keyValuePrint"),
-        maybeEq(params.getIdPatient(), patientProperty),
+        maybeEq(params.getIdPatient(), personProperty),
         maybeEq(params.getIdPayer(), "keyValuePrint.fields['buyer.id']"),
         maybe(params.getStartDate(), ge("keyValuePrint.createdTime", params.getStartDate())),
         maybe(params.getEndDate(), le("keyValuePrint.createdTime", params.getEndDate())),

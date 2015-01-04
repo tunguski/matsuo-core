@@ -40,9 +40,12 @@ public class User extends AbstractEntity {
   private Integer nextPasswordChangeDays;
   private boolean blocked = false;
   /**
+   * <p>
    * Unique ticket assigned to user that will unblock account if provided.
-   * <p/>
+   * </p>
+   * <p>
    * For sending in email for confirmation that email exists.
+   * </p>
    */
   private String unblockTicket;
 

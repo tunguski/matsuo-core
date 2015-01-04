@@ -44,8 +44,9 @@ import static java.util.Arrays.*;
  * If RequestBody annotation is present, parameters instance will be created on request's input stream. If not,
  * it will be created basing on request's params.
  *
- * <p/>
+ * <p>
  * Created by tunguski on 23.11.13.
+ * </p>
  */
 @Component
 public class FacadeBuilderHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {

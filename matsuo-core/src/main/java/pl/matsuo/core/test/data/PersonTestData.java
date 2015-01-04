@@ -1,6 +1,7 @@
 package pl.matsuo.core.test.data;
 
 import org.springframework.stereotype.Component;
+import pl.matsuo.core.conf.DiscoverTypes;
 import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.organization.address.Address;
 
@@ -11,6 +12,7 @@ import static pl.matsuo.core.util.NumberUtil.*;
 
 
 @Component
+@DiscoverTypes({ MediqTestData.class })
 public class PersonTestData extends AbstractMediqTestData {
 
 

@@ -21,12 +21,15 @@ public abstract class AbstractEntity implements HasId, Comparable<AbstractEntity
   protected Integer id;
   protected Date createdTime;
   /**
+   * <p>
    * This is id defining most general data association to privileges. In most common situation this id is
    * user id or company id (data aggregated for many users in organization). This id must always match user's
    * idBucket.
-   * <p />
+   * </p>
+   * <p>
    * All client data must have idBucket assigned. Only it administrative data (like logs from logged-off users) may be
    * disconnected.
+   * </p>
    */
   protected Integer idBucket;
 

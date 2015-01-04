@@ -28,10 +28,7 @@ import static java.math.BigDecimal.*;
 
 /**
  * Zamiana liczb na postać słowną
- * 
- * @author Klaudiusz Kulik <kulikk(at)monstrum.org>
- * 
- *         TODO: Zaimplementować dla BigInteger
+ * @author Klaudiusz Kulik kulikk(at)monstrum.org
  */
 public abstract class NumberSpeaker {
 

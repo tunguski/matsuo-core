@@ -8,6 +8,8 @@
   <artifactId>matsuo-core-parent</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>matsuo-parent</name>
+  <url>http://tunguski.github.io/matsuo-core</url>
+  <description>Common code for building server and web applications.</description>
 
   <modules>
     <module>matsuo-util</module>
@@ -22,26 +24,26 @@
     <downloadJavadocs>true</downloadJavadocs>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <spring.version>4.1.2.RELEASE</spring.version>
+    <spring.version>4.1.4.RELEASE</spring.version>
     <selenium.version>2.44.0</selenium.version>
-    <jackson-2.version>2.4.4</jackson-2.version>
+    <jackson-2.version>2.5.0</jackson-2.version>
     <flying-saucer.version>9.0.7</flying-saucer.version>
     <jetty.version>9.3.0.M1</jetty.version>
-    <slf4j.version>1.7.7</slf4j.version>
+    <slf4j.version>1.7.9</slf4j.version>
     <commons-io.version>2.4</commons-io.version>
     <commons-lang3.version>3.3.2</commons-lang3.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <commons-codec.version>1.10</commons-codec.version>
     <guava.version>18.0</guava.version>
-    <mockito.version>1.10.8</mockito.version>
+    <mockito.version>1.10.19</mockito.version>
     <junit.version>4.12</junit.version>
     <poi.version>3.11-beta3</poi.version>
-    <super-csv.version>2.2.0</super-csv.version>
+    <super-csv.version>2.2.1</super-csv.version>
     <freemarker.version>2.3.21</freemarker.version>
     <el-api.version>2.2.1-b04</el-api.version>
     <el-ri.version>1.0</el-ri.version>
     <gson.version>2.3.1</gson.version>
-    <pdfbox.version>1.8.7</pdfbox.version>
+    <pdfbox.version>1.8.8</pdfbox.version>
     <jasperreports.version>5.2.0</jasperreports.version>
     <jgit.version>3.5.1.201410131835-r</jgit.version>
     <xml-apis.version>1.4.01</xml-apis.version>
@@ -126,6 +128,13 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
         <version>2.6</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>5.0.3</version>
+          </dependency>
+        </dependencies>
         <configuration>
           <format>xml</format>
           <maxmem>256m</maxmem>
@@ -136,13 +145,6 @@
             <ignoreMethodAnnotation>java.lang.annotation.Target</ignoreMethodAnnotation>
           </instrumentation>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm</artifactId>
-            <version>5.0.3</version>
-          </dependency>
-        </dependencies>
       </plugin>
     </plugins>
 
@@ -244,6 +246,25 @@
               <ignoreMethodAnnotation>java.lang.annotation.Target</ignoreMethodAnnotation>
             </instrumentation>
           </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.3</version>
+          <dependencies>
+            <dependency>
+              <groupId>lt.velykis.maven.skins</groupId>
+              <artifactId>reflow-velocity-tools</artifactId>
+              <version>1.1.1</version>
+            </dependency>
+            <!-- Reflow skin requires Velocity >= 1.7  -->
+            <dependency>
+              <groupId>org.apache.velocity</groupId>
+              <artifactId>velocity</artifactId>
+              <version>1.7</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -382,10 +403,67 @@
     </repository>
   </repositories>
 
+  <issueManagement>
+    <system>Github</system>
+    <url>https://github.com/tunguski/matsuo-core/issues</url>
+  </issueManagement>
+
+  <scm>
+    <connection>scm:git:https://github.com/tunguski/matsuo-core.git</connection>
+    <developerConnection>scm:git:git@github.com:tunguski/matsuo-core.git</developerConnection>
+    <url>https://github.com/tunguski/matsuo-core</url>
+  </scm>
+
   <distributionManagement>
     <repository>
       <id>matsuo-it</id>
       <url>scp://matsuo-it.com//var/www/html/repo/</url>
     </repository>
   </distributionManagement>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.6</version>
+      </plugin>
+      <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-javadoc-plugin</artifactId>-->
+        <!--<version>2.10.1</version>-->
+      <!--</plugin>-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.18.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <targetjdk>1.8</targetjdk>
+          <linkXref>true</linkXref>
+          <!--<rulesets>-->
+            <!--<ruleset>/rulesets/basic.xml</ruleset>-->
+            <!--<ruleset>/rulesets/controversial.xml</ruleset>-->
+          <!--</rulesets>-->
+          <format>xml</format>
+          <sourceEncoding>utf-8</sourceEncoding>
+          <minimumTokens>100</minimumTokens>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
