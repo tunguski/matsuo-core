@@ -8,7 +8,7 @@
   <artifactId>matsuo-core-parent</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>matsuo-parent</name>
-  <url>http://tunguski.github.io/matsuo-core</url>
+  <url>${site.url}</url>
   <description>Common code for building server and web applications.</description>
 
   <modules>
@@ -37,7 +37,7 @@
     <guava.version>18.0</guava.version>
     <mockito.version>1.10.19</mockito.version>
     <junit.version>4.12</junit.version>
-    <poi.version>3.11-beta3</poi.version>
+    <poi.version>3.11</poi.version>
     <super-csv.version>2.2.1</super-csv.version>
     <freemarker.version>2.3.21</freemarker.version>
     <el-api.version>2.2.1-b04</el-api.version>
@@ -56,7 +56,40 @@
     <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
     <json-path.version>0.9.1</json-path.version>
     <cors-filter.version>2.2.1</cors-filter.version>
+
+    <site.url>https://tunguski.github.io/maven-core</site.url>
+    <github.global.server>github</github.global.server>
+    <site.deploy.id>gh-pages</site.deploy.id>
+    <site.deploy.url />
+
+    <repositoryName>maven-core</repositoryName>
+    <repositoryOwner>tunguski</repositoryOwner>
   </properties>
+
+  <scm>
+    <connection>scm:git:git@github.com:tunguski/matsuo-core.git</connection>
+    <developerConnection>scm:git:git@github.com:tunguski/matsuo-core.git</developerConnection>
+    <url>https://github.com/tunguski/matsuo-core/tree/master</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/tunguski/matsuo-core/issues</url>
+  </issueManagement>
+
+  <licenses>
+    <license>
+      <name>GNU LESSER GENERAL PUBLIC LICENSE Version 3, 29 June 2007</name>
+      <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>Matsuo IT</name>
+    <url>http://matsuo.pl</url>
+  </organization>
 
   <prerequisites>
     <maven>3.1.0</maven>
@@ -145,6 +178,59 @@
             <ignoreMethodAnnotation>java.lang.annotation.Target</ignoreMethodAnnotation>
           </instrumentation>
         </configuration>
+      </plugin>
+
+      <!-- Configure Maven site plugin for Msb3 skin and Markdown support -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <generateReports>true</generateReports>
+          <inputEncoding>UTF-8</inputEncoding>
+          <outputEncoding>UTF-8</outputEncoding>
+          <!-- Site deployment done using GitHub site plugin -->
+          <skipDeploy>true</skipDeploy>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <!-- GitHub site plug-in for deployment to GitHub pages -->
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.10</version>
+        <configuration>
+          <message>Creating site for ${project.artifactId}, ${project.version}</message>
+          <!-- this does the trick to place every module in the correct subfolder -->
+          <path>${project.distributionManagement.site.url}</path>
+          <merge>true</merge>
+        </configuration>
+        <executions>
+          <execution>
+            <id>github-site</id>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>site-deploy</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <pushChanges>false</pushChanges>
+          <localCheckout>true</localCheckout>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.scm</groupId>
+            <artifactId>maven-scm-provider-gitexe</artifactId>
+            <!-- This version is necessary for use with git version 1.8.5 -->
+            <version>1.9.2</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
 
@@ -251,12 +337,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.3</version>
+          <version>3.4</version>
           <dependencies>
             <dependency>
-              <groupId>lt.velykis.maven.skins</groupId>
-              <artifactId>reflow-velocity-tools</artifactId>
-              <version>1.1.1</version>
+              <groupId>pl.matsuo.maven.skins</groupId>
+              <artifactId>msb3-velocity-tools</artifactId>
+              <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <!-- Reflow skin requires Velocity >= 1.7  -->
             <dependency>
@@ -265,6 +351,12 @@
               <version>1.7</version>
             </dependency>
           </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>2.7</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -403,24 +495,6 @@
     </repository>
   </repositories>
 
-  <issueManagement>
-    <system>Github</system>
-    <url>https://github.com/tunguski/matsuo-core/issues</url>
-  </issueManagement>
-
-  <scm>
-    <connection>scm:git:https://github.com/tunguski/matsuo-core.git</connection>
-    <developerConnection>scm:git:git@github.com:tunguski/matsuo-core.git</developerConnection>
-    <url>https://github.com/tunguski/matsuo-core</url>
-  </scm>
-
-  <distributionManagement>
-    <repository>
-      <id>matsuo-it</id>
-      <url>scp://matsuo-it.com//var/www/html/repo/</url>
-    </repository>
-  </distributionManagement>
-
   <reporting>
     <plugins>
       <plugin>
@@ -466,4 +540,42 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <distributionManagement>
+    <site>
+      <id>${site.deploy.id}</id>
+      <name>Deployment through GitHub's site deployment plugin</name>
+      <url>${site.deploy.url}</url>
+    </site>
+  </distributionManagement>
+
+  <profiles>
+    <profile>
+      <id>stage</id>
+      <properties>
+        <site.deploy.url>https://github.com/tunguski/matsuo-core/tree/gh-pages/</site.deploy.url>
+      </properties>
+
+      <build>
+        <plugins>
+          <!-- Configure Maven site plugin to perform stage -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.4</version>
+            <executions>
+              <execution>
+                <id>stage</id>
+                <goals>
+                  <goal>stage</goal>
+                </goals>
+                <phase>site</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+
+    </profile>
+  </profiles>
 </project>
