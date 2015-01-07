@@ -377,6 +377,13 @@
     </extensions>
   </build>
 
+  <repositories>
+    <repository>
+      <id>repo.matsuo-it.com</id>
+      <url>http://repo.matsuo-it.com/</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework</groupId>
