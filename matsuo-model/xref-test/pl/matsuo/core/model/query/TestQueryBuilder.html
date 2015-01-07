@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>TestQueryBuilder xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../testapidocs/pl/matsuo/core/model/query/TestQueryBuilder.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> pl.matsuo.core.model.query;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.*;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> pl.matsuo.core.model.query.QueryBuilder.*;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * Created by tunguski on 26.09.13.</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../pl/matsuo/core/model/query/TestQueryBuilder.html">TestQueryBuilder</a> {
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>    @Test
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testQueries() {
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>      <em class="jxr_comment">// podstawowe zapytani</em>
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>      assertEquals(<span class="jxr_string">"FROM pl.matsuo.core.model.query.TheModel theModel"</span>, query(TheModel.<strong class="jxr_keyword">class</strong>).printQuery());
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>      <em class="jxr_comment">// klauzula select</em>
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>      assertEquals(<span class="jxr_string">"SELECT theModel.id, theModel FROM pl.matsuo.core.model.query.TheModel theModel"</span>,
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>                      query(TheModel.<strong class="jxr_keyword">class</strong>, select(<span class="jxr_string">"theModel.id, theModel"</span>)).printQuery());
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>      <em class="jxr_comment">// klauzula where</em>
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>      assertEquals(<span class="jxr_string">"FROM pl.matsuo.core.model.query.TheModel theModel WHERE id = 12"</span>,
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>                      query(TheModel.<strong class="jxr_keyword">class</strong>, eq(<span class="jxr_string">"id"</span>, 12)).printQuery());
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      <em class="jxr_comment">// warunek and</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>      assertEquals(<span class="jxr_string">"FROM pl.matsuo.core.model.query.TheModel theModel WHERE (id = 12 AND id &lt; 200)"</span>,
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>                      query(TheModel.<strong class="jxr_keyword">class</strong>, and(eq(<span class="jxr_string">"id"</span>, 12), lt(<span class="jxr_string">"id"</span>, 200))).printQuery());
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <em class="jxr_comment">// klauzula order by</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      assertEquals(<span class="jxr_string">"FROM pl.matsuo.core.model.query.TheModel theModel ORDER BY id DESC"</span>,
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>                      query(TheModel.<strong class="jxr_keyword">class</strong>).orderBy(<span class="jxr_string">"id DESC"</span>).printQuery());
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <em class="jxr_comment">// theta join</em>
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      assertEquals(<span class="jxr_string">"FROM pl.matsuo.core.model.query.TheModel theModel , "</span> +
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>                       <span class="jxr_string">"pl.matsuo.core.model.query.TheModel appointment WHERE (appointment.id = id)"</span>,
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>                      query(TheModel.<strong class="jxr_keyword">class</strong>, leftJoin(<span class="jxr_string">"appointment"</span>, TheModel.<strong class="jxr_keyword">class</strong>, cond(<span class="jxr_string">"appointment.id = id"</span>))).printQuery());
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>    }
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2015 <a href="http://matsuo.pl">Matsuo IT</a>. All rights reserved.</div>
+</body>
+</html>

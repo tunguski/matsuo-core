@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>IdBucketInterceptor xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../apidocs/pl/matsuo/core/service/db/interceptor/IdBucketInterceptor.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> pl.matsuo.core.service.db.interceptor;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.hibernate.type.Type;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.springframework.beans.factory.BeanCreationException;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> pl.matsuo.core.model.interceptor.InterceptorComponent;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> java.io.Serializable;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> java.util.function.Supplier;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  @InterceptorComponent
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../pl/matsuo/core/service/db/interceptor/IdBucketInterceptor.html">IdBucketInterceptor</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../../pl/matsuo/core/service/db/interceptor/AbstractEntityInterceptor.html">AbstractEntityInterceptor</a> {
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>    Supplier&lt;Object&gt; idBucketSupplier = () -&gt; {
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>      <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>        <strong class="jxr_keyword">return</strong> sessionState != <strong class="jxr_keyword">null</strong> ? sessionState.getIdBucket() : <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>      } <strong class="jxr_keyword">catch</strong> (BeanCreationException e) {
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>        <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>      }
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>    };
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>    @Override
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>      <strong class="jxr_keyword">if</strong> (getValue(state, propertyNames, <span class="jxr_string">"idBucket"</span>) == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>        setValue(state, propertyNames, <span class="jxr_string">"idBucket"</span>, idBucketSupplier);
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>        <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      }
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>    }
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  }
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2015 <a href="http://matsuo.pl">Matsuo IT</a>. All rights reserved.</div>
+</body>
+</html>
