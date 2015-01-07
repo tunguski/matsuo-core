@@ -23,7 +23,7 @@
       <theme>default</theme>
       <highlightJs>true</highlightJs>
       <highlightJsTheme>github</highlightJsTheme>
-      <absoluteResourceURL>https://github.com/tunguski/matsuo-core</absoluteResourceURL>
+      <absoluteResourceURL>http://tunguski.github.io/matsuo-core</absoluteResourceURL>
       <brand>
         <!-- Brand text in top-left part of the site -->
         <name>
