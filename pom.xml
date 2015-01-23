@@ -155,13 +155,11 @@
       <plugin>
         <groupId>org.eluder.coveralls</groupId>
         <artifactId>coveralls-maven-plugin</artifactId>
-        <version>2.2.0</version>
       </plugin>
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.6</version>
         <dependencies>
           <dependency>
             <groupId>org.ow2.asm</groupId>
@@ -319,7 +317,7 @@
         <plugin>
           <groupId>org.eluder.coveralls</groupId>
           <artifactId>coveralls-maven-plugin</artifactId>
-          <version>2.2.0</version>
+          <version>3.0.1</version>
         </plugin>
 
         <plugin>
@@ -507,7 +505,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.6</version>
       </plugin>
       <!--<plugin>-->
         <!--<groupId>org.apache.maven.plugins</groupId>-->
