@@ -48,7 +48,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   private List<String> groupBy = new ArrayList<>();
   private List<Condition> having = new ArrayList<>();
   private List<String> orderBy = new ArrayList<>();
-  private List<Initializer<? super E>> initializers = new ArrayList<>();
+  protected List<Initializer<? super E>> initializers = new ArrayList<>();
   private Integer limit;
   private Integer offset;
 
@@ -65,13 +65,13 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   }
 
 
-  public AbstractQuery<E> select(SelectPart selectPart) {
+  protected AbstractQuery<E> select(SelectPart selectPart) {
     select.add(selectPart);
     return this;
   }
 
 
-  public AbstractQuery<E> from(FromPart fromPart) {
+  protected AbstractQuery<E> from(FromPart fromPart) {
     from.add(fromPart);
     return this;
   }
