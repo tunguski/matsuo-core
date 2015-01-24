@@ -70,7 +70,9 @@ public class ReflectUtil {
 
 
   /**
-   * Pobiera typ pojedynczego pola.
+   * Pobiera typ pojedynczego pola. Analizuje listę przekazanych klas do skutku. Przydatne przy przeszukiwaniu
+   * interfejsów rozszerzanych przez inny interfejs. Wtedy nie mamy implementacji metody w "trzymanej" klasie, jedynie
+   * listę interfejsów w których należy szukać.
    */
   protected static <E> Class<E> getExactPropertyType(List<Class> classes, String exactFieldName) {
     for (Class clazz : classes) {

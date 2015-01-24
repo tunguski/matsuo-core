@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 import static pl.matsuo.core.util.ReflectUtil.*;
 
@@ -36,22 +37,22 @@ public class TestReflectUtil {
 
   @Test
   public void testGetExactPropertyType() throws Exception {
-
+    assertEquals(String.class, getExactPropertyType(X.class, "fieldValue"));
   }
 
   @Test
   public void testGetExactPropertyType1() throws Exception {
-
+    assertEquals(String.class, getExactPropertyType(asList(X.class), "fieldValue"));
   }
 
   @Test
   public void testGetPropertyType() throws Exception {
-
+    assertEquals(String.class, getPropertyType(Z.class, "complex.fieldValue"));
+    assertEquals(Z.class, getPropertyType(Z.class, "complex.complex"));
   }
 
   @Test
   public void testGetExactAnnotatedElement() throws Exception {
-
   }
 
   @Test
@@ -66,12 +67,15 @@ public class TestReflectUtil {
 
   @Test
   public void testInvoke() throws Exception {
-
+    Z z = new Z();
+    assertEquals(0, z.invocations);
+    invoke(z, "invoke");
+    assertEquals(1, z.invocations);
   }
 
   @Test
   public void testFieldName() throws Exception {
-
+    assertEquals("string", fieldName("getString"));
   }
 
   class X {
@@ -90,6 +94,19 @@ public class TestReflectUtil {
     private final String fieldValue = "error";
     private String getMethodValue() {
       return "error 2";
+    }
+  }
+
+
+  class Z extends X {
+    public int invocations = 0;
+
+    public void invoke() {
+      invocations++;
+    }
+
+    private Z getComplex() {
+      return new Z();
     }
   }
 }
