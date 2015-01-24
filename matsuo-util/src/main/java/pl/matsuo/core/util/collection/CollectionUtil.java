@@ -83,13 +83,7 @@ public class CollectionUtil {
 
 
   public static final <E> List<E> merge(Collection<E> ... collections) {
-    List<E> result = new ArrayList<>();
-
-    for (Collection<E> collection : collections) {
-      result.addAll(collection);
-    }
-
-    return result;
+    return flatten(collections);
   }
 
 
@@ -109,7 +103,7 @@ public class CollectionUtil {
     Map<String, String> map = new HashMap<>();
 
     for(int i = 0; i < (keyValues.length / 2); i++) {
-      map.put(keyValues[i], keyValues[i+1]);
+      map.put(keyValues[2*i], keyValues[2*i+1]);
     }
 
     return map;
