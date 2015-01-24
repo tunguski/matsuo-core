@@ -7,6 +7,7 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import pl.matsuo.core.model.query.AbstractQuery;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.session.SessionState;
+import pl.matsuo.core.util.function.FunctionalUtil;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,6 +16,7 @@ import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
 
 public class TestDatabaseImpl {
@@ -39,7 +41,17 @@ public class TestDatabaseImpl {
     when(sessionState.getIdBucket()).thenReturn(10);
     doAnswer(invocation -> {
       AbstractQuery query = invocation.getArgumentAt(0, AbstractQuery.class);
-      query.setSessionFactory(sessionFactory);
+      with(AbstractQuery.class.getDeclaredField("sessionFactory"), field -> {
+        field.setAccessible(true);
+        try {
+          field.set(query, sessionFactory);
+        } catch (IllegalAccessException e) {
+          throw new RuntimeException(e);
+        } finally {
+          field.setAccessible(false);
+        }
+      });
+
       return null;
     }).when(beanFactory).autowireBeanProperties(anyObject(), anyInt(), anyBoolean());
 

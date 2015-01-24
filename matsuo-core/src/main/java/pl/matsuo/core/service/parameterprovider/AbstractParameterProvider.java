@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import static pl.matsuo.core.util.DateUtil.*;
 import static pl.matsuo.core.util.NumberUtil.*;
@@ -63,6 +64,11 @@ public abstract class AbstractParameterProvider<U> implements IParameterProvider
     } else if (expectedClass.equals(Boolean.class)) {
       return (E) Boolean.valueOf(stringValue);
     }
+
+    if (Object.class.equals(expectedClass)) {
+      return (E) value;
+    }
+
     return null;
   }
 

@@ -267,10 +267,5 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
     return sb.toString().trim();
   }
-
-
-  public void setSessionFactory(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
-  }
 }
 
