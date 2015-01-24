@@ -4,7 +4,9 @@ import org.junit.After;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.matsuo.core.service.parameterprovider.AbstractParameterProvider;
 import pl.matsuo.core.service.parameterprovider.IParameterProvider;
+import pl.matsuo.core.util.ReflectUtil;
 import pl.matsuo.core.util.collection.CollectionUtil;
 
 import java.util.HashMap;
@@ -13,6 +15,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import static pl.matsuo.core.util.DateUtil.*;
 import static pl.matsuo.core.util.NumberUtil.*;
+import static pl.matsuo.core.util.ReflectUtil.*;
 
 
 public class TestFacadeBuilder {
@@ -94,6 +97,9 @@ public class TestFacadeBuilder {
   @Test
   public void testInitializeProviders() throws Exception {
     facadeBuilder.initializeProviders();
+    Map<Class, Class<? extends AbstractParameterProvider>> parameterProviders =
+        getValue(facadeBuilder, "parameterProviders");
+    assertEquals(2, parameterProviders.size());
   }
 }
 
