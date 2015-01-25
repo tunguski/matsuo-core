@@ -72,7 +72,7 @@ public class DateUtil {
     for (Format format : formats) {
       try {
         return (Date) format.parseObject(source);
-      } catch (ParseException e) {
+      } catch (ParseException | NumberFormatException e) {
       }
     }
 
