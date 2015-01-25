@@ -365,7 +365,7 @@ public class BootstrapRenderer {
       } else {
         return asList(fields).stream().reduce("", (sum, fieldName) -> {
           return sum + renderer().renderField(getPropertyType(entityType, fieldName),
-              getAnnoatedElement(entityType, fieldName), fieldName, this) + "\n";
+              getAnnotatedElement(entityType, fieldName), fieldName, this) + "\n";
         });
       }
     }
@@ -373,7 +373,7 @@ public class BootstrapRenderer {
 
     public String renderWithName(String entityFieldName, String htmlFieldName) {
       return renderer().renderField(getPropertyType(entityType, entityFieldName),
-          getAnnoatedElement(entityType, entityFieldName), htmlFieldName, this);
+          getAnnotatedElement(entityType, entityFieldName), htmlFieldName, this);
     }
   }
 
@@ -392,7 +392,7 @@ public class BootstrapRenderer {
       elements.add(el("span", asList("inline-form-text", simpleElementName)).attr("translate", fullFieldName));
 
       elements.add(createInput(getPropertyType(builder.entityType, fieldName),
-                                getAnnoatedElement(builder.entityType, fieldName),
+                                getAnnotatedElement(builder.entityType, fieldName),
                                 fullFieldName, builder.entityType, "entity", builder,
                                 // css classes
                                 simpleElementName));

@@ -2,6 +2,8 @@ package pl.matsuo.core.util;
 
 import org.junit.Test;
 
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,21 +31,25 @@ public class TestReflectUtil {
     assertEquals("test Y2", getValue(new Y(), "methodValue2"));
   }
 
+
   @Test
   public void testGetValue1() throws Exception {
     assertEquals("test X", getValue(new Y(), "fieldValue", X.class).get());
     assertEquals("test X2", getValue(new Y(), "methodValue", X.class).get());
   }
 
+
   @Test
   public void testGetExactPropertyType() throws Exception {
     assertEquals(String.class, getExactPropertyType(X.class, "fieldValue"));
   }
 
+
   @Test
   public void testGetExactPropertyType1() throws Exception {
     assertEquals(String.class, getExactPropertyType(asList(X.class), "fieldValue"));
   }
+
 
   @Test
   public void testGetPropertyType() throws Exception {
@@ -51,19 +57,42 @@ public class TestReflectUtil {
     assertEquals(Z.class, getPropertyType(Z.class, "complex.complex"));
   }
 
+
+  @Test(expected = RuntimeException.class)
+  public void testGetPropertyType1() throws Exception {
+    assertEquals(Z.class, getPropertyType(Z.class, "xxx"));
+  }
+
+
+  @Test(expected = RuntimeException.class)
+  public void testGetPropertyType2() throws Exception {
+    assertEquals(Z.class, getPropertyType(Z.class, "xxx.xxx"));
+  }
+
+
   @Test
   public void testGetExactAnnotatedElement() throws Exception {
+    AnnotatedElement complex = getExactAnnotatedElement(Z.class, "complex");
+    assertNotNull(complex);
+    assertEquals(Method.class, complex.getClass());
   }
+
 
   @Test
   public void testGetExactAnnoatedElement() throws Exception {
-
+    AnnotatedElement complex = getExactAnnotatedElement(asList(Object.class, Z.class), "complex");
+    assertNotNull(complex);
+    assertEquals(Method.class, complex.getClass());
   }
+
 
   @Test
-  public void testGetAnnoatedElement() throws Exception {
-
+  public void testGetAnnotatedElement() throws Exception {
+    AnnotatedElement complex = getAnnotatedElement(Z.class, "complex");
+    assertNotNull(complex);
+    assertEquals(Method.class, complex.getClass());
   }
+
 
   @Test
   public void testInvoke() throws Exception {

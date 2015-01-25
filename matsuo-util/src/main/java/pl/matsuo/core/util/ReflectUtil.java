@@ -142,7 +142,7 @@ public class ReflectUtil {
    */
   protected static AnnotatedElement getExactAnnotatedElement(List<Class> classes, String exactFieldName) {
     for (Class clazz : classes) {
-      AnnotatedElement annotatedElement = getExactAnnoatedElement(clazz, exactFieldName);
+      AnnotatedElement annotatedElement = getExactAnnotatedElement(clazz, exactFieldName);
       if (annotatedElement != null) {
         return annotatedElement;
       }
@@ -155,7 +155,7 @@ public class ReflectUtil {
   /**
    * Pobiera typ pojedynczego pola.
    */
-  protected static AnnotatedElement getExactAnnoatedElement(final Class<?> clazz, String exactFieldName) {
+  protected static AnnotatedElement getExactAnnotatedElement(final Class<?> clazz, String exactFieldName) {
     if (clazz == null || clazz.equals(Object.class)) {
       return null;
     }
@@ -181,7 +181,7 @@ public class ReflectUtil {
   }
 
 
-  public static AnnotatedElement getAnnoatedElement(Class<?> clazz, String fieldName) {
+  public static AnnotatedElement getAnnotatedElement(Class<?> clazz, String fieldName) {
     String[] splitted = fieldName.split("[.]");
     List<String> prefix = newArrayList(splitted);
     String lastElement = prefix.remove(prefix.size() - 1);
@@ -191,7 +191,7 @@ public class ReflectUtil {
       clazz = getPropertyType(clazz, Joiner.on(".").join(prefix));
     }
 
-    return getExactAnnoatedElement(clazz, lastElement);
+    return getExactAnnotatedElement(clazz, lastElement);
   }
 
 
