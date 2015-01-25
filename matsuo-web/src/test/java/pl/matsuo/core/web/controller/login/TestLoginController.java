@@ -5,9 +5,12 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import pl.matsuo.core.conf.TestMailConfig;
 import pl.matsuo.core.exception.RestProcessingException;
 import pl.matsuo.core.exception.UnauthorizedException;
 import pl.matsuo.core.model.AbstractEntity;
@@ -20,12 +23,14 @@ import pl.matsuo.core.service.login.CreateAccountData;
 import pl.matsuo.core.service.login.ILoginServiceExtension;
 import pl.matsuo.core.service.login.LoginData;
 import pl.matsuo.core.service.login.LoginService;
+import pl.matsuo.core.service.mail.IMailService;
 import pl.matsuo.core.service.permission.PermissionService;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
 import static pl.matsuo.core.model.user.GroupEnum.*;
 
@@ -36,7 +41,7 @@ import static pl.matsuo.core.model.user.GroupEnum.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = { LoginController.class, LoginService.class, PermissionService.class,
-                                  TestLoginController.LoginServiceExtension.class })
+                                  TestLoginController.LoginServiceExtension.class, TestMailConfig.class})
 public class TestLoginController extends AbstractControllerTest {
   private static final Logger logger = LoggerFactory.getLogger(TestLoginController.class);
 

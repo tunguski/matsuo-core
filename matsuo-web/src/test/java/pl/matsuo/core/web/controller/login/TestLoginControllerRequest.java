@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.util.NestedServletException;
+import pl.matsuo.core.conf.TestMailConfig;
 import pl.matsuo.core.exception.RestProcessingException;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.login.CreateAccountData;
@@ -27,7 +28,8 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { LoginController.class, LoginService.class, PermissionService.class })
+@ContextConfiguration(classes = { LoginController.class, LoginService.class, PermissionService.class,
+                                  TestMailConfig.class})
 public class TestLoginControllerRequest extends AbstractDbControllerRequestTest {
   private static final Logger logger = LoggerFactory.getLogger(TestLoginControllerRequest.class);
 

@@ -16,7 +16,7 @@ public class NumerationConfig {
 
 
   @Bean
-  public BeanFactoryPostProcessor mvcServices() {
+  public static BeanFactoryPostProcessor mvcServices() {
     return new ClassesAddingBeanFactoryPostProcessor(NumerationServiceImpl.class,
         MonthlyNumerationSchemaStrategy.class, QuaterlyNumerationSchemaStrategy.class);
   }

@@ -13,6 +13,7 @@ import pl.matsuo.core.model.user.GroupEnum;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.db.Database;
+import pl.matsuo.core.service.mail.IMailService;
 import pl.matsuo.core.service.session.SessionState;
 
 import java.util.Date;
@@ -36,6 +37,8 @@ public class LoginService implements ILoginService {
   Database database;
   @Autowired(required = false)
   ILoginServiceExtension[] extensions;
+  @Autowired
+  IMailService mailService;
 
 
   @Override
@@ -89,7 +92,7 @@ public class LoginService implements ILoginService {
 
 
   @Override
-  public String createAccount(CreateAccountData createAccountData) {
+  public String createAccount(CreateAccountData createAccountData, boolean sendMail) {
     User user = database.findOne(query(User.class, eq("username", createAccountData.getUsername())));
     if (user != null) {
       throw new RestProcessingException("Username already used");
@@ -129,7 +132,27 @@ public class LoginService implements ILoginService {
       }
     }
 
-    // fixme: send this by email to username
+    if (sendMail) {
+      mailService.sendMail("accounting@matsuo-it.com", user.getUsername(),
+          "Witamy! Prosimy o weryfikację adresu e-mail",
+          "<!DOCTYPE html>\n" +
+              "<html>\n" +
+              "  <head>\n" +
+              "    <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />\n" +
+              "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+              "  </head>\n" +
+              "  <body>" +
+              "  <div>" +
+              "    <h1>Aktywacja konta</h1>" +
+              "  </div>" +
+              "  <div>" +
+              "    <a href=\"http://accounting.matsuo-it.com/api/login/activateAccount/" + user.getUnblockTicket() + "\">" +
+              "      Kliknięcie w ten link aktywuje konto</a>" +
+              "  </div>" +
+              "  </body>\n" +
+              "</html>");
+    }
+
     return user.getUnblockTicket();
   }
 }

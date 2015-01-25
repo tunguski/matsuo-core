@@ -7,5 +7,5 @@ public interface ILoginService {
 
   String login(LoginData loginData);
   void activateAccount(String ticket);
-  String createAccount(CreateAccountData createAccountData);
+  String createAccount(CreateAccountData createAccountData, boolean sendMail);
 }

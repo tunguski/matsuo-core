@@ -66,7 +66,7 @@ public class LoginController {
 
   @RequestMapping(value = "/createAccount", method = POST)
   public String createAccount(@RequestBody CreateAccountData createAccountData) {
-    return "Account confirmation ticket: " + loginService.createAccount(createAccountData);
+    return "Account confirmation ticket: " + loginService.createAccount(createAccountData, true);
   }
 
 
