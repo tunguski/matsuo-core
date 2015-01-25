@@ -137,7 +137,7 @@ public class QueryBuilder {
 
 
   public static Condition between(final String fieldName, final Object min, final Object max) {
-    return query -> fieldName + " between " + query.propertyValue(min) + " AND " + query.propertyValue(max);
+    return query -> fieldName + " BETWEEN " + query.propertyValue(min) + " AND " + query.propertyValue(max);
   }
 
 
@@ -205,7 +205,7 @@ public class QueryBuilder {
 
 
   public static FromPart join(String alias, String joinPath) {
-    return new FromPart("join", alias, joinPath);
+    return new FromPart("JOIN", alias, joinPath);
   }
 
 

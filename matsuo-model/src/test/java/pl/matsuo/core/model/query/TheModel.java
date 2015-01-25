@@ -7,4 +7,5 @@ import pl.matsuo.core.model.AbstractEntity;
  */
 public class TheModel extends AbstractEntity {
   Integer id;
+  TheModel subModel;
 }
