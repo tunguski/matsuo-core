@@ -137,7 +137,7 @@ public class BootstrapRenderer {
     HtmlElement element = el("ui-select", asList(""),
           el("ui-select-match", asList(""),
               text("{{ formatElement($select.selected) }}"))
-              .attr("placeholder", "{{ opts.placeholderText | translate }}"),
+              .attr("placeholder", "{{ options.placeholderText | translate }}"),
           el("ui-select-choices", asList(""),
             div(asList(""))
               .attr("ng-bind-html", "formatElement(item)"))
