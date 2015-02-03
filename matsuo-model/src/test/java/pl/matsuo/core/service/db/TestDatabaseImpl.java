@@ -7,7 +7,6 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import pl.matsuo.core.model.query.AbstractQuery;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.session.SessionState;
-import pl.matsuo.core.util.function.FunctionalUtil;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,6 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
 import static pl.matsuo.core.util.function.FunctionalUtil.*;
 

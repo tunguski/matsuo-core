@@ -6,5 +6,5 @@ package pl.matsuo.core.service.mail;
 public interface IMailService {
 
 
-  Integer sendMail(String from, String to, String subject, String body);
+  Integer sendMail(String from, String to, String subject, String bodyTemplate, Object model);
 }

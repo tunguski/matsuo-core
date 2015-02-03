@@ -2,13 +2,9 @@ package pl.matsuo.core.model.query;
 
 import org.hibernate.criterion.MatchMode;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.util.Arrays;
 
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 

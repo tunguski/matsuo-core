@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.matsuo.core.service.parameterprovider.AbstractParameterProvider;
 import pl.matsuo.core.service.parameterprovider.IParameterProvider;
-import pl.matsuo.core.util.ReflectUtil;
 import pl.matsuo.core.util.collection.CollectionUtil;
 
 import java.util.HashMap;

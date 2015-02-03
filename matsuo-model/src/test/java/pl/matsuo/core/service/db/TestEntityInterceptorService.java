@@ -2,12 +2,8 @@ package pl.matsuo.core.service.db;
 
 import org.hibernate.Interceptor;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.util.Arrays;
 
 import static java.util.Arrays.*;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class TestEntityInterceptorService {

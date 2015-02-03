@@ -2,13 +2,15 @@ package pl.matsuo.core.util.collection;
 
 import org.junit.Test;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Arrays.*;
 import static java.util.stream.Collectors.*;
 import static org.junit.Assert.*;
 import static pl.matsuo.core.util.collection.CollectionUtil.*;
+import static pl.matsuo.core.util.collection.CollectionUtil.toMap;
 
 public class TestCollectionUtil {
 

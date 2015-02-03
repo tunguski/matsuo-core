@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import pl.matsuo.core.model.message.MailMessage;
 import pl.matsuo.core.service.db.Database;
+import pl.matsuo.core.service.print.IPrintsRendererService;
 
 import javax.mail.internet.MimeMessage;
 
@@ -18,12 +19,14 @@ public class MailService implements IMailService {
 
 
   @Autowired
+  IPrintsRendererService printsRendererService;
+  @Autowired
   JavaMailSender mailSender;
   @Autowired
   Database database;
 
 
-  public Integer sendMail(String from, String to, String subject, String body) {
+  public Integer sendMail(String from, String to, String subject, String bodyTemplate, Object model) {
     try{
       MimeMessage message = mailSender.createMimeMessage();
 
@@ -32,6 +35,8 @@ public class MailService implements IMailService {
       helper.setTo(to);
       helper.setFrom(from);
       helper.setSubject(subject);
+
+      String body = new String(printsRendererService.renderHtml(bodyTemplate, model));
 
       // use the true flag to indicate the text included is HTML
       helper.setText(body, true);

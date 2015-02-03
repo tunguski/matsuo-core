@@ -6,8 +6,6 @@ import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.organization.address.Address;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.model.user.User;
-import pl.matsuo.core.util.DateUtil;
-import pl.matsuo.core.util.function.FunctionalUtil;
 
 import java.util.List;
 import java.util.Objects;

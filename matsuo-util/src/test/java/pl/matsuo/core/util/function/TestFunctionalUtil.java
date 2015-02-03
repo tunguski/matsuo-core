@@ -11,6 +11,7 @@ import static java.util.Arrays.*;
 import static java.util.stream.Collectors.*;
 import static org.junit.Assert.*;
 import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import static pl.matsuo.core.util.function.FunctionalUtil.stream;
 
 
 public class TestFunctionalUtil {

@@ -2,10 +2,6 @@ package pl.matsuo.core.web.controller.print;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.stereotype.Service;
@@ -15,18 +11,13 @@ import pl.matsuo.core.conf.GeneralConfig;
 import pl.matsuo.core.model.print.IPrintFacade;
 import pl.matsuo.core.model.print.KeyValuePrint;
 import pl.matsuo.core.model.report.IPrintsReportParams;
-import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.print.AbstractPrintService;
 import pl.matsuo.core.service.print.PrintsRendererService;
 
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 
 @ContextConfiguration(classes = { PrintController.class, PrintsRendererService.class, GeneralConfig.class,

@@ -2,25 +2,18 @@ package pl.matsuo.core.service.login;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.matsuo.core.AbstractDbTest;
 import pl.matsuo.core.conf.TestMailConfig;
 import pl.matsuo.core.exception.UnauthorizedException;
-import pl.matsuo.core.model.query.QueryBuilder;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.mail.IMailService;
-import pl.matsuo.core.service.permission.PermissionService;
-import pl.matsuo.core.test.data.TestSessionState;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -72,13 +65,22 @@ public class TestLoginService extends AbstractDbTest {
 
 
   @Test
+  public void testRemindPassword() throws Exception {
+    loginService.remindPassword("admin");
+
+    verify(mailService).sendMail(anyString(), anyString(), anyString(), anyString(), anyObject());
+    reset(mailService);
+  }
+
+
+  @Test
   public void testCreateAccount() throws Exception {
     CreateAccountData createAccountData = new CreateAccountData();
     createAccountData.setUsername("blicky");
     createAccountData.setCompanyName("test");
     createAccountData.setPassword("blickyPass");
 
-    when(mailService.sendMail(anyString(), anyString(), anyString(), anyString())).then(invocation -> {
+    when(mailService.sendMail(anyString(), anyString(), anyString(), anyString(), anyObject())).then(invocation -> {
       String address = invocation.getArgumentAt(1, String.class);
       assertEquals("blicky", address);
       return null;
@@ -89,7 +91,7 @@ public class TestLoginService extends AbstractDbTest {
     User blicky = database.findOne(query(User.class, eq("username", "blicky")));
     assertEquals(ticket, blicky.getUnblockTicket());
 
-    verify(mailService).sendMail(anyString(), anyString(), anyString(), anyString());
+    verify(mailService).sendMail(anyString(), anyString(), anyString(), anyString(), anyObject());
     // clear context for other tests
     reset(mailService);
   }

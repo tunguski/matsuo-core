@@ -92,6 +92,16 @@ public class LoginService implements ILoginService {
 
 
   @Override
+  public void remindPassword(String username) {
+    User user = database.findOne(query(User.class, eq("username", username)));
+    if (user != null) {
+      mailService.sendMail("accounting@matsuo-it.com", user.getUsername(),
+          "Przypomnienie hasła", "print/createAccount.vm", user);
+    }
+  }
+
+
+  @Override
   public String createAccount(CreateAccountData createAccountData, boolean sendMail) {
     User user = database.findOne(query(User.class, eq("username", createAccountData.getUsername())));
     if (user != null) {
@@ -134,23 +144,7 @@ public class LoginService implements ILoginService {
 
     if (sendMail) {
       mailService.sendMail("accounting@matsuo-it.com", user.getUsername(),
-          "Witamy! Prosimy o weryfikację adresu e-mail",
-          "<!DOCTYPE html>\n" +
-              "<html>\n" +
-              "  <head>\n" +
-              "    <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />\n" +
-              "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-              "  </head>\n" +
-              "  <body>" +
-              "  <div>" +
-              "    <h1>Aktywacja konta</h1>" +
-              "  </div>" +
-              "  <div>" +
-              "    <a href=\"http://accounting.matsuo-it.com/api/login/activateAccount/" + user.getUnblockTicket() + "\">" +
-              "      Kliknięcie w ten link aktywuje konto</a>" +
-              "  </div>" +
-              "  </body>\n" +
-              "</html>");
+          "Witamy! Prosimy o weryfikację adresu e-mail", "print/createAccount.vm", user);
     }
 
     return user.getUnblockTicket();

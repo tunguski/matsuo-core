@@ -36,11 +36,9 @@ public class PrintsRendererService implements IPrintsRendererService {
   private ITextRenderer initRenderer() throws DocumentException, IOException {
     ITextRenderer renderer = new ITextRenderer();
 
-    asList(FONTS).forEach(font -> runtimeEx(() -> {
-          renderer.getFontResolver().addFont(
-              getClass().getResource(font).toURI().toString(), IDENTITY_H, NOT_EMBEDDED);
-        },
-        e -> { logger.error("Error while configuring fonts", e); }));
+    asList(FONTS).forEach(font -> runtimeEx(() -> renderer.getFontResolver().addFont(
+            getClass().getResource(font).toURI().toString(), IDENTITY_H, NOT_EMBEDDED),
+        e -> logger.error("Error while configuring fonts", e)));
 
     return renderer;
   }
