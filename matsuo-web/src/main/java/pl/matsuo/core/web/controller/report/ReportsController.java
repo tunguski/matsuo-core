@@ -59,9 +59,8 @@ public class ReportsController {
   /**
    * Methoda generująca generycznie raporty.
    */
-  protected <E> void generateReport(String outputType, String contentType,
-                                    BiFunction<String, Object, byte[]> method, String reportName, Map<String, String> params,
-                                    HttpServletResponse response) {
+  protected <E> void generateReport(String outputType, String contentType, BiFunction<String, Object, byte[]> method,
+                                    String reportName, Map<String, String> params, HttpServletResponse response) {
     try {
       IReportService<E> reportService = reportServicesMap.get(reportName);
 
