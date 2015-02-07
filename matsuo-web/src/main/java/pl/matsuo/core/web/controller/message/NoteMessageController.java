@@ -17,7 +17,7 @@ import static pl.matsuo.core.model.message.NoteStatus.*;
  * Created by marek on 16.08.14.
  */
 @RestController
-@RequestMapping("/notes")
+@RequestMapping("/noteMessages")
 public class NoteMessageController extends AbstractMessageController<NoteMessage> {
 
 
