@@ -1,6 +1,6 @@
 package pl.matsuo.core.web.controller.message;
 
-import pl.matsuo.core.IQueryRequestParams;
+import pl.matsuo.core.params.IQueryRequestParams;
 
 
 /**

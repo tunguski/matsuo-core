@@ -1,7 +1,7 @@
 package pl.matsuo.core.web.controller.print;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.matsuo.core.IQueryRequestParams;
+import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.print.IPrintFacade;
 import pl.matsuo.core.model.print.KeyValuePrint;

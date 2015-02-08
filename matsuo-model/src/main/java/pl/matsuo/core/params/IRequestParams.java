@@ -1,4 +1,4 @@
-package pl.matsuo.core;
+package pl.matsuo.core.params;
 
 
 /**

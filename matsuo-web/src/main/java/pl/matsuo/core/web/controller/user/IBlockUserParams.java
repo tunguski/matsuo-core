@@ -1,7 +1,7 @@
 package pl.matsuo.core.web.controller.user;
 
 
-import pl.matsuo.core.IRequestParams;
+import pl.matsuo.core.params.IRequestParams;
 
 
 /**

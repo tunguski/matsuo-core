@@ -3,7 +3,7 @@ package pl.matsuo.core.web.controller.organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.matsuo.core.IQueryRequestParams;
+import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.model.organization.AbstractParty;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.service.db.Database;

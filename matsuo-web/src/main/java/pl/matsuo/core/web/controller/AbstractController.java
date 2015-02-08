@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriTemplate;
-import pl.matsuo.core.IQueryRequestParams;
+import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.AbstractQuery;

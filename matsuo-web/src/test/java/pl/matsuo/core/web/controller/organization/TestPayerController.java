@@ -2,7 +2,7 @@ package pl.matsuo.core.web.controller.organization;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.matsuo.core.IQueryRequestParams;
+import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.model.organization.OrganizationUnit;
 import pl.matsuo.core.model.query.AbstractQuery;
 import pl.matsuo.core.model.query.Query;

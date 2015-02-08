@@ -1,6 +1,6 @@
 package pl.matsuo.core.web.controller.params;
 
-import pl.matsuo.core.IQueryRequestParams;
+import pl.matsuo.core.params.IQueryRequestParams;
 
 
 /**

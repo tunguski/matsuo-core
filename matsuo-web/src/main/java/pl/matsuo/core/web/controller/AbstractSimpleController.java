@@ -1,6 +1,6 @@
 package pl.matsuo.core.web.controller;
 
-import pl.matsuo.core.IQueryRequestParams;
+import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.model.AbstractEntity;
 
 

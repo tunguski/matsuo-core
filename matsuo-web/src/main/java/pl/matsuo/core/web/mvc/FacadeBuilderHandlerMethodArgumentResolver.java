@@ -17,7 +17,7 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import pl.matsuo.core.IRequestParams;
+import pl.matsuo.core.params.IRequestParams;
 import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 import pl.matsuo.core.service.parameterprovider.MapParameterProvider;
