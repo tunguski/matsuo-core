@@ -37,7 +37,6 @@ public class WideSessionScope extends AbstractRequestAttributesScope implements 
       return RequestContextHolder.currentRequestAttributes().getSessionId();
     } catch (IllegalStateException e) {
       logger.debug("outside web session");
-      e.printStackTrace();
       return "non_web_";
     }
   }
@@ -89,7 +88,7 @@ public class WideSessionScope extends AbstractRequestAttributesScope implements 
       RequestAttributes attributes = RequestContextHolder.currentRequestAttributes();
       attributes.registerDestructionCallback(name, callback, getScope());
     } catch (IllegalStateException e) {
-
+      logger.debug("outside web session");
     }
   }
 }
