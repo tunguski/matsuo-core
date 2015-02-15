@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static pl.matsuo.core.model.query.QueryBuilder.eq;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
 import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
@@ -144,7 +143,7 @@ public class TestDatabaseImpl {
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
 
-    List<User> users = database.find(query(User.class, eq("id", 7)));
+    List<User> users = database.find(query(User.class, eq(User::getId, 7)));
     assertEquals(1, users.size());
     assertEquals(testUser, users.get(0));
   }
@@ -156,7 +155,7 @@ public class TestDatabaseImpl {
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
 
-    List<User> users = database.findAsAdmin(query(User.class, eq("id", 7)));
+    List<User> users = database.findAsAdmin(query(User.class, eq(User::getId, 7)));
     assertEquals(1, users.size());
     assertEquals(testUser, users.get(0));
   }
@@ -168,7 +167,7 @@ public class TestDatabaseImpl {
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
 
-    assertEquals(testUser, database.findOne(query(User.class, eq("id", 7))));
+    assertEquals(testUser, database.findOne(query(User.class, eq(User::getId, 7))));
   }
 }
 

@@ -6,6 +6,7 @@ import pl.matsuo.core.model.log.AccessLog;
 import pl.matsuo.core.web.controller.AbstractSimpleController;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.Arrays.*;
 
@@ -19,8 +20,8 @@ public class AccessLogController extends AbstractSimpleController<AccessLog> {
 
 
   @Override
-  protected List<String> queryMatchers() {
-    return asList("request", "method", "ip");
+  protected List<Function<AccessLog, String>> queryMatchers() {
+    return asList(AccessLog::getRequest, AccessLog::getMethod, AccessLog::getIp);
   }
 }
 

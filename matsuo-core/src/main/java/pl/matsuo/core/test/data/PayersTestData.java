@@ -94,7 +94,7 @@ public class PayersTestData extends AbstractMediqTestData {
     organizationUnit.setRegon(regon);
 
     List<Person> employees =
-      patientPesels.length > 0 ? database.find(query(Person.class, in("pesel", patientPesels)))
+      patientPesels.length > 0 ? database.find(query(Person.class, in(Person::getPesel, patientPesels)))
         : Collections.<Person>emptyList();
 
     organizationUnit.getEmployees().addAll(employees);

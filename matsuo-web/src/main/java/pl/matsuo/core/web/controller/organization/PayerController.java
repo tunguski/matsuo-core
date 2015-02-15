@@ -6,6 +6,7 @@ import pl.matsuo.core.model.organization.AbstractParty;
 import pl.matsuo.core.web.controller.AbstractSimpleController;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.Arrays.*;
 
@@ -16,8 +17,8 @@ public class PayerController extends AbstractSimpleController<AbstractParty> {
 
 
   @Override
-  protected List<String> queryMatchers() {
-    return asList("firstName", "lastName", "fullName", "shortName", "code");
+  protected List<Function<AbstractParty, String>> queryMatchers() {
+    return asList(AbstractParty::getName);
   }
 }
 

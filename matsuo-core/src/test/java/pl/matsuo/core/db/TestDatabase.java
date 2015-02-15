@@ -68,7 +68,7 @@ public class TestDatabase {
     groups = database.findAll(Group.class);
     assertTrue(groups.contains(group));
 
-    group = database.findOne(query(Group.class, eq("name", "test-group")));
+    group = database.findOne(query(Group.class, eq(Group::getName, "test-group")));
     assertNotNull(group);
 
     group = database.findById(Group.class, group.getId());
@@ -76,12 +76,12 @@ public class TestDatabase {
 
     group.setName("test-group-2");
     database.update(group);
-    assertNull(database.findOne(query(Group.class, eq("name", "test-group"))));
-    assertNotNull(database.findOne(query(Group.class, eq("name", "test-group-2"))));
+    assertNull(database.findOne(query(Group.class, eq(Group::getName, "test-group"))));
+    assertNotNull(database.findOne(query(Group.class, eq(Group::getName, "test-group-2"))));
 
     database.delete(group);
-    assertNull(database.findOne(query(Group.class, eq("name", "test-group"))));
-    assertNull(database.findOne(query(Group.class, eq("name", "test-group-2"))));
+    assertNull(database.findOne(query(Group.class, eq(Group::getName, "test-group"))));
+    assertNull(database.findOne(query(Group.class, eq(Group::getName, "test-group-2"))));
   }
 }
 

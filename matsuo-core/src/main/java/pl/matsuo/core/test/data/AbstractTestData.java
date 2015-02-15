@@ -29,7 +29,7 @@ public abstract class AbstractTestData implements IExecuteService {
 
 
   protected void withUser(String userName, Runnable runnable) {
-    User user = database.findOne(query(User.class, eq("username", userName)));
+    User user = database.findOne(query(User.class, eq(User::getUsername, userName)));
     sessionState.setUser(user);
     sessionState.setIdBucket(user.getIdBucket());
     try {

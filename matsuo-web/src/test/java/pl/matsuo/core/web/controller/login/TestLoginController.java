@@ -126,7 +126,7 @@ public class TestLoginController extends AbstractControllerTest {
     logger.info(result);
     assertFalse(result.isEmpty());
 
-    User user = database.findOne(query(User.class, eq("username", "tristan")));
+    User user = database.findOne(query(User.class, eq(User::getUsername, "tristan")));
 
     try {
       controller.activateAccount(user.getUnblockTicket());
@@ -134,7 +134,7 @@ public class TestLoginController extends AbstractControllerTest {
       throw new RuntimeException(e);
     }
 
-    user = database.findOne(query(User.class, eq("username", "tristan")));
+    user = database.findOne(query(User.class, eq(User::getUsername, "tristan")));
     assertFalse(user.getBlocked());
     assertNull(user.getUnblockTicket());
     assertNotNull(user.getIdBucket());
@@ -155,7 +155,7 @@ public class TestLoginController extends AbstractControllerTest {
 
   protected void checkEntitiesCountForBucket(Integer idBucket, Integer size, Class<? extends AbstractEntity> clazz) {
     List<AbstractEntity> entities =
-        database.find(query((Class<AbstractEntity>) clazz, eq("idBucket", idBucket)));
+        database.find(query((Class<AbstractEntity>) clazz, eq(AbstractEntity::getIdBucket, idBucket)));
     assertEquals(1, entities.size());
   }
 

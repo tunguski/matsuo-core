@@ -50,7 +50,7 @@ public class TestLoginControllerRequest extends AbstractDbControllerRequestTest 
     performAndCheck(post("/login/createAccount", createAccountData),
         http -> assertFalse(http.isEmpty()));
 
-    User user = database.findOne(query(User.class, eq("username", "kryspin")));
+    User user = database.findOne(query(User.class, eq(User::getUsername, "kryspin")));
 
     try {
       performAndCheck(get("/login/activateAccount/" + user.getUnblockTicket()));
@@ -58,7 +58,7 @@ public class TestLoginControllerRequest extends AbstractDbControllerRequestTest 
       throw new RuntimeException(e);
     }
 
-    user = database.findOne(query(User.class, eq("username", "kryspin")));
+    user = database.findOne(query(User.class, eq(User::getUsername, "kryspin")));
     assertFalse(user.getBlocked());
     assertNull(user.getUnblockTicket());
 

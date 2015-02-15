@@ -27,7 +27,7 @@ public class Execution extends AbstractEntity {
   public void setRunDate(Date runDate) {
     this.runDate = runDate;
   }
-  public boolean isSuccess() {
+  public boolean getSuccess() {
     return success;
   }
   public void setSuccess(boolean success) {

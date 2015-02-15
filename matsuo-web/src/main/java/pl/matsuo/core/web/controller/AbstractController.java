@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
@@ -53,7 +54,7 @@ public abstract class AbstractController<E extends AbstractEntity, P extends IQu
    * Lista pól z którymi należy porównywać wartość parametru 'query' z zapytania listującego
    * elementy.
    */
-  protected List<String> queryMatchers() {
+  protected List<Function<E, String>> queryMatchers() {
     return emptyList();
   }
 
@@ -76,7 +77,7 @@ public abstract class AbstractController<E extends AbstractEntity, P extends IQu
       for (String part : parts) {
         List<Condition> partConditions = new ArrayList<>();
 
-        for (String queryMatcher : queryMatchers()) {
+        for (Function<E, String> queryMatcher : queryMatchers()) {
           partConditions.add(ilike(queryMatcher, part.trim(), ANYWHERE));
         }
 
@@ -129,7 +130,7 @@ public abstract class AbstractController<E extends AbstractEntity, P extends IQu
    */
   @RequestMapping(value = "/list/byIds", method = GET, consumes = {APPLICATION_OCTET_STREAM_VALUE})
   public List<E> listByIds(@RequestParam("ids") List<Integer> ids) {
-    return database.find(entityQuery(in("id", ids)));
+    return database.find(entityQuery(in(AbstractEntity::getId, ids)));
   }
 
 

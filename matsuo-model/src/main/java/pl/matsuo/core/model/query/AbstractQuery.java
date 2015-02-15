@@ -2,9 +2,12 @@ package pl.matsuo.core.model.query;
 
 import com.google.common.base.Joiner;
 import org.hibernate.SessionFactory;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.condition.Condition;
@@ -19,8 +22,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.Arrays.*;
+import static org.mockito.Mockito.mock;
 import static org.springframework.util.StringUtils.*;
 import static pl.matsuo.core.util.collection.CollectionUtil.*;
 
@@ -35,7 +40,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   private static final Logger logger = LoggerFactory.getLogger(AbstractQuery.class);
 
 
-  private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+  public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
 
   @Autowired
@@ -51,11 +56,55 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   protected List<Initializer<? super E>> initializers = new ArrayList<>();
   private Integer limit;
   private Integer offset;
+  private Class<E> clazz;
+
+  private ThreadLocal<String> methodName = new ThreadLocal<>();
+  private final E mock;
 
 
+  public AbstractQuery(Class<E> clazz) {
+    Assert.notNull(clazz);
 
-  public AbstractQuery(Class clazz) {
+    this.clazz = clazz;
+    mock = mock(clazz, new Answer() {
+
+
+      private Object innerMock(InvocationOnMock base) {
+        return mock(base.getMethod().getReturnType(), (Answer) invocation -> {
+          if (invocation.getMethod().getName().startsWith("get")) {
+            methodName.set(methodName.get() + "." + uncapitalize(invocation.getMethod().getName().substring(3)));
+          }
+
+          if (AbstractEntity.class.isAssignableFrom(invocation.getMethod().getReturnType())) {
+            return innerMock(invocation);
+          }
+
+          return null;
+        });
+      }
+
+
+      @Override
+      public Object answer(InvocationOnMock invocation) throws Throwable {
+        if (invocation.getMethod().getName().startsWith("get")) {
+          methodName.set(uncapitalize(invocation.getMethod().getName().substring(3)));
+        }
+
+        if (AbstractEntity.class.isAssignableFrom(invocation.getMethod().getReturnType())) {
+          return innerMock(invocation);
+        }
+
+        return null;
+      }
+    });
+
     from.add(new FromPart("", uncapitalize(clazz.getSimpleName()), clazz.getName()));
+  }
+
+
+  public String resolveFieldName(Function<E, ?> getter) {
+    getter.apply(mock);
+    return methodName.get();
   }
 
 
@@ -99,7 +148,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
       } else if (SelectPart.class.isAssignableFrom(queryPart.getClass())) {
         select((SelectPart) queryPart);
       } else {
-        throw new RuntimeException("Not implemented yet");
+        throw new RuntimeException("Not implemented yet for " + queryPart.getClass().getName());
       }
     }
 

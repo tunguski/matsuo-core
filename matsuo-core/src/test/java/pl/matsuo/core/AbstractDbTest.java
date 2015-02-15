@@ -43,7 +43,7 @@ public abstract class AbstractDbTest implements FacadeBuilderMethods {
 
   @Before
   public void setupSessionState() {
-    sessionState.setUser(database.findOne(query(User.class, eq("username", "admin")).initializer(new UserInitializer())));
+    sessionState.setUser(database.findOne(query(User.class, eq(User::getUsername, "admin")).initializer(new UserInitializer())));
   }
 
 

@@ -47,7 +47,7 @@ public class LoginService implements ILoginService {
       throw new UnauthorizedException();
     }
 
-    User user = database.findOne(query(User.class, eq("username", loginData.getUsername()))
+    User user = database.findOne(query(User.class, eq(User::getUsername, loginData.getUsername()))
         .initializer(new UserInitializer()));
     if (user != null && !user.getBlocked()
         && user.getPassword().equals(passwordHash(loginData.getPassword()))) {
@@ -73,7 +73,7 @@ public class LoginService implements ILoginService {
 
   @Override
   public void activateAccount(String ticket) {
-    List<User> users = database.find(query(User.class, eq("unblockTicket", ticket)));
+    List<User> users = database.find(query(User.class, eq(User::getUnblockTicket, ticket)));
 
     if (users.size() != 1) {
       throw new RestProcessingException("Unable to identify account");
@@ -93,7 +93,7 @@ public class LoginService implements ILoginService {
 
   @Override
   public void remindPassword(String username) {
-    User user = database.findOne(query(User.class, eq("username", username)));
+    User user = database.findOne(query(User.class, eq(User::getUsername, username)));
     if (user != null) {
       mailService.sendMail("accounting@matsuo-it.com", user.getUsername(),
           "Przypomnienie hasła", "print/createAccount.vm", user);
@@ -103,7 +103,7 @@ public class LoginService implements ILoginService {
 
   @Override
   public String createAccount(CreateAccountData createAccountData, boolean sendMail) {
-    User user = database.findOne(query(User.class, eq("username", createAccountData.getUsername())));
+    User user = database.findOne(query(User.class, eq(User::getUsername, createAccountData.getUsername())));
     if (user != null) {
       throw new RestProcessingException("Username already used");
     }
@@ -125,7 +125,7 @@ public class LoginService implements ILoginService {
 
     user = new User();
     user.setPerson(person);
-    List<Group> groups = database.findAsAdmin(query(Group.class, eq("name", GroupEnum.SUPERVISOR.name())));
+    List<Group> groups = database.findAsAdmin(query(Group.class, eq(Group::getName, GroupEnum.SUPERVISOR.name())));
     Assert.isTrue(groups.size() == 1);
     user.getGroups().add(groups.get(0));
     user.setUsername(createAccountData.getUsername());

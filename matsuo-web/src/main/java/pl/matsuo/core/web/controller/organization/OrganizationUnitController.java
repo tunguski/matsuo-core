@@ -13,6 +13,7 @@ import pl.matsuo.core.web.controller.AbstractSimpleController;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.Arrays.*;
 import static org.springframework.http.HttpStatus.*;
@@ -31,8 +32,8 @@ public class OrganizationUnitController extends AbstractSimpleController<Organiz
 
 
   @Override
-  protected List<String> queryMatchers() {
-    return asList("fullName");
+  protected List<Function<OrganizationUnit, String>> queryMatchers() {
+    return asList(OrganizationUnit::getFullName);
   }
 
 

@@ -32,6 +32,6 @@ public abstract class AbstractDbControllerRequestTest extends AbstractController
   @Before
   public void setup() {
     super.setup();
-    sessionState.setUser(database.findOne(query(User.class, eq("username", "admin")).initializer(new UserInitializer())));
+    sessionState.setUser(database.findOne(query(User.class, eq(User::getUsername, "admin")).initializer(new UserInitializer())));
   }
 }

@@ -10,6 +10,7 @@ import pl.matsuo.core.test.NumerationConfig;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 
 @ContextConfiguration(classes = { NumerationConfig.class, MediqTestData.class, PersonTestData.class })
@@ -18,7 +19,7 @@ public class TestPersonTestData extends AbstractDbTest {
 
     @Test
     public void testDataInDatabase() {
-        List<Person> persons = database.find(QueryBuilder.query(Person.class));
+        List<Person> persons = database.find(query(Person.class));
         assertEquals(892, persons.size());
     }
 }

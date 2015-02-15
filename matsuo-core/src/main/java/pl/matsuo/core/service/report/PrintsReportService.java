@@ -23,12 +23,13 @@ public class PrintsReportService extends AbstractReportService<IPrintsReportPara
    * @return Zwraca obiekt zapytania
    */
   private static Query<KeyValuePrint> buildQuery(IPrintsReportParams params) {
-    return QueryBuilder.query(KeyValuePrint.class, new Condition[] {
-        maybe(params.getStartDate(), ge("createdTime", params.getStartDate())),
-        maybe(params.getEndDate(), le("createdTime", params.getEndDate())),
-        maybeEq(params.getPatient(), "patient"),
-        maybeEq(params.getPayer(), "payer"),
-        maybeEq(params.getPrintClass(), "printClass")
+    return query(KeyValuePrint.class, new Condition[]{
+        maybe(params.getStartDate(), ge(KeyValuePrint::getCreatedTime, params.getStartDate())),
+        maybe(params.getEndDate(), le(KeyValuePrint::getCreatedTime, params.getEndDate())),
+        // FIXME: how to reference this?
+//        maybeEq(params.getPatient(), KeyValuePrint::patient),
+//        maybeEq(params.getPayer(), KeyValuePrint::payer),
+        maybeEq(params.getPrintClass(), KeyValuePrint::getPrintClass)
     }).initializer(new PrintInitializer());
   }
 

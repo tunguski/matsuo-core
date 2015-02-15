@@ -38,7 +38,7 @@ public class PartyController {
       result.add(new SimpleParty(party.getId(), party.getName(), AbstractParty.class));
     }
 
-    List<Group> groups = database.find(query(Group.class, ilike("name", params.getQuery())));
+    List<Group> groups = database.find(query(Group.class, ilike(Group::getName, params.getQuery())));
     for (Group group : groups) {
       result.add(new SimpleParty(group.getId(), group.getName(), Group.class));
     }

@@ -76,7 +76,7 @@ public class ExecutionServiceImpl implements ApplicationListener<ContextRefreshe
 
       try {
         boolean noSuccessExecutions =
-            database.find(query(Execution.class, eq("beanName", executeServiceName), eq("success", true))).isEmpty();
+            database.find(query(Execution.class, eq(Execution::getBeanName, executeServiceName), eq(Execution::getSuccess, true))).isEmpty();
 
         if (noSuccessExecutions) {
           try {

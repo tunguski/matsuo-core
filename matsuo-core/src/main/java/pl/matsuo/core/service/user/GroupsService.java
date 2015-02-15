@@ -38,9 +38,6 @@ public class GroupsService implements IGroupsService {
       elements.addAll(providerService.findActualElements());
     }
 
-    List<User> users = database.find(query(User.class, join("group", "groups"), eq("group.name", groupName)));
-    users.size();
-
     return elements;
   }
 

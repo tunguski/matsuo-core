@@ -6,6 +6,7 @@ import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.web.controller.AbstractSimpleController;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.Arrays.*;
 
@@ -16,8 +17,8 @@ public class PersonController extends AbstractSimpleController<Person> {
 
 
   @Override
-  protected List<String> queryMatchers() {
-    return asList("firstName", "lastName");
+  protected List<Function<Person, String>> queryMatchers() {
+    return asList(Person::getFirstName, Person::getLastName);
   }
 }
 

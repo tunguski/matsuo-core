@@ -55,7 +55,7 @@ public abstract class AbstractMessageController<E extends AbstractMessage> exten
 
   @Override
   protected AbstractQuery<E> listQuery(IMessageRequestParams params, Condition... additionalConditions) {
-    return super.listQuery(params, additionalConditions).parts(eq("idParty", params.getIdParty()));
+    return super.listQuery(params, additionalConditions).parts(eq(AbstractMessage::getIdParty, params.getIdParty()));
   }
 }
 

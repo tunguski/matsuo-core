@@ -75,18 +75,20 @@ public class NumerationServiceImpl implements NumerationService {
 
 
   protected Numeration getOrCreateNumeration(String numerationCode, Date date) {
-    Numeration numeration = database.findOne(query(Numeration.class, eq("code", numerationCode),
-        or(isNull("startDate"), le("startDate", date)), or(isNull("endDate"), ge("endDate", date))));
+    Numeration numeration = database.findOne(query(Numeration.class, eq(Numeration::getCode, numerationCode),
+        or(isNull(Numeration::getStartDate), le(Numeration::getStartDate, date)),
+        or(isNull(Numeration::getEndDate), ge(Numeration::getEndDate, date))));
 
     return numeration != null ? numeration : createNumeration(numerationCode, date);
   }
 
 
   protected Numeration createNumeration(String numerationCode, Date date) {
-    NumerationSchema numerationSchema = database.findOne(query(NumerationSchema.class, eq("code", numerationCode)));
+    NumerationSchema numerationSchema =
+        database.findOne(query(NumerationSchema.class, eq(NumerationSchema::getCode, numerationCode)));
     if (numerationSchema == null) {
-      List<NumerationSchema> numerationSchemas =
-          database.findAsAdmin(query(NumerationSchema.class, eq("code", numerationCode), isNull("idBucket")));
+      List<NumerationSchema> numerationSchemas = database.findAsAdmin(query(NumerationSchema.class,
+          eq(NumerationSchema::getCode, numerationCode), isNull(NumerationSchema::getIdBucket)));
       if (numerationSchemas.isEmpty()) {
         throw new RuntimeException("Cannot find numeration schema for code: " + numerationCode);
       } else {

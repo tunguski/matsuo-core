@@ -12,7 +12,7 @@ public interface IGroupsService {
 
 
   /**
-   * Zwraca listę podmiotów które aktualnie kwalifikują się do grupy.
+   * Returns list of parties that qualify by group name.
    */
   Set<AbstractParty> findActualElements(String groupName);
 }

@@ -14,6 +14,7 @@ import pl.matsuo.core.service.db.Database;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
@@ -27,8 +28,8 @@ public class TestAbstractController {
 
   AbstractController controller = new AbstractController<User, IQueryRequestParams>() {
     @Override
-    protected List<String> queryMatchers() {
-      return asList("name", "index");
+    protected List<Function<User, String>> queryMatchers() {
+      return asList(User::getUsername, User::getPassword);
     }
 
     @Override
@@ -51,8 +52,8 @@ public class TestAbstractController {
 
     AbstractQuery query = controller.listQuery(params, q -> "test string");
     assertEquals("FROM pl.matsuo.core.model.user.User user WHERE test string " +
-            "AND (lower(name) like '%some%' OR lower(index) like '%some%') " +
-            "AND (lower(name) like '%text%' OR lower(index) like '%text%')",
+            "AND (lower(username) like '%some%' OR lower(password) like '%some%') " +
+            "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
         query.printQuery());
   }
 
@@ -64,8 +65,8 @@ public class TestAbstractController {
     when(database.find(any(Query.class))).then(invocation -> {
       AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
       assertEquals("FROM pl.matsuo.core.model.user.User user WHERE " +
-              "(lower(name) like '%some%' OR lower(index) like '%some%') " +
-              "AND (lower(name) like '%text%' OR lower(index) like '%text%')",
+              "(lower(username) like '%some%' OR lower(password) like '%some%') " +
+              "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
           query.printQuery());
 
       return Collections.nCopies(100, new User());

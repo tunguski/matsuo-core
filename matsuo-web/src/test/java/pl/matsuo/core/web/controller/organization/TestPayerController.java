@@ -38,9 +38,7 @@ public class TestPayerController {
   public void testLoadingMediq() {
     when(database.find(any(Query.class))).then(invocation -> {
           String queryString = ((AbstractQuery) invocation.getArguments()[0]).printQuery();
-          String expected = "FROM pl.matsuo.core.model.organization.AbstractParty abstractParty WHERE " +
-              "(lower(firstName) like '%mediq%' OR lower(lastName) like '%mediq%' OR lower(fullName) " +
-              "like '%mediq%' OR lower(shortName) like '%mediq%' OR lower(code) like '%mediq%')";
+          String expected = "FROM pl.matsuo.core.model.organization.AbstractParty abstractParty WHERE (lower(name) like '%mediq%')";
           assertTrue("Query does not match:\n" + queryString.trim() + "\nexpected:\n" + expected,
               queryString.trim().equals(expected));
 

@@ -104,12 +104,13 @@ public class PrintController {
 
   protected List<KeyValuePrint> findPrints(IPrintsReportParams params, String personProperty, QueryPart... queryParts) {
     return database.find(query(KeyValuePrint.class, select("keyValuePrint"),
-        maybeEq(params.getIdPatient(), personProperty),
-        maybeEq(params.getIdPayer(), "keyValuePrint.fields['buyer.id']"),
-        maybe(params.getStartDate(), ge("keyValuePrint.createdTime", params.getStartDate())),
-        maybe(params.getEndDate(), le("keyValuePrint.createdTime", params.getEndDate())),
-        maybeEq(params.getPrintClass(), "keyValuePrint.printClass"))
-        .parts(queryParts).initializer(new PrintInitializer()));
+        maybe(params.getIdPatient(), cond(personProperty + " = " + params.getIdPatient())),
+        maybe(params.getIdPayer(), cond("keyValuePrint.fields['buyer.id'] = " + params.getIdPayer())),
+        maybe(params.getStartDate(), ge(KeyValuePrint::getCreatedTime, params.getStartDate())),
+        maybe(params.getEndDate(), le(KeyValuePrint::getCreatedTime, params.getEndDate())),
+        maybeEq(params.getPrintClass(), KeyValuePrint::getPrintClass)
+        )
+            .parts(queryParts).initializer(new PrintInitializer()));
   }
 
 
@@ -120,7 +121,7 @@ public class PrintController {
 //        new LeftJoinElement("appointment",
 //            "pl.matsuo.clinic.model.medical.appointment.Appointment", cond("appointment.id = keyValuePrint.idEntity")));
     // Przypadek KP
-    List<KeyValuePrint> prints2 = findPrints(params, "keyValuePrint.fields['buyer.id']", isNull("keyValuePrint.idEntity"));
+    List<KeyValuePrint> prints2 = findPrints(params, "keyValuePrint.fields['buyer.id']"/* , isNull("keyValuePrint.idEntity") */);
     // prints connected directly to somebody
     List<KeyValuePrint> prints = findPrints(params, "keyValuePrint.idEntity");
 
@@ -160,7 +161,7 @@ public class PrintController {
    */
   @RequestMapping(value = "/list/byIdEntities", method = GET, consumes = {APPLICATION_OCTET_STREAM_VALUE})
   public List<KeyValuePrint> listByIdEntities(@RequestParam("ids") List<Integer> ids) {
-    return database.find(query(KeyValuePrint.class, in("idEntity", ids)).initializer(new PrintInitializer()));
+    return database.find(query(KeyValuePrint.class, in(KeyValuePrint::getIdEntity, ids)).initializer(new PrintInitializer()));
   }
 
 

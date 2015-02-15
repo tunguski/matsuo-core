@@ -13,7 +13,6 @@ import pl.matsuo.core.service.mail.IMailService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static pl.matsuo.core.model.query.QueryBuilder.eq;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -88,7 +87,7 @@ public class TestLoginService extends AbstractDbTest {
 
 
     String ticket = loginService.createAccount(createAccountData, true);
-    User blicky = database.findOne(query(User.class, eq("username", "blicky")));
+    User blicky = database.findOne(query(User.class, eq(User::getUsername, "blicky")));
     assertEquals(ticket, blicky.getUnblockTicket());
 
     verify(mailService).sendMail(anyString(), anyString(), anyString(), anyString(), anyObject());

@@ -420,7 +420,8 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>${mockito.version}</version>
-      <scope>test</scope>
+      <!-- used by query builder at runtime -->
+      <!--<scope>test</scope>-->
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>

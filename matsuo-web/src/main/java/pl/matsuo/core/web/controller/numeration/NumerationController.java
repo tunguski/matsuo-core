@@ -28,12 +28,6 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
 public class NumerationController extends AbstractController<Numeration, IEntityQueryRequestParams> {
 
 
-  @Override
-  protected AbstractQuery<Numeration> listQuery(IEntityQueryRequestParams params, Condition... conditions) {
-    return super.listQuery(params, maybeEq(params.getIdEntity(), "idEntity"));
-  }
-
-
   @RequestMapping(method = POST, consumes = {APPLICATION_JSON_VALUE})
   @ResponseStatus(CREATED)
   @Override

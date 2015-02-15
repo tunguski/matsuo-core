@@ -1,26 +1,29 @@
 package pl.matsuo.core.model.query.condition;
 
+import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.query.AbstractQuery;
+
+import java.util.function.Function;
 
 
 /**
  * Nadklasa dla funkcji jednoargumentowych.
  */
-public class AbstractQueryFunction implements QueryFunction {
+public class AbstractQueryFunction<T extends AbstractEntity, R> implements QueryFunction {
 
 
-  private String fieldName;
+  private Function<T, R> getter;
   private String functionName;
 
 
-  public AbstractQueryFunction(String fieldName, String functionName) {
-    this.fieldName = fieldName;
+  public AbstractQueryFunction(Function<T, R> getter, String functionName) {
+    this.getter = getter;
     this.functionName = functionName;
   }
 
 
   @Override
   public String print(AbstractQuery query) {
-    return functionName + "(" + fieldName + ")";
+    return functionName + "(" + query.resolveFieldName(getter) + ")";
   }
 }

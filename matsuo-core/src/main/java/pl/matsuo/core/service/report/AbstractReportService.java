@@ -48,7 +48,8 @@ public abstract class AbstractReportService<E> implements IReportService<E> {
     dataModel.put("messages", i18nService);
     dataModel.put("generationTime", new Date());
     if (dataModel.get("company") == null) {
-      dataModel.put("company", database.findOne(query(OrganizationUnit.class, eq("id", sessionState.getIdBucket()))));
+      dataModel.put("company", database.findOne(query(OrganizationUnit.class,
+          eq(OrganizationUnit::getId, sessionState.getIdBucket()))));
     }
 
     return dataModel;

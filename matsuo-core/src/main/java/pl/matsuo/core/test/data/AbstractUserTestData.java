@@ -21,7 +21,8 @@ public abstract class AbstractUserTestData extends AbstractTestData {
 
 
   protected void createUser(String firstName, String lastName, String username, String password, String ... groupNames) {
-    Person person = database.findOne(query(Person.class, eq("firstName", firstName), eq("lastName", lastName)));
+    Person person = database.findOne(query(Person.class,
+        eq(Person::getFirstName, firstName), eq(Person::getLastName, lastName)));
     if (person == null) {
       person = new Person();
       person.setFirstName(firstName);
@@ -43,7 +44,7 @@ public abstract class AbstractUserTestData extends AbstractTestData {
     user.setUsername(username);
     user.setPassword(passwordHash(password));
 
-    List<Group> groups = database.find(query(Group.class, in("name", groupNames)));
+    List<Group> groups = database.find(query(Group.class, in(Group::getName, groupNames)));
 
     Assert.isTrue(Objects.equals(groups.size(), groupNames.length));
 

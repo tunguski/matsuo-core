@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.matsuo.core.exception.RestProcessingException;
 import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.organization.Person;
+import pl.matsuo.core.model.query.QueryBuilder;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.session.SessionState;
@@ -20,11 +21,13 @@ import pl.matsuo.core.web.controller.AbstractSimpleController;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.Arrays.*;
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
 import static pl.matsuo.core.util.SecurityUtil.*;
 
 
@@ -42,8 +45,8 @@ public class UserController extends AbstractSimpleController<User> {
 
 
   @Override
-  protected List<String> queryMatchers() {
-    return asList("username", "person.firstName", "person.lastName");
+  protected List<Function<User, String>> queryMatchers() {
+    return asList(User::getUsername, sub(User::getPerson, Person::getFirstName), sub(User::getPerson, Person::getLastName));
   }
 
 
