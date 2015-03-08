@@ -14,7 +14,7 @@ import static pl.matsuo.core.util.function.FunctionalUtil.*;
 public class DataModelBuilder {
 
   private final Database database;
-  private final Map<String,Object> dataModel;
+  private final Map<String, Object> dataModel;
 
   public DataModelBuilder(Map<String, Object> dataModel, Database database) {
     this.database = database;
@@ -36,7 +36,7 @@ public class DataModelBuilder {
     return this;
   }
 
-  public Map<String,Object> getDataModel() {
+  public Map<String, Object> getDataModel() {
     return dataModel;
   }
 }

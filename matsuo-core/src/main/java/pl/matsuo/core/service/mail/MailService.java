@@ -9,6 +9,7 @@ import pl.matsuo.core.model.message.MailMessage;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.print.IPrintsRendererService;
 
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 /**
@@ -26,25 +27,27 @@ public class MailService implements IMailService {
   Database database;
 
 
-  public Integer sendMail(String from, String to, String subject, String bodyTemplate, Object model) {
+  public Integer sendMail(InternetAddress from, InternetAddress to, String subject, String bodyTemplate, Object model) {
     try{
       MimeMessage message = mailSender.createMimeMessage();
 
       // use the true flag to indicate you need a multipart message
       MimeMessageHelper helper = new MimeMessageHelper(message, true);
+      new InternetAddress();
       helper.setTo(to);
       helper.setFrom(from);
-      helper.setSubject(subject);
 
       String body = new String(printsRendererService.renderHtml(bodyTemplate, model));
 
       // use the true flag to indicate the text included is HTML
-      helper.setText(body, true);
+      //helper.setText(encodeText(body), true);
+      message.setText(body, "utf-8", "html");
+      message.setSubject(subject, "utf-8");
       mailSender.send(message);
 
       // after success create database entity
       MailMessage mail = new MailMessage();
-      mail.setAddress(to);
+      mail.setAddress(to.getAddress());
       mail.setText(body);
 
       return database.create(mail).getId();

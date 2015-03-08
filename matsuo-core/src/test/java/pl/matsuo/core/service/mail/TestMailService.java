@@ -10,6 +10,7 @@ import pl.matsuo.core.model.message.MailMessage;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.print.IPrintsRendererService;
 
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import static org.junit.Assert.*;
@@ -47,7 +48,8 @@ public class TestMailService {
 
     when(printsRendererService.renderHtml("bodyTemplate.ftl", null)).thenReturn("OK".getBytes());
 
-    assertEquals((Integer) 55, mailService.sendMail("from", "to", "subject", "bodyTemplate.ftl", null));
+    assertEquals((Integer) 55, mailService.sendMail(new InternetAddress("from@example.com"),
+        new InternetAddress("to@example.com"), "subject", "bodyTemplate.ftl", null));
 
     verify(mailSender).send(any(MimeMessage.class));
   }

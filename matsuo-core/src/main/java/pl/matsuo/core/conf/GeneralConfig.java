@@ -1,9 +1,12 @@
 package pl.matsuo.core.conf;
 
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
@@ -14,6 +17,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * Created by tunguski on 22.09.13.
  */
 @Configuration
+@PropertySource("classpath:/app.properties")
 public class GeneralConfig {
 
 
@@ -27,6 +31,11 @@ public class GeneralConfig {
 
   @Bean public static BeanFactoryPostProcessor generalServices() {
     return new ClassesAddingBeanFactoryPostProcessor(GenericConversionService.class, LocalValidatorFactoryBean.class);
+  }
+
+
+  @Bean public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    return new PropertySourcesPlaceholderConfigurer();
   }
 
 
