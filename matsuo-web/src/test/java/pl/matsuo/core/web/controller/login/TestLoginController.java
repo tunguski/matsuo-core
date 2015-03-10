@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -127,9 +128,10 @@ public class TestLoginController extends AbstractControllerTest {
     assertFalse(result.isEmpty());
 
     User user = database.findOne(query(User.class, eq(User::getUsername, "tristan")));
+    MockHttpServletResponse response = new MockHttpServletResponse();
 
     try {
-      controller.activateAccount(user.getUnblockTicket());
+      controller.activateAccount(user.getUnblockTicket(), response);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -144,7 +146,8 @@ public class TestLoginController extends AbstractControllerTest {
     checkEntitiesCountForBucket(user.getIdBucket(), 1, Address.class);
 
     try {
-      controller.activateAccount(user.getUnblockTicket());
+      response = new MockHttpServletResponse();
+      controller.activateAccount(user.getUnblockTicket(), response);
     } catch (Exception e) {
       return;
     }

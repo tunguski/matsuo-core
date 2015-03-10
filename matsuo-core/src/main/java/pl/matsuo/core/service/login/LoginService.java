@@ -153,7 +153,8 @@ public class LoginService implements ILoginService {
     }
 
     if (sendMail) {
-      runtimeEx(() -> mailService.sendMail(new InternetAddress(generalMailAccount, appName), new InternetAddress(user.getUsername()),
+      runtimeEx(() -> mailService.sendMail(new InternetAddress(generalMailAccount, appName),
+          new InternetAddress(user.getUsername()),
           "Witamy! Prosimy o weryfikację adresu e-mail", "createAccount.ftl",
           new DataModelBuilder().put("user", user).getDataModel()));
     }

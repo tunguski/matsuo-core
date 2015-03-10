@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -63,8 +64,14 @@ public abstract class AbstractControllerRequestTest {
 
 
   protected void performAndCheck(MockHttpServletRequestBuilder request, Consumer<String>... checks) throws Exception {
+    performAndCheckStatus(request, status().isOk(), checks);
+  }
+
+
+  protected void performAndCheckStatus(MockHttpServletRequestBuilder request, ResultMatcher status,
+                                 Consumer<String>... checks) throws Exception {
     ResultActions result = mockMvc.perform(request);
-    result.andExpect(status().isOk());
+    result.andExpect(status);
     String html = result.andReturn().getResponse().getContentAsString();
 
     for (Consumer<String> check : checks) {

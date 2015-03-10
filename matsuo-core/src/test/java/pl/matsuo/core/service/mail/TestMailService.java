@@ -4,8 +4,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import pl.matsuo.core.model.message.MailMessage;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.print.IPrintsRendererService;
@@ -23,8 +25,8 @@ public class TestMailService {
 
   @InjectMocks
   MailService mailService = new MailService();
-  @Mock
-  JavaMailSender mailSender;
+  @Spy
+  JavaMailSender mailSender = new JavaMailSenderImpl();
   @Mock
   Database database;
   @Mock
@@ -42,14 +44,14 @@ public class TestMailService {
     MailMessage mailMessage = new MailMessage();
     mailMessage.setId(55);
 
-    MimeMessage mimeMessage = mock(MimeMessage.class);
-    when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
+    doAnswer(invocation -> null).when(mailSender).send(any(MimeMessage.class));
     when(database.create(any(MailMessage.class))).thenReturn(mailMessage);
 
     when(printsRendererService.renderHtml("bodyTemplate.ftl", null)).thenReturn("OK".getBytes());
 
     assertEquals((Integer) 55, mailService.sendMail(new InternetAddress("from@example.com"),
         new InternetAddress("to@example.com"), "subject", "bodyTemplate.ftl", null));
+
 
     verify(mailSender).send(any(MimeMessage.class));
   }

@@ -11,6 +11,8 @@ import static org.mockito.Mockito.*;
  */
 @Configuration
 public class TestMailConfig {
+
+
   @Bean
   IMailService mailService() {
     return mock(IMailService.class);

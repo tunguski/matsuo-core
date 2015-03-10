@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import pl.matsuo.core.exception.RestProcessingException;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.login.CreateAccountData;
@@ -16,6 +17,8 @@ import pl.matsuo.core.service.login.LoginData;
 import pl.matsuo.core.service.permission.IPermissionService;
 import pl.matsuo.core.service.session.SessionState;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +62,13 @@ public class LoginController {
 
 
   @RequestMapping(value = "/activateAccount/{ticket}")
-  public void activateAccount(@PathVariable("ticket") String ticket) {
+  public void activateAccount(@PathVariable("ticket") String ticket, HttpServletResponse response) {
     loginService.activateAccount(ticket);
+    try {
+      response.sendRedirect("/");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
 

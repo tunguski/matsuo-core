@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.util.NestedServletException;
 import pl.matsuo.core.conf.TestMailConfig;
 import pl.matsuo.core.exception.RestProcessingException;
@@ -20,6 +21,7 @@ import pl.matsuo.core.web.controller.AbstractDbControllerRequestTest;
 
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 
@@ -53,7 +55,7 @@ public class TestLoginControllerRequest extends AbstractDbControllerRequestTest 
     User user = database.findOne(query(User.class, eq(User::getUsername, "kryspin")));
 
     try {
-      performAndCheck(get("/login/activateAccount/" + user.getUnblockTicket()));
+      performAndCheckStatus(get("/login/activateAccount/" + user.getUnblockTicket()), status().isFound());
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
