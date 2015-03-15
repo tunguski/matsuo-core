@@ -28,7 +28,7 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 
 /**
- * Serwis wykonujący zdefiniowane operacje.
+ * Execute defined (mostly database) changes.
  * @author Marek Romanowski
  * @since 11-07-2013
  */
@@ -89,7 +89,7 @@ public class ExecutionServiceImpl implements ApplicationListener<ContextRefreshe
             logger.info("Processed execution: " + executeServiceName + " in "
                             + (1.0 * (endTime - startTime) / 1000) + " seconds");
           } catch (Exception e) {
-            // TODO: zapisanie informacji o błędzie wykonania
+            // TODO: save information about unsuccessful script execution
             logger.error("Error while processing execution: " + executeServiceName, e);
           } finally {
             sessionState.setUser(null);
