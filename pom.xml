@@ -27,8 +27,8 @@
     <commons-codec.version>1.10</commons-codec.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <commons-io.version>2.4</commons-io.version>
-    <commons-lang3.version>3.3.2</commons-lang3.version>
-    <cors-filter.version>2.3</cors-filter.version>
+    <commons-lang3.version>3.4</commons-lang3.version>
+    <cors-filter.version>2.4</cors-filter.version>
     <el-api.version>2.2.1-b04</el-api.version>
     <el-ri.version>1.0</el-ri.version>
     <flying-saucer.version>9.0.7</flying-saucer.version>
@@ -40,21 +40,21 @@
     <hibernate-core.version>4.3.8.Final</hibernate-core.version>
     <hibernate-validator-pl.version>0.1-SNAPSHOT</hibernate-validator-pl.version>
     <hsqldb.version>2.3.2</hsqldb.version>
-    <htmlunit.version>2.15</htmlunit.version>
+    <htmlunit.version>2.16</htmlunit.version>
     <jasperreports.version>5.2.0</jasperreports.version>
     <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
     <javax.mail.version>1.5.0-b01</javax.mail.version>
     <jackson-2.version>2.5.1</jackson-2.version>
-    <jetty.version>9.3.0.M2</jetty.version>
+    <jetty.version>9.3.0.RC0</jetty.version>
     <jgit.version>3.6.2.201501210735-r</jgit.version>
-    <json-path.version>1.2.0</json-path.version>
+    <json-path.version>2.0.0</json-path.version>
     <junit.version>4.12</junit.version>
-    <mockito.version>2.0.5-beta</mockito.version>
-    <pdfbox.version>1.8.8</pdfbox.version>
-    <poi.version>3.11</poi.version>
+    <mockito.version>2.0.8-beta</mockito.version>
+    <pdfbox.version>1.8.9</pdfbox.version>
+    <poi.version>3.12</poi.version>
     <selenium.version>2.45.0</selenium.version>
-    <slf4j.version>1.7.10</slf4j.version>
-    <spring.version>4.1.5.RELEASE</spring.version>
+    <slf4j.version>1.7.12</slf4j.version>
+    <spring.version>4.1.6.RELEASE</spring.version>
     <super-csv.version>2.3.1</super-csv.version>
     <xml-apis.version>1.4.01</xml-apis.version>
 
