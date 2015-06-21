@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.message.AbstractMessage;
 import pl.matsuo.core.model.organization.AbstractParty;
 import pl.matsuo.core.model.query.AbstractQuery;
@@ -54,8 +55,10 @@ public abstract class AbstractMessageController<E extends AbstractMessage> exten
 
 
   @Override
-  protected AbstractQuery<E> listQuery(IMessageRequestParams params, Condition... additionalConditions) {
-    return super.listQuery(params, additionalConditions).parts(eq(AbstractMessage::getIdParty, params.getIdParty()));
+  protected <F extends AbstractEntity> AbstractQuery<F> listQuery(
+      Class<F> entity, IMessageRequestParams params, Condition... additionalConditions) {
+    return super.listQuery(entity, params, additionalConditions)
+        .parts(eq(AbstractMessage::getIdParty, params.getIdParty()));
   }
 }
 

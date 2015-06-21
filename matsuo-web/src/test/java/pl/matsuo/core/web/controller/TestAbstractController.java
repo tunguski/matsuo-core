@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
+import pl.matsuo.core.model.query.condition.Condition;
 import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.AbstractQuery;
@@ -124,13 +125,13 @@ public class TestAbstractController {
       return Collections.nCopies(33, new User());
     });
 
-    assertEquals(33, controller.list(q -> "test_x", q -> "test_y").size());
+    assertEquals(33, controller.list((Condition) q -> "test_x", q -> "test_y").size());
   }
 
   @Test
   public void testEntityQuery() throws Exception {
     assertEquals("FROM pl.matsuo.core.model.user.User user WHERE test_x AND test_y",
-        controller.entityQuery(q -> "test_x", q -> "test_y").printQuery());
+        controller.entityQuery(User.class, q -> "test_x", q -> "test_y").printQuery());
   }
 
   @Test
