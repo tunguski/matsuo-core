@@ -40,16 +40,16 @@
     <hibernate-core.version>4.3.8.Final</hibernate-core.version>
     <hibernate-validator-pl.version>0.1-SNAPSHOT</hibernate-validator-pl.version>
     <hsqldb.version>2.3.2</hsqldb.version>
-    <htmlunit.version>2.16</htmlunit.version>
+    <htmlunit.version>2.17</htmlunit.version>
     <jasperreports.version>5.2.0</jasperreports.version>
     <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
     <javax.mail.version>1.5.0-b01</javax.mail.version>
     <jackson-2.version>2.5.1</jackson-2.version>
-    <jetty.version>9.3.0.RC0</jetty.version>
+    <jetty.version>9.3.0.RC1</jetty.version>
     <jgit.version>3.6.2.201501210735-r</jgit.version>
     <json-path.version>2.0.0</json-path.version>
     <junit.version>4.12</junit.version>
-    <mockito.version>2.0.8-beta</mockito.version>
+    <mockito.version>2.0.14-beta</mockito.version>
     <pdfbox.version>1.8.9</pdfbox.version>
     <poi.version>3.12</poi.version>
     <selenium.version>2.45.0</selenium.version>
