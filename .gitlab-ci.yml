@@ -1,5 +1,4 @@
-image: maven:latest
-job1:
+test:
   stage: build
   script:
     - mvn clean install
