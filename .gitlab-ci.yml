@@ -1,0 +1,7 @@
+image: maven:latest
+job1:
+  stage: build
+  script:
+    - mvn clean install
+  tags:
+    - mvn
