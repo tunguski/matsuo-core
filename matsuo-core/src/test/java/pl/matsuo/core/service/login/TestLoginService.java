@@ -33,7 +33,7 @@ public class TestLoginService extends AbstractDbTest {
   public void testLogin() throws Exception {
     LoginData loginData = new LoginData();
     loginData.setUsername("admin");
-    loginData.setPassword("test");
+    loginData.setPassword("6%86P#WnukNp2gBm");
     assertEquals("admin", loginService.login(loginData));
 
     verifyNoMoreInteractions(mailService);

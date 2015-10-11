@@ -15,7 +15,7 @@ public class UserTestData extends AbstractUserTestData {
 
   @Override
   public void execute() {
-    createUser("Vlad", "Hernandez", "admin", "test", ADMIN.name());
+    createUser("Vlad", "Hernandez", "admin", "6%86P#WnukNp2gBm", ADMIN.name());
   }
 }
 

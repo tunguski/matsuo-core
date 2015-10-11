@@ -101,7 +101,7 @@ public class TestUserController extends AbstractControllerTest {
     IChangePasswordParams params = facadeBuilder.createFacade(new HashMap<>(), IChangePasswordParams.class);
 
     params.setId(user.getId());
-    params.setActualPassword("test");
+    params.setActualPassword("6%86P#WnukNp2gBm");
     params.setNewPassword("kredka111");
     params.setConfirmationPassword("kredka111");
 
@@ -117,7 +117,7 @@ public class TestUserController extends AbstractControllerTest {
     IChangePasswordParams params = facadeBuilder.createFacade(new HashMap<>(), IChangePasswordParams.class);
 
     params.setId(0);
-    params.setActualPassword("test");
+    params.setActualPassword("6%86P#WnukNp2gBm");
     params.setNewPassword("kredka111");
     params.setConfirmationPassword("kredka111");
 

@@ -64,7 +64,7 @@ public class TestLoginController extends AbstractControllerTest {
   public void testCorrectLogin() throws Exception {
     LoginData loginData = new LoginData();
     loginData.setUsername("admin");
-    loginData.setPassword("test");
+    loginData.setPassword("6%86P#WnukNp2gBm");
 
     assertEquals("admin", controller.login(loginData));
 
