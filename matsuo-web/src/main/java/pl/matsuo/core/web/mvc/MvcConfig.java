@@ -11,6 +11,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import pl.matsuo.core.conf.ClassesAddingBeanFactoryPostProcessor;
@@ -81,6 +82,12 @@ public class MvcConfig extends WebMvcConfigurationSupport implements Application
   public BeanFactoryPostProcessor mvcServices() {
     return new ClassesAddingBeanFactoryPostProcessor(BootstrapRenderer.class,
         FacadeBuilderHandlerMethodArgumentResolver.class);
+  }
+
+
+  @Bean
+  public CommonsMultipartResolver multipartResolver() {
+    return new CommonsMultipartResolver();
   }
 }
 
