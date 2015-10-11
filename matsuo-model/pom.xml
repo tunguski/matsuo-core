@@ -56,7 +56,7 @@
     </dependency>
 
     <dependency>
-      <groupId>com.tunguski</groupId>
+      <groupId>pl.matsuo</groupId>
       <artifactId>hibernate-validator-pl</artifactId>
       <version>${hibernate-validator-pl.version}</version>
     </dependency>

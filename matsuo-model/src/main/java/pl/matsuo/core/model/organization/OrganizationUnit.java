@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.organization;
 
-import com.tunguski.validator.REGON;
+import pl.matsuo.validator.REGON;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;

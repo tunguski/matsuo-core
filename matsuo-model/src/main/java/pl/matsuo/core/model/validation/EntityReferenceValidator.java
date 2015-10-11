@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.validation;
 
-import com.tunguski.validator.ValidatorBase;
+import pl.matsuo.validator.ValidatorBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.matsuo.core.service.db.Database;
 

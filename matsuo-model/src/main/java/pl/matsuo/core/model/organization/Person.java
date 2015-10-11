@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.organization;
 
-import com.tunguski.validator.PESEL;
+import pl.matsuo.validator.PESEL;
 import pl.matsuo.core.model.organization.address.Address;
 
 import javax.persistence.Entity;

@@ -1,7 +1,7 @@
 package pl.matsuo.core.model.organization;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tunguski.validator.NIP;
+import pl.matsuo.validator.NIP;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.address.Address;
 
