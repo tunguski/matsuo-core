@@ -6,7 +6,7 @@
   <packaging>pom</packaging>
   <groupId>pl.matsuo</groupId>
   <artifactId>matsuo-core-parent</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.1.1</version>
   <name>matsuo-parent</name>
   <url>${site.url}</url>
   <description>Common code for building server and web applications.</description>
