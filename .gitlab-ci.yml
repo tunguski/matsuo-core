@@ -1,0 +1,6 @@
+test:
+  stage: build
+  script:
+    - mvn clean install
+  tags:
+    - mvn
