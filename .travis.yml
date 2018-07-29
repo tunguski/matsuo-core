@@ -5,3 +5,6 @@ after_success: mvn cobertura:cobertura coveralls:report
 jdk:
   - oraclejdk8
   - oraclejdk9
+  - oraclejdk10
+  - openjdk10
+  - openjdk11
