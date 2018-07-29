@@ -1,21 +1,24 @@
 package pl.matsuo.core.service.db;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.Test;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import pl.matsuo.core.model.query.AbstractQuery;
-import pl.matsuo.core.model.user.User;
-import pl.matsuo.core.service.session.SessionState;
+import static java.util.Arrays.*;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static java.util.Arrays.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.junit.Test;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+
+import pl.matsuo.core.model.query.AbstractQuery;
+import pl.matsuo.core.model.user.User;
+import pl.matsuo.core.service.session.SessionState;
 
 
 public class TestDatabaseImpl {
@@ -39,7 +42,7 @@ public class TestDatabaseImpl {
     when(sessionFactory.getCurrentSession()).thenReturn(session);
     when(sessionState.getIdBucket()).thenReturn(10);
     doAnswer(invocation -> {
-      AbstractQuery query = invocation.getArgumentAt(0, AbstractQuery.class);
+      AbstractQuery query = invocation.getArgument(0);
       with(AbstractQuery.class.getDeclaredField("sessionFactory"), field -> {
         field.setAccessible(true);
         try {
@@ -75,7 +78,7 @@ public class TestDatabaseImpl {
 
   @Test
   public void testFindAll() throws Exception {
-    org.hibernate.Query hQuery = mock(org.hibernate.Query.class);
+    org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
 
@@ -139,7 +142,7 @@ public class TestDatabaseImpl {
 
   @Test
   public void testFind() throws Exception {
-    org.hibernate.Query hQuery = mock(org.hibernate.Query.class);
+    org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
 
@@ -151,7 +154,7 @@ public class TestDatabaseImpl {
 
   @Test
   public void testFindAsAdmin() throws Exception {
-    org.hibernate.Query hQuery = mock(org.hibernate.Query.class);
+    org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
 
@@ -163,7 +166,7 @@ public class TestDatabaseImpl {
 
   @Test
   public void testFindOne() throws Exception {
-    org.hibernate.Query hQuery = mock(org.hibernate.Query.class);
+    org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
 

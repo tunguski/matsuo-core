@@ -1,7 +1,11 @@
 package pl.matsuo.core.web.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.springframework.http.MediaType.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+
+import java.util.function.Consumer;
+
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +18,14 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.test.data.TestSessionState;
 import pl.matsuo.core.web.mvc.MvcConfig;
-
-import java.util.function.Consumer;
-
-import static org.springframework.http.MediaType.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 
 /**
@@ -47,10 +49,13 @@ public abstract class AbstractControllerRequestTest {
   protected ObjectMapper objectMapper;
 
 
-  protected MockHttpServletRequestBuilder post(String url, Object content) throws JsonProcessingException {
-    return MockMvcRequestBuilders.post(url).content(objectMapper.writeValueAsString(content)).contentType(APPLICATION_JSON);
+  protected MockHttpServletRequestBuilder post(String url, Object content)
+      throws JsonProcessingException {
+    return MockMvcRequestBuilders
+        .post(url)
+        .content(objectMapper.writeValueAsString(content))
+        .contentType(APPLICATION_JSON);
   }
-
 
   protected MockHttpServletRequestBuilder post(String url) throws JsonProcessingException {
     return MockMvcRequestBuilders.post(url);
@@ -69,7 +74,7 @@ public abstract class AbstractControllerRequestTest {
 
 
   protected void performAndCheckStatus(MockHttpServletRequestBuilder request, ResultMatcher status,
-                                 Consumer<String>... checks) throws Exception {
+      Consumer<String>... checks) throws Exception {
     ResultActions result = mockMvc.perform(request);
     result.andExpect(status);
     String html = result.andReturn().getResponse().getContentAsString();

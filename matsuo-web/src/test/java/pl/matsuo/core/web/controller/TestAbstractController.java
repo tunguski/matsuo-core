@@ -1,25 +1,27 @@
 package pl.matsuo.core.web.controller;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.Before;
-import org.junit.Test;
-import pl.matsuo.core.model.query.condition.Condition;
-import pl.matsuo.core.params.IQueryRequestParams;
-import pl.matsuo.core.model.api.Initializer;
-import pl.matsuo.core.model.query.AbstractQuery;
-import pl.matsuo.core.model.query.Query;
-import pl.matsuo.core.model.user.User;
-import pl.matsuo.core.service.db.Database;
+import static java.util.Arrays.*;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-import static java.util.Arrays.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.junit.Before;
+import org.junit.Test;
+
+import pl.matsuo.core.model.api.Initializer;
+import pl.matsuo.core.model.query.AbstractQuery;
+import pl.matsuo.core.model.query.Query;
+import pl.matsuo.core.model.query.condition.Condition;
+import pl.matsuo.core.model.user.User;
+import pl.matsuo.core.params.IQueryRequestParams;
+import pl.matsuo.core.service.db.Database;
 
 
 public class TestAbstractController {
@@ -53,8 +55,8 @@ public class TestAbstractController {
 
     AbstractQuery query = controller.listQuery(params, q -> "test string");
     assertEquals("FROM pl.matsuo.core.model.user.User user WHERE test string " +
-            "AND (lower(username) like '%some%' OR lower(password) like '%some%') " +
-            "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
+        "AND (lower(username) like '%some%' OR lower(password) like '%some%') " +
+        "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
         query.printQuery());
   }
 
@@ -66,8 +68,8 @@ public class TestAbstractController {
     when(database.find(any(Query.class))).then(invocation -> {
       AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
       assertEquals("FROM pl.matsuo.core.model.user.User user WHERE " +
-              "(lower(username) like '%some%' OR lower(password) like '%some%') " +
-              "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
+          "(lower(username) like '%some%' OR lower(password) like '%some%') " +
+          "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
           query.printQuery());
 
       return Collections.nCopies(100, new User());
@@ -87,7 +89,7 @@ public class TestAbstractController {
     when(database.find(any(Query.class))).then(invocation -> {
 
       SessionFactory sessionFactory = mock(SessionFactory.class);
-      org.hibernate.Query hQuery = mock(org.hibernate.Query.class);
+      org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
       Session session = mock(Session.class);
 
       when(sessionFactory.getCurrentSession()).thenReturn(session);
@@ -150,7 +152,7 @@ public class TestAbstractController {
   @Test
   public void testFind() throws Exception {
     User user = new User();
-    when(database.findById(any(Class.class), any(Integer.class), any(Initializer[].class))).thenReturn(user);
+    when(database.findById(any(Class.class), any(Integer.class), any(Initializer.class))).thenReturn(user);
     assertTrue(controller.find(7).getBody() == user);
   }
 

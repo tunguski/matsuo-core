@@ -1,11 +1,20 @@
 package pl.matsuo.core.db;
 
+import static org.junit.Assert.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.util.ReflectUtil.*;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.hibernate.Interceptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import pl.matsuo.core.conf.DbConfig;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.service.db.Database;
@@ -13,13 +22,6 @@ import pl.matsuo.core.service.db.EntityInterceptorService;
 import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
 import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 import pl.matsuo.core.test.data.TestSessionState;
-
-import javax.transaction.Transactional;
-import java.util.List;
-
-import static org.junit.Assert.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

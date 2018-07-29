@@ -1,5 +1,12 @@
 package pl.matsuo.core.conf;
 
+import static java.lang.System.*;
+
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -11,21 +18,15 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import pl.matsuo.core.service.db.DatabaseImpl;
 import pl.matsuo.core.service.db.EntityInterceptorService;
 import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
 import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Properties;
-
-import static java.lang.System.*;
-
 
 /**
  * Created by tunguski on 19.09.13.
@@ -36,16 +37,18 @@ import static java.lang.System.*;
 public class DbConfig {
   private static Logger logger = LoggerFactory.getLogger(DbConfig.class);
 
-
-  @Autowired(required=false) @Qualifier("prod")
+  @Autowired(required = false)
+  @Qualifier("prod")
   DataSource dataSource;
-  @Autowired(required=false) @Qualifier("prod")
+  @Autowired(required = false)
+  @Qualifier("prod")
   FactoryBean<SessionFactory> sessionFactory;
-  @Autowired(required=false) @Qualifier("prod")
+  @Autowired(required = false)
+  @Qualifier("prod")
   PlatformTransactionManager transactionManager;
 
-
-  @Bean(name = "default.dataSource") @Qualifier("app-ds")
+  @Bean(name = "default.dataSource")
+  @Qualifier("app-ds")
   public DataSource dataSource() throws IOException, InterruptedException {
     if (dataSource != null) {
       return dataSource;
@@ -57,7 +60,8 @@ public class DbConfig {
 
       logger.warn("Test environment!");
       dataSource.setDriverClassName(properties.getProperty("db.default.driverClassName"));
-      dataSource.setUrl(properties.getProperty("db.default.url").replace("test_db", "test_db_" + currentTimeMillis()));
+      dataSource.setUrl(properties.getProperty("db.default.url").replace("test_db",
+          "test_db_" + currentTimeMillis()));
       dataSource.setUsername(properties.getProperty("db.default.username"));
       dataSource.setPassword(properties.getProperty("db.default.password"));
 
@@ -65,10 +69,10 @@ public class DbConfig {
     }
   }
 
-
-  @Bean(name = "default.sessionFactory") @Qualifier("app-sessionFactory")
+  @Bean(name = "default.sessionFactory")
+  @Qualifier("app-sessionFactory")
   public FactoryBean<SessionFactory> sessionFactoryBean(EntityInterceptorService interceptor,
-                                                        @Qualifier("app-ds") DataSource dataSource) throws IOException {
+      @Qualifier("app-ds") DataSource dataSource) throws IOException {
     if (sessionFactory != null) {
       return sessionFactory;
     } else {
@@ -85,9 +89,9 @@ public class DbConfig {
     }
   }
 
-
   @Bean(name = "default.transactionManager")
-  public PlatformTransactionManager transactionManager(@Qualifier("app-sessionFactory") SessionFactory sessionFactory) {
+  public PlatformTransactionManager transactionManager(
+      @Qualifier("app-sessionFactory") SessionFactory sessionFactory) {
     if (transactionManager != null) {
       return transactionManager;
     } else {
@@ -97,10 +101,9 @@ public class DbConfig {
     }
   }
 
-
-  @Bean public static BeanFactoryPostProcessor database() {
-    return new ClassesAddingBeanFactoryPostProcessor(DatabaseImpl.class, EntityInterceptorService.class,
-        AuditTrailInterceptor.class, IdBucketInterceptor.class);
+  @Bean
+  public static BeanFactoryPostProcessor database() {
+    return new ClassesAddingBeanFactoryPostProcessor(DatabaseImpl.class,
+        EntityInterceptorService.class, AuditTrailInterceptor.class, IdBucketInterceptor.class);
   }
 }
-

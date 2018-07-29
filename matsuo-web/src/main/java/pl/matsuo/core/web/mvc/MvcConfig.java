@@ -1,7 +1,11 @@
 package pl.matsuo.core.web.mvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.*;
+import static com.fasterxml.jackson.databind.DeserializationFeature.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.ApplicationListener;
@@ -14,15 +18,13 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+
 import pl.matsuo.core.conf.ClassesAddingBeanFactoryPostProcessor;
 import pl.matsuo.core.web.annotation.WebConfiguration;
 import pl.matsuo.core.web.view.BootstrapRenderer;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.*;
-import static com.fasterxml.jackson.databind.DeserializationFeature.*;
 
 
 @WebConfiguration
@@ -39,7 +41,7 @@ public class MvcConfig extends WebMvcConfigurationSupport implements Application
           event.getApplicationContext().getBean(FacadeBuilderHandlerMethodArgumentResolver.class);
 
       List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<>(adapter.getArgumentResolvers());
-      List<HandlerMethodArgumentResolver> customResolvers = adapter.getCustomArgumentResolvers();
+      adapter.getCustomArgumentResolvers();
       argumentResolvers.remove(facadeBuilderHandlerMethodArgumentResolver);
       argumentResolvers.add(0, facadeBuilderHandlerMethodArgumentResolver);
       adapter.setArgumentResolvers(argumentResolvers);
@@ -70,7 +72,7 @@ public class MvcConfig extends WebMvcConfigurationSupport implements Application
     objectMapper.setDateFormat(new CustomDateFormat());
 
     objectMapper.registerModule(new CustomJacksonModule());
-    objectMapper.registerModule(new Hibernate4Module());
+    objectMapper.registerModule(new Hibernate5Module());
     objectMapper.setSerializationInclusion(NON_NULL);
     objectMapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
 

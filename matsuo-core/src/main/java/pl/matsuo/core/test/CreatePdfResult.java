@@ -1,11 +1,11 @@
 package pl.matsuo.core.test;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.util.PDFTextStripper;
+import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
 import java.io.ByteArrayInputStream;
 
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 
 /**

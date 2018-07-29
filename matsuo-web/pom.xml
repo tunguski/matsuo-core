@@ -38,8 +38,7 @@
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-hibernate4</artifactId>
-      <!-- fixme: ${jackson-2.version} jak tylko zostanie wydany update tego pluginu -->
+      <artifactId>jackson-datatype-hibernate5</artifactId>
       <version>${jackson-2.version}</version>
     </dependency>
 

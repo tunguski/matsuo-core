@@ -1,22 +1,25 @@
 package pl.matsuo.core.service.login;
 
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+
+import javax.mail.internet.InternetAddress;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import pl.matsuo.core.AbstractDbTest;
 import pl.matsuo.core.conf.GeneralConfig;
 import pl.matsuo.core.conf.TestMailConfig;
 import pl.matsuo.core.exception.UnauthorizedException;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.mail.IMailService;
-
-import javax.mail.internet.InternetAddress;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { LoginService.class, TestMailConfig.class, GeneralConfig.class })
@@ -86,7 +89,7 @@ public class TestLoginService extends AbstractDbTest {
 
     when(mailService.sendMail(any(InternetAddress.class), any(InternetAddress.class), anyString(), anyString(), anyObject())).then(
         invocation -> {
-          InternetAddress address = invocation.getArgumentAt(1, InternetAddress.class);
+          InternetAddress address = invocation.getArgument(1);
           assertEquals("blicky", address.getAddress());
           return null;
         });
