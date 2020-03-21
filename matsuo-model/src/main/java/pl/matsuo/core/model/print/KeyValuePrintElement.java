@@ -1,11 +1,7 @@
 package pl.matsuo.core.model.print;
 
+import javax.persistence.Entity;
 import pl.matsuo.core.model.kv.KeyValueEntity;
 
-import javax.persistence.Entity;
-
-
 @Entity
-public class KeyValuePrintElement extends KeyValueEntity {
-}
-
+public class KeyValuePrintElement extends KeyValueEntity {}

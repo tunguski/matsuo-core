@@ -1,6 +1,7 @@
 package pl.matsuo.core.service.mail;
 
-
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -9,26 +10,17 @@ import pl.matsuo.core.model.message.MailMessage;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.print.IPrintsRendererService;
 
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-/**
- * Created by marek on 24.01.15.
- */
+/** Created by marek on 24.01.15. */
 @Service
 public class MailService implements IMailService {
 
+  @Autowired IPrintsRendererService printsRendererService;
+  @Autowired JavaMailSender mailSender;
+  @Autowired Database database;
 
-  @Autowired
-  IPrintsRendererService printsRendererService;
-  @Autowired
-  JavaMailSender mailSender;
-  @Autowired
-  Database database;
-
-
-  public Integer sendMail(InternetAddress from, InternetAddress to, String subject, String bodyTemplate, Object model) {
-    try{
+  public Integer sendMail(
+      InternetAddress from, InternetAddress to, String subject, String bodyTemplate, Object model) {
+    try {
       MimeMessage message = mailSender.createMimeMessage();
 
       // use the true flag to indicate you need a multipart message
@@ -40,7 +32,7 @@ public class MailService implements IMailService {
       String body = new String(printsRendererService.renderHtml(bodyTemplate, model));
 
       // use the true flag to indicate the text included is HTML
-      //helper.setText(encodeText(body), true);
+      // helper.setText(encodeText(body), true);
       message.setText(body, "utf-8", "html");
       message.setSubject(subject, "utf-8");
       mailSender.send(message);
@@ -57,4 +49,3 @@ public class MailService implements IMailService {
     }
   }
 }
-

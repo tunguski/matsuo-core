@@ -1,20 +1,13 @@
 package pl.matsuo.core.web.view;
 
-import com.google.common.base.Joiner;
-import org.springframework.stereotype.Component;
-import pl.matsuo.core.model.validation.EntityReference;
-import pl.matsuo.core.model.validation.PasswordField;
+import static java.beans.Introspector.*;
+import static java.util.Arrays.*;
+import static org.apache.commons.lang3.ArrayUtils.*;
+import static org.springframework.util.StringUtils.*;
+import static pl.matsuo.core.util.ReflectUtil.*;
+import static pl.matsuo.core.util.collection.ArrayUtil.*;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.metadata.BeanDescriptor;
-import javax.validation.metadata.ConstraintDescriptor;
+import com.google.common.base.Joiner;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
@@ -26,17 +19,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import static java.beans.Introspector.*;
-import static java.util.Arrays.*;
-import static org.apache.commons.lang3.ArrayUtils.*;
-import static org.springframework.util.StringUtils.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
-import static pl.matsuo.core.util.collection.ArrayUtil.*;
-
+import javax.annotation.PostConstruct;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.metadata.BeanDescriptor;
+import javax.validation.metadata.ConstraintDescriptor;
+import org.springframework.stereotype.Component;
+import pl.matsuo.core.model.validation.EntityReference;
+import pl.matsuo.core.model.validation.PasswordField;
 
 /**
  * Zbiór metod automatyzujących generowanie kodu jsp.
+ *
  * @author Marek Romanowski
  * @since 09-06-2013
  */
@@ -44,12 +43,9 @@ import static pl.matsuo.core.util.collection.ArrayUtil.*;
 public class BootstrapRenderer {
   private static Logger logger = Logger.getLogger(BootstrapRenderer.class.getName());
 
-
   private static BootstrapRenderer bootstrapRenderer;
 
-
   Validator validator;
-
 
   @PostConstruct
   public void init() {
@@ -62,61 +58,73 @@ public class BootstrapRenderer {
     validator = Validation.buildDefaultValidatorFactory().getValidator();
   }
 
-
-  protected String renderField(Class<?> fieldType, AnnotatedElement annotatedElement,
-      String fieldName, BootstrapRenderingBuilder builder) {
+  protected String renderField(
+      Class<?> fieldType,
+      AnnotatedElement annotatedElement,
+      String fieldName,
+      BootstrapRenderingBuilder builder) {
     String fullFieldName = fullFieldName(builder.entityName, fieldName);
 
-    return createControlGroup(fullFieldName, createControls(
-        fieldType, annotatedElement, fieldName, builder.entityType, fullFieldName, builder,
-        // css classes
-        addAll(builder.cssClasses, lastNameElement(fieldName.split("[.]")))));
+    return createControlGroup(
+        fullFieldName,
+        createControls(
+            fieldType,
+            annotatedElement,
+            fieldName,
+            builder.entityType,
+            fullFieldName,
+            builder,
+            // css classes
+            addAll(builder.cssClasses, lastNameElement(fieldName.split("[.]")))));
   }
-
 
   private String createControlGroup(String fullFieldName, HtmlElement controls) {
-    return div(asList("form-group", fullFieldName.replaceAll("[.-]", "_"),
-            bindServerErrorPath(fullFieldName, " && 'error' || ''")),
-        el("label", asList("col-sm-4 control-label"))
-              .attr("for", fullFieldName)
-              .attr("translate", fullFieldName),
-        controls
-        ).toString();
+    return div(
+            asList(
+                "form-group",
+                fullFieldName.replaceAll("[.-]", "_"),
+                bindServerErrorPath(fullFieldName, " && 'error' || ''")),
+            el("label", asList("col-sm-4 control-label"))
+                .attr("for", fullFieldName)
+                .attr("translate", fullFieldName),
+            controls)
+        .toString();
   }
-
 
   private String serverErrorPath(String fullFieldName) {
     return formField(fullFieldName, "serverError");
   }
 
-
   private String bindServerErrorPath(String fullFieldName, String suffix) {
     return "{{" + formField(fullFieldName, "serverError") + suffix + "}}";
   }
-
 
   private String formField(String fullFieldName, String field) {
     return joinDot("form", fullFieldName.replaceAll("[.-]", "_"), field);
   }
 
-
-  private String joinDot(String ... parts) {
+  private String joinDot(String... parts) {
     return Joiner.on(".").join(parts);
   }
 
-
-  /**
-   * Tworzy pole formularza razem z helpem, opisem itp.
-   */
-  private HtmlElement createControls(Class<?> fieldType, AnnotatedElement annotatedElement, String fieldName,
-                                     Class<?> entityType, String fullFieldName, BootstrapRenderingBuilder builder,
-                                     String... cssClasses) {
-    return div(asList("col-sm-6", isCheckbox(fieldType) ? "checkbox" : ""),
-        createInput(fieldType, annotatedElement, fullFieldName, entityType, fieldName, builder, cssClasses),
-        el("span", asList("help-inline", bindServerErrorPath(fullFieldName, " ? '' : 'hide'")),
+  /** Tworzy pole formularza razem z helpem, opisem itp. */
+  private HtmlElement createControls(
+      Class<?> fieldType,
+      AnnotatedElement annotatedElement,
+      String fieldName,
+      Class<?> entityType,
+      String fullFieldName,
+      BootstrapRenderingBuilder builder,
+      String... cssClasses) {
+    return div(
+        asList("col-sm-6", isCheckbox(fieldType) ? "checkbox" : ""),
+        createInput(
+            fieldType, annotatedElement, fullFieldName, entityType, fieldName, builder, cssClasses),
+        el(
+            "span",
+            asList("help-inline", bindServerErrorPath(fullFieldName, " ? '' : 'hide'")),
             text(bindServerErrorPath(fullFieldName, ""))));
   }
-
 
   private String lastNameElement(String[] splitted) {
     String lastNameElement = splitted[splitted.length - 1];
@@ -127,53 +135,63 @@ public class BootstrapRenderer {
     return lastNameElement;
   }
 
-
   private boolean isCheckbox(Class<?> fieldType) {
     return boolean.class.isAssignableFrom(fieldType) || Boolean.class.isAssignableFrom(fieldType);
   }
 
-
   protected HtmlElement createSelect(String lastNameElement, String constantValues) {
-    HtmlElement element = el("ui-select", asList(""),
-          el("ui-select-match", asList(""),
-              text("{{ formatElement($select.selected) }}"))
-              .attr("placeholder", "{{ options.placeholderText | translate }}"),
-          el("ui-select-choices", asList(""),
-            div(asList(""))
-              .attr("ng-bind-html", "formatElement(item)"))
-            .attr("repeat", "item in " + constantValues + " | filter: $select.search")
-            .attr("refresh", "searchElements($select.search)"))
-        .attr("mt-select-options", joinDot(lastNameElement, "options"))
-        .attr("ng-disabled", joinDot(lastNameElement, "options.disabled"));
+    HtmlElement element =
+        el(
+                "ui-select",
+                asList(""),
+                el("ui-select-match", asList(""), text("{{ formatElement($select.selected) }}"))
+                    .attr("placeholder", "{{ options.placeholderText | translate }}"),
+                el(
+                        "ui-select-choices",
+                        asList(""),
+                        div(asList("")).attr("ng-bind-html", "formatElement(item)"))
+                    .attr("repeat", "item in " + constantValues + " | filter: $select.search")
+                    .attr("refresh", "searchElements($select.search)"))
+            .attr("mt-select-options", joinDot(lastNameElement, "options"))
+            .attr("ng-disabled", joinDot(lastNameElement, "options.disabled"));
     return element;
   }
 
-
-  /**
-   * Tworzy kontrolkę formularza.
-   */
-  private HtmlPart createInput(Class<?> fieldType, AnnotatedElement annotatedElement, String fullFieldName,
-                               Class<?> entityType, String fieldName, BootstrapRenderingBuilder builder,
-                               String... cssClasses) {
+  /** Tworzy kontrolkę formularza. */
+  private HtmlPart createInput(
+      Class<?> fieldType,
+      AnnotatedElement annotatedElement,
+      String fullFieldName,
+      Class<?> entityType,
+      String fieldName,
+      BootstrapRenderingBuilder builder,
+      String... cssClasses) {
     boolean addFormControlStyle = true;
     HtmlElement el;
     HtmlElement inputIfNotEl = null;
     String ngModel = fullFieldName;
 
     if (Enum.class.isAssignableFrom(fieldType)) {
-      el = el("select", asList(""),
-          getEnumValuesElements((Class<? extends Enum<?>>) fieldType,
-              !isAnnotationPresent(annotatedElement, NotNull.class)));
+      el =
+          el(
+              "select",
+              asList(""),
+              getEnumValuesElements(
+                  (Class<? extends Enum<?>>) fieldType,
+                  !isAnnotationPresent(annotatedElement, NotNull.class)));
     } else if (Time.class.isAssignableFrom(fieldType)) {
-      el = el("input", asList("input-size-time", "timepicker"))
-          .attr("type", "text")
-          .attr("placeholder", "HH:mm");
+      el =
+          el("input", asList("input-size-time", "timepicker"))
+              .attr("type", "text")
+              .attr("placeholder", "HH:mm");
       pattern(el, "[0-2][0-9]:[0-5][0-9]");
     } else if (Date.class.isAssignableFrom(fieldType)) {
-      el = el("input", asList("input-size-date"))
-          .attr("type", "text")
-          .attr("mt-datepicker", "datepickerOptions");
-    } else if (isAnnotationPresent(annotatedElement, ManyToOne.class, EntityReference.class, OneToOne.class)) {
+      el =
+          el("input", asList("input-size-date"))
+              .attr("type", "text")
+              .attr("mt-datepicker", "datepickerOptions");
+    } else if (isAnnotationPresent(
+        annotatedElement, ManyToOne.class, EntityReference.class, OneToOne.class)) {
       String[] splitted = fullFieldName.split("[.]");
       String lastNameElement = lastNameElement(splitted);
 
@@ -185,14 +203,11 @@ public class BootstrapRenderer {
       addFormControlStyle = false;
     } else if (isCheckbox(fieldType)) {
       inputIfNotEl = el("input", asList("")).attr("type", "checkbox");
-      el = el("label", asList(""),
-                inputIfNotEl,
-                text("&nbsp;"));
+      el = el("label", asList(""), inputIfNotEl, text("&nbsp;"));
 
       addFormControlStyle = false;
     } else {
-      el = el("input", asList(""))
-          .attr("type", "text");
+      el = el("input", asList("")).attr("type", "text");
 
       if (Number.class.isAssignableFrom(fieldType)) {
         pattern(el, "[0-9]+([.,][0-9]+)?");
@@ -225,9 +240,8 @@ public class BootstrapRenderer {
     return el;
   }
 
-
   private boolean isAnnotationPresent(
-      AnnotatedElement annotatedElement, Class<? extends Annotation> ... annotations) {
+      AnnotatedElement annotatedElement, Class<? extends Annotation>... annotations) {
     if (annotatedElement != null) {
       for (Class<? extends Annotation> annotation : annotations) {
         if (annotatedElement.isAnnotationPresent(annotation)) {
@@ -239,8 +253,8 @@ public class BootstrapRenderer {
     return false;
   }
 
-
-  private void addFieldValidation(Class<?> fieldType, Class<?> entityType, HtmlElement el, String fieldName) {
+  private void addFieldValidation(
+      Class<?> fieldType, Class<?> entityType, HtmlElement el, String fieldName) {
     if (entityType == null) {
       return;
     }
@@ -255,7 +269,8 @@ public class BootstrapRenderer {
         constraintsForClass.getConstraintsForProperty(propertyName);
 
     if (constraintsForProperty != null) {
-      Set<ConstraintDescriptor<?>> constraintDescriptors = constraintsForProperty.getConstraintDescriptors();
+      Set<ConstraintDescriptor<?>> constraintDescriptors =
+          constraintsForProperty.getConstraintDescriptors();
 
       for (ConstraintDescriptor<?> constraintDescriptor : constraintDescriptors) {
         Object annotation = constraintDescriptor.getAnnotation();
@@ -276,7 +291,6 @@ public class BootstrapRenderer {
     }
   }
 
-
   private <A extends Annotation> A isAnnotatedAnnotation(Class<?> clazz, Class<A> annotation) {
     if (clazz.getAnnotation(annotation) != null) {
       return annotation.getClass().getAnnotation(annotation);
@@ -291,13 +305,12 @@ public class BootstrapRenderer {
     return null;
   }
 
-
   private void pattern(HtmlElement el, String pattern) {
     el.attr("ng-pattern", "/^(" + pattern + ")?$/");
   }
 
-
-  private HtmlPart[] getEnumValuesElements(Class<? extends Enum<?>> propertyType, boolean withEmptyElement) {
+  private HtmlPart[] getEnumValuesElements(
+      Class<? extends Enum<?>> propertyType, boolean withEmptyElement) {
     List<HtmlPart> elements = new ArrayList<>();
 
     if (withEmptyElement) {
@@ -305,23 +318,22 @@ public class BootstrapRenderer {
     }
 
     for (Enum<?> enumElement : propertyType.getEnumConstants()) {
-      elements.add(el("option", asList(""))
-          .attr("translate", joinDot("enum", propertyType.getSimpleName(), enumElement.toString()))
-          .attr("value", enumElement.name()));
+      elements.add(
+          el("option", asList(""))
+              .attr(
+                  "translate",
+                  joinDot("enum", propertyType.getSimpleName(), enumElement.toString()))
+              .attr("value", enumElement.name()));
     }
 
     return elements.toArray(new HtmlPart[0]);
   }
 
-
   public BootstrapRenderingBuilder create(Class<?> entityType) {
     return new BootstrapRenderingBuilder(entityType);
   }
 
-
-  /**
-   * Klasa buildera pozwalająca na zdefiniowanie parametrów renderowania pól.
-   */
+  /** Klasa buildera pozwalająca na zdefiniowanie parametrów renderowania pól. */
   public static class BootstrapRenderingBuilder {
     private Class<?> entityType;
     private String entityName = "entity";
@@ -329,58 +341,63 @@ public class BootstrapRenderer {
     private String[] cssClasses;
     private Map<String, String> attributes = new HashMap<>();
 
-
     public BootstrapRenderingBuilder(Class<?> entityType) {
       this.entityType = entityType;
     }
-
 
     public BootstrapRenderingBuilder entityName(String entityName) {
       this.entityName = entityName;
       return this;
     }
 
-
     public BootstrapRenderingBuilder inline(boolean inline) {
       this.inline = inline;
       return this;
     }
 
-
-    public BootstrapRenderingBuilder cssClasses(String ... cssClasses) {
+    public BootstrapRenderingBuilder cssClasses(String... cssClasses) {
       this.cssClasses = cssClasses;
       return this;
     }
-
 
     public BootstrapRenderingBuilder attribute(String name, String value) {
       attributes.put(name, value);
       return this;
     }
 
-
-    public String render(String ... fields) {
+    public String render(String... fields) {
       if (inline) {
         return renderer().renderInlineFields(fields, this);
       } else {
-        return asList(fields).stream().reduce("", (sum, fieldName) -> {
-          return sum + renderer().renderField(getPropertyType(entityType, fieldName),
-              getAnnotatedElement(entityType, fieldName), fieldName, this) + "\n";
-        });
+        return asList(fields).stream()
+            .reduce(
+                "",
+                (sum, fieldName) -> {
+                  return sum
+                      + renderer()
+                          .renderField(
+                              getPropertyType(entityType, fieldName),
+                              getAnnotatedElement(entityType, fieldName),
+                              fieldName,
+                              this)
+                      + "\n";
+                });
       }
     }
 
-
     public String renderWithName(String entityFieldName, String htmlFieldName) {
-      return renderer().renderField(getPropertyType(entityType, entityFieldName),
-          getAnnotatedElement(entityType, entityFieldName), htmlFieldName, this);
+      return renderer()
+          .renderField(
+              getPropertyType(entityType, entityFieldName),
+              getAnnotatedElement(entityType, entityFieldName),
+              htmlFieldName,
+              this);
     }
   }
 
-
   /**
-   * Renderuje listę pól należących do encji <code>entityType</code>. Prefiksem nazw będzie
-   * "entity" - jako generyczne odwowłanie do  w/w obiektu.
+   * Renderuje listę pól należących do encji <code>entityType</code>. Prefiksem nazw będzie "entity"
+   * - jako generyczne odwowłanie do w/w obiektu.
    */
   private String renderInlineFields(String[] fields, BootstrapRenderingBuilder builder) {
     List<HtmlPart> elements = new ArrayList<>();
@@ -389,59 +406,62 @@ public class BootstrapRenderer {
       String fullFieldName = fullFieldName(builder.entityName, fieldName);
       String simpleElementName = last(fieldName.split("[.]"));
 
-      elements.add(el("span", asList("inline-form-text", simpleElementName)).attr("translate", fullFieldName));
+      elements.add(
+          el("span", asList("inline-form-text", simpleElementName))
+              .attr("translate", fullFieldName));
 
-      elements.add(createInput(getPropertyType(builder.entityType, fieldName),
-                                getAnnotatedElement(builder.entityType, fieldName),
-                                fullFieldName, builder.entityType, "entity", builder,
-                                // css classes
-                                simpleElementName));
+      elements.add(
+          createInput(
+              getPropertyType(builder.entityType, fieldName),
+              getAnnotatedElement(builder.entityType, fieldName),
+              fullFieldName,
+              builder.entityType,
+              "entity",
+              builder,
+              // css classes
+              simpleElementName));
     }
     elements.remove(0);
 
-    elements.add(el("span", asList("help-inline"), text(bindServerErrorPath(builder.entityName, ""))));
+    elements.add(
+        el("span", asList("help-inline"), text(bindServerErrorPath(builder.entityName, ""))));
 
-    return createControlGroup(fullFieldName(builder.entityName, fields[0]),
-                                 div(asList("controls"), elements.toArray(new HtmlPart[0])));
+    return createControlGroup(
+        fullFieldName(builder.entityName, fields[0]),
+        div(asList("controls"), elements.toArray(new HtmlPart[0])));
   }
-
 
   /**
    * Renderuje pojedyncze pole typu <code>fieldType</code>, o nazwie <code>fieldName</code>, któremu
    * opcjonalnie można przypisać dodatkowe klasy stylu <code>cssClasses</code>.
    */
-  public String renderSingleField(Class<?> fieldType, String fieldName, String ... cssClasses) {
+  public String renderSingleField(Class<?> fieldType, String fieldName, String... cssClasses) {
     return renderField(fieldType, null, fieldName, create(null).cssClasses(cssClasses)) + "\n";
   }
 
-
-  public String renderSingleField(Method method, String fieldName, String ... cssClasses) {
-    return renderField(method.getReturnType(), method, fieldName, create(null).cssClasses(cssClasses)) + "\n";
+  public String renderSingleField(Method method, String fieldName, String... cssClasses) {
+    return renderField(
+            method.getReturnType(), method, fieldName, create(null).cssClasses(cssClasses))
+        + "\n";
   }
-
 
   private String fullFieldName(String entityName, String fieldName) {
     return (entityName != null ? decapitalize(entityName) + "." : "") + fieldName;
   }
 
-
-  public HtmlElement div(List<String> classes, HtmlPart ... innerElements) {
+  public HtmlElement div(List<String> classes, HtmlPart... innerElements) {
     return new HtmlElement("div", innerElements).style(classes);
   }
 
-
-  public HtmlElement el(String element, List<String> classes, HtmlPart ... innerElements) {
+  public HtmlElement el(String element, List<String> classes, HtmlPart... innerElements) {
     return new HtmlElement(element, innerElements).style(classes);
   }
-
 
   public HtmlText text(String text) {
     return new HtmlText(text);
   }
 
-
   public static BootstrapRenderer renderer() {
     return bootstrapRenderer;
   }
 }
-

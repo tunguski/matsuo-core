@@ -1,8 +1,8 @@
 package pl.matsuo.core.service.parameterprovider;
 
-
 /**
  * Interfejs dla fasad dostępu do wartości.
+ *
  * @author Marek Romanowski
  * @since Aug 24, 2013
  */
@@ -18,4 +18,3 @@ public interface IParameterProvider<U> {
 
   U getUnderlyingEntity();
 }
-

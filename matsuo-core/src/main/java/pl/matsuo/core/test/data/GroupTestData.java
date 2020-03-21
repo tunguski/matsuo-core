@@ -4,10 +4,8 @@ import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.model.user.GroupEnum;
 
-
 @Component
 public class GroupTestData extends AbstractTestData {
-
 
   @Override
   public void execute() {
@@ -16,11 +14,9 @@ public class GroupTestData extends AbstractTestData {
     }
   }
 
-
   protected void createGroup(String groupName) {
     Group group = new Group();
     group.setName(groupName);
     database.create(group);
   }
 }
-

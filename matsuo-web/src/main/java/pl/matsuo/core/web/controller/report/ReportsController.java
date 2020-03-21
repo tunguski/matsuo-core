@@ -1,5 +1,14 @@
 package pl.matsuo.core.web.controller.report;
 
+import static java.util.Arrays.*;
+import static org.apache.commons.io.IOUtils.*;
+import static org.springframework.core.GenericTypeResolver.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static pl.matsuo.core.util.collection.CollectionUtil.*;
+
+import java.util.Map;
+import java.util.function.BiFunction;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,56 +20,53 @@ import pl.matsuo.core.service.facade.IFacadeBuilder;
 import pl.matsuo.core.service.print.IPrintsRendererService;
 import pl.matsuo.core.service.report.IReportService;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
-import java.util.function.BiFunction;
-
-import static java.util.Arrays.*;
-import static org.apache.commons.io.IOUtils.*;
-import static org.springframework.core.GenericTypeResolver.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.util.collection.CollectionUtil.*;
-
-
 @RestController
 // wyjątkowo ten kontroler jest transakcyjny! ze względu na specyficzny sposób obsługi requestów
 @Transactional
 @RequestMapping("/reports")
 public class ReportsController {
 
-
-  @Autowired
-  Database database;
-  @Autowired
-  IPrintsRendererService printsRendererService;
-  @Autowired
-  IFacadeBuilder facadeBuilder;
+  @Autowired Database database;
+  @Autowired IPrintsRendererService printsRendererService;
+  @Autowired IFacadeBuilder facadeBuilder;
   Map<String, IReportService> reportServicesMap;
-
 
   @RequestMapping(value = "/pdf/{reportName}", method = GET)
   public void generateReportPdf(
       @PathVariable("reportName") String reportName,
       @RequestParam Map<String, String> params,
       HttpServletResponse response) {
-    generateReport("pdf", "application/pdf", printsRendererService::generatePrint, reportName, params, response);
+    generateReport(
+        "pdf",
+        "application/pdf",
+        printsRendererService::generatePrint,
+        reportName,
+        params,
+        response);
   }
-
 
   @RequestMapping(value = "/xls/{reportName}", method = GET)
   public void generateReportXls(
       @PathVariable("reportName") String reportName,
       @RequestParam Map<String, String> params,
       HttpServletResponse response) {
-    generateReport("xls", "application/vnd.ms-excel", printsRendererService::renderHtml, reportName, params, response);
+    generateReport(
+        "xls",
+        "application/vnd.ms-excel",
+        printsRendererService::renderHtml,
+        reportName,
+        params,
+        response);
   }
 
-
-  /**
-   * Methoda generująca generycznie raporty.
-   */
-  protected <E> void generateReport(String outputType, String contentType, BiFunction<String, Object, byte[]> method,
-                                    String reportName, Map<String, String> params, HttpServletResponse response) {
+  /** Methoda generująca generycznie raporty. */
+  protected <E> void generateReport(
+      String outputType,
+      String contentType,
+      BiFunction<String, Object, byte[]> method,
+      String reportName,
+      Map<String, String> params,
+      HttpServletResponse response) {
     try {
       IReportService<E> reportService = reportServicesMap.get(reportName);
 
@@ -68,28 +74,30 @@ public class ReportsController {
         throw new IllegalArgumentException("Unknown report " + reportName);
       }
 
-      Map<String, Object> model = reportService.buildModel(facadeBuilder.createFacade(
-          params, (Class<E>) resolveTypeArgument(reportService.getClass(), IReportService.class)));
+      Map<String, Object> model =
+          reportService.buildModel(
+              facadeBuilder.createFacade(
+                  params,
+                  (Class<E>) resolveTypeArgument(reportService.getClass(), IReportService.class)));
       model.put("outputFormat", outputType);
 
       String templateName = reportService.getTemplateName() + ".ftl";
       byte[] html = method.apply(templateName, model);
       response.setContentType(contentType);
       response.setContentLength(html.length);
-      response.addHeader("Content-Disposition", "attachment; filename=\"" + reportName + "." + outputType + "\"");
+      response.addHeader(
+          "Content-Disposition", "attachment; filename=\"" + reportName + "." + outputType + "\"");
 
       write(html, response.getOutputStream());
 
     } catch (Exception e) {
-      throw new RuntimeException("Exception while generating report " + reportName
-          + " for outputType " + outputType, e);
+      throw new RuntimeException(
+          "Exception while generating report " + reportName + " for outputType " + outputType, e);
     }
   }
-
 
   @Autowired(required = false)
   public void setReportServices(IReportService[] reportServices) {
     reportServicesMap = toMap(asList(reportServices), "defaultTemplateName");
   }
 }
-

@@ -1,5 +1,9 @@
 package pl.matsuo.core.service.db;
 
+import static org.springframework.beans.factory.config.AutowireCapableBeanFactory.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
+
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.BeansException;
@@ -15,37 +19,27 @@ import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.Query;
 import pl.matsuo.core.service.session.SessionState;
 
-import java.util.List;
-
-import static org.springframework.beans.factory.config.AutowireCapableBeanFactory.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-
-
 @Repository
 @Transactional
 public class DatabaseImpl implements Database, BeanFactoryAware {
 
-
-  @Autowired
-  protected SessionFactory sessionFactory;
+  @Autowired protected SessionFactory sessionFactory;
   protected AutowireCapableBeanFactory beanFactory;
-  @Autowired
-  protected SessionState sessionState;
-
+  @Autowired protected SessionState sessionState;
 
   private Session session() {
     return sessionFactory.getCurrentSession();
   }
 
-
-//  @PostConstruct
-//  public void startDbGui() {
-//    DatabaseManagerSwing.main(new String[]{ "--url", "jdbc:hsqldb:mem:test", "--user", "sa", "--noexit"});
-//  }
-
+  //  @PostConstruct
+  //  public void startDbGui() {
+  //    DatabaseManagerSwing.main(new String[]{ "--url", "jdbc:hsqldb:mem:test", "--user", "sa",
+  // "--noexit"});
+  //  }
 
   @Override
-  public <E extends AbstractEntity> E findById(Class<E> clazz, Integer id, Initializer<? super E>... initializers) {
+  public <E extends AbstractEntity> E findById(
+      Class<E> clazz, Integer id, Initializer<? super E>... initializers) {
     E element = (E) session().get(clazz, id);
 
     Assert.notNull(element);
@@ -55,9 +49,9 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
     return element;
   }
 
-
   @Override
-  public <E extends AbstractEntity> List<E> findAll(Class<E> clazz, Initializer<? super E> ... initializers) {
+  public <E extends AbstractEntity> List<E> findAll(
+      Class<E> clazz, Initializer<? super E>... initializers) {
     List<E> list = find(query(clazz));
 
     for (E element : list) {
@@ -67,8 +61,8 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
     return list;
   }
 
-
-  protected <E extends AbstractEntity> void initializeEntity(E element, Initializer<? super E> ... initializers) {
+  protected <E extends AbstractEntity> void initializeEntity(
+      E element, Initializer<? super E>... initializers) {
     if (sessionState != null
         && sessionState.getIdBucket() != null
         && !sessionState.getIdBucket().equals(element.getIdBucket())) {
@@ -80,13 +74,11 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
     }
   }
 
-
   @Override
   public <E extends AbstractEntity> E create(E element) {
     session().save(element);
     return element;
   }
-
 
   @Override
   public <E extends AbstractEntity> E update(E element) {
@@ -94,26 +86,22 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
     return element;
   }
 
-
   @Override
   public void delete(Class<? extends AbstractEntity> clazz, Integer id) {
     session().delete(findById(clazz, id));
   }
-
 
   @Override
   public void delete(AbstractEntity entity) {
     session().delete(entity);
   }
 
-
   @Override
-  public void evict(Object ... objects) {
+  public void evict(Object... objects) {
     for (Object object : objects) {
       session().evict(object);
     }
   }
-
 
   @Override
   public <E extends AbstractEntity> List<E> find(Query<E> query) {
@@ -121,13 +109,11 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
     return query.query(sessionState.getIdBucket());
   }
 
-
   @Override
   public <E extends AbstractEntity> List<E> findAsAdmin(Query<E> query) {
     beanFactory.autowireBeanProperties(query, AUTOWIRE_NO, true);
     return query.query(null);
   }
-
 
   @Override
   public <E extends AbstractEntity> E findOne(Query<E> query) {
@@ -139,10 +125,8 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
     }
   }
 
-
   @Override
   public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
     this.beanFactory = (AutowireCapableBeanFactory) beanFactory;
   }
 }
-

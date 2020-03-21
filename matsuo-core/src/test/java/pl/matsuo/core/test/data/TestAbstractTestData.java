@@ -1,5 +1,8 @@
 package pl.matsuo.core.test.data;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -10,21 +13,12 @@ import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.session.SessionState;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-
 @RunWith(MockitoJUnitRunner.class)
 public class TestAbstractTestData {
 
-
-  @Mock
-  Database database;
-  @Mock
-  SessionState sessionState;
-  @Spy @InjectMocks
-  TestData testData;
-
+  @Mock Database database;
+  @Mock SessionState sessionState;
+  @Spy @InjectMocks TestData testData;
 
   @Test
   public void testDataInDatabase() {
@@ -42,7 +36,6 @@ public class TestAbstractTestData {
     verify(sessionState).setUser(null);
     verify(sessionState).setIdBucket(null);
   }
-
 
   public static class TestData extends AbstractTestData {
 

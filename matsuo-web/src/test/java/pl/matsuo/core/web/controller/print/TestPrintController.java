@@ -1,5 +1,8 @@
 package pl.matsuo.core.web.controller.print;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,24 +18,19 @@ import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.print.AbstractPrintService;
 import pl.matsuo.core.service.print.PrintsRendererService;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-
-@ContextConfiguration(classes = { PrintController.class, PrintsRendererService.class, GeneralConfig.class,
-                                  TestPrintController.TemplateNamePrintService.class })
+@ContextConfiguration(
+    classes = {
+      PrintController.class,
+      PrintsRendererService.class,
+      GeneralConfig.class,
+      TestPrintController.TemplateNamePrintService.class
+    })
 public class TestPrintController extends AbstractDbTest {
 
-
-  @Autowired
-  PrintController printController;
-  @Autowired
-  FacadeBuilder facadeBuilder;
-
+  @Autowired PrintController printController;
+  @Autowired FacadeBuilder facadeBuilder;
 
   KeyValuePrint print;
-
 
   @Before
   public void setupDatabase() {
@@ -42,20 +40,17 @@ public class TestPrintController extends AbstractDbTest {
     database.create(print);
   }
 
-
   @Test
   public void testGeneratePrint() throws Exception {
     MockHttpServletResponse response = new MockHttpServletResponse();
     printController.generatePrint(print.getId(), response);
   }
 
-
   @Test
   public void testGeneratePrint1() throws Exception {
     MockHttpServletResponse response = new MockHttpServletResponse();
     printController.generatePrint(print, response);
   }
-
 
   @Test
   public void testGeneratePrint2() throws Exception {
@@ -64,7 +59,6 @@ public class TestPrintController extends AbstractDbTest {
     printController.generatePrint("templateName.ftl", "fileName", dataModel, response);
   }
 
-
   @Test
   public void testFindPrints() throws Exception {
     printController.findPrints(
@@ -72,31 +66,23 @@ public class TestPrintController extends AbstractDbTest {
         "keyValuePrint.idEntity");
   }
 
-
   @Test
   public void testList() throws Exception {
     printController.list(facadeBuilder.createFacade(new HashMap<>(), IPrintsReportParams.class));
   }
-
 
   @Test
   public void testListByIdEntities() throws Exception {
     printController.listByIdEntities(Arrays.asList(17));
   }
 
-
-  public static interface TemplateName extends IPrintFacade {
-
-  }
-
+  public static interface TemplateName extends IPrintFacade {}
 
   @Service
   public static class TemplateNamePrintService extends AbstractPrintService<TemplateName> {
 
     @Override
-    protected void buildModel(TemplateName print, Map dataModel) {
-
-    }
+    protected void buildModel(TemplateName print, Map dataModel) {}
 
     @Override
     public String getFileName(TemplateName print) {
@@ -104,4 +90,3 @@ public class TestPrintController extends AbstractDbTest {
     }
   }
 }
-

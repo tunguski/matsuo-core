@@ -1,7 +1,5 @@
 package pl.matsuo.core.service.print;
 
-
-
 public interface IPrintsRendererService {
 
   byte[] createPDF(byte[] document, String url);
@@ -10,4 +8,3 @@ public interface IPrintsRendererService {
 
   byte[] renderHtml(String templateName, Object dataModel);
 }
-

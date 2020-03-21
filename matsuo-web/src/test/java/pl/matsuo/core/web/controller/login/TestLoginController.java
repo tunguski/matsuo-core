@@ -1,5 +1,10 @@
 package pl.matsuo.core.web.controller.login;
 
+import static org.junit.Assert.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.model.user.GroupEnum.*;
+
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -25,29 +30,22 @@ import pl.matsuo.core.service.login.LoginService;
 import pl.matsuo.core.service.permission.PermissionService;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
 
-import java.util.List;
-
-import static org.junit.Assert.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.model.user.GroupEnum.*;
-
-
-/**
- * Created by tunguski on 15.01.14.
- */
+/** Created by tunguski on 15.01.14. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { LoginController.class, LoginService.class, PermissionService.class,
-                                  TestLoginController.LoginServiceExtension.class, TestMailConfig.class})
+@ContextConfiguration(
+    classes = {
+      LoginController.class,
+      LoginService.class,
+      PermissionService.class,
+      TestLoginController.LoginServiceExtension.class,
+      TestMailConfig.class
+    })
 public class TestLoginController extends AbstractControllerTest {
   private static final Logger logger = LoggerFactory.getLogger(TestLoginController.class);
 
-
-  @Autowired
-  LoginController controller;
-  @Autowired
-  TestLoginController.LoginServiceExtension loginServiceExtension;
-
+  @Autowired LoginController controller;
+  @Autowired TestLoginController.LoginServiceExtension loginServiceExtension;
 
   @Test
   public void testLoggedUsername() throws Exception {
@@ -58,7 +56,6 @@ public class TestLoginController extends AbstractControllerTest {
 
     assertEquals("test_1", controller.loggedUsername());
   }
-
 
   @Test
   public void testCorrectLogin() throws Exception {
@@ -72,7 +69,6 @@ public class TestLoginController extends AbstractControllerTest {
     assertEquals("admin", sessionState.getUser().getUsername());
   }
 
-
   @Test(expected = UnauthorizedException.class)
   public void testFalseLogin() throws Exception {
     LoginData loginData = new LoginData();
@@ -82,7 +78,6 @@ public class TestLoginController extends AbstractControllerTest {
     controller.login(loginData);
   }
 
-
   @Test
   public void testLogoff() throws Exception {
     // zapewnienie autoryzacji przed właściwym testem
@@ -90,11 +85,9 @@ public class TestLoginController extends AbstractControllerTest {
 
     controller.logoff();
 
-
     assertNull(sessionState.getUser());
     assertTrue(sessionState.isInGroup(GUEST.name()));
   }
-
 
   @Test
   public void testLoggedUser() throws Exception {
@@ -104,7 +97,6 @@ public class TestLoginController extends AbstractControllerTest {
     assertTrue(sessionState.getUser().equals(controller.loggedUser()));
   }
 
-
   @Test
   public void testLoginTime() throws Exception {
     // zapewnienie autoryzacji przed właściwym testem
@@ -112,7 +104,6 @@ public class TestLoginController extends AbstractControllerTest {
 
     assertTrue(sessionState.getLastRequestTime() == sessionState.getLoginTime());
   }
-
 
   @Test
   public void testActivateAccount() throws Exception {
@@ -155,13 +146,13 @@ public class TestLoginController extends AbstractControllerTest {
     fail();
   }
 
-
-  protected void checkEntitiesCountForBucket(Integer idBucket, Integer size, Class<? extends AbstractEntity> clazz) {
+  protected void checkEntitiesCountForBucket(
+      Integer idBucket, Integer size, Class<? extends AbstractEntity> clazz) {
     List<AbstractEntity> entities =
-        database.find(query((Class<AbstractEntity>) clazz, eq(AbstractEntity::getIdBucket, idBucket)));
+        database.find(
+            query((Class<AbstractEntity>) clazz, eq(AbstractEntity::getIdBucket, idBucket)));
     assertEquals(1, entities.size());
   }
-
 
   @Test
   public void testCreateAccount() throws Exception {
@@ -188,13 +179,9 @@ public class TestLoginController extends AbstractControllerTest {
     fail();
   }
 
-
-
   static class LoginServiceExtension implements ILoginServiceExtension {
 
-
     public int counter = 0;
-
 
     @Override
     public void createAccount(OrganizationUnit organizationUnit, User user) {
@@ -202,10 +189,8 @@ public class TestLoginController extends AbstractControllerTest {
     }
   }
 
-
   @Test
   public void testRemindPassword() throws Exception {
     // FIXME: test przesłania hasła poprzez maila - wywołanie odpowiedniej funkcji z parametrami
   }
 }
-

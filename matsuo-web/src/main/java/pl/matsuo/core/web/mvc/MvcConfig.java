@@ -3,9 +3,10 @@ package pl.matsuo.core.web.mvc;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.*;
 import static com.fasterxml.jackson.databind.DeserializationFeature.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.ApplicationListener;
@@ -18,38 +19,34 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
-
 import pl.matsuo.core.conf.ClassesAddingBeanFactoryPostProcessor;
 import pl.matsuo.core.web.annotation.WebConfiguration;
 import pl.matsuo.core.web.view.BootstrapRenderer;
 
-
 @WebConfiguration
 @Configuration
-public class MvcConfig extends WebMvcConfigurationSupport implements ApplicationListener<ContextRefreshedEvent> {
-
+public class MvcConfig extends WebMvcConfigurationSupport
+    implements ApplicationListener<ContextRefreshedEvent> {
 
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
-    RequestMappingHandlerAdapter adapter = event.getApplicationContext().getBean(RequestMappingHandlerAdapter.class);
+    RequestMappingHandlerAdapter adapter =
+        event.getApplicationContext().getBean(RequestMappingHandlerAdapter.class);
 
     try {
       FacadeBuilderHandlerMethodArgumentResolver facadeBuilderHandlerMethodArgumentResolver =
           event.getApplicationContext().getBean(FacadeBuilderHandlerMethodArgumentResolver.class);
 
-      List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<>(adapter.getArgumentResolvers());
+      List<HandlerMethodArgumentResolver> argumentResolvers =
+          new ArrayList<>(adapter.getArgumentResolvers());
       adapter.getCustomArgumentResolvers();
       argumentResolvers.remove(facadeBuilderHandlerMethodArgumentResolver);
       argumentResolvers.add(0, facadeBuilderHandlerMethodArgumentResolver);
       adapter.setArgumentResolvers(argumentResolvers);
     } catch (BeansException e) {
-      //e.printStackTrace();
+      // e.printStackTrace();
     }
   }
-
 
   @Override
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -57,12 +54,10 @@ public class MvcConfig extends WebMvcConfigurationSupport implements Application
     addDefaultHttpMessageConverters(converters);
   }
 
-
   @Bean
   public ObjectMapper objectMapper(MappingJackson2HttpMessageConverter converter) {
     return converter.getObjectMapper();
   }
-
 
   @Bean
   public MappingJackson2HttpMessageConverter converter() {
@@ -79,17 +74,14 @@ public class MvcConfig extends WebMvcConfigurationSupport implements Application
     return converter;
   }
 
-
   @Bean
   public BeanFactoryPostProcessor mvcServices() {
-    return new ClassesAddingBeanFactoryPostProcessor(BootstrapRenderer.class,
-        FacadeBuilderHandlerMethodArgumentResolver.class);
+    return new ClassesAddingBeanFactoryPostProcessor(
+        BootstrapRenderer.class, FacadeBuilderHandlerMethodArgumentResolver.class);
   }
-
 
   @Bean
   public CommonsMultipartResolver multipartResolver() {
     return new CommonsMultipartResolver();
   }
 }
-

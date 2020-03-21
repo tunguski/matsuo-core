@@ -1,5 +1,11 @@
 package pl.matsuo.core.web.controller;
 
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.MediaType.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
+import java.net.URI;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,43 +18,35 @@ import org.springframework.web.util.UriTemplate;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.params.IQueryRequestParams;
 
-import javax.validation.Valid;
-import java.net.URI;
-
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.MediaType.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
-
 @Transactional
 public abstract class AbstractController<E extends AbstractEntity, P extends IQueryRequestParams>
     extends AbstractSearchController<E, P> {
 
-
-  @RequestMapping(method = POST, consumes = {APPLICATION_JSON_VALUE})
+  @RequestMapping(
+      method = POST,
+      consumes = {APPLICATION_JSON_VALUE})
   @ResponseStatus(CREATED)
-  public HttpEntity<E> create(@RequestBody @Valid E entity,
-                              @Value("#{request.requestURL}") StringBuffer parentUri) {
+  public HttpEntity<E> create(
+      @RequestBody @Valid E entity, @Value("#{request.requestURL}") StringBuffer parentUri) {
     entity = database.create(entity);
     HttpHeaders headers = new HttpHeaders();
     headers.setLocation(childLocation(parentUri, entity.getId()));
     return new HttpEntity<E>(headers);
   }
 
-
-  @RequestMapping(method = PUT, consumes = {APPLICATION_JSON_VALUE})
+  @RequestMapping(
+      method = PUT,
+      consumes = {APPLICATION_JSON_VALUE})
   @ResponseStatus(NO_CONTENT)
   public void update(@RequestBody @Valid E entity) {
     database.update(entity);
   }
-
 
   @RequestMapping(value = "/{id}", method = DELETE)
   @ResponseStatus(NO_CONTENT)
   public void delete(@PathVariable("id") Integer id) {
     database.delete(entityType, id);
   }
-
 
   @RequestMapping(value = "/{id}", method = PUT)
   @ResponseStatus(NO_CONTENT)
@@ -57,12 +55,10 @@ public abstract class AbstractController<E extends AbstractEntity, P extends IQu
     database.create(entity);
   }
 
-
   protected URI childLocation(StringBuffer parentUri, Object childId) {
     UriTemplate uri = new UriTemplate(parentUri.append("/{childId}").toString());
     return uri.expand(childId);
   }
-
 
   protected <E> HttpEntity<E> httpEntity(AbstractEntity entity, StringBuffer parentUri) {
     HttpHeaders headers = new HttpHeaders();
@@ -70,4 +66,3 @@ public abstract class AbstractController<E extends AbstractEntity, P extends IQu
     return new HttpEntity<E>(headers);
   }
 }
-

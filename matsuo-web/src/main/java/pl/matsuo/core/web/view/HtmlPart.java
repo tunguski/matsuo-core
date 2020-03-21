@@ -1,5 +1,3 @@
 package pl.matsuo.core.web.view;
 
-public class HtmlPart {
-
-}
+public class HtmlPart {}

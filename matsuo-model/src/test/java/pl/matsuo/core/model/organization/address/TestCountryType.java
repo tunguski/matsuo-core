@@ -1,12 +1,10 @@
 package pl.matsuo.core.model.organization.address;
 
-import org.junit.Test;
-
 import static org.junit.Assert.*;
 
+import org.junit.Test;
 
 public class TestCountryType {
-
 
   @Test
   public void testNotNull() {
@@ -17,4 +15,3 @@ public class TestCountryType {
     }
   }
 }
-

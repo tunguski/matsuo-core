@@ -1,16 +1,13 @@
 package pl.matsuo.core.service.report;
 
-import pl.matsuo.core.model.AbstractEntity;
-import pl.matsuo.core.service.db.Database;
+import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import pl.matsuo.core.model.AbstractEntity;
+import pl.matsuo.core.service.db.Database;
 
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
-
-/**
- * Created by marek on 01.04.14.
- */
+/** Created by marek on 01.04.14. */
 public class DataModelBuilder {
 
   private final Database database;
@@ -26,8 +23,11 @@ public class DataModelBuilder {
     this.dataModel = new HashMap<>();
   }
 
-  public DataModelBuilder maybePut(Integer id, String propertyName, Class<? extends AbstractEntity> entityClass) {
-    optional(id).ifPresent(idEntity -> dataModel.put(propertyName, database.findById(entityClass, idEntity)));
+  public DataModelBuilder maybePut(
+      Integer id, String propertyName, Class<? extends AbstractEntity> entityClass) {
+    optional(id)
+        .ifPresent(
+            idEntity -> dataModel.put(propertyName, database.findById(entityClass, idEntity)));
     return this;
   }
 

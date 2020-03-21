@@ -1,5 +1,12 @@
 package pl.matsuo.core.web.controller.organization;
 
+import static java.util.Arrays.*;
+import static java.util.Collections.emptyList;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.matsuo.core.util.ComparatorUtil.comparator;
+
+import java.util.*;
+import java.util.function.Function;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.matsuo.core.model.AbstractEntity;
@@ -7,23 +14,11 @@ import pl.matsuo.core.model.organization.AbstractParty;
 import pl.matsuo.core.model.organization.OrganizationUnit;
 import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.params.IQueryRequestParams;
-import pl.matsuo.core.util.ComparatorUtil;
 import pl.matsuo.core.web.controller.AbstractSearchController;
-import pl.matsuo.core.web.controller.AbstractSimpleController;
-
-import java.util.*;
-import java.util.function.Function;
-
-import static java.util.Arrays.*;
-import static java.util.Collections.emptyList;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static pl.matsuo.core.util.ComparatorUtil.comparator;
-
 
 @RestController
 @RequestMapping("/payers")
 public class PayerController extends AbstractSearchController<AbstractParty, IQueryRequestParams> {
-
 
   @Override
   protected <F extends AbstractEntity> List<Function<F, String>> queryMatchers(Class<F> entity) {
@@ -32,13 +27,15 @@ public class PayerController extends AbstractSearchController<AbstractParty, IQu
       return (List) result;
     } else if (OrganizationUnit.class.equals(entity)) {
       List<Function<OrganizationUnit, String>> result =
-          asList(OrganizationUnit::getFullName, OrganizationUnit::getShortName, OrganizationUnit::getCode);
+          asList(
+              OrganizationUnit::getFullName,
+              OrganizationUnit::getShortName,
+              OrganizationUnit::getCode);
       return (List) result;
     } else {
       return emptyList();
     }
   }
-
 
   @RequestMapping(method = GET)
   public List<AbstractParty> list(IQueryRequestParams params) {
@@ -53,4 +50,3 @@ public class PayerController extends AbstractSearchController<AbstractParty, IQu
     return parties;
   }
 }
-

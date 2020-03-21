@@ -1,33 +1,26 @@
 package pl.matsuo.core.web.filter;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import pl.matsuo.core.model.log.AccessLog;
-import pl.matsuo.core.service.permission.PermissionService;
-
+import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import pl.matsuo.core.model.log.AccessLog;
+import pl.matsuo.core.service.permission.PermissionService;
 
-
-/**
- * Created by tunguski on 22.12.13.
- */
+/** Created by tunguski on 22.12.13. */
 @Component("accessLogFilter")
 public class AccessLogFilter extends AbstractFilter {
 
-
-  @Autowired
-  PermissionService permissionService;
-
+  @Autowired PermissionService permissionService;
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-    throws IOException, ServletException {
+      throws IOException, ServletException {
     HttpServletRequest httpRequest = (HttpServletRequest) request;
     HttpServletResponse httpResponse = (HttpServletResponse) response;
 
@@ -60,4 +53,3 @@ public class AccessLogFilter extends AbstractFilter {
     }
   }
 }
-

@@ -1,23 +1,20 @@
 package pl.matsuo.core.util;
 
-import org.junit.Test;
+import static java.util.Arrays.*;
+import static org.junit.Assert.*;
+import static pl.matsuo.core.util.ReflectUtil.*;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Arrays.*;
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
+import org.junit.Test;
 
 public class TestReflectUtil {
 
-
   @Test
   public void testResolveType() throws Exception {
-    assertEquals(Integer.class, resolveType(new ArrayList<Integer>() {
-    }.getClass(), List.class, 0));
+    assertEquals(Integer.class, resolveType(new ArrayList<Integer>() {}.getClass(), List.class, 0));
   }
 
   @Test
@@ -31,25 +28,21 @@ public class TestReflectUtil {
     assertEquals("test Y2", getValue(new Y(), "methodValue2"));
   }
 
-
   @Test
   public void testGetValue1() throws Exception {
     assertEquals("test X", getValue(new Y(), "fieldValue", X.class).get());
     assertEquals("test X2", getValue(new Y(), "methodValue", X.class).get());
   }
 
-
   @Test
   public void testGetExactPropertyType() throws Exception {
     assertEquals(String.class, getExactPropertyType(X.class, "fieldValue"));
   }
 
-
   @Test
   public void testGetExactPropertyType1() throws Exception {
     assertEquals(String.class, getExactPropertyType(asList(X.class), "fieldValue"));
   }
-
 
   @Test
   public void testGetPropertyType() throws Exception {
@@ -57,18 +50,15 @@ public class TestReflectUtil {
     assertEquals(Z.class, getPropertyType(Z.class, "complex.complex"));
   }
 
-
   @Test(expected = RuntimeException.class)
   public void testGetPropertyType1() throws Exception {
     assertEquals(Z.class, getPropertyType(Z.class, "xxx"));
   }
 
-
   @Test(expected = RuntimeException.class)
   public void testGetPropertyType2() throws Exception {
     assertEquals(Z.class, getPropertyType(Z.class, "xxx.xxx"));
   }
-
 
   @Test
   public void testGetExactAnnotatedElement() throws Exception {
@@ -77,7 +67,6 @@ public class TestReflectUtil {
     assertEquals(Method.class, complex.getClass());
   }
 
-
   @Test
   public void testGetExactAnnoatedElement() throws Exception {
     AnnotatedElement complex = getExactAnnotatedElement(asList(Object.class, Z.class), "complex");
@@ -85,14 +74,12 @@ public class TestReflectUtil {
     assertEquals(Method.class, complex.getClass());
   }
 
-
   @Test
   public void testGetAnnotatedElement() throws Exception {
     AnnotatedElement complex = getAnnotatedElement(Z.class, "complex");
     assertNotNull(complex);
     assertEquals(Method.class, complex.getClass());
   }
-
 
   @Test
   public void testInvoke() throws Exception {
@@ -109,23 +96,25 @@ public class TestReflectUtil {
 
   class X {
     private final String fieldValue = "test X";
+
     private String getMethodValue() {
       return "test X2";
     }
   }
 
-
   class Y extends X {
     private final String fieldValue2 = "test Y";
+
     private String getMethodValue2() {
       return "test Y2";
     }
+
     private final String fieldValue = "error";
+
     private String getMethodValue() {
       return "error 2";
     }
   }
-
 
   class Z extends X {
     public int invocations = 0;
@@ -139,4 +128,3 @@ public class TestReflectUtil {
     }
   }
 }
-

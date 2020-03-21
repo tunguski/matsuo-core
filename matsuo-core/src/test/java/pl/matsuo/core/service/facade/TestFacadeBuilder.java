@@ -1,5 +1,12 @@
 package pl.matsuo.core.service.facade;
 
+import static org.junit.Assert.*;
+import static pl.matsuo.core.util.DateUtil.*;
+import static pl.matsuo.core.util.NumberUtil.*;
+import static pl.matsuo.core.util.ReflectUtil.*;
+
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.After;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -8,29 +15,17 @@ import pl.matsuo.core.service.parameterprovider.AbstractParameterProvider;
 import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 import pl.matsuo.core.util.collection.CollectionUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.NumberUtil.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
-
-
 public class TestFacadeBuilder {
   private static final Logger logger = LoggerFactory.getLogger(TestFacadeBuilder.class);
-
 
   private final FacadeBuilder facadeBuilder = new FacadeBuilder();
   private final Map print = new HashMap();
   private final PrintTestFacade facade = facadeBuilder.createFacade(print, PrintTestFacade.class);
 
-
   @After
   public void logPrintState() {
     logger.info(print.toString());
   }
-
 
   @Test
   public void testIntegerReadWrite() throws Exception {
@@ -38,20 +33,17 @@ public class TestFacadeBuilder {
     assertEquals((Object) 7, facade.getInteger());
   }
 
-
   @Test
   public void testStringReadWrite() throws Exception {
     facade.setString("test");
     assertEquals("test", facade.getString());
   }
 
-
   @Test
   public void testDateReadWrite() throws Exception {
     facade.setDate(date(2013, 4, 4));
     assertEquals(date(2013, 4, 4), facade.getDate());
   }
-
 
   @Test
   public void testBigDecimalReadWrite() throws Exception {
@@ -66,7 +58,6 @@ public class TestFacadeBuilder {
     facade.setBoolean(false);
     assertFalse(facade.getBoolean());
   }
-
 
   @Test
   public void testSubEntity() throws Exception {
@@ -83,7 +74,6 @@ public class TestFacadeBuilder {
     assertEquals(bd("0.00"), print.get("bigDecimal"));
   }
 
-
   @Test
   public void testCreateParameterProvider() throws Exception {
     IParameterProvider<String> parameterProvider =
@@ -91,7 +81,6 @@ public class TestFacadeBuilder {
     assertEquals("one", parameterProvider.get("1"));
     assertEquals("two", parameterProvider.get("2"));
   }
-
 
   @Test
   public void testInitializeProviders() throws Exception {
@@ -101,4 +90,3 @@ public class TestFacadeBuilder {
     assertEquals(2, parameterProviders.size());
   }
 }
-

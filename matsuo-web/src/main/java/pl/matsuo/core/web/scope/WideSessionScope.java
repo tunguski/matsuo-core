@@ -1,5 +1,7 @@
 package pl.matsuo.core.web.scope;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;
@@ -9,27 +11,21 @@ import org.springframework.web.context.request.AbstractRequestAttributesScope;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Session scope modification that provides bean even outside of http request processing.
  *
- * Created by marek on 19.07.14.
+ * <p>Created by marek on 19.07.14.
  */
 public class WideSessionScope extends AbstractRequestAttributesScope implements Scope {
   private static final Logger logger = LoggerFactory.getLogger(WideSessionScope.class);
 
-
   protected Map<String, ThreadLocal<Object>> objectHolders = new HashMap<>();
-
 
   @Override
   protected int getScope() {
     // constant higher than values from RequestAttributes.
     return 13;
   }
-
 
   @Override
   public String getConversationId() {
@@ -40,7 +36,6 @@ public class WideSessionScope extends AbstractRequestAttributesScope implements 
       return "non_web_";
     }
   }
-
 
   @Override
   public Object get(String name, ObjectFactory<?> objectFactory) {
@@ -64,7 +59,6 @@ public class WideSessionScope extends AbstractRequestAttributesScope implements 
     }
   }
 
-
   @Override
   public Object remove(String name) {
     try {
@@ -80,7 +74,6 @@ public class WideSessionScope extends AbstractRequestAttributesScope implements 
     }
   }
 
-
   @Override
   public void registerDestructionCallback(String name, Runnable callback) {
     try {
@@ -92,4 +85,3 @@ public class WideSessionScope extends AbstractRequestAttributesScope implements 
     }
   }
 }
-

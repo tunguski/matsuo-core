@@ -1,5 +1,10 @@
 package pl.matsuo.core.service.mail;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,32 +17,18 @@ import pl.matsuo.core.model.message.MailMessage;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.print.IPrintsRendererService;
 
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-
 @RunWith(MockitoJUnitRunner.class)
 public class TestMailService {
 
-
-  @InjectMocks
-  MailService mailService = new MailService();
-  @Spy
-  JavaMailSender mailSender = new JavaMailSenderImpl();
-  @Mock
-  Database database;
-  @Mock
-  IPrintsRendererService printsRendererService;
-
+  @InjectMocks MailService mailService = new MailService();
+  @Spy JavaMailSender mailSender = new JavaMailSenderImpl();
+  @Mock Database database;
+  @Mock IPrintsRendererService printsRendererService;
 
   public TestMailService() {
     mailService.database = database;
     mailService.mailSender = mailSender;
   }
-
 
   @Test
   public void testSendMail() throws Exception {
@@ -49,11 +40,15 @@ public class TestMailService {
 
     when(printsRendererService.renderHtml("bodyTemplate.ftl", null)).thenReturn("OK".getBytes());
 
-    assertEquals((Integer) 55, mailService.sendMail(new InternetAddress("from@example.com"),
-        new InternetAddress("to@example.com"), "subject", "bodyTemplate.ftl", null));
-
+    assertEquals(
+        (Integer) 55,
+        mailService.sendMail(
+            new InternetAddress("from@example.com"),
+            new InternetAddress("to@example.com"),
+            "subject",
+            "bodyTemplate.ftl",
+            null));
 
     verify(mailSender).send(any(MimeMessage.class));
   }
 }
-

@@ -1,5 +1,7 @@
 package pl.matsuo.core.web.controller.exception;
 
+import static org.springframework.http.HttpStatus.*;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -9,12 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.matsuo.core.validation.ValidationErrors;
 
-import static org.springframework.http.HttpStatus.*;
-
-
 @ControllerAdvice
 public class ValidationExceptionHandler {
-
 
   @ExceptionHandler({MethodArgumentNotValidException.class})
   public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException pe) {
@@ -32,4 +30,3 @@ public class ValidationExceptionHandler {
     return new ResponseEntity<Object>(errors, BAD_REQUEST);
   }
 }
-

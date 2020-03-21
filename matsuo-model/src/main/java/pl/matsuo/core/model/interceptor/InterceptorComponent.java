@@ -1,17 +1,13 @@
 package pl.matsuo.core.model.interceptor;
 
-import org.springframework.stereotype.Component;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import org.springframework.stereotype.Component;
 
-/**
- * Created by marek on 25.03.14.
- */
+/** Created by marek on 25.03.14. */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Component
-public @interface InterceptorComponent {
-}
+public @interface InterceptorComponent {}

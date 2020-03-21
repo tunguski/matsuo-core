@@ -1,10 +1,9 @@
 package pl.matsuo.core.web.mvc;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.text.ParsePosition;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class TestCustomDateFormat {
 
@@ -13,6 +12,7 @@ public class TestCustomDateFormat {
     CustomDateFormat format = new CustomDateFormat();
 
     assertEquals(format.parse("2004-02-12T15:19:21+00:00").getTime(), 1076599161000L);
-    assertEquals(format.parse("2004-02-12T15:19:21+00:00", new ParsePosition(0)).getTime(), 1076599161000L);
+    assertEquals(
+        format.parse("2004-02-12T15:19:21+00:00", new ParsePosition(0)).getTime(), 1076599161000L);
   }
 }

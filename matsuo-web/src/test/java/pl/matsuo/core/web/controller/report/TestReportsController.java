@@ -1,5 +1,13 @@
 package pl.matsuo.core.web.controller.report;
 
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
+import static pl.matsuo.core.util.ReflectUtil.*;
+
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,61 +26,47 @@ import pl.matsuo.core.service.report.DataModelBuilder;
 import pl.matsuo.core.service.report.IReportService;
 import pl.matsuo.core.test.data.TestSessionState;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
-
-/**
- * Created by marek on 11.04.14.
- */
+/** Created by marek on 11.04.14. */
 @RunWith(MockitoJUnitRunner.class)
 public class TestReportsController {
 
+  @InjectMocks protected ReportsController reportsController = new ReportsController();
 
-  @InjectMocks
-  protected ReportsController reportsController = new ReportsController();
   @Spy
-  IPrintsRendererService printsRendererService = new PrintsRendererService() {
-    @Override
-    public byte[] renderHtml(String templateName, Object dataModel) {
-      return "Rendered Html OK".getBytes();
-    }
+  IPrintsRendererService printsRendererService =
+      new PrintsRendererService() {
+        @Override
+        public byte[] renderHtml(String templateName, Object dataModel) {
+          return "Rendered Html OK".getBytes();
+        }
 
-    @Override
-    public byte[] generatePrint(String templateName, Object dataModel) {
-      return "Rendered Print OK".getBytes();
-    }
-  };
-  @Mock
-  Database database;
-  @Mock
-  TestSessionState sessionState;
-  @Spy
-  FacadeBuilder facadeBuilder = new FacadeBuilder();
+        @Override
+        public byte[] generatePrint(String templateName, Object dataModel) {
+          return "Rendered Print OK".getBytes();
+        }
+      };
 
+  @Mock Database database;
+  @Mock TestSessionState sessionState;
+  @Spy FacadeBuilder facadeBuilder = new FacadeBuilder();
 
   @Before
   public void setUp() {
     TestReportService testReportService = new TestReportService();
-    reportsController.setReportServices(new IReportService[] { testReportService });
+    reportsController.setReportServices(new IReportService[] {testReportService});
 
-    when(printsRendererService.renderHtml(anyString(), anyObject())).thenReturn("Rendered OK".getBytes());
+    when(printsRendererService.renderHtml(anyString(), anyObject()))
+        .thenReturn("Rendered OK".getBytes());
   }
-
 
   @Test
   public void testSetReportServices() {
-    Map<String, IReportService> reportServicesMap = getValue(reportsController, "reportServicesMap");
+    Map<String, IReportService> reportServicesMap =
+        getValue(reportsController, "reportServicesMap");
 
     assertEquals(1, reportServicesMap.size());
     assertNotNull(reportServicesMap.get("testReport"));
   }
-
 
   @Test
   public void testGenerateReportPdf() throws Exception {
@@ -86,9 +80,7 @@ public class TestReportsController {
     reportsController.generateReportXls("testReport", new HashMap<>(), response);
   }
 
-
   class TestReportService extends AbstractReportService<IPrintsReportParams> {
-
 
     public TestReportService() {
       database = TestReportsController.this.database;
@@ -96,7 +88,6 @@ public class TestReportsController {
     }
 
     @Override
-    protected void injectModel(DataModelBuilder dataModel, IPrintsReportParams params) {
-    }
+    protected void injectModel(DataModelBuilder dataModel, IPrintsReportParams params) {}
   }
 }

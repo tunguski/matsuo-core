@@ -4,12 +4,8 @@ import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.print.KeyValuePrint;
 import pl.matsuo.core.model.print.KeyValuePrintElement;
 
-
-/**
- * Created by tunguski on 19.09.13.
- */
+/** Created by tunguski on 19.09.13. */
 public class PrintInitializer implements Initializer<KeyValuePrint> {
-
 
   @Override
   public void init(KeyValuePrint print) {
@@ -22,4 +18,3 @@ public class PrintInitializer implements Initializer<KeyValuePrint> {
     }
   }
 }
-

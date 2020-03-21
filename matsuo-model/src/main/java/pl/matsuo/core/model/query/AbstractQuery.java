@@ -1,6 +1,17 @@
 package pl.matsuo.core.model.query;
 
+import static java.util.Arrays.*;
+import static org.mockito.Mockito.mock;
+import static org.springframework.util.StringUtils.*;
+import static pl.matsuo.core.util.collection.CollectionUtil.*;
+
 import com.google.common.base.Joiner;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Function;
 import org.hibernate.SessionFactory;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -17,21 +28,9 @@ import pl.matsuo.core.model.query.condition.QueryPart;
 import pl.matsuo.core.model.query.condition.SelectPart;
 import pl.matsuo.core.util.collection.CollectionUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.function.Function;
-
-import static java.util.Arrays.*;
-import static org.mockito.Mockito.mock;
-import static org.springframework.util.StringUtils.*;
-import static pl.matsuo.core.util.collection.CollectionUtil.*;
-
-
 /**
  * Abstrakcyjna nadklasa dla zapytań.
+ *
  * @author Marek Romanowski
  * @since Aug 23, 2013
  * @param <E>
@@ -39,13 +38,9 @@ import static pl.matsuo.core.util.collection.CollectionUtil.*;
 public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   private static final Logger logger = LoggerFactory.getLogger(AbstractQuery.class);
 
-
   public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
-
-  @Autowired
-  protected SessionFactory sessionFactory;
-
+  @Autowired protected SessionFactory sessionFactory;
 
   private List<SelectPart> select = new ArrayList<>();
   private List<FromPart> from = new ArrayList<>();
@@ -61,72 +56,74 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   private ThreadLocal<String> methodName = new ThreadLocal<>();
   private final E mock;
 
-
   public AbstractQuery(Class<E> clazz) {
     Assert.notNull(clazz);
 
     this.clazz = clazz;
-    mock = mock(clazz, new Answer() {
+    mock =
+        mock(
+            clazz,
+            new Answer() {
 
+              private Object innerMock(InvocationOnMock base) {
+                return mock(
+                    base.getMethod().getReturnType(),
+                    (Answer)
+                        invocation -> {
+                          if (invocation.getMethod().getName().startsWith("get")) {
+                            methodName.set(
+                                methodName.get()
+                                    + "."
+                                    + uncapitalize(invocation.getMethod().getName().substring(3)));
+                          }
 
-      private Object innerMock(InvocationOnMock base) {
-        return mock(base.getMethod().getReturnType(), (Answer) invocation -> {
-          if (invocation.getMethod().getName().startsWith("get")) {
-            methodName.set(methodName.get() + "." + uncapitalize(invocation.getMethod().getName().substring(3)));
-          }
+                          if (AbstractEntity.class.isAssignableFrom(
+                              invocation.getMethod().getReturnType())) {
+                            return innerMock(invocation);
+                          }
 
-          if (AbstractEntity.class.isAssignableFrom(invocation.getMethod().getReturnType())) {
-            return innerMock(invocation);
-          }
+                          return null;
+                        });
+              }
 
-          return null;
-        });
-      }
+              @Override
+              public Object answer(InvocationOnMock invocation) throws Throwable {
+                if (invocation.getMethod().getName().startsWith("get")) {
+                  methodName.set(uncapitalize(invocation.getMethod().getName().substring(3)));
+                }
 
+                if (AbstractEntity.class.isAssignableFrom(invocation.getMethod().getReturnType())) {
+                  return innerMock(invocation);
+                }
 
-      @Override
-      public Object answer(InvocationOnMock invocation) throws Throwable {
-        if (invocation.getMethod().getName().startsWith("get")) {
-          methodName.set(uncapitalize(invocation.getMethod().getName().substring(3)));
-        }
-
-        if (AbstractEntity.class.isAssignableFrom(invocation.getMethod().getReturnType())) {
-          return innerMock(invocation);
-        }
-
-        return null;
-      }
-    });
+                return null;
+              }
+            });
 
     from.add(new FromPart("", uncapitalize(clazz.getSimpleName()), clazz.getName()));
   }
-
 
   public String resolveFieldName(Function<E, ?> getter) {
     getter.apply(mock);
     return methodName.get();
   }
 
-
   public AbstractQuery<E> select(String name) {
     select.add(new SelectPart(name));
     return this;
   }
-
 
   protected AbstractQuery<E> select(SelectPart selectPart) {
     select.add(selectPart);
     return this;
   }
 
-
   protected AbstractQuery<E> from(FromPart fromPart) {
     from.add(fromPart);
     return this;
   }
 
-
-  public AbstractQuery<E> condition(Condition ... conditions) {
+  public AbstractQuery<E> condition(Condition... conditions) {
     for (Condition condition : conditions) {
       if (condition != null) {
         where.add(condition);
@@ -136,8 +133,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
     return this;
   }
 
-
-  public AbstractQuery<E> parts(QueryPart ... queryParts) {
+  public AbstractQuery<E> parts(QueryPart... queryParts) {
     for (QueryPart queryPart : queryParts) {
       if (queryPart == null) {
         continue;
@@ -155,46 +151,39 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
     return this;
   }
 
-
   public AbstractQuery<E> groupBy(String fieldName) {
     groupBy.add(fieldName);
     return this;
   }
-
 
   public AbstractQuery<E> having(Condition condition) {
     having.add(condition);
     return this;
   }
 
-
   public AbstractQuery<E> orderBy(String fieldName) {
     orderBy.add(fieldName);
     return this;
   }
-
 
   public AbstractQuery<E> limit(Integer limit) {
     this.limit = limit;
     return this;
   }
 
-
   public AbstractQuery<E> offset(Integer offset) {
     this.offset = offset;
     return this;
   }
 
-
-  public AbstractQuery<E> initializer(Initializer<? super E> ... initializer) {
+  public AbstractQuery<E> initializer(Initializer<? super E>... initializer) {
     this.initializers.addAll(asList(initializer));
     return this;
   }
 
-
   public String propertyValue(Object value) {
     if (Number.class.isAssignableFrom(value.getClass())
-            || Boolean.class.isAssignableFrom(value.getClass())) {
+        || Boolean.class.isAssignableFrom(value.getClass())) {
       return value.toString();
     } else if (Date.class.isAssignableFrom(value.getClass())) {
       return "'" + dateFormat.format(value) + "'";
@@ -209,9 +198,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
     }
   }
 
-
   protected ThreadLocal<Integer> idBucket = new ThreadLocal();
-
 
   @Override
   public List<E> query(Integer idBucketValue) {
@@ -221,7 +208,8 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
       // wyszukaj w bazie danych
       try {
-        org.hibernate.query.Query query = sessionFactory.getCurrentSession().createQuery(queryString);
+        org.hibernate.query.Query query =
+            sessionFactory.getCurrentSession().createQuery(queryString);
         if (limit != null && limit >= 0) {
           query.setMaxResults(limit);
         }
@@ -246,10 +234,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
     }
   }
 
-
-  /**
-   * Tworzy tekstową reprezentację danego zapytania.
-   */
+  /** Tworzy tekstową reprezentację danego zapytania. */
   public String printQuery() {
     StringBuilder sb = new StringBuilder();
 
@@ -261,7 +246,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
         sb.append(selectPart.print(this).trim() + ", ");
       }
 
-      sb.delete(sb.length() -2, sb.length());
+      sb.delete(sb.length() - 2, sb.length());
     }
 
     // from ...
@@ -271,7 +256,8 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
       sb.append(" " + fromPart.print(this).trim());
     }
 
-    List<Condition> conditions = removeNulls(merge(CollectionUtil.<Condition>collect(from, "joinCondition"), where));
+    List<Condition> conditions =
+        removeNulls(merge(CollectionUtil.<Condition>collect(from, "joinCondition"), where));
 
     boolean hasWhere = false;
 
@@ -283,7 +269,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
         sb.append(condition.print(this).trim() + " AND ");
       }
 
-      sb.delete(sb.length() -5, sb.length());
+      sb.delete(sb.length() - 5, sb.length());
 
       hasWhere = true;
     }
@@ -306,7 +292,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
         sb.append(condition.print(this) + " AND ");
       }
 
-      sb.delete(sb.length() -5, sb.length());
+      sb.delete(sb.length() - 5, sb.length());
     }
 
     // order by ...
@@ -317,4 +303,3 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
     return sb.toString().trim();
   }
 }
-

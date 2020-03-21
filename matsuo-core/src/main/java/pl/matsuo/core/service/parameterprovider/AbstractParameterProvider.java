@@ -1,33 +1,28 @@
 package pl.matsuo.core.service.parameterprovider;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import static pl.matsuo.core.util.DateUtil.*;
+import static pl.matsuo.core.util.NumberUtil.*;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.Date;
 
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.NumberUtil.*;
-
-
 /**
  * Nadklasa dla wszystkich providerów.
+ *
  * @author Marek Romanowski
  * @since Aug 24, 2013
  */
 public abstract class AbstractParameterProvider<U> implements IParameterProvider<U> {
 
-
   protected final DateFormat dateFormat = new ISO8601DateFormat();
 
-
   protected final U underlyingEntity;
-
 
   public AbstractParameterProvider(U underlyingEntity) {
     this.underlyingEntity = underlyingEntity;
   }
-
 
   @Override
   public final <E> E get(String key, Class<E> expectedClass) {
@@ -37,7 +32,8 @@ public abstract class AbstractParameterProvider<U> implements IParameterProvider
       return (E) value;
     }
 
-    if (Number.class.isAssignableFrom(expectedClass) && Number.class.isAssignableFrom(value.getClass())) {
+    if (Number.class.isAssignableFrom(expectedClass)
+        && Number.class.isAssignableFrom(value.getClass())) {
       Number number = (Number) value;
       if (expectedClass.equals(Integer.class)) {
         return (E) (Integer) number.intValue();
@@ -71,15 +67,12 @@ public abstract class AbstractParameterProvider<U> implements IParameterProvider
     return null;
   }
 
-
   public abstract Object internalGet(String key, Class<?> expectedClass);
-
 
   @Override
   public U getUnderlyingEntity() {
     return underlyingEntity;
   }
-
 
   public AbstractParameterProvider<U> buildParameterProvider(U object) {
     try {
@@ -89,4 +82,3 @@ public abstract class AbstractParameterProvider<U> implements IParameterProvider
     }
   }
 }
-

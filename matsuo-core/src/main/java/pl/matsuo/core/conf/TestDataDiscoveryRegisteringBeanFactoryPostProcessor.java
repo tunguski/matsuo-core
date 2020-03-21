@@ -1,22 +1,18 @@
 package pl.matsuo.core.conf;
 
+import static org.springframework.beans.factory.support.BeanDefinitionBuilder.*;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.springframework.beans.factory.support.BeanDefinitionBuilder.*;
-
-
-/**
- * Created by tunguski on 06.10.13.
- */
-public class TestDataDiscoveryRegisteringBeanFactoryPostProcessor  implements BeanFactoryPostProcessor {
-
+/** Created by tunguski on 06.10.13. */
+public class TestDataDiscoveryRegisteringBeanFactoryPostProcessor
+    implements BeanFactoryPostProcessor {
 
   public void discover(Class<?> clazz, Set<Class> toAdd) {
     DiscoverTypes annotation = clazz.getAnnotation(DiscoverTypes.class);
@@ -27,7 +23,6 @@ public class TestDataDiscoveryRegisteringBeanFactoryPostProcessor  implements Be
       }
     }
   }
-
 
   public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
     try {
@@ -52,11 +47,11 @@ public class TestDataDiscoveryRegisteringBeanFactoryPostProcessor  implements Be
 
       // tworzy nowe definicje beanów dla brakujących elementów
       for (Class clazz : toAdd) {
-        factory.registerBeanDefinition(clazz.getSimpleName(), rootBeanDefinition(clazz).getBeanDefinition());
+        factory.registerBeanDefinition(
+            clazz.getSimpleName(), rootBeanDefinition(clazz).getBeanDefinition());
       }
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 }
-

@@ -1,5 +1,9 @@
 package pl.matsuo.core.service.permission;
 
+import static org.junit.Assert.*;
+import static pl.matsuo.core.model.user.GroupEnum.*;
+import static pl.matsuo.core.service.permission.IPermissionService.RequestType.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,24 +15,13 @@ import pl.matsuo.core.service.permission.model.Permissions;
 import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.test.data.TestSessionState;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.model.user.GroupEnum.*;
-import static pl.matsuo.core.service.permission.IPermissionService.RequestType.*;
-
-
-/**
- * Created by tunguski on 15.01.14.
- */
+/** Created by tunguski on 15.01.14. */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { PermissionService.class, TestSessionState.class })
+@ContextConfiguration(classes = {PermissionService.class, TestSessionState.class})
 public class TestPermissionService {
 
-
-  @Autowired
-  PermissionService permissionService;
-  @Autowired
-  SessionState sessionState;
-
+  @Autowired PermissionService permissionService;
+  @Autowired SessionState sessionState;
 
   @Test
   public void testGetPermissions() throws Exception {
@@ -37,7 +30,6 @@ public class TestPermissionService {
     assertNotNull(permissions.getPermissions());
     assertFalse(permissions.getPermissions().isEmpty());
   }
-
 
   protected void configureSessionState(String groupName) {
     User user = new User();
@@ -48,7 +40,6 @@ public class TestPermissionService {
     sessionState.setUser(user);
   }
 
-
   @Test
   public void testAdminPermissions() {
     configureSessionState(ADMIN.name());
@@ -57,7 +48,6 @@ public class TestPermissionService {
     assertTrue(permissionService.isPermitted("/reckonings/simple_test"));
     assertTrue(permissionService.isPermitted("xxx_yyy"));
   }
-
 
   @Test
   public void testPermissions() {
@@ -69,7 +59,6 @@ public class TestPermissionService {
     assertFalse(permissionService.isPermitted("xxx_yyy"));
   }
 
-
   @Test
   public void testPermissionsWithRestrictedRequestType() {
     configureSessionState("reckonings");
@@ -78,12 +67,10 @@ public class TestPermissionService {
     assertFalse(permissionService.isPermitted("xxx_yyy", POST));
   }
 
-
   @Test
   public void testPermissionMatching() {
     permissionService.matches("/reckonings/simple_test", "/reckonings/*");
   }
-
 
   @Test
   public void testPermissionResetAfterTime() {
@@ -99,4 +86,3 @@ public class TestPermissionService {
     assertTrue(sessionState.isInGroup(GUEST.name()));
   }
 }
-

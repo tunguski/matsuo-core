@@ -1,23 +1,19 @@
 package pl.matsuo.core.service.facade;
 
-
-import pl.matsuo.core.service.parameterprovider.IParameterProvider;
-
 import java.util.function.Consumer;
+import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 
 /**
  * Interfejs budowania fasad dla różnych typów obiektów.
+ *
  * @author Marek Romanowski
  * @since Aug 25, 2013
  */
 public interface IFacadeBuilder {
 
-
   <E> E createFacade(Object object, Class<E> clazz);
 
-
   <E> E createFacade(Object object, Class<E> clazz, String prefix);
-
 
   <E> E createFacade(IFacadeAware facadeAware);
 
@@ -31,4 +27,3 @@ public interface IFacadeBuilder {
 
   IParameterProvider<?> createParameterProvider(Object object);
 }
-

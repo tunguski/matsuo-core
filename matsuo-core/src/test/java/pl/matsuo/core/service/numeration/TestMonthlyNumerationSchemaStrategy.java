@@ -1,19 +1,16 @@
 package pl.matsuo.core.service.numeration;
 
+import static org.junit.Assert.*;
+import static pl.matsuo.core.util.DateUtil.*;
+
+import java.util.Date;
 import org.junit.Test;
 import pl.matsuo.core.model.numeration.Numeration;
 import pl.matsuo.core.model.numeration.NumerationSchema;
 
-import java.util.Date;
-
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.DateUtil.*;
-
 public class TestMonthlyNumerationSchemaStrategy {
 
-
   MonthlyNumerationSchemaStrategy strategy = new MonthlyNumerationSchemaStrategy();
-
 
   @Test
   public void testCreateNumeration() throws Exception {

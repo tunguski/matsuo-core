@@ -1,22 +1,17 @@
 package pl.matsuo.core.service.numeration;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import static pl.matsuo.core.util.DateUtil.*;
+
+import java.util.Date;
 import org.junit.Test;
 import pl.matsuo.core.model.numeration.Numeration;
 import pl.matsuo.core.model.query.Query;
 import pl.matsuo.core.service.db.Database;
 
-import java.util.Date;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static pl.matsuo.core.util.DateUtil.*;
-
-
-/**
- * Created by tunguski on 15.09.13.
- */
+/** Created by tunguski on 15.09.13. */
 public class TestNumerationServiceImpl {
-
 
   @Test
   public void testGetNumber() {
@@ -37,4 +32,3 @@ public class TestNumerationServiceImpl {
     assertEquals("FV/2014/8/254350", numerationService.getNumber("INVOICE", new Date(), true));
   }
 }
-

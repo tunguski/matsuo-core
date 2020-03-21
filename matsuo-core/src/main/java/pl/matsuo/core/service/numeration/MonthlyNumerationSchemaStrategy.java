@@ -1,22 +1,17 @@
 package pl.matsuo.core.service.numeration;
 
+import static java.util.Calendar.*;
+
+import java.util.Calendar;
+import java.util.Date;
 import org.springframework.stereotype.Service;
 import pl.matsuo.core.model.numeration.Numeration;
 import pl.matsuo.core.model.numeration.NumerationSchema;
 import pl.matsuo.core.util.DateUtil;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import static java.util.Calendar.*;
-
-
-/**
- * Created by marek on 23.07.14.
- */
+/** Created by marek on 23.07.14. */
 @Service
 public class MonthlyNumerationSchemaStrategy implements NumerationSchemaStrategy {
-
 
   @Override
   public Numeration createNumeration(NumerationSchema numerationSchema, Date date) {
@@ -39,4 +34,3 @@ public class MonthlyNumerationSchemaStrategy implements NumerationSchemaStrategy
     return numeration;
   }
 }
-

@@ -1,5 +1,12 @@
 package pl.matsuo.core.web.controller.organization;
 
+import static java.util.Arrays.*;
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Function;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,15 +18,6 @@ import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.organization.initializer.CompanyInitializer;
 import pl.matsuo.core.web.controller.AbstractSimpleController;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.function.Function;
-
-import static java.util.Arrays.*;
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
-
 /**
  * Organization unit controller.
  *
@@ -30,18 +28,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping("/organizationUnits")
 public class OrganizationUnitController extends AbstractSimpleController<OrganizationUnit> {
 
-
   @Override
   protected List<Function<OrganizationUnit, String>> queryMatchers() {
     return asList(OrganizationUnit::getFullName);
   }
 
-
   @Override
   protected List<? extends Initializer<OrganizationUnit>> entityInitializers() {
     return asList(new CompanyInitializer());
   }
-
 
   @Override
   @RequestMapping(value = "/{id}", method = GET)
@@ -51,13 +46,13 @@ public class OrganizationUnitController extends AbstractSimpleController<Organiz
     return entity;
   }
 
-
   @RequestMapping(value = "/{id}/employee/{idEmployee}", method = POST)
   @ResponseStatus(OK)
-  public Person addEmployee(@PathVariable("id") Integer id,
-                            @PathVariable("idEmployee") Integer idEmployee) {
+  public Person addEmployee(
+      @PathVariable("id") Integer id, @PathVariable("idEmployee") Integer idEmployee) {
     Person person = database.findById(Person.class, idEmployee);
-    OrganizationUnit organizationUnit = database.findById(OrganizationUnit.class, id, entityInitializers);
+    OrganizationUnit organizationUnit =
+        database.findById(OrganizationUnit.class, id, entityInitializers);
 
     organizationUnit.getEmployees().add(person);
     database.update(organizationUnit);
@@ -65,12 +60,12 @@ public class OrganizationUnitController extends AbstractSimpleController<Organiz
     return person;
   }
 
-
   @RequestMapping(value = "/{id}/employee/{idEmployee}", method = DELETE)
   @ResponseStatus(OK)
-  public void removeEmployee(@PathVariable("id") Integer id,
-                             @PathVariable("idEmployee") Integer idEmployee) {
-    OrganizationUnit organizationUnit = database.findById(OrganizationUnit.class, id, entityInitializers);
+  public void removeEmployee(
+      @PathVariable("id") Integer id, @PathVariable("idEmployee") Integer idEmployee) {
+    OrganizationUnit organizationUnit =
+        database.findById(OrganizationUnit.class, id, entityInitializers);
 
     Iterator<Person> iterator = organizationUnit.getEmployees().iterator();
     while (iterator.hasNext()) {
@@ -83,4 +78,3 @@ public class OrganizationUnitController extends AbstractSimpleController<Organiz
     database.update(organizationUnit);
   }
 }
-

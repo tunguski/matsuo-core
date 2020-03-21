@@ -1,14 +1,10 @@
 package pl.matsuo.core.params;
 
-public interface ISearchRequestParams extends  IRequestParams {
+public interface ISearchRequestParams extends IRequestParams {
 
-  /**
-   * Number of elements to be returned by search.
-   */
+  /** Number of elements to be returned by search. */
   Integer getLimit();
 
-  /**
-   * Paging offset.
-   */
+  /** Paging offset. */
   Integer getOffset();
 }

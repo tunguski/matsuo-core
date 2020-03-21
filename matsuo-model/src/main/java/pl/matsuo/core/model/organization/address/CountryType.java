@@ -242,11 +242,9 @@ public enum CountryType {
   ZM("ZAMBIA", "ZMB", 894),
   ZW("ZIMBABWE", "ZWE", 716);
 
-
   final String name;
   final String longCode;
   final Integer numberCode;
-
 
   private CountryType(String name, String longCode, Integer numberCode) {
     this.name = name;

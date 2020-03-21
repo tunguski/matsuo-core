@@ -1,21 +1,17 @@
 package pl.matsuo.core.util;
 
-
 import static java.lang.Character.*;
 
-/**
- * Pomocnicze metody dla obsługi Stringów.
- */
+/** Pomocnicze metody dla obsługi Stringów. */
 public class StringUtil {
 
-
   /**
-   * Sprawdza czy przekazany obiekt nie jest pusty. Tekst składający się z samych białych znaków jest uznawany za pusty.
+   * Sprawdza czy przekazany obiekt nie jest pusty. Tekst składający się z samych białych znaków
+   * jest uznawany za pusty.
    */
   public static boolean notEmpty(String text) {
     return text != null && !text.trim().isEmpty();
   }
-
 
   public static String camelCaseToCssName(String text) {
     text = toLowerCase(text.charAt(0)) + text.substring(1);
@@ -32,4 +28,3 @@ public class StringUtil {
     return sb.toString();
   }
 }
-

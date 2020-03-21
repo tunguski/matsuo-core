@@ -1,7 +1,15 @@
 package pl.matsuo.core.web.mvc;
 
+import static java.util.Arrays.*;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Conventions;
@@ -22,40 +30,25 @@ import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 import pl.matsuo.core.service.parameterprovider.MapParameterProvider;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static java.util.Arrays.*;
-
-
 /**
  * Mapping request body to IRequestParams subinterfaces, allowing to use them in controller methods:
  *
  * <pre>
-     \@RequestMapping(value = "updateOwnPassword", method = PUT, consumes = { APPLICATION_JSON_VALUE })
-     \@ResponseStatus(NO_CONTENT)
-     public void updateOwnPassword(@RequestBody IChangePasswordParams changePasswordParams) {
+ * \@RequestMapping(value = "updateOwnPassword", method = PUT, consumes = { APPLICATION_JSON_VALUE })
+ * \@ResponseStatus(NO_CONTENT)
+ * public void updateOwnPassword(@RequestBody IChangePasswordParams changePasswordParams) {
  * </pre>
  *
- * If RequestBody annotation is present, parameters instance will be created on request's input stream. If not,
- * it will be created basing on request's params.
+ * If RequestBody annotation is present, parameters instance will be created on request's input
+ * stream. If not, it will be created basing on request's params.
  *
- * <p>
- * Created by tunguski on 23.11.13.
- * </p>
+ * <p>Created by tunguski on 23.11.13.
  */
 @Component
 public class FacadeBuilderHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
-
-  @Autowired
-  FacadeBuilder facadeBuilder;
+  @Autowired FacadeBuilder facadeBuilder;
   protected Gson gson = new Gson();
-
 
   @Override
   public boolean supportsParameter(MethodParameter parameter) {
@@ -63,21 +56,27 @@ public class FacadeBuilderHandlerMethodArgumentResolver implements HandlerMethod
         || IParameterProvider.class.equals(parameter.getParameterType());
   }
 
-
   @Override
-  public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+  public Object resolveArgument(
+      MethodParameter parameter,
+      ModelAndViewContainer mavContainer,
+      NativeWebRequest webRequest,
+      WebDataBinderFactory binderFactory)
+      throws Exception {
     boolean returnFacade = IRequestParams.class.isAssignableFrom(parameter.getParameterType());
     Object facade;
     if (parameter.hasParameterAnnotation(RequestBody.class)) {
-      String body = IOUtils.toString(webRequest.getNativeRequest(HttpServletRequest.class).getInputStream());
+      String body =
+          IOUtils.toString(webRequest.getNativeRequest(HttpServletRequest.class).getInputStream());
       if (returnFacade) {
-        facade = facadeBuilder.createFacade(
-            gson.fromJson(body, new TypeToken<Map<String, Object>>(){}.getType()),
-            parameter.getParameterType());
+        facade =
+            facadeBuilder.createFacade(
+                gson.fromJson(body, new TypeToken<Map<String, Object>>() {}.getType()),
+                parameter.getParameterType());
       } else {
-        facade = facadeBuilder.createParameterProvider(
-            gson.fromJson(body, new TypeToken<Map<String, Object>>(){}.getType()));
+        facade =
+            facadeBuilder.createParameterProvider(
+                gson.fromJson(body, new TypeToken<Map<String, Object>>() {}.getType()));
       }
     } else {
       Map<String, String[]> parameterMap = webRequest.getParameterMap();
@@ -87,23 +86,24 @@ public class FacadeBuilderHandlerMethodArgumentResolver implements HandlerMethod
         params.put(key, new ArrayList<>(asList(values)));
       }
 
-      IParameterProvider<?> parameterProvider = new MapParameterProvider(params) {
-        @Override
-        public Object internalGet(String key, Class<?> expectedClass) {
-          if (expectedClass.equals(List.class)) {
-            return super.internalGet(key, expectedClass);
-          } else {
-            Object list = super.internalGet(key, Object.class);
-            if (list == null) {
-              return null;
-            } else if (List.class.isAssignableFrom(list.getClass())) {
-              return ((List) list).get(0);
-            } else {
-              return list;
+      IParameterProvider<?> parameterProvider =
+          new MapParameterProvider(params) {
+            @Override
+            public Object internalGet(String key, Class<?> expectedClass) {
+              if (expectedClass.equals(List.class)) {
+                return super.internalGet(key, expectedClass);
+              } else {
+                Object list = super.internalGet(key, Object.class);
+                if (list == null) {
+                  return null;
+                } else if (List.class.isAssignableFrom(list.getClass())) {
+                  return ((List) list).get(0);
+                } else {
+                  return list;
+                }
+              }
             }
-          }
-        }
-      };
+          };
 
       if (returnFacade) {
         facade = facadeBuilder.createFacade(parameterProvider, parameter.getParameterType());
@@ -120,7 +120,6 @@ public class FacadeBuilderHandlerMethodArgumentResolver implements HandlerMethod
 
     return facade;
   }
-
 
   private void validate(WebDataBinder binder, MethodParameter parameter) throws Exception {
 
@@ -140,19 +139,20 @@ public class FacadeBuilderHandlerMethodArgumentResolver implements HandlerMethod
     }
   }
 
-
   /**
    * Whether to raise a {@link MethodArgumentNotValidException} on validation errors.
+   *
    * @param binder the data binder used to perform data binding
    * @param parameter the method argument
-   * @return {@code true} if the next method argument is not of type {@link org.springframework.validation.Errors}.
+   * @return {@code true} if the next method argument is not of type {@link
+   *     org.springframework.validation.Errors}.
    */
   private boolean isBindExceptionRequired(WebDataBinder binder, MethodParameter parameter) {
     int i = parameter.getParameterIndex();
     Class<?>[] paramTypes = parameter.getMethod().getParameterTypes();
-    boolean hasBindingResult = (paramTypes.length > (i + 1) && Errors.class.isAssignableFrom(paramTypes[i + 1]));
+    boolean hasBindingResult =
+        (paramTypes.length > (i + 1) && Errors.class.isAssignableFrom(paramTypes[i + 1]));
 
     return !hasBindingResult;
   }
 }
-

@@ -7,13 +7,11 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
 import static pl.matsuo.core.model.query.QueryBuilder.eq;
 
 import javax.mail.internet.InternetAddress;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import pl.matsuo.core.AbstractDbTest;
 import pl.matsuo.core.conf.GeneralConfig;
 import pl.matsuo.core.conf.TestMailConfig;
@@ -22,15 +20,11 @@ import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.mail.IMailService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { LoginService.class, TestMailConfig.class, GeneralConfig.class })
+@ContextConfiguration(classes = {LoginService.class, TestMailConfig.class, GeneralConfig.class})
 public class TestLoginService extends AbstractDbTest {
 
-
-  @Autowired
-  LoginService loginService;
-  @Autowired
-  IMailService mailService;
-
+  @Autowired LoginService loginService;
+  @Autowired IMailService mailService;
 
   @Test
   public void testLogin() throws Exception {
@@ -42,7 +36,6 @@ public class TestLoginService extends AbstractDbTest {
     verifyNoMoreInteractions(mailService);
   }
 
-
   @Test(expected = UnauthorizedException.class)
   public void testIncorrectLogin() throws Exception {
     LoginData loginData = new LoginData();
@@ -50,7 +43,6 @@ public class TestLoginService extends AbstractDbTest {
     loginData.setPassword("xxx");
     loginService.login(loginData);
   }
-
 
   @Test
   public void testActivateAccount() throws Exception {
@@ -70,15 +62,19 @@ public class TestLoginService extends AbstractDbTest {
     assertEquals("blicky2", loginService.login(loginData));
   }
 
-
   @Test
   public void testRemindPassword() throws Exception {
     loginService.remindPassword("admin");
 
-    verify(mailService).sendMail(any(InternetAddress.class), any(InternetAddress.class), anyString(), anyString(), anyObject());
+    verify(mailService)
+        .sendMail(
+            any(InternetAddress.class),
+            any(InternetAddress.class),
+            anyString(),
+            anyString(),
+            anyObject());
     reset(mailService);
   }
-
 
   @Test
   public void testCreateAccount() throws Exception {
@@ -87,21 +83,31 @@ public class TestLoginService extends AbstractDbTest {
     createAccountData.setCompanyName("test");
     createAccountData.setPassword("blickyPass");
 
-    when(mailService.sendMail(any(InternetAddress.class), any(InternetAddress.class), anyString(), anyString(), anyObject())).then(
-        invocation -> {
-          InternetAddress address = invocation.getArgument(1);
-          assertEquals("blicky", address.getAddress());
-          return null;
-        });
-
+    when(mailService.sendMail(
+            any(InternetAddress.class),
+            any(InternetAddress.class),
+            anyString(),
+            anyString(),
+            anyObject()))
+        .then(
+            invocation -> {
+              InternetAddress address = invocation.getArgument(1);
+              assertEquals("blicky", address.getAddress());
+              return null;
+            });
 
     String ticket = loginService.createAccount(createAccountData, true);
     User blicky = database.findOne(query(User.class, eq(User::getUsername, "blicky")));
     assertEquals(ticket, blicky.getUnblockTicket());
 
-    verify(mailService).sendMail(any(InternetAddress.class), any(InternetAddress.class), anyString(), anyString(), anyObject());
+    verify(mailService)
+        .sendMail(
+            any(InternetAddress.class),
+            any(InternetAddress.class),
+            anyString(),
+            anyString(),
+            anyObject());
     // clear context for other tests
     reset(mailService);
   }
 }
-

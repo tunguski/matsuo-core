@@ -4,20 +4,15 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
-
 import java.sql.Date;
 import java.sql.Time;
-
-
 
 public class CustomJacksonModule extends SimpleModule {
   private static final long serialVersionUID = 1L;
 
-
   public CustomJacksonModule() {
     super("Klinika", new Version(1, 0, 0, null, "pl.matsuo", "klinika"));
   }
-
 
   @Override
   public void setupModule(SetupContext context) {
@@ -38,4 +33,3 @@ public class CustomJacksonModule extends SimpleModule {
     context.addDeserializers(deserializers);
   }
 }
-

@@ -1,5 +1,10 @@
 package pl.matsuo.core.web.filter;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.*;
+
+import javax.servlet.FilterChain;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,27 +20,19 @@ import pl.matsuo.core.service.permission.PermissionService;
 import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.test.data.TestSessionState;
 
-import javax.servlet.FilterChain;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.http.HttpStatus.*;
-
-
-/**
- * Created by tunguski on 15.01.14.
- */
+/** Created by tunguski on 15.01.14. */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { DbConfig.class, PermissionService.class, PermissionsFilter.class,
-                                  TestSessionState.class })
+@ContextConfiguration(
+    classes = {
+      DbConfig.class,
+      PermissionService.class,
+      PermissionsFilter.class,
+      TestSessionState.class
+    })
 public class TestPermissionsFilter {
 
-
-  @Autowired
-  PermissionsFilter permissionsFilter;
-  @Autowired
-  SessionState sessionState;
-
+  @Autowired PermissionsFilter permissionsFilter;
+  @Autowired SessionState sessionState;
 
   @Test
   public void testPassLoggedOff() throws Exception {
@@ -49,7 +46,6 @@ public class TestPermissionsFilter {
     verify(filterChain).doFilter(servletRequest, servletResponse);
   }
 
-
   @Test
   public void testRejectLoggedOff() throws Exception {
     MockHttpServletRequest servletRequest = new MockHttpServletRequest("GET", "/api/lists/AA");
@@ -62,7 +58,6 @@ public class TestPermissionsFilter {
     verifyNoMoreInteractions(filterChain);
   }
 
-
   protected void configureSessionState(String groupName) {
     User user = new User();
     Group group = new Group();
@@ -72,8 +67,8 @@ public class TestPermissionsFilter {
     sessionState.setUser(user);
   }
 
-
-  @Test @DirtiesContext
+  @Test
+  @DirtiesContext
   public void testPassLoggedOn() throws Exception {
     configureSessionState("ADMIN");
 
@@ -86,7 +81,6 @@ public class TestPermissionsFilter {
     assertEquals(OK.value(), servletResponse.getStatus());
     verify(filterChain).doFilter(servletRequest, servletResponse);
   }
-
 
   @Test
   public void testRejectLoggedOn() throws Exception {
@@ -102,4 +96,3 @@ public class TestPermissionsFilter {
     verifyNoMoreInteractions(filterChain);
   }
 }
-

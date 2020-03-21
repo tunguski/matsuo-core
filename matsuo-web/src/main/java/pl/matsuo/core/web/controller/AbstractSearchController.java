@@ -1,5 +1,18 @@
 package pl.matsuo.core.web.controller;
 
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
+import static org.hibernate.criterion.MatchMode.*;
+import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.MediaType.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.util.ReflectUtil.*;
+import static pl.matsuo.core.util.StringUtil.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,34 +28,15 @@ import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.facade.IFacadeBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-import static org.hibernate.criterion.MatchMode.*;
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.MediaType.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
-import static pl.matsuo.core.util.StringUtil.*;
-
-
 @Transactional
-public abstract class AbstractSearchController<E extends AbstractEntity, P extends IQueryRequestParams> {
+public abstract class AbstractSearchController<
+    E extends AbstractEntity, P extends IQueryRequestParams> {
 
-
-  @Autowired
-  protected Database database;
-  @Autowired
-  protected IFacadeBuilder facadeBuilder;
-
+  @Autowired protected Database database;
+  @Autowired protected IFacadeBuilder facadeBuilder;
 
   @SuppressWarnings("unchecked")
   protected final Class<E> entityType = resolveType(getClass(), AbstractSearchController.class, 0);
-
 
   /**
    * Lista pól z którymi należy porównywać wartość parametru 'query' z zapytania listującego
@@ -56,7 +50,6 @@ public abstract class AbstractSearchController<E extends AbstractEntity, P exten
     throw new RuntimeException("Custom entity type requires queryMatchers(Class) redefinition");
   }
 
-
   /**
    * Lista pól z którymi należy porównywać wartość parametru 'query' z zapytania listującego
    * elementy.
@@ -65,14 +58,16 @@ public abstract class AbstractSearchController<E extends AbstractEntity, P exten
     return emptyList();
   }
 
-
   /**
    * Tworzy proste zapytanie na podstawie przekazanej mapy parametrów. Jedynym obsługiwanym
    * parametrem jest 'query' - na podstawie listy pól zwracanych przez {@link #queryMatchers(Class)}
    * buduje zapytanie wymagające aby każde słowo z 'query' znalazło się w którymś z pól.
    */
   protected <F extends AbstractEntity> AbstractQuery<F> listQuery(
-      Class<F> entity, P params, List<Function<F, String>> queryMatchers, Condition... additionalConditions) {
+      Class<F> entity,
+      P params,
+      List<Function<F, String>> queryMatchers,
+      Condition... additionalConditions) {
     List<Condition> conditions = new ArrayList<>(asList(additionalConditions));
 
     if (notEmpty(params.getQuery())) {
@@ -96,21 +91,16 @@ public abstract class AbstractSearchController<E extends AbstractEntity, P exten
     return entityQuery(entity, conditions.toArray(new Condition[0]));
   }
 
-
   protected <F extends AbstractEntity> AbstractQuery<F> listQuery(
       Class<F> entity, P params, Condition... additionalConditions) {
     return listQuery(entity, params, queryMatchers(entity), additionalConditions);
   }
 
-
   protected AbstractQuery<E> listQuery(P params, Condition... additionalConditions) {
     return listQuery(entityType, params, queryMatchers(), additionalConditions);
   }
 
-
-  /**
-   * Domyślna metoda listująca elementy według zadanych parametrów.
-   */
+  /** Domyślna metoda listująca elementy według zadanych parametrów. */
   protected <F extends AbstractEntity> List<F> list(Class<F> entity, P params) {
     AbstractQuery<F> query = listQuery(entity, params);
 
@@ -126,44 +116,33 @@ public abstract class AbstractSearchController<E extends AbstractEntity, P exten
     return list;
   }
 
-
-  /**
-   * Domyślna metoda listująca elementy według zadanych parametrów.
-   */
+  /** Domyślna metoda listująca elementy według zadanych parametrów. */
   @RequestMapping(method = GET)
   public List<E> list(P params) {
     return list(entityType, params);
   }
 
-
-  /**
-   * Pomocnicza metoda wyszukiwania gdy zapytanie wymaga jedynie przekazania kryteriów.
-   */
+  /** Pomocnicza metoda wyszukiwania gdy zapytanie wymaga jedynie przekazania kryteriów. */
   protected List<E> list(Condition... conditions) {
     return database.find(entityQuery(entityType, conditions));
   }
 
-
-  /**
-   * Pomocnicza metoda wyszukiwania gdy zapytanie wymaga jedynie przekazania kryteriów.
-   */
-  protected <F extends AbstractEntity> AbstractQuery<F> entityQuery(Class<F> entity, Condition... conditions) {
+  /** Pomocnicza metoda wyszukiwania gdy zapytanie wymaga jedynie przekazania kryteriów. */
+  protected <F extends AbstractEntity> AbstractQuery<F> entityQuery(
+      Class<F> entity, Condition... conditions) {
     return query(entity, conditions).initializer(entityInitializers);
   }
 
-
-  /**
-   * Pobiera listę encji danego typu po kolekcji identyfikatorów.
-   */
-  @RequestMapping(value = "/list/byIds", method = GET, consumes = {APPLICATION_OCTET_STREAM_VALUE})
+  /** Pobiera listę encji danego typu po kolekcji identyfikatorów. */
+  @RequestMapping(
+      value = "/list/byIds",
+      method = GET,
+      consumes = {APPLICATION_OCTET_STREAM_VALUE})
   public List<E> listByIds(@RequestParam("ids") List<Integer> ids) {
     return database.find(entityQuery(entityType, in(AbstractEntity::getId, ids)));
   }
 
-
-  /**
-   * Pobiera pojedynczą encję danego typu po id.
-   */
+  /** Pobiera pojedynczą encję danego typu po id. */
   @RequestMapping(value = "/{id}", method = GET)
   public HttpEntity<E> find(@PathVariable("id") Integer id) {
     try {
@@ -173,25 +152,21 @@ public abstract class AbstractSearchController<E extends AbstractEntity, P exten
     }
   }
 
-
-  protected final Initializer<E>[] entityInitializers = entityInitializers().toArray(new Initializer[0]);
-
+  protected final Initializer<E>[] entityInitializers =
+      entityInitializers().toArray(new Initializer[0]);
 
   protected List<? extends Initializer<? super E>> entityInitializers() {
     return new ArrayList<>();
   }
 
-
   @ResponseStatus(NOT_FOUND)
   public static class EntityNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
-
 
     public EntityNotFoundException(Integer id) {
       super("Entity '" + id + "' not found.");
     }
   }
-
 
   public void setDatabase(Database database) {
     this.database = database;
@@ -201,4 +176,3 @@ public abstract class AbstractSearchController<E extends AbstractEntity, P exten
     this.facadeBuilder = facadeBuilder;
   }
 }
-

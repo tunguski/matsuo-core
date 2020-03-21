@@ -1,16 +1,11 @@
 package pl.matsuo.core.util;
 
-import org.apache.commons.codec.binary.Base64;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.apache.commons.codec.binary.Base64;
 
-
-/**
- * Created by tunguski on 28.01.14.
- */
+/** Created by tunguski on 28.01.14. */
 public class SecurityUtil {
-
 
   public static String passwordHash(String password) {
     try {
@@ -22,4 +17,3 @@ public class SecurityUtil {
     }
   }
 }
-

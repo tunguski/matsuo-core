@@ -5,16 +5,13 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
 import static pl.matsuo.core.util.ReflectUtil.*;
 
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.hibernate.Interceptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import pl.matsuo.core.conf.DbConfig;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.service.db.Database;
@@ -23,17 +20,12 @@ import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
 import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 import pl.matsuo.core.test.data.TestSessionState;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { DbConfig.class, TestSessionState.class })
+@ContextConfiguration(classes = {DbConfig.class, TestSessionState.class})
 public class TestDatabase {
 
-
-  @Autowired
-  protected Database database;
-  @Autowired
-  protected EntityInterceptorService entityInterceptorService;
-
+  @Autowired protected Database database;
+  @Autowired protected EntityInterceptorService entityInterceptorService;
 
   @Test
   public void testEntityInterceptor() throws Exception {
@@ -44,16 +36,16 @@ public class TestDatabase {
     boolean containsIdBucketInterceptor = false;
 
     for (Interceptor interceptor : interceptors) {
-      containsAuditTrailInterceptor = containsAuditTrailInterceptor
-          || interceptor.getClass().equals(AuditTrailInterceptor.class);
-      containsIdBucketInterceptor = containsIdBucketInterceptor
-          || interceptor.getClass().equals(IdBucketInterceptor.class);
+      containsAuditTrailInterceptor =
+          containsAuditTrailInterceptor
+              || interceptor.getClass().equals(AuditTrailInterceptor.class);
+      containsIdBucketInterceptor =
+          containsIdBucketInterceptor || interceptor.getClass().equals(IdBucketInterceptor.class);
     }
 
     assertTrue(containsAuditTrailInterceptor);
     assertTrue(containsIdBucketInterceptor);
   }
-
 
   @Test
   @Transactional
@@ -86,4 +78,3 @@ public class TestDatabase {
     assertNull(database.findOne(query(Group.class, eq(Group::getName, "test-group-2"))));
   }
 }
-

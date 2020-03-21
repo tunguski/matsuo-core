@@ -1,28 +1,24 @@
 package pl.matsuo.core.web.controller.exception;
 
+import static org.springframework.http.HttpStatus.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import pl.matsuo.core.exception.RestProcessingException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.springframework.http.HttpStatus.*;
-
-
-/**
- * Created by tunguski on 16.09.13.
- */
+/** Created by tunguski on 16.09.13. */
 @ControllerAdvice
 public class RestProcessingExceptionHandler {
 
-
   @ExceptionHandler(RestProcessingException.class)
-  public ResponseEntity<Object> handleException(final RestProcessingException e, WebRequest request) {
+  public ResponseEntity<Object> handleException(
+      final RestProcessingException e, WebRequest request) {
 
     Map<String, Object> result = new HashMap<>();
     List<String> globalErrors = new ArrayList<>();
@@ -41,4 +37,3 @@ public class RestProcessingExceptionHandler {
     return new ResponseEntity<Object>(result, BAD_REQUEST);
   }
 }
-

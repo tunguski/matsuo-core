@@ -1,13 +1,12 @@
 package pl.matsuo.core.service.session;
 
-import org.junit.Test;
-import pl.matsuo.core.model.user.User;
-
 import static org.junit.Assert.*;
 import static pl.matsuo.core.model.user.GroupEnum.*;
 
-public class TestSessionState {
+import org.junit.Test;
+import pl.matsuo.core.model.user.User;
 
+public class TestSessionState {
 
   @Test
   public void testSetUser() throws Exception {
@@ -23,7 +22,6 @@ public class TestSessionState {
     assertFalse(sessionState.isInGroup(GUEST.name()));
   }
 
-
   @Test
   public void testGuestUser() throws Exception {
     SessionState sessionState = new SessionState();
@@ -32,4 +30,3 @@ public class TestSessionState {
     assertTrue(sessionState.isInGroup(GUEST.name()));
   }
 }
-

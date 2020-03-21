@@ -1,33 +1,37 @@
 package pl.matsuo.core.service.parameterprovider;
 
-import pl.matsuo.core.model.kv.KeyValueEntity;
-
-import java.math.BigDecimal;
-import java.util.Date;
-
 import static pl.matsuo.core.util.ReflectUtil.*;
 import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import pl.matsuo.core.model.kv.KeyValueEntity;
 
 /**
  * Provider dla obiektów {@link KeyValueEntity}.
+ *
  * @author Marek Romanowski
  * @since Aug 24, 2013
  */
 public class KeyValueParameterProvider extends AbstractParameterProvider<KeyValueEntity> {
 
-
   public KeyValueParameterProvider(KeyValueEntity underlyingEntity) {
     super(underlyingEntity);
   }
 
-
   @Override
   public Object internalGet(String key, Class<?> expectedClass) {
-    return optional((Object) underlyingEntity.getFields().get(key)).orElseGet(
-        () -> processEx(() -> { return getValue(underlyingEntity, key); }, e -> { return null; }));
+    return optional((Object) underlyingEntity.getFields().get(key))
+        .orElseGet(
+            () ->
+                processEx(
+                    () -> {
+                      return getValue(underlyingEntity, key);
+                    },
+                    e -> {
+                      return null;
+                    }));
   }
-
 
   @Override
   public void set(String propertyName, Object value) {
@@ -55,4 +59,3 @@ public class KeyValueParameterProvider extends AbstractParameterProvider<KeyValu
     }
   }
 }
-

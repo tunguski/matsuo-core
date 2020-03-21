@@ -8,16 +8,15 @@ import pl.matsuo.core.service.numeration.MonthlyNumerationSchemaStrategy;
 import pl.matsuo.core.service.numeration.NumerationServiceImpl;
 import pl.matsuo.core.service.numeration.QuaterlyNumerationSchemaStrategy;
 
-/**
- * Created by marek on 23.07.14.
- */
+/** Created by marek on 23.07.14. */
 @Configuration
 public class NumerationConfig {
 
-
   @Bean
   public static BeanFactoryPostProcessor mvcServices() {
-    return new ClassesAddingBeanFactoryPostProcessor(NumerationServiceImpl.class,
-        MonthlyNumerationSchemaStrategy.class, QuaterlyNumerationSchemaStrategy.class);
+    return new ClassesAddingBeanFactoryPostProcessor(
+        NumerationServiceImpl.class,
+        MonthlyNumerationSchemaStrategy.class,
+        QuaterlyNumerationSchemaStrategy.class);
   }
 }

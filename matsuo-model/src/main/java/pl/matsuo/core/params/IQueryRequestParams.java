@@ -1,8 +1,6 @@
 package pl.matsuo.core.params;
 
-/**
- * Created by tunguski on 23.11.13.
- */
+/** Created by tunguski on 23.11.13. */
 public interface IQueryRequestParams extends ISearchRequestParams {
 
   /**

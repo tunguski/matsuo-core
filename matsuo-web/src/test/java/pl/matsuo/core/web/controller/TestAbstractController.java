@@ -9,12 +9,10 @@ import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
-
 import pl.matsuo.core.model.api.Initializer;
 import pl.matsuo.core.model.query.AbstractQuery;
 import pl.matsuo.core.model.query.Query;
@@ -23,30 +21,27 @@ import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.service.db.Database;
 
-
 public class TestAbstractController {
-
 
   Database database = mock(Database.class);
 
-  AbstractController controller = new AbstractController<User, IQueryRequestParams>() {
-    @Override
-    protected List<Function<User, String>> queryMatchers() {
-      return asList(User::getUsername, User::getPassword);
-    }
+  AbstractController controller =
+      new AbstractController<User, IQueryRequestParams>() {
+        @Override
+        protected List<Function<User, String>> queryMatchers() {
+          return asList(User::getUsername, User::getPassword);
+        }
 
-    @Override
-    protected List<? extends Initializer<? super User>> entityInitializers() {
-      return asList(user -> user.setUsername("tester"));
-    }
-  };
-
+        @Override
+        protected List<? extends Initializer<? super User>> entityInitializers() {
+          return asList(user -> user.setUsername("tester"));
+        }
+      };
 
   @Before
   public void setup() {
     controller.database = database;
   }
-
 
   @Test
   public void testListQuery() throws Exception {
@@ -54,9 +49,10 @@ public class TestAbstractController {
     when(params.getQuery()).thenReturn("some text");
 
     AbstractQuery query = controller.listQuery(params, q -> "test string");
-    assertEquals("FROM pl.matsuo.core.model.user.User user WHERE test string " +
-        "AND (lower(username) like '%some%' OR lower(password) like '%some%') " +
-        "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
+    assertEquals(
+        "FROM pl.matsuo.core.model.user.User user WHERE test string "
+            + "AND (lower(username) like '%some%' OR lower(password) like '%some%') "
+            + "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
         query.printQuery());
   }
 
@@ -65,19 +61,21 @@ public class TestAbstractController {
     IQueryRequestParams params = mock(IQueryRequestParams.class);
     when(params.getQuery()).thenReturn("some text");
 
-    when(database.find(any(Query.class))).then(invocation -> {
-      AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
-      assertEquals("FROM pl.matsuo.core.model.user.User user WHERE " +
-          "(lower(username) like '%some%' OR lower(password) like '%some%') " +
-          "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
-          query.printQuery());
+    when(database.find(any(Query.class)))
+        .then(
+            invocation -> {
+              AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
+              assertEquals(
+                  "FROM pl.matsuo.core.model.user.User user WHERE "
+                      + "(lower(username) like '%some%' OR lower(password) like '%some%') "
+                      + "AND (lower(username) like '%text%' OR lower(password) like '%text%')",
+                  query.printQuery());
 
-      return Collections.nCopies(100, new User());
-    });
+              return Collections.nCopies(100, new User());
+            });
 
     assertEquals(100, controller.list(params).size());
   }
-
 
   @Test
   public void testList_limitAndOffset() throws Exception {
@@ -86,65 +84,72 @@ public class TestAbstractController {
     when(params.getLimit()).thenReturn(20);
     when(params.getOffset()).thenReturn(10);
 
-    when(database.find(any(Query.class))).then(invocation -> {
+    when(database.find(any(Query.class)))
+        .then(
+            invocation -> {
+              SessionFactory sessionFactory = mock(SessionFactory.class);
+              org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
+              Session session = mock(Session.class);
 
-      SessionFactory sessionFactory = mock(SessionFactory.class);
-      org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
-      Session session = mock(Session.class);
+              when(sessionFactory.getCurrentSession()).thenReturn(session);
+              when(session.createQuery(anyString())).thenReturn(hQuery);
 
-      when(sessionFactory.getCurrentSession()).thenReturn(session);
-      when(session.createQuery(anyString())).thenReturn(hQuery);
+              AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
 
-      AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
+              Field field = query.getClass().getDeclaredField("sessionFactory");
+              try {
+                field.setAccessible(true);
+                field.set(query, sessionFactory);
+              } finally {
+                field.setAccessible(false);
+              }
 
-      Field field = query.getClass().getDeclaredField("sessionFactory");
-      try {
-        field.setAccessible(true);
-        field.set(query, sessionFactory);
-      } finally {
-        field.setAccessible(false);
-      }
+              query.query(null);
 
-      query.query(null);
+              verify(hQuery).setMaxResults(20);
+              verify(hQuery).setFirstResult(10);
 
-      verify(hQuery).setMaxResults(20);
-      verify(hQuery).setFirstResult(10);
-
-      return Collections.nCopies(5, new User());
-    });
+              return Collections.nCopies(5, new User());
+            });
 
     assertEquals(5, controller.list(params).size());
   }
 
-
   @Test
   public void testList1() throws Exception {
-    when(database.find(any(Query.class))).then(invocation -> {
-      AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
-      assertEquals("FROM pl.matsuo.core.model.user.User user WHERE test_x AND test_y",
-          query.printQuery());
+    when(database.find(any(Query.class)))
+        .then(
+            invocation -> {
+              AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
+              assertEquals(
+                  "FROM pl.matsuo.core.model.user.User user WHERE test_x AND test_y",
+                  query.printQuery());
 
-      return Collections.nCopies(33, new User());
-    });
+              return Collections.nCopies(33, new User());
+            });
 
     assertEquals(33, controller.list((Condition) q -> "test_x", q -> "test_y").size());
   }
 
   @Test
   public void testEntityQuery() throws Exception {
-    assertEquals("FROM pl.matsuo.core.model.user.User user WHERE test_x AND test_y",
+    assertEquals(
+        "FROM pl.matsuo.core.model.user.User user WHERE test_x AND test_y",
         controller.entityQuery(User.class, q -> "test_x", q -> "test_y").printQuery());
   }
 
   @Test
   public void testListByIds() throws Exception {
-    when(database.find(any(Query.class))).then(invocation -> {
-      AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
-      assertEquals("FROM pl.matsuo.core.model.user.User user WHERE id in (1, 2, 3)",
-          query.printQuery());
+    when(database.find(any(Query.class)))
+        .then(
+            invocation -> {
+              AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
+              assertEquals(
+                  "FROM pl.matsuo.core.model.user.User user WHERE id in (1, 2, 3)",
+                  query.printQuery());
 
-      return Collections.nCopies(3, new User());
-    });
+              return Collections.nCopies(3, new User());
+            });
 
     assertEquals(3, controller.listByIds(asList(1, 2, 3)).size());
   }
@@ -152,54 +157,44 @@ public class TestAbstractController {
   @Test
   public void testFind() throws Exception {
     User user = new User();
-    when(database.findById(any(Class.class), any(Integer.class), any(Initializer.class))).thenReturn(user);
+    when(database.findById(any(Class.class), any(Integer.class), any(Initializer.class)))
+        .thenReturn(user);
     assertTrue(controller.find(7).getBody() == user);
   }
 
   @Test
   public void testEntityInitializers() throws Exception {
-    when(database.findById(any(Class.class), any(Integer.class), any(Initializer.class))).then(invocation -> {
-      assertEquals(3, invocation.getArguments().length);
+    when(database.findById(any(Class.class), any(Integer.class), any(Initializer.class)))
+        .then(
+            invocation -> {
+              assertEquals(3, invocation.getArguments().length);
 
-      Initializer initializer = (Initializer) invocation.getArguments()[2];
+              Initializer initializer = (Initializer) invocation.getArguments()[2];
 
-      User user = new User();
-      initializer.init(user);
-      assertEquals("tester", user.getUsername());
+              User user = new User();
+              initializer.init(user);
+              assertEquals("tester", user.getUsername());
 
-      return user;
-    });
+              return user;
+            });
     assertEquals("tester", ((User) controller.find(7).getBody()).getUsername());
   }
 
   @Test
-  public void testCreate() throws Exception {
-
-  }
+  public void testCreate() throws Exception {}
 
   @Test
-  public void testUpdate() throws Exception {
-
-  }
+  public void testUpdate() throws Exception {}
 
   @Test
-  public void testDelete() throws Exception {
-
-  }
+  public void testDelete() throws Exception {}
 
   @Test
-  public void testUpdate1() throws Exception {
-
-  }
+  public void testUpdate1() throws Exception {}
 
   @Test
-  public void testChildLocation() throws Exception {
-
-  }
+  public void testChildLocation() throws Exception {}
 
   @Test
-  public void testHttpEntity() throws Exception {
-
-  }
+  public void testHttpEntity() throws Exception {}
 }
-

@@ -2,7 +2,6 @@ package pl.matsuo.core.service.report;
 
 import java.util.Map;
 
-
 public interface IReportService<E> {
 
   Map<String, Object> buildModel(E params);
@@ -11,4 +10,3 @@ public interface IReportService<E> {
 
   String getTemplateName();
 }
-

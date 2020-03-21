@@ -1,20 +1,17 @@
 package pl.matsuo.core.test.data;
 
+import static pl.matsuo.core.util.DateUtil.*;
+import static pl.matsuo.core.util.NumberUtil.*;
+
+import java.util.Random;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.conf.DiscoverTypes;
 import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.organization.address.Address;
 
-import java.util.Random;
-
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.NumberUtil.*;
-
-
 @Component
-@DiscoverTypes({ MediqTestData.class })
+@DiscoverTypes({MediqTestData.class})
 public class PersonTestData extends AbstractMediqTestData {
-
 
   @Override
   public void internalExecute() {
@@ -967,8 +964,8 @@ public class PersonTestData extends AbstractMediqTestData {
     insertPatient("Oliwia", "Maciejewska", "67123002885");
   }
 
-
   private Random random = new Random();
+
   private String generateRandom(int n) {
     String result = "";
     for (int i = 0; i < n; i++) {
@@ -977,7 +974,6 @@ public class PersonTestData extends AbstractMediqTestData {
     return result;
   }
 
-
   private void insertPatient(String firstName, String lastName, String pesel) {
     Person person = new Person();
     Address address = person.getAddress();
@@ -985,7 +981,11 @@ public class PersonTestData extends AbstractMediqTestData {
     person.setFirstName(firstName);
     person.setLastName(lastName);
     person.setPesel(pesel);
-    person.setBirthDate(date(1900 + i(pesel.substring(0, 2)), i(pesel.substring(2, 4)) - 1, i(pesel.substring(4, 6))));
+    person.setBirthDate(
+        date(
+            1900 + i(pesel.substring(0, 2)),
+            i(pesel.substring(2, 4)) - 1,
+            i(pesel.substring(4, 6))));
 
     address.setStreet("Skowrońskiego");
     address.setApartmentNumber("15");
@@ -993,12 +993,18 @@ public class PersonTestData extends AbstractMediqTestData {
     address.setZipCode("00-683");
     address.setTown("Warszawa");
 
-    address.setPhone("" + (5 + random.nextInt(3)) + generateRandom(2) + "-" + generateRandom(3) + "-" + generateRandom(3));
+    address.setPhone(
+        ""
+            + (5 + random.nextInt(3))
+            + generateRandom(2)
+            + "-"
+            + generateRandom(3)
+            + "-"
+            + generateRandom(3));
     address.setEmail(firstName + "." + lastName + "@poczta.onet.pl");
 
     database.create(person);
   }
-
 
   @Override
   public String getExecuteServiceName() {

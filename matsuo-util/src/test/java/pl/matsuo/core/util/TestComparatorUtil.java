@@ -1,25 +1,21 @@
 package pl.matsuo.core.util;
 
-import org.junit.Test;
-
-import java.util.Date;
-import java.util.List;
-
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 import static pl.matsuo.core.util.ComparatorUtil.*;
 import static pl.matsuo.core.util.DateUtil.*;
 
+import java.util.Date;
+import java.util.List;
+import org.junit.Test;
+
 public class TestComparatorUtil {
 
-
   private class X {
-
 
     final Integer integer;
     final String string;
     final Date date;
-
 
     private X(Integer integer, String string, Date date) {
       this.integer = integer;
@@ -27,18 +23,18 @@ public class TestComparatorUtil {
       this.date = date;
     }
 
-
     public Integer getInteger() {
       return integer;
     }
+
     public String getString() {
       return string;
     }
+
     public Date getDate() {
       return date;
     }
   }
-
 
   public List<X> list() {
     return asList(
@@ -49,19 +45,19 @@ public class TestComparatorUtil {
         new X(null, null, null));
   }
 
-
   @Test
   public void testComparator() throws Exception {
-    asList(comparator(X::getInteger), comparator(X::getDate), comparator(X::getString)).forEach(comparator -> {
-      List<X> list = list();
-      list.sort(comparator);
+    asList(comparator(X::getInteger), comparator(X::getDate), comparator(X::getString))
+        .forEach(
+            comparator -> {
+              List<X> list = list();
+              list.sort(comparator);
 
-      assertNull(list.get(0).getInteger());
-      assertNull(list.get(1).getInteger());
-      assertEquals((Integer) 1, list.get(2).getInteger());
-      assertEquals((Integer) 2, list.get(3).getInteger());
-      assertEquals((Integer) 3, list.get(4).getInteger());
-    });
+              assertNull(list.get(0).getInteger());
+              assertNull(list.get(1).getInteger());
+              assertEquals((Integer) 1, list.get(2).getInteger());
+              assertEquals((Integer) 2, list.get(3).getInteger());
+              assertEquals((Integer) 3, list.get(4).getInteger());
+            });
   }
 }
-

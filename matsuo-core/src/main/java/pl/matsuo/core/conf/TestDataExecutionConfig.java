@@ -6,26 +6,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.matsuo.core.service.execution.ExecutionServiceImpl;
 
-
-/**
- * Created by tunguski on 06.10.13.
- */
+/** Created by tunguski on 06.10.13. */
 @Configuration
 public class TestDataExecutionConfig {
-
 
   @Autowired(required = true)
   protected ExecutionServiceImpl executionService;
 
-
   @Bean
   public static TestDataDiscoveryRegisteringBeanFactoryPostProcessor
-  testDataDiscoveryRegisteringBeanFactoryPostProcessor() {
+      testDataDiscoveryRegisteringBeanFactoryPostProcessor() {
     return new TestDataDiscoveryRegisteringBeanFactoryPostProcessor();
   }
 
-
-  @Bean public static BeanFactoryPostProcessor executionService() {
+  @Bean
+  public static BeanFactoryPostProcessor executionService() {
     return new ClassesAddingBeanFactoryPostProcessor(ExecutionServiceImpl.class);
   }
 }

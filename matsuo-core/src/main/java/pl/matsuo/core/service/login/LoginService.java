@@ -1,5 +1,14 @@
 package pl.matsuo.core.service.login;
 
+import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.util.SecurityUtil.*;
+import static pl.matsuo.core.util.StringUtil.*;
+import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import static pl.matsuo.core.util.function.Optional.*;
+
+import java.util.Date;
+import java.util.List;
+import javax.mail.internet.InternetAddress;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,42 +26,24 @@ import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.mail.IMailService;
 import pl.matsuo.core.service.report.DataModelBuilder;
 import pl.matsuo.core.service.session.SessionState;
-import pl.matsuo.core.util.function.FunctionalUtil;
-import pl.matsuo.core.util.function.Optional;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.List;
-
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.SecurityUtil.*;
-import static pl.matsuo.core.util.StringUtil.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
-import static pl.matsuo.core.util.function.Optional.*;
-
-
-/**
- * Created by marek on 12.07.14.
- */
+/** Created by marek on 12.07.14. */
 @Service
 public class LoginService implements ILoginService {
 
+  @Autowired SessionState sessionState;
+  @Autowired Database database;
 
-  @Autowired
-  SessionState sessionState;
-  @Autowired
-  Database database;
   @Autowired(required = false)
   ILoginServiceExtension[] extensions;
-  @Autowired
-  IMailService mailService;
+
+  @Autowired IMailService mailService;
+
   @Value("${mail.general.account}")
   String generalMailAccount;
+
   @Value("${app.name}")
   String appName;
-
 
   @Override
   public String login(LoginData loginData) {
@@ -60,9 +51,12 @@ public class LoginService implements ILoginService {
       throw new UnauthorizedException();
     }
 
-    User user = database.findOne(query(User.class, eq(User::getUsername, loginData.getUsername()))
-        .initializer(new UserInitializer()));
-    if (user != null && !user.getBlocked()
+    User user =
+        database.findOne(
+            query(User.class, eq(User::getUsername, loginData.getUsername()))
+                .initializer(new UserInitializer()));
+    if (user != null
+        && !user.getBlocked()
         && user.getPassword().equals(passwordHash(loginData.getPassword()))) {
       user.setLastLoginTime(new Date());
       user.getGroups().size();
@@ -83,7 +77,6 @@ public class LoginService implements ILoginService {
     }
   }
 
-
   @Override
   public void activateAccount(String ticket) {
     List<User> users = database.find(query(User.class, eq(User::getUnblockTicket, ticket)));
@@ -103,18 +96,25 @@ public class LoginService implements ILoginService {
     database.update(user);
   }
 
-
   @Override
   public void remindPassword(String username) {
-    ofNullable(database.findOne(query(User.class, eq(User::getUsername, username)))).map(user -> runtimeEx(
-        () -> mailService.sendMail(new InternetAddress(generalMailAccount, appName), new InternetAddress(user.getUsername()),
-            "Przypomnienie hasła", "remindPassword.ftl", new DataModelBuilder().put("user", user).getDataModel())));
+    ofNullable(database.findOne(query(User.class, eq(User::getUsername, username))))
+        .map(
+            user ->
+                runtimeEx(
+                    () ->
+                        mailService.sendMail(
+                            new InternetAddress(generalMailAccount, appName),
+                            new InternetAddress(user.getUsername()),
+                            "Przypomnienie hasła",
+                            "remindPassword.ftl",
+                            new DataModelBuilder().put("user", user).getDataModel())));
   }
-
 
   @Override
   public String createAccount(CreateAccountData createAccountData, boolean sendMail) {
-    if (database.findOne(query(User.class, eq(User::getUsername, createAccountData.getUsername()))) != null) {
+    if (database.findOne(query(User.class, eq(User::getUsername, createAccountData.getUsername())))
+        != null) {
       throw new RestProcessingException("Username already used");
     }
 
@@ -135,7 +135,8 @@ public class LoginService implements ILoginService {
 
     User user = new User();
     user.setPerson(person);
-    List<Group> groups = database.findAsAdmin(query(Group.class, eq(Group::getName, GroupEnum.SUPERVISOR.name())));
+    List<Group> groups =
+        database.findAsAdmin(query(Group.class, eq(Group::getName, GroupEnum.SUPERVISOR.name())));
     Assert.isTrue(groups.size() == 1);
     user.getGroups().add(groups.get(0));
     user.setUsername(createAccountData.getUsername());
@@ -153,13 +154,16 @@ public class LoginService implements ILoginService {
     }
 
     if (sendMail) {
-      runtimeEx(() -> mailService.sendMail(new InternetAddress(generalMailAccount, appName),
-          new InternetAddress(user.getUsername()),
-          "Witamy! Prosimy o weryfikację adresu e-mail", "createAccount.ftl",
-          new DataModelBuilder().put("user", user).getDataModel()));
+      runtimeEx(
+          () ->
+              mailService.sendMail(
+                  new InternetAddress(generalMailAccount, appName),
+                  new InternetAddress(user.getUsername()),
+                  "Witamy! Prosimy o weryfikację adresu e-mail",
+                  "createAccount.ftl",
+                  new DataModelBuilder().put("user", user).getDataModel()));
     }
 
     return user.getUnblockTicket();
   }
 }
-

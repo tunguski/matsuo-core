@@ -1,8 +1,8 @@
 package pl.matsuo.core.util;
 
-import java.math.BigDecimal;
-
 import static java.math.BigDecimal.*;
+
+import java.math.BigDecimal;
 
 /*
  * NumberSpeaker.java
@@ -28,13 +28,33 @@ import static java.math.BigDecimal.*;
 
 /**
  * Zamiana liczb na postać słowną
+ *
  * @author Klaudiusz Kulik kulikk(at)monstrum.org
  */
 public abstract class NumberSpeaker {
 
-  private static final String[] teens = { "", "jeden", "dwa", "trzy", "cztery", "pięć", "sześć",
-      "siedem", "osiem", "dziewięć", "dziesięć", "jedenaście", "dwanaście", "trzynaście",
-      "czternaście", "piętnaście", "szesnaście", "siedemnaście", "osiemnaście", "dziewiętnaście" };
+  private static final String[] teens = {
+    "",
+    "jeden",
+    "dwa",
+    "trzy",
+    "cztery",
+    "pięć",
+    "sześć",
+    "siedem",
+    "osiem",
+    "dziewięć",
+    "dziesięć",
+    "jedenaście",
+    "dwanaście",
+    "trzynaście",
+    "czternaście",
+    "piętnaście",
+    "szesnaście",
+    "siedemnaście",
+    "osiemnaście",
+    "dziewiętnaście"
+  };
   private static final String _20 = "dwadzieścia";
   private static final String _30 = "trzydzieści";
   private static final String _40 = "czterdzieści";
@@ -46,8 +66,8 @@ public abstract class NumberSpeaker {
   private static final String _1e2 = "set";
   private static final String _1000 = "tysiąc";
 
-  private static final String[] _1e3suff = { "ące", "ęcy" };
-  private static final String[] _1e6suff = { "y", "ów" };
+  private static final String[] _1e3suff = {"ące", "ęcy"};
+  private static final String[] _1e6suff = {"y", "ów"};
 
   private static final String _1e3 = "tysi";
 
@@ -60,23 +80,24 @@ public abstract class NumberSpeaker {
   private static final String _1e21 = "tryliard";
   private static final String _1e24 = "kwadrylion";
 
-  private static final String[] zloteSuffixes = { "złoty", // 1
-      "złote", // 2-4
-      "złotych" // >5
+  private static final String[] zloteSuffixes = {
+    "złoty", // 1
+    "złote", // 2-4
+    "złotych" // >5
   };
-  private static final String[] groszeSuffixes = { "grosz", // 1
-      "grosze", // 2-4
-      "groszy", // >5
-      "groszy", // x1
+  private static final String[] groszeSuffixes = {
+    "grosz", // 1
+    "grosze", // 2-4
+    "groszy", // >5
+    "groszy", // x1
   };
 
   private static final int secSize = 3; // po 3 cyfry w sekcji
 
   /**
    * Metoda zwracająca słowną reprezentację liczby
-   * 
-   * @param value
-   *          liczba
+   *
+   * @param value liczba
    * @return słowna reprezentacja
    */
   public static String speakNumber(long value) {
@@ -121,11 +142,10 @@ public abstract class NumberSpeaker {
 
   /**
    * Metoda zamienia liczbę z przedziału 0-999 na jej słowną reprezentację
-   * 
-   * @param number
-   *          liczba do konwersji
+   *
+   * @param number liczba do konwersji
    * @return napis ze słowną reprezentacją Metoda jest rekurencyjna! Wywołuje przeciążoną metodę.
-   *         TODO: Uprościć
+   *     TODO: Uprościć
    */
   private static String decode(String number) {
     String retval;
@@ -155,25 +175,20 @@ public abstract class NumberSpeaker {
       int i = num / 100;
       int j = num % 100;
       retval = (teens[i] + _1e2 + " " + decode(j));
-    } else
-      retval = null;
+    } else retval = null;
     return retval;
   }
 
-  /**
-   * Przeciążona metoda konwertująca. Dodana w celu uproszczenia rekurencji
-   */
+  /** Przeciążona metoda konwertująca. Dodana w celu uproszczenia rekurencji */
   private static String decode(int number) {
     return decode(String.valueOf(number));
   }
 
   /**
    * Metoda określa przyrostki dodawane do poszczególnych trójek liczb.
-   * 
-   * @param number
-   *          liczba jako string
-   * @param position
-   *          pozycja danej trójki
+   *
+   * @param number liczba jako string
+   * @param position pozycja danej trójki
    * @return napis zawierający prawidłowy przyrostek
    */
   private static String determineSuffix(String number, int position) {
@@ -183,43 +198,40 @@ public abstract class NumberSpeaker {
     }
     // pozycja 2 - tysiące, 3 - miliony, 4 - miliardy itd.
     switch (position) {
-    case 1:
-      return suffix;
-    case 2: // tysiące
-      if (number.endsWith("1") && (number.length() == 1))
-        suffix = _1000;
-      if (!(number.endsWith("1") && number.length() == 1)) {
-        suffix = _1e3;
-        suffix += suffixHelper(number, _1e3suff);
-      }
-      return suffix;
-    case 3: // miliony
-      suffix = _1e6;
-      break;
-    case 4: // miliardy
-      suffix = _1e9;
-      break;
-    case 5: // biliony
-      suffix = _1e12;
-      break;
-    case 6: // biliardy
-      suffix = _1e15;
-      break;
-    case 7: // tryliony
-      suffix = _1e18;
-      break;
+      case 1:
+        return suffix;
+      case 2: // tysiące
+        if (number.endsWith("1") && (number.length() == 1)) suffix = _1000;
+        if (!(number.endsWith("1") && number.length() == 1)) {
+          suffix = _1e3;
+          suffix += suffixHelper(number, _1e3suff);
+        }
+        return suffix;
+      case 3: // miliony
+        suffix = _1e6;
+        break;
+      case 4: // miliardy
+        suffix = _1e9;
+        break;
+      case 5: // biliony
+        suffix = _1e12;
+        break;
+      case 6: // biliardy
+        suffix = _1e15;
+        break;
+      case 7: // tryliony
+        suffix = _1e18;
+        break;
     }
     // od miliona w górę odmiana regularna
-    if (!(number.endsWith("1") && number.length() == 1))
-      suffix += suffixHelper(number, _1e6suff);
+    if (!(number.endsWith("1") && number.length() == 1)) suffix += suffixHelper(number, _1e6suff);
     return suffix;
   }
 
   /**
    * Metoda upraszczająca kod dla tworzenia sufisków
-   * 
-   * @param number
-   *          liczba jako string
+   *
+   * @param number liczba jako string
    * @return napis zawierający końcówkę
    */
   private static String suffixHelper(String number, String[] suffixes) {
@@ -227,7 +239,9 @@ public abstract class NumberSpeaker {
     if (number.equals("")) {
       return "";
     }
-    if ((number.endsWith("11")) || (number.endsWith("12")) || (number.endsWith("13"))
+    if ((number.endsWith("11"))
+        || (number.endsWith("12"))
+        || (number.endsWith("13"))
         || (number.endsWith("14"))) {
       return suffixes[1];
     } else {
@@ -241,19 +255,14 @@ public abstract class NumberSpeaker {
 
   private static String currencyDeclension(long number, String[] suffixes) {
     long unities = number % 10;
-    long tens = (number-unities)/10 % 10; 
+    long tens = (number - unities) / 10 % 10;
     if (unities == 1)
-      if(suffixes.length == 4 && tens > 0)
-        return suffixes[3];
-      else
-        return suffixes[0];
-    if (unities > 1 && unities < 5)
-      return suffixes[1];
-    if (unities == 0 || unities > 5)
-      return suffixes[2];
+      if (suffixes.length == 4 && tens > 0) return suffixes[3];
+      else return suffixes[0];
+    if (unities > 1 && unities < 5) return suffixes[1];
+    if (unities == 0 || unities > 5) return suffixes[2];
     return null; // nigdy nie osiagane
   }
-
 
   public static String speakCashAmount(BigDecimal value) {
     String result = "";
@@ -265,13 +274,13 @@ public abstract class NumberSpeaker {
 
     String upperPart = "";
     if (value.longValue() != 0)
-      upperPart = speakNumber(value.longValue()) + " "
-          + currencyDeclension(value.longValue(), zloteSuffixes);
+      upperPart =
+          speakNumber(value.longValue())
+              + " "
+              + currencyDeclension(value.longValue(), zloteSuffixes);
     long lowerPart = (long) (value.doubleValue() * 100 % 100);
-    if (lowerPart == 0)
-      result += upperPart + " zero ";
-    else
-      result += upperPart + " " + speakNumber(lowerPart) + " ";
+    if (lowerPart == 0) result += upperPart + " zero ";
+    else result += upperPart + " " + speakNumber(lowerPart) + " ";
     result += currencyDeclension(lowerPart, groszeSuffixes);
     return result.trim().replaceAll("  ", " ");
   }

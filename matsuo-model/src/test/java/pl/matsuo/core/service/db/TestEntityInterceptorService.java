@@ -1,22 +1,19 @@
 package pl.matsuo.core.service.db;
 
-import org.hibernate.Interceptor;
-import org.junit.Test;
-
 import static java.util.Arrays.*;
 import static org.mockito.Mockito.*;
 
-public class TestEntityInterceptorService {
+import org.hibernate.Interceptor;
+import org.junit.Test;
 
+public class TestEntityInterceptorService {
 
   EntityInterceptorService entityInterceptorService = new EntityInterceptorService();
   Interceptor interceptor = mock(Interceptor.class);
 
-
   public TestEntityInterceptorService() {
     entityInterceptorService.setInterceptors(asList(interceptor));
   }
-
 
   @Test
   public void testOnLoad() throws Exception {
@@ -102,4 +99,3 @@ public class TestEntityInterceptorService {
     verify(interceptor).afterTransactionCompletion(null);
   }
 }
-

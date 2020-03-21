@@ -1,6 +1,14 @@
 package pl.matsuo.core.service.permission;
 
+import static java.lang.System.*;
+import static pl.matsuo.core.model.user.GroupEnum.*;
+
 import com.google.gson.Gson;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,28 +19,13 @@ import org.springframework.stereotype.Service;
 import pl.matsuo.core.service.permission.model.Permissions;
 import pl.matsuo.core.service.session.SessionState;
 
-import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static java.lang.System.*;
-import static pl.matsuo.core.model.user.GroupEnum.*;
-
-
-/**
- * Created by tunguski on 21.12.13.
- */
+/** Created by tunguski on 21.12.13. */
 @Service
 public class PermissionService implements IPermissionService, ResourceLoaderAware {
   private static final Logger logger = LoggerFactory.getLogger(PermissionService.class);
 
-
-  @Autowired
-  protected SessionState sessionState;
+  @Autowired protected SessionState sessionState;
   private ResourceLoader resourceLoader;
-
 
   protected String permissionFilePath = "/permissions.json";
   protected Permissions permissions;
@@ -41,17 +34,18 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
   protected long interval = 2000;
   protected long authorizationLength = 30;
 
-
   protected Permissions getPermissions() {
     try {
       Resource resource = resourceLoader.getResource(permissionFilePath);
 
       if (permissions == null
-            || ((lastCheckTime + interval < currentTimeMillis())
-                  && lastReadTime < resource.getFile().lastModified())) {
+          || ((lastCheckTime + interval < currentTimeMillis())
+              && lastReadTime < resource.getFile().lastModified())) {
         logger.info("reading new permissions from: " + resource.getFile().getAbsolutePath());
 
-        permissions = new Gson().fromJson(new InputStreamReader(resource.getInputStream()), Permissions.class);
+        permissions =
+            new Gson()
+                .fromJson(new InputStreamReader(resource.getInputStream()), Permissions.class);
         lastReadTime = resource.getFile().lastModified();
         lastCheckTime = currentTimeMillis();
       }
@@ -62,23 +56,24 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
     return permissions;
   }
 
-
   @Override
   public boolean isPermitted(String name) {
     return isPermitted(name, RequestType.GET);
   }
 
-
   @Override
   public boolean isPermitted(String name, RequestType requestType) {
     // weryfikacja czasu nieaktywności - po przekroczeniu automatycznie wylogowywuje
-    if (authorizationLength > 0 && sessionState.getUser() != null
-          && (sessionState.getLastRequestTime() + authorizationLength * 60 * 1000) < currentTimeMillis()) {
+    if (authorizationLength > 0
+        && sessionState.getUser() != null
+        && (sessionState.getLastRequestTime() + authorizationLength * 60 * 1000)
+            < currentTimeMillis()) {
       logoff();
     }
 
     // aktualizacja czasu ostatniego odwołania do serwisu
-    // fixme: mechanizm wyłączeń dla cyklicznych zapytań nie będących wynikiem interakcji użytkownika
+    // fixme: mechanizm wyłączeń dla cyklicznych zapytań nie będących wynikiem interakcji
+    // użytkownika
     sessionState.setLastRequestTime(currentTimeMillis());
 
     // admin może wszystko
@@ -102,15 +97,14 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
     return findPermission(functionDefinitions);
   }
 
-
   @Override
   public void logoff() {
     sessionState.setUser(null);
   }
 
-
   /**
-   * Czy któryś ze zbiorów funkcji uprawniających do wykonania akcji jest uprawniony dla którejś z grup użytkownika.
+   * Czy któryś ze zbiorów funkcji uprawniających do wykonania akcji jest uprawniony dla którejś z
+   * grup użytkownika.
    */
   protected boolean findPermission(Set<String> elements) {
     for (String groupName : getPermissions().getPermissions().keySet()) {
@@ -127,17 +121,19 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
     return false;
   }
 
-
   /**
-   * Tworzy zbiór zbiorów definicji funkcji, w których znajduje się dowolna z pasujących nazw funkcji.
+   * Tworzy zbiór zbiorów definicji funkcji, w których znajduje się dowolna z pasujących nazw
+   * funkcji.
    */
   protected Set<String> functionSets(Set<String> functionNames, RequestType requestType) {
     Set<String> functionSets = new HashSet<>();
 
     for (String functionsSetName : getPermissions().getFunctionSets().keySet()) {
-      Map<String, List<String>> functionSet = getPermissions().getFunctionSets().get(functionsSetName);
+      Map<String, List<String>> functionSet =
+          getPermissions().getFunctionSets().get(functionsSetName);
       for (String functionName : functionSet.keySet()) {
-        if (functionNames.contains(functionName) && functionSet.get(functionName).contains(requestType.name())) {
+        if (functionNames.contains(functionName)
+            && functionSet.get(functionName).contains(requestType.name())) {
           functionSets.add(functionsSetName);
         }
       }
@@ -146,19 +142,19 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
     return functionSets;
   }
 
-
-  /**
-   * Czy dana nazwa pasuje do przekazanej funkcji (definicja uprawnienia).
-   */
+  /** Czy dana nazwa pasuje do przekazanej funkcji (definicja uprawnienia). */
   protected boolean matches(String name, String function) {
     if (function.equals(name)) {
       return true;
 
-      // zapis funkcji '/api/xxx/*' spowoduje automatyczne zezwolenie dla '/api/xxx', czyli każda nazwa, włącznie z
+      // zapis funkcji '/api/xxx/*' spowoduje automatyczne zezwolenie dla '/api/xxx', czyli każda
+      // nazwa, włącznie z
       // brakiem slasha i czegokolwiek po xxx jest dozwolona
-    } else if (function.endsWith("*") && name.indexOf(function.substring(0, function.length() - 2)) == 0) {
+    } else if (function.endsWith("*")
+        && name.indexOf(function.substring(0, function.length() - 2)) == 0) {
       if (function.length() <= 4) {
-        throw new RuntimeException("Wildcard definition must be longer than 4 characters: " + function);
+        throw new RuntimeException(
+            "Wildcard definition must be longer than 4 characters: " + function);
       }
 
       return true;
@@ -167,15 +163,13 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
     return false;
   }
 
-
-  /**
-   * Tworzy zbiór definicji funkcji, które pasują do przekazanego uprawnienia.
-   */
+  /** Tworzy zbiór definicji funkcji, które pasują do przekazanego uprawnienia. */
   protected Set<String> functionDefinitions(String name, RequestType requestType) {
     Set<String> functionDefinitions = new HashSet<>();
 
     for (String function : getPermissions().getFunctions().keySet()) {
-      if (matches(name, function) && getPermissions().getFunctions().get(function).contains(requestType.name())) {
+      if (matches(name, function)
+          && getPermissions().getFunctions().get(function).contains(requestType.name())) {
         functionDefinitions.add(function);
       }
     }
@@ -183,10 +177,8 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
     return functionDefinitions;
   }
 
-
   @Override
   public void setResourceLoader(ResourceLoader resourceLoader) {
     this.resourceLoader = resourceLoader;
   }
 }
-

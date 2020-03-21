@@ -1,34 +1,28 @@
 package pl.matsuo.core.conf;
 
+import static java.util.Arrays.*;
+import static org.springframework.beans.factory.support.BeanDefinitionBuilder.*;
+
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static java.util.Arrays.*;
-import static org.springframework.beans.factory.support.BeanDefinitionBuilder.*;
-
-
-/**
- * Created by tunguski on 06.10.13.
- */
+/** Created by tunguski on 06.10.13. */
 public class ClassesAddingBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
-
 
   private Class[] classes;
 
-
-  public ClassesAddingBeanFactoryPostProcessor(Class ... classes) {
+  public ClassesAddingBeanFactoryPostProcessor(Class... classes) {
     this.classes = classes;
   }
 
-
   @Override
-  public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+  public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory)
+      throws BeansException {
     BeanDefinitionRegistry factory = (BeanDefinitionRegistry) beanFactory;
 
     Set<Class> toAdd = new HashSet<>(asList(classes));
@@ -46,7 +40,8 @@ public class ClassesAddingBeanFactoryPostProcessor implements BeanFactoryPostPro
     }
 
     for (Class clazz : toAdd) {
-      factory.registerBeanDefinition(clazz.getSimpleName(), rootBeanDefinition(clazz).getBeanDefinition());
+      factory.registerBeanDefinition(
+          clazz.getSimpleName(), rootBeanDefinition(clazz).getBeanDefinition());
     }
   }
 }

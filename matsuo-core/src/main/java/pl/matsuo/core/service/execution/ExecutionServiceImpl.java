@@ -1,6 +1,12 @@
 package pl.matsuo.core.service.execution;
 
+import static java.lang.System.*;
+import static org.springframework.core.Ordered.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
 
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -18,56 +24,49 @@ import pl.matsuo.core.model.execution.Execution;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.session.SessionState;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-import static java.lang.System.*;
-import static org.springframework.core.Ordered.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-
-
 /**
  * Execute defined (mostly database) changes.
+ *
  * @author Marek Romanowski
  * @since 11-07-2013
  */
 @Service
-public class ExecutionServiceImpl implements ApplicationListener<ContextRefreshedEvent>, ApplicationContextAware {
+public class ExecutionServiceImpl
+    implements ApplicationListener<ContextRefreshedEvent>, ApplicationContextAware {
   private static final Logger logger = LoggerFactory.getLogger(ExecutionServiceImpl.class);
-
 
   @Autowired(required = false)
   List<IExecuteService> executeServices;
-  @Autowired
-  Database database;
-  @Autowired
-  PlatformTransactionManager transactionManager;
-  @Autowired
-  SessionState sessionState;
-  ApplicationContext applicationContext;
 
+  @Autowired Database database;
+  @Autowired PlatformTransactionManager transactionManager;
+  @Autowired SessionState sessionState;
+  ApplicationContext applicationContext;
 
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
     if (!event.getApplicationContext().equals(applicationContext)
-        || executeServices == null || executeServices.isEmpty()) {
+        || executeServices == null
+        || executeServices.isEmpty()) {
       return;
     }
 
-    Collections.sort(executeServices, new AnnotationAwareOrderComparator() {
-      @Override
-      protected int getOrder(Object obj) {
-        int order = super.getOrder(obj);
+    Collections.sort(
+        executeServices,
+        new AnnotationAwareOrderComparator() {
+          @Override
+          protected int getOrder(Object obj) {
+            int order = super.getOrder(obj);
 
-        return order == LOWEST_PRECEDENCE ? HIGHEST_PRECEDENCE : order;
-      }
-    });
+            return order == LOWEST_PRECEDENCE ? HIGHEST_PRECEDENCE : order;
+          }
+        });
 
     for (IExecuteService executeService : executeServices) {
       String executeServiceName = executeService.getExecuteServiceName();
 
-      TransactionStatus transaction = transactionManager.getTransaction(new DefaultTransactionDefinition());
+      TransactionStatus transaction =
+          transactionManager.getTransaction(new DefaultTransactionDefinition());
 
       Execution execution = new Execution();
       execution.setBeanName(executeServiceName);
@@ -76,7 +75,13 @@ public class ExecutionServiceImpl implements ApplicationListener<ContextRefreshe
 
       try {
         boolean noSuccessExecutions =
-            database.find(query(Execution.class, eq(Execution::getBeanName, executeServiceName), eq(Execution::getSuccess, true))).isEmpty();
+            database
+                .find(
+                    query(
+                        Execution.class,
+                        eq(Execution::getBeanName, executeServiceName),
+                        eq(Execution::getSuccess, true)))
+                .isEmpty();
 
         if (noSuccessExecutions) {
           try {
@@ -86,8 +91,12 @@ public class ExecutionServiceImpl implements ApplicationListener<ContextRefreshe
             executeService.execute();
 
             long endTime = currentTimeMillis();
-            logger.info("Processed execution: " + executeServiceName + " in "
-                            + (1.0 * (endTime - startTime) / 1000) + " seconds");
+            logger.info(
+                "Processed execution: "
+                    + executeServiceName
+                    + " in "
+                    + (1.0 * (endTime - startTime) / 1000)
+                    + " seconds");
           } catch (Exception e) {
             // TODO: save information about unsuccessful script execution
             logger.error("Error while processing execution: " + executeServiceName, e);
@@ -106,14 +115,11 @@ public class ExecutionServiceImpl implements ApplicationListener<ContextRefreshe
         execution.setSuccess(false);
         transactionManager.commit(transaction);
       }
-
     }
   }
-
 
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
   }
 }
-

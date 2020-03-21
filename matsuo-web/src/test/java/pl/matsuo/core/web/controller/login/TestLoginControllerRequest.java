@@ -1,5 +1,10 @@
 package pl.matsuo.core.web.controller.login;
 
+import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static pl.matsuo.core.model.query.QueryBuilder.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -18,26 +23,20 @@ import pl.matsuo.core.service.login.LoginService;
 import pl.matsuo.core.service.permission.PermissionService;
 import pl.matsuo.core.web.controller.AbstractDbControllerRequestTest;
 
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-
-
-/**
- * Created by tunguski on 15.01.14.
- */
+/** Created by tunguski on 15.01.14. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { LoginController.class, LoginService.class, PermissionService.class,
-                                  TestMailConfig.class})
+@ContextConfiguration(
+    classes = {
+      LoginController.class,
+      LoginService.class,
+      PermissionService.class,
+      TestMailConfig.class
+    })
 public class TestLoginControllerRequest extends AbstractDbControllerRequestTest {
   private static final Logger logger = LoggerFactory.getLogger(TestLoginControllerRequest.class);
 
-
-  @Autowired
-  LoginController controller;
-
+  @Autowired LoginController controller;
 
   @Test
   public void testActivateAccount() throws Exception {
@@ -48,13 +47,14 @@ public class TestLoginControllerRequest extends AbstractDbControllerRequestTest 
     createAccountData.setCompanyShortName("kryspin");
     createAccountData.setCompanyNip("692-000-00-13");
 
-    performAndCheck(post("/login/createAccount", createAccountData),
-        http -> assertFalse(http.isEmpty()));
+    performAndCheck(
+        post("/login/createAccount", createAccountData), http -> assertFalse(http.isEmpty()));
 
     User user = database.findOne(query(User.class, eq(User::getUsername, "kryspin")));
 
     try {
-      performAndCheckStatus(get("/login/activateAccount/" + user.getUnblockTicket()), status().isFound());
+      performAndCheckStatus(
+          get("/login/activateAccount/" + user.getUnblockTicket()), status().isFound());
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -72,8 +72,7 @@ public class TestLoginControllerRequest extends AbstractDbControllerRequestTest 
       loginData.setUsername("kryspin");
       loginData.setPassword("kryspinx");
 
-      performAndCheck(post("/login", loginData),
-          reponse -> assertEquals(reponse, "\"kryspin\""));
+      performAndCheck(post("/login", loginData), reponse -> assertEquals(reponse, "\"kryspin\""));
 
       return;
     }
@@ -81,4 +80,3 @@ public class TestLoginControllerRequest extends AbstractDbControllerRequestTest 
     fail("Should not come here");
   }
 }
-

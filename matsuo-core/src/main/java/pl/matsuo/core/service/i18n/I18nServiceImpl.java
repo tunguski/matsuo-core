@@ -1,26 +1,19 @@
 package pl.matsuo.core.service.i18n;
 
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
 
-import java.util.Locale;
-
-
-/**
- * Created by tunguski on 26.09.13.
- */
+/** Created by tunguski on 26.09.13. */
 @Service
 public class I18nServiceImpl implements I18nService {
 
-
-  @Autowired
-  MessageSource[] messageSources;
-
+  @Autowired MessageSource[] messageSources;
 
   @Override
-  public String translate(String code, Object ... params) {
+  public String translate(String code, Object... params) {
     // FIXME: stworzyć localeProvidera
     Locale locale = Locale.getDefault();
 
@@ -28,7 +21,8 @@ public class I18nServiceImpl implements I18nService {
       for (MessageSource messageSource : messageSources) {
         try {
           return messageSource.getMessage(code, params, locale);
-        } catch (NoSuchMessageException e) {}
+        } catch (NoSuchMessageException e) {
+        }
       }
 
       if (locale == null) {
@@ -41,4 +35,3 @@ public class I18nServiceImpl implements I18nService {
     }
   }
 }
-

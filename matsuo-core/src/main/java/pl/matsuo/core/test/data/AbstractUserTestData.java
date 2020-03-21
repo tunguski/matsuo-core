@@ -1,5 +1,12 @@
 package pl.matsuo.core.test.data;
 
+import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.util.DateUtil.*;
+import static pl.matsuo.core.util.SecurityUtil.*;
+import static pl.matsuo.core.util.function.FunctionalUtil.*;
+
+import java.util.List;
+import java.util.Objects;
 import org.springframework.util.Assert;
 import pl.matsuo.core.conf.DiscoverTypes;
 import pl.matsuo.core.model.organization.Person;
@@ -7,22 +14,17 @@ import pl.matsuo.core.model.organization.address.Address;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.model.user.User;
 
-import java.util.List;
-import java.util.Objects;
-
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.SecurityUtil.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
-
-
-@DiscoverTypes({ GroupTestData.class })
+@DiscoverTypes({GroupTestData.class})
 public abstract class AbstractUserTestData extends AbstractTestData {
 
-
-  protected void createUser(String firstName, String lastName, String username, String password, String ... groupNames) {
-    Person person = database.findOne(query(Person.class,
-        eq(Person::getFirstName, firstName), eq(Person::getLastName, lastName)));
+  protected void createUser(
+      String firstName, String lastName, String username, String password, String... groupNames) {
+    Person person =
+        database.findOne(
+            query(
+                Person.class,
+                eq(Person::getFirstName, firstName),
+                eq(Person::getLastName, lastName)));
     if (person == null) {
       person = new Person();
       person.setFirstName(firstName);
@@ -30,12 +32,15 @@ public abstract class AbstractUserTestData extends AbstractTestData {
       person.setPesel("00000000000");
       person.setBirthDate(date(1972, 4, 21));
 
-      person.setAddress(with(new Address(), address -> {
-        address.setStreet("Wałbrzyska");
-        address.setApartmentNumber("20");
-        address.setHouseNumber("32");
-        address.setTown("Warszawa");
-      }));
+      person.setAddress(
+          with(
+              new Address(),
+              address -> {
+                address.setStreet("Wałbrzyska");
+                address.setApartmentNumber("20");
+                address.setHouseNumber("32");
+                address.setTown("Warszawa");
+              }));
     }
 
     database.create(person);
@@ -54,4 +59,3 @@ public abstract class AbstractUserTestData extends AbstractTestData {
     database.create(user);
   }
 }
-

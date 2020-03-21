@@ -1,16 +1,15 @@
 package pl.matsuo.core.util.collection;
 
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import static java.util.Arrays.*;
 import static java.util.stream.Collectors.*;
 import static org.junit.Assert.*;
 import static pl.matsuo.core.util.collection.CollectionUtil.*;
 import static pl.matsuo.core.util.collection.CollectionUtil.toMap;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.junit.Test;
 
 public class TestCollectionUtil {
 
@@ -80,24 +79,20 @@ public class TestCollectionUtil {
     assertEquals((Integer) 27, list.get(27));
   }
 
-
   class X {
 
-
     private Integer value;
-
 
     public X(Integer value) {
       this.value = value;
     }
 
-
     public Integer getValue() {
       return value;
     }
+
     public void setValue(Integer value) {
       this.value = value;
     }
   }
 }
-
