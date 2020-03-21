@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.model.user.User;
 
-/** Created by tunguski on 16.09.13. */
 @Component
 @Scope(value = "wideSession")
 public class SessionState {

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Created by tunguski on 16.09.13. */
 public class RestProcessingException extends RuntimeException {
 
   protected List<String> globalErrors = new ArrayList<>();

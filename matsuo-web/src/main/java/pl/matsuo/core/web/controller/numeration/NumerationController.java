@@ -16,7 +16,6 @@ import pl.matsuo.core.model.numeration.Numeration;
 import pl.matsuo.core.web.controller.AbstractController;
 import pl.matsuo.core.web.controller.params.IEntityQueryRequestParams;
 
-/** Created by tunguski on 15.09.13. */
 @RestController
 @RequestMapping("/numerations")
 public class NumerationController

@@ -3,7 +3,6 @@ package pl.matsuo.core.model.query.condition;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.query.AbstractQuery;
 
-/** Created by tunguski on 26.09.13. */
 public class FromPart<E extends AbstractEntity> implements QueryPart<E> {
 
   private final String joinType;

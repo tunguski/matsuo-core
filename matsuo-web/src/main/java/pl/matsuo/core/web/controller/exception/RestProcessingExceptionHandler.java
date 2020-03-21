@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import pl.matsuo.core.exception.RestProcessingException;
 
-/** Created by tunguski on 16.09.13. */
 @ControllerAdvice
 public class RestProcessingExceptionHandler {
 

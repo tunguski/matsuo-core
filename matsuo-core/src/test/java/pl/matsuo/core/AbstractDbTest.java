@@ -22,7 +22,6 @@ import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.test.data.TestSessionState;
 import pl.matsuo.core.test.data.UserTestData;
 
-/** Created by tunguski on 19.12.13. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
     classes = {

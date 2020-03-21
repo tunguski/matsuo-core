@@ -2,7 +2,6 @@ package pl.matsuo.core.model.query.condition;
 
 import pl.matsuo.core.model.query.AbstractQuery;
 
-/** Created by tunguski on 19.09.13. */
 public class ComplexCondition implements Condition {
 
   private String joiner;

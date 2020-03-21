@@ -16,7 +16,6 @@ import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.validation.PasswordField;
 
-/** Created by tunguski on 20.12.13. */
 @Entity
 @Table(name = "tblUser")
 public class User extends AbstractEntity {

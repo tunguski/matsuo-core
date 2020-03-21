@@ -15,7 +15,6 @@ import pl.matsuo.core.service.permission.model.Permissions;
 import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.test.data.TestSessionState;
 
-/** Created by tunguski on 15.01.14. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PermissionService.class, TestSessionState.class})
 public class TestPermissionService {

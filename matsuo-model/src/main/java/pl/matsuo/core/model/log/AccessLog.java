@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import pl.matsuo.core.model.AbstractEntity;
 
-/** Created by tunguski on 22.01.14. */
 @Entity
 public class AccessLog extends AbstractEntity {
 

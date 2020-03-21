@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import pl.matsuo.core.model.organization.AbstractParty;
 import pl.matsuo.core.service.db.Database;
 
-/** Created by tunguski on 21.12.13. */
 @Service
 public class GroupsService implements IGroupsService {
 

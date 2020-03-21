@@ -1,6 +1,5 @@
 package pl.matsuo.core.service.login;
 
-/** Created by tunguski on 22.12.13. */
 public class LoginData {
 
   private String username;

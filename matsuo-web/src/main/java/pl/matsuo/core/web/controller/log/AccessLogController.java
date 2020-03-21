@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.matsuo.core.model.log.AccessLog;
 import pl.matsuo.core.web.controller.AbstractSimpleController;
 
-/** Created by tunguski on 12.01.14. */
 @RestController
 @RequestMapping("/accessLogs")
 public class AccessLogController extends AbstractSimpleController<AccessLog> {

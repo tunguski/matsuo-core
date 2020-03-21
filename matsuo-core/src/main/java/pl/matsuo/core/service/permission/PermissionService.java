@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import pl.matsuo.core.service.permission.model.Permissions;
 import pl.matsuo.core.service.session.SessionState;
 
-/** Created by tunguski on 21.12.13. */
 @Service
 public class PermissionService implements IPermissionService, ResourceLoaderAware {
   private static final Logger logger = LoggerFactory.getLogger(PermissionService.class);

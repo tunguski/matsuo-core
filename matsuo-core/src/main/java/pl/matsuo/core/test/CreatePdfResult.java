@@ -6,7 +6,6 @@ import java.io.ByteArrayInputStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
-/** Created by tunguski on 27.11.13. */
 public class CreatePdfResult {
 
   private String html;

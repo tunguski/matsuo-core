@@ -5,7 +5,6 @@ import static pl.matsuo.core.util.SecurityUtil.*;
 
 import org.junit.Test;
 
-/** Created by tunguski on 29.01.14. */
 public class TestSecurityUtil {
 
   @Test

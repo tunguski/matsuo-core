@@ -24,7 +24,6 @@ import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.test.data.TestSessionState;
 import pl.matsuo.core.web.mvc.MvcConfig;
 
-/** Created by tunguski on 19.12.13. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {MvcConfig.class, FacadeBuilder.class, TestSessionState.class})

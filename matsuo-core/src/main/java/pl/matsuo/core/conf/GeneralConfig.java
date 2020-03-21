@@ -11,7 +11,6 @@ import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-/** Created by tunguski on 22.09.13. */
 @Configuration
 @PropertySource("classpath:/app.properties")
 public class GeneralConfig {

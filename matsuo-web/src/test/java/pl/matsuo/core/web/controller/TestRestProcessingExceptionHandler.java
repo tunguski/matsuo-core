@@ -21,7 +21,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import pl.matsuo.core.exception.RestProcessingException;
 import pl.matsuo.core.web.controller.exception.RestProcessingExceptionHandler;
 
-/** Created by tunguski on 20.09.13. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(

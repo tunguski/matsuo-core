@@ -25,7 +25,6 @@ import pl.matsuo.core.service.db.EntityInterceptorService;
 import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
 import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 
-/** Created by tunguski on 19.09.13. */
 @Configuration
 @EnableTransactionManagement
 @Profile("!prod")

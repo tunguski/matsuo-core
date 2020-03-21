@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import pl.matsuo.core.model.message.AbstractMessage;
 import pl.matsuo.core.web.controller.organization.SimpleParty;
 
-/** Created by tunguski on 20.12.13. */
 public class MultiMessage<E extends AbstractMessage> {
 
   @Valid private E message;

@@ -23,7 +23,6 @@ import pl.matsuo.core.service.login.LoginData;
 import pl.matsuo.core.service.permission.IPermissionService;
 import pl.matsuo.core.service.session.SessionState;
 
-/** Created by tunguski on 22.12.13. */
 @RestController
 @RequestMapping("/login")
 public class LoginController {

@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.api.TemporalEntity;
 
-/** Created by tunguski on 15.09.13. */
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"idBucket", "code", "startDate"})})
 public class Numeration extends AbstractEntity implements TemporalEntity {

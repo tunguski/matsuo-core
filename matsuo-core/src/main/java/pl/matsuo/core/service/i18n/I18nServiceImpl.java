@@ -6,7 +6,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
 
-/** Created by tunguski on 26.09.13. */
 @Service
 public class I18nServiceImpl implements I18nService {
 

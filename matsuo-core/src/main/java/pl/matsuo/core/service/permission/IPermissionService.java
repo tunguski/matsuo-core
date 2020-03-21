@@ -1,6 +1,5 @@
 package pl.matsuo.core.service.permission;
 
-/** Created by tunguski on 21.12.13. */
 public interface IPermissionService {
 
   public enum RequestType {

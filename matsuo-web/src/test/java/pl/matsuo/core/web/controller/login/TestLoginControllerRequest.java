@@ -23,7 +23,6 @@ import pl.matsuo.core.service.login.LoginService;
 import pl.matsuo.core.service.permission.PermissionService;
 import pl.matsuo.core.web.controller.AbstractDbControllerRequestTest;
 
-/** Created by tunguski on 15.01.14. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(

@@ -13,7 +13,6 @@ import pl.matsuo.core.model.user.Group;
 import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.service.db.Database;
 
-/** Created by tunguski on 20.12.13. */
 @RestController
 @RequestMapping("/party")
 public class PartyController {

@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import pl.matsuo.core.model.AbstractEntity;
 
-/** Created by tunguski on 2014-07-13 */
 @Entity
 public class NumerationSchema extends AbstractEntity {
 

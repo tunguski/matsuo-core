@@ -3,7 +3,6 @@ package pl.matsuo.core.service.permission.model;
 import java.util.List;
 import java.util.Map;
 
-/** Created by tunguski on 21.12.13. */
 public class Permissions {
 
   private Map<String, List<String>> functions;

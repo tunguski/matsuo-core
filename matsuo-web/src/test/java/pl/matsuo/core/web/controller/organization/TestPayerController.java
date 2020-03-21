@@ -14,7 +14,6 @@ import pl.matsuo.core.params.IQueryRequestParams;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.facade.FacadeBuilder;
 
-/** Created by tunguski on 19.09.13. */
 public class TestPayerController {
 
   @Autowired Database database = mock(Database.class);

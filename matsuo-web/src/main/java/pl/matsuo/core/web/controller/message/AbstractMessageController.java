@@ -21,7 +21,6 @@ import pl.matsuo.core.service.user.IGroupsService;
 import pl.matsuo.core.web.controller.AbstractController;
 import pl.matsuo.core.web.controller.organization.SimpleParty;
 
-/** Created by tunguski on 21.12.13. */
 public abstract class AbstractMessageController<E extends AbstractMessage>
     extends AbstractController<E, IMessageRequestParams> {
 

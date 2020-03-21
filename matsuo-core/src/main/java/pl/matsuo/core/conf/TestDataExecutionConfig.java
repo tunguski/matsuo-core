@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.matsuo.core.service.execution.ExecutionServiceImpl;
 
-/** Created by tunguski on 06.10.13. */
 @Configuration
 public class TestDataExecutionConfig {
 

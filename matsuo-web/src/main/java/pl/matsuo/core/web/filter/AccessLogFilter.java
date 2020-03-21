@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.log.AccessLog;
 import pl.matsuo.core.service.permission.PermissionService;
 
-/** Created by tunguski on 22.12.13. */
 @Component("accessLogFilter")
 public class AccessLogFilter extends AbstractFilter {
 

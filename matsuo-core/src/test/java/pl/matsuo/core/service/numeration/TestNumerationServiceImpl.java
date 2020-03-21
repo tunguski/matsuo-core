@@ -10,7 +10,6 @@ import pl.matsuo.core.model.numeration.Numeration;
 import pl.matsuo.core.model.query.Query;
 import pl.matsuo.core.service.db.Database;
 
-/** Created by tunguski on 15.09.13. */
 public class TestNumerationServiceImpl {
 
   @Test

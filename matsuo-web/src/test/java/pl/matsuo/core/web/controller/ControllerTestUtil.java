@@ -7,7 +7,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.test.web.servlet.ResultActions;
 import pl.matsuo.core.service.facade.FacadeBuilder;
 
-/** Created by tunguski on 14.09.13. */
 public class ControllerTestUtil {
 
   public static FacadeBuilder facadeBuilder = new FacadeBuilder();

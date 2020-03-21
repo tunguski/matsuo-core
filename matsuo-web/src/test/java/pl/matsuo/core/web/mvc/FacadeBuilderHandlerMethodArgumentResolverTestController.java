@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.matsuo.core.params.IRequestParams;
 import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 
-/** Created by tunguski on 23.11.13. */
 @RestController
 @RequestMapping("/facadeBuilderHandlerMethodArgumentResolverTestController")
 public class FacadeBuilderHandlerMethodArgumentResolverTestController {

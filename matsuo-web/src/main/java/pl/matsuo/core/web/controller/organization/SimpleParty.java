@@ -1,6 +1,5 @@
 package pl.matsuo.core.web.controller.organization;
 
-/** Created by tunguski on 20.12.13. */
 public class SimpleParty {
 
   private Integer id;

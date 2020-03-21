@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import pl.matsuo.core.service.permission.IPermissionService;
 import pl.matsuo.core.service.permission.PermissionService;
 
-/** Created by tunguski on 22.12.13. */
 @Component("permissionsFilter")
 public class PermissionsFilter extends AbstractFilter {
 

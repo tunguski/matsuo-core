@@ -7,7 +7,6 @@ import static pl.matsuo.core.model.query.QueryBuilder.*;
 import org.hibernate.criterion.MatchMode;
 import org.junit.Test;
 
-/** Created by tunguski on 26.09.13. */
 public class TestQueryBuilder {
 
   AbstractQuery abstractQuery = new AbstractQuery(TheModel.class);

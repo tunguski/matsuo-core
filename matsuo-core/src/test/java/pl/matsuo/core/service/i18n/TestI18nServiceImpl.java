@@ -7,7 +7,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.matsuo.core.conf.GeneralConfig;
 
-/** Created by tunguski on 26.09.13. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {I18nServiceImpl.class, GeneralConfig.class})
 public class TestI18nServiceImpl {

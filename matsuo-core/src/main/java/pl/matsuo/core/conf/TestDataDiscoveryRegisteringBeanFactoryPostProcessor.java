@@ -10,7 +10,6 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 
-/** Created by tunguski on 06.10.13. */
 public class TestDataDiscoveryRegisteringBeanFactoryPostProcessor
     implements BeanFactoryPostProcessor {
 

@@ -19,7 +19,6 @@ import org.springframework.web.context.WebApplicationContext;
 import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.report.DataModelBuilder;
 
-/** Created by tunguski on 23.11.13. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(

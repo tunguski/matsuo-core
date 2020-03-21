@@ -27,7 +27,6 @@ import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.session.SessionState;
 import pl.matsuo.core.web.controller.AbstractSimpleController;
 
-/** Created by tunguski on 12.01.14. */
 @RestController
 @RequestMapping("/users")
 public class UserController extends AbstractSimpleController<User> {

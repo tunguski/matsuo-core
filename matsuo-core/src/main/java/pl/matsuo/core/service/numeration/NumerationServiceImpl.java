@@ -19,7 +19,6 @@ import pl.matsuo.core.model.numeration.NumerationSchema;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.report.DataModelBuilder;
 
-/** Created by tunguski on 15.09.13. */
 @Service
 public class NumerationServiceImpl implements NumerationService {
 

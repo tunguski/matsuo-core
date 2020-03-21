@@ -5,7 +5,6 @@ import java.util.Map;
 import pl.matsuo.core.model.print.ICompanyPrintFacade;
 import pl.matsuo.core.model.print.IPrintFacade;
 
-/** Created by tunguski on 03.02.14. */
 public abstract class AbstractPrintService<E extends IPrintFacade> {
 
   public final Map<String, Object> buildModel(E print) {

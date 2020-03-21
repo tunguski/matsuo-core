@@ -15,7 +15,6 @@ import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.test.data.UserTestData;
 
-/** Created by tunguski on 19.12.13. */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {DbConfig.class, TestDataExecutionConfig.class, UserTestData.class})
