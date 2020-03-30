@@ -12,12 +12,16 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.Person;
 import pl.matsuo.core.model.validation.PasswordField;
 
 @Entity
 @Table(name = "tblUser")
+@Getter
+@Setter
 public class User extends AbstractEntity {
 
   @NotNull @Valid @OneToOne private Person person;
@@ -30,7 +34,7 @@ public class User extends AbstractEntity {
   private Date lastLoginTime;
   private Date lastPasswordChangeTime;
   private Integer nextPasswordChangeDays;
-  private boolean blocked = false;
+  private Boolean blocked = false;
   /**
    * Unique ticket assigned to user that will unblock account if provided.
    *
@@ -40,14 +44,6 @@ public class User extends AbstractEntity {
 
   @ManyToMany private final Set<Group> groups = new HashSet<>();
 
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
   @JsonIgnore
   public String getPassword() {
     return password;
@@ -56,57 +52,5 @@ public class User extends AbstractEntity {
   @JsonProperty
   public void setPassword(String password) {
     this.password = password;
-  }
-
-  public Date getLastLoginTime() {
-    return lastLoginTime;
-  }
-
-  public void setLastLoginTime(Date lastLoginTime) {
-    this.lastLoginTime = lastLoginTime;
-  }
-
-  public Date getLastPasswordChangeTime() {
-    return lastPasswordChangeTime;
-  }
-
-  public void setLastPasswordChangeTime(Date lastPasswordChangeTime) {
-    this.lastPasswordChangeTime = lastPasswordChangeTime;
-  }
-
-  public Integer getNextPasswordChangeDays() {
-    return nextPasswordChangeDays;
-  }
-
-  public void setNextPasswordChangeDays(Integer nextPasswordChangeDays) {
-    this.nextPasswordChangeDays = nextPasswordChangeDays;
-  }
-
-  public Set<Group> getGroups() {
-    return groups;
-  }
-
-  public Person getPerson() {
-    return person;
-  }
-
-  public void setPerson(Person person) {
-    this.person = person;
-  }
-
-  public boolean getBlocked() {
-    return blocked;
-  }
-
-  public void setBlocked(boolean blocked) {
-    this.blocked = blocked;
-  }
-
-  public String getUnblockTicket() {
-    return unblockTicket;
-  }
-
-  public void setUnblockTicket(String unblockTicket) {
-    this.unblockTicket = unblockTicket;
   }
 }

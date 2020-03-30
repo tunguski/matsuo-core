@@ -2,9 +2,13 @@ package pl.matsuo.core.model.log;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
 import pl.matsuo.core.model.AbstractEntity;
 
 @Entity
+@Getter
+@Setter
 public class AccessLog extends AbstractEntity {
 
   @Column(length = 512)
@@ -18,52 +22,4 @@ public class AccessLog extends AbstractEntity {
   String ip;
   Integer status;
   Integer idUser;
-
-  public String getRequest() {
-    return request;
-  }
-
-  public void setRequest(String request) {
-    this.request = request;
-  }
-
-  public String getIp() {
-    return ip;
-  }
-
-  public void setIp(String ip) {
-    this.ip = ip;
-  }
-
-  public Integer getIdUser() {
-    return idUser;
-  }
-
-  public void setIdUser(Integer idUser) {
-    this.idUser = idUser;
-  }
-
-  public String getMethod() {
-    return method;
-  }
-
-  public void setMethod(String method) {
-    this.method = method;
-  }
-
-  public Integer getStatus() {
-    return status;
-  }
-
-  public void setStatus(Integer status) {
-    this.status = status;
-  }
-
-  public String getParameters() {
-    return parameters;
-  }
-
-  public void setParameters(String parameters) {
-    this.parameters = parameters;
-  }
 }

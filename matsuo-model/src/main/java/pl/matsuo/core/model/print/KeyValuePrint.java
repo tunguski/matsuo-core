@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import pl.matsuo.core.model.kv.KeyValueEntity;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.validation.EntityReference;
@@ -21,6 +23,8 @@ import pl.matsuo.core.service.facade.IFacadeAware;
 
 @Entity
 @Inheritance(strategy = SINGLE_TABLE)
+@Getter
+@Setter
 public class KeyValuePrint extends KeyValueEntity implements IFacadeAware {
 
   @NotNull private Class<? extends IPrintFacade> printClass;
@@ -53,37 +57,5 @@ public class KeyValuePrint extends KeyValueEntity implements IFacadeAware {
       print.setIdEntity(id);
       return print;
     };
-  }
-
-  public List<KeyValuePrintElement> getElements() {
-    return elements;
-  }
-
-  public void setElements(List<KeyValuePrintElement> elements) {
-    this.elements = elements;
-  }
-
-  public Class<? extends IPrintFacade> getPrintClass() {
-    return printClass;
-  }
-
-  public void setPrintClass(Class<? extends IPrintFacade> printClass) {
-    this.printClass = printClass;
-  }
-  /** Obecnie idAppointment. */
-  public Integer getIdEntity() {
-    return idEntity;
-  }
-
-  protected void setIdEntity(Integer idEntity) {
-    this.idEntity = idEntity;
-  }
-
-  public Integer getIdUserCreated() {
-    return idUserCreated;
-  }
-
-  public void setIdUserCreated(Integer idUserCreated) {
-    this.idUserCreated = idUserCreated;
   }
 }

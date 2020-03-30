@@ -7,9 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.SequenceGenerator;
+import lombok.Getter;
+import lombok.Setter;
 import pl.matsuo.core.model.api.HasId;
 
 @MappedSuperclass
+@Getter
+@Setter
 public abstract class AbstractEntity implements HasId, Comparable<AbstractEntity> {
 
   @Id
@@ -31,32 +35,5 @@ public abstract class AbstractEntity implements HasId, Comparable<AbstractEntity
   @Override
   public int compareTo(AbstractEntity entity) {
     return id.compareTo(entity.getId());
-  }
-
-  // getters & setters
-  @Override
-  public Integer getId() {
-    return id;
-  }
-
-  @Override
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public Date getCreatedTime() {
-    return createdTime;
-  }
-
-  public void setCreatedTime(Date createdTime) {
-    this.createdTime = createdTime;
-  }
-
-  public Integer getIdBucket() {
-    return idBucket;
-  }
-
-  public void setIdBucket(Integer idBucket) {
-    this.idBucket = idBucket;
   }
 }

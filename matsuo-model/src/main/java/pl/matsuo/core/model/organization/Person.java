@@ -9,11 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import lombok.Getter;
+import lombok.Setter;
 import pl.matsuo.core.model.organization.address.Address;
 import pl.matsuo.validator.PESEL;
 
 @Entity
 // @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"firstName", "secondName", "pesel"}))
+@Getter
+@Setter
 public class Person extends AbstractParty {
 
   private String firstName;
@@ -39,94 +43,5 @@ public class Person extends AbstractParty {
   @Override
   public String getName() {
     return firstName + " " + lastName;
-  }
-
-  // getters
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getSecondName() {
-    return secondName;
-  }
-
-  public void setSecondName(String secondName) {
-    this.secondName = secondName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public Sex getSex() {
-    return sex;
-  }
-
-  public void setSex(Sex sex) {
-    this.sex = sex;
-  }
-
-  public String getPesel() {
-    return pesel;
-  }
-
-  public void setPesel(String pesel) {
-    this.pesel = pesel;
-  }
-
-  public Date getBirthDate() {
-    return birthDate;
-  }
-
-  public void setBirthDate(Date birthDate) {
-    this.birthDate = birthDate;
-  }
-
-  public String getIdentificationDocument() {
-    return identificationDocument;
-  }
-
-  public void setIdentificationDocument(String identificationDocument) {
-    this.identificationDocument = identificationDocument;
-  }
-
-  public String getIdentificationDocumentNumber() {
-    return identificationDocumentNumber;
-  }
-
-  public void setIdentificationDocumentNumber(String identificationDocumentNumber) {
-    this.identificationDocumentNumber = identificationDocumentNumber;
-  }
-
-  public Boolean getNoIdentificationDocument() {
-    return noIdentificationDocument;
-  }
-
-  public void setNoIdentificationDocument(Boolean noIdentificationDocument) {
-    this.noIdentificationDocument = noIdentificationDocument;
-  }
-
-  public String getDisabilities() {
-    return disabilities;
-  }
-
-  public void setDisabilities(String disabilities) {
-    this.disabilities = disabilities;
-  }
-
-  public Address getCorrespondenceAddress() {
-    return correspondenceAddress;
-  }
-
-  public void setCorrespondenceAddress(Address correspondenceAddress) {
-    this.correspondenceAddress = correspondenceAddress;
   }
 }

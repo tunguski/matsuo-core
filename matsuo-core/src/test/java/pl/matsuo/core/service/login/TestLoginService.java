@@ -72,7 +72,7 @@ public class TestLoginService extends AbstractDbTest {
             any(InternetAddress.class),
             anyString(),
             anyString(),
-            anyObject());
+            any(Object.class));
     reset(mailService);
   }
 
@@ -88,7 +88,7 @@ public class TestLoginService extends AbstractDbTest {
             any(InternetAddress.class),
             anyString(),
             anyString(),
-            anyObject()))
+            any(Object.class)))
         .then(
             invocation -> {
               InternetAddress address = invocation.getArgument(1);
@@ -106,7 +106,7 @@ public class TestLoginService extends AbstractDbTest {
             any(InternetAddress.class),
             anyString(),
             anyString(),
-            anyObject());
+            any(Object.class));
     // clear context for other tests
     reset(mailService);
   }

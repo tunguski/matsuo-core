@@ -2,12 +2,16 @@ package pl.matsuo.core.model.message;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.AbstractParty;
 import pl.matsuo.core.model.validation.EntityReference;
 
 @MappedSuperclass
+@Getter
+@Setter
 public abstract class AbstractMessage extends AbstractEntity {
 
   @EntityReference(value = AbstractParty.class)
@@ -18,20 +22,4 @@ public abstract class AbstractMessage extends AbstractEntity {
   @NotEmpty
   @Column(columnDefinition = "clob")
   private String text;
-
-  public String getText() {
-    return text;
-  }
-
-  public void setText(String text) {
-    this.text = text;
-  }
-
-  public Integer getIdParty() {
-    return idParty;
-  }
-
-  public void setIdParty(Integer idParty) {
-    this.idParty = idParty;
-  }
 }
