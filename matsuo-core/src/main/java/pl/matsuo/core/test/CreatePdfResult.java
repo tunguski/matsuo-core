@@ -1,5 +1,6 @@
 package pl.matsuo.core.test;
 
+import static java.util.Optional.ofNullable;
 import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
 import java.io.ByteArrayInputStream;
@@ -18,7 +19,7 @@ public class CreatePdfResult {
   }
 
   public String getPdfString() {
-    return optional(pdfString)
+    return ofNullable(pdfString)
         .orElseGet(
             () ->
                 runtimeEx(

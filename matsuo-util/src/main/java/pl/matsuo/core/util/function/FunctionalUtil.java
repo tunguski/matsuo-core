@@ -1,18 +1,13 @@
 package pl.matsuo.core.util.function;
 
-import static java.util.Spliterator.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Spliterators;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -167,11 +162,6 @@ public class FunctionalUtil {
     }
   }
 
-  /** Build Optional from value that may be null. */
-  public static <E> Optional<E> optional(E value) {
-    return Optional.ofNullable(value);
-  }
-
   /** Create consumer that invokes list of inner consumers. */
   public static <E> Consumer<E> compose(Consumer<? super E>... parts) {
     return value -> {
@@ -198,31 +188,5 @@ public class FunctionalUtil {
     List<E> result = new ArrayList<>();
     repeat(condition, () -> result.add(getter.get()));
     return result;
-  }
-
-  /**
-   * Creates stream consisting of elements returned by invocations of supply. Length of stream is
-   * established by condition.
-   */
-  public static <T> Stream<T> stream(Supplier<Boolean> condition, Supplier<T> supply) {
-
-    final Iterator<T> iterator =
-        new Iterator<T>() {
-          Boolean hasNext = null;
-
-          @Override
-          public boolean hasNext() {
-            return hasNext == null ? hasNext = condition.get() : hasNext;
-          }
-
-          @Override
-          public T next() {
-            hasNext = null;
-            return supply.get();
-          }
-        };
-
-    return StreamSupport.stream(
-        Spliterators.spliteratorUnknownSize(iterator, ORDERED | IMMUTABLE), false);
   }
 }

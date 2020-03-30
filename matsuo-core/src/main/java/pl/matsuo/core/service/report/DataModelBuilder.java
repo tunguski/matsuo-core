@@ -1,5 +1,6 @@
 package pl.matsuo.core.service.report;
 
+import static java.util.Optional.ofNullable;
 import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class DataModelBuilder {
 
   public DataModelBuilder maybePut(
       Integer id, String propertyName, Class<? extends AbstractEntity> entityClass) {
-    optional(id)
+    ofNullable(id)
         .ifPresent(
             idEntity -> dataModel.put(propertyName, database.findById(entityClass, idEntity)));
     return this;

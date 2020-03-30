@@ -1,5 +1,6 @@
 package pl.matsuo.core.service.parameterprovider;
 
+import static java.util.Optional.ofNullable;
 import static pl.matsuo.core.util.ReflectUtil.*;
 import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
@@ -20,7 +21,7 @@ public class KeyValueParameterProvider extends AbstractParameterProvider<KeyValu
 
   @Override
   public Object internalGet(String key, Class<?> expectedClass) {
-    return optional((Object) underlyingEntity.getFields().get(key))
+    return ofNullable((Object) underlyingEntity.getFields().get(key))
         .orElseGet(
             () ->
                 processEx(

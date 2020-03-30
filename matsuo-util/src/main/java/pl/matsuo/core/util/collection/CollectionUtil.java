@@ -1,6 +1,6 @@
 package pl.matsuo.core.util.collection;
 
-import static pl.matsuo.core.util.ReflectUtil.*;
+import static pl.matsuo.core.util.ReflectUtil.getValue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.Predicate;
 
 /** Pomocnicze metody przy operowaniu na kolekcjach. */
 public class CollectionUtil {
@@ -22,10 +21,7 @@ public class CollectionUtil {
    * </code>. Powtórzenia identycznych wartości zostają usunięte.
    */
   public static final <E> List<E> collect(Collection<?> collection, String property) {
-    return (List<E>)
-        collection.stream()
-            .map((Object object) -> getValue(object, property))
-            .collect(Collectors.toList());
+    return (List<E>) map(collection, (Object object) -> getValue(object, property));
   }
 
   /**
@@ -40,6 +36,29 @@ public class CollectionUtil {
     }
 
     return new ArrayList<>(new LinkedHashSet<>(resultList));
+  }
+
+  public static final <F, T> List<T> map(
+      Collection<? extends F> collection, Function<F, T> mapper) {
+    List<T> resultList = new ArrayList<>(collection.size());
+
+    for (F element : collection) {
+      resultList.add(mapper.apply(element));
+    }
+
+    return resultList;
+  }
+
+  public static final <E> List<E> filter(Collection<E> collection, Predicate<E> condition) {
+    List<E> resultList = new ArrayList<>(collection.size());
+
+    for (E element : collection) {
+      if (condition.test(element)) {
+        resultList.add(element);
+      }
+    }
+
+    return resultList;
   }
 
   /**
@@ -117,13 +136,13 @@ public class CollectionUtil {
     return value;
   }
 
-  public static Stream<Integer> range(final Integer start, final Integer end) {
+  public static List<Integer> range(final Integer start, final Integer end) {
     List<Integer> range = new ArrayList<>();
 
     for (int i = start; i < end; i++) {
       range.add(i);
     }
 
-    return range.stream();
+    return range;
   }
 }

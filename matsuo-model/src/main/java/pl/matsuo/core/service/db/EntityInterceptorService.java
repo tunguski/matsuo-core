@@ -1,6 +1,7 @@
 package pl.matsuo.core.service.db;
 
 import static java.util.stream.Collectors.*;
+import static pl.matsuo.core.util.collection.CollectionUtil.filter;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -128,10 +129,9 @@ public class EntityInterceptorService extends EmptyInterceptor {
   @InterceptorComponent
   void setInterceptors(List<Interceptor> interceptors) {
     this.interceptors =
-        interceptors.stream()
-            .filter(
-                interceptor ->
-                    !EntityInterceptorService.class.isAssignableFrom(interceptor.getClass()))
-            .collect(toList());
+        filter(
+            interceptors,
+            interceptor ->
+                !EntityInterceptorService.class.isAssignableFrom(interceptor.getClass()));
   }
 }

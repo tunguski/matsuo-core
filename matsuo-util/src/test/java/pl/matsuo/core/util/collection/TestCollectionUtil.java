@@ -73,7 +73,7 @@ public class TestCollectionUtil {
 
   @Test
   public void testRange() throws Exception {
-    List<Integer> list = range(0, 28).collect(toList());
+    List<Integer> list = range(0, 28);
     assertEquals(28, list.size());
     assertEquals((Integer) 0, list.get(0));
     assertEquals((Integer) 27, list.get(27));

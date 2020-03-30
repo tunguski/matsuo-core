@@ -1,10 +1,11 @@
 package pl.matsuo.core.service.login;
 
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.SecurityUtil.*;
-import static pl.matsuo.core.util.StringUtil.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
-import static pl.matsuo.core.util.function.Optional.*;
+import static java.util.Optional.ofNullable;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
+import static pl.matsuo.core.util.SecurityUtil.passwordHash;
+import static pl.matsuo.core.util.StringUtil.notEmpty;
+import static pl.matsuo.core.util.function.FunctionalUtil.runtimeEx;
 
 import java.util.Date;
 import java.util.List;

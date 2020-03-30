@@ -4,12 +4,10 @@ import static java.util.Arrays.*;
 import static java.util.stream.Collectors.*;
 import static org.junit.Assert.*;
 import static pl.matsuo.core.util.function.FunctionalUtil.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.stream;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 import org.junit.Test;
 
 public class TestFunctionalUtil {
@@ -159,11 +157,6 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testOptional() throws Exception {
-    assertEquals("x", optional("x").get());
-  }
-
-  @Test
   public void testCompose() throws Exception {
     AtomicBoolean invoked1 = new AtomicBoolean(false);
     AtomicBoolean invoked2 = new AtomicBoolean(false);
@@ -210,22 +203,6 @@ public class TestFunctionalUtil {
 
     assertEquals(-1, counter.get());
     assertEquals(asList(2, 1, 0), integers);
-  }
-
-  @Test
-  public void testStream() throws Exception {
-    AtomicInteger counter = new AtomicInteger(3);
-
-    Stream<Integer> stream =
-        stream(
-            () -> {
-              counter.set(counter.get() - 1);
-              return counter.get() >= 0;
-            },
-            () -> counter.get());
-
-    assertEquals(asList(2, 1, 0), stream.collect(toList()));
-    assertEquals(-1, counter.get());
   }
 
   class Z {
