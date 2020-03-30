@@ -1,8 +1,28 @@
 package pl.matsuo.core.util;
 
-import static java.util.Calendar.*;
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.DateUtil.*;
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.HOUR;
+import static java.util.Calendar.MINUTE;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
+import static java.util.Calendar.getInstance;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static pl.matsuo.core.util.DateUtil.addTime;
+import static pl.matsuo.core.util.DateUtil.between;
+import static pl.matsuo.core.util.DateUtil.cal;
+import static pl.matsuo.core.util.DateUtil.date;
+import static pl.matsuo.core.util.DateUtil.dateAndTime;
+import static pl.matsuo.core.util.DateUtil.getQuaterEnd;
+import static pl.matsuo.core.util.DateUtil.getQuaterStart;
+import static pl.matsuo.core.util.DateUtil.isoFormat;
+import static pl.matsuo.core.util.DateUtil.max;
+import static pl.matsuo.core.util.DateUtil.maybeDate;
+import static pl.matsuo.core.util.DateUtil.min;
+import static pl.matsuo.core.util.DateUtil.time;
 
 import java.sql.Time;
 import java.util.Calendar;

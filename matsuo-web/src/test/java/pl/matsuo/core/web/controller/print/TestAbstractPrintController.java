@@ -1,6 +1,6 @@
 package pl.matsuo.core.web.controller.print;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 

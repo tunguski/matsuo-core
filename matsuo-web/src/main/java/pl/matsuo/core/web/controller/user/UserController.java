@@ -1,11 +1,13 @@
 package pl.matsuo.core.web.controller.user;
 
-import static java.util.Arrays.*;
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.MediaType.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.SecurityUtil.*;
+import static java.util.Arrays.asList;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static pl.matsuo.core.model.query.QueryBuilder.sub;
+import static pl.matsuo.core.util.SecurityUtil.passwordHash;
 
 import java.util.Date;
 import java.util.List;

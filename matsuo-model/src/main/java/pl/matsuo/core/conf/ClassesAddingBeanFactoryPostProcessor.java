@@ -1,7 +1,7 @@
 package pl.matsuo.core.conf;
 
-import static java.util.Arrays.*;
-import static org.springframework.beans.factory.support.BeanDefinitionBuilder.*;
+import static java.util.Arrays.asList;
+import static org.springframework.beans.factory.support.BeanDefinitionBuilder.rootBeanDefinition;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,6 +1,7 @@
 package pl.matsuo.core.web.filter;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;

@@ -1,8 +1,16 @@
 package pl.matsuo.core.util;
 
-import static java.util.Arrays.*;
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static pl.matsuo.core.util.ReflectUtil.fieldName;
+import static pl.matsuo.core.util.ReflectUtil.getAnnotatedElement;
+import static pl.matsuo.core.util.ReflectUtil.getExactAnnotatedElement;
+import static pl.matsuo.core.util.ReflectUtil.getExactPropertyType;
+import static pl.matsuo.core.util.ReflectUtil.getPropertyType;
+import static pl.matsuo.core.util.ReflectUtil.getValue;
+import static pl.matsuo.core.util.ReflectUtil.invoke;
+import static pl.matsuo.core.util.ReflectUtil.resolveType;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;

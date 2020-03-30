@@ -1,6 +1,6 @@
 package pl.matsuo.core.conf;
 
-import static org.springframework.beans.factory.support.BeanDefinitionBuilder.*;
+import static org.springframework.beans.factory.support.BeanDefinitionBuilder.rootBeanDefinition;
 
 import java.util.Arrays;
 import java.util.HashSet;

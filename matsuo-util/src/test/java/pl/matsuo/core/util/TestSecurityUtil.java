@@ -1,7 +1,7 @@
 package pl.matsuo.core.util;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.SecurityUtil.*;
+import static org.junit.Assert.assertEquals;
+import static pl.matsuo.core.util.SecurityUtil.passwordHash;
 
 import org.junit.Test;
 

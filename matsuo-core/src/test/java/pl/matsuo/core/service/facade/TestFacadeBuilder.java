@@ -1,9 +1,11 @@
 package pl.matsuo.core.service.facade;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.NumberUtil.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static pl.matsuo.core.util.DateUtil.date;
+import static pl.matsuo.core.util.NumberUtil.bd;
+import static pl.matsuo.core.util.ReflectUtil.getValue;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package pl.matsuo.core.model.print;
 
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.InheritanceType.*;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;

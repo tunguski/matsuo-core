@@ -1,6 +1,6 @@
 package pl.matsuo.core.exception;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
 import java.util.Arrays;

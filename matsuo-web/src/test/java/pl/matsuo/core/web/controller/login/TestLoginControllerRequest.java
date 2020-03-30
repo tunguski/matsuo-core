@@ -1,9 +1,14 @@
 package pl.matsuo.core.web.controller.login;
 
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

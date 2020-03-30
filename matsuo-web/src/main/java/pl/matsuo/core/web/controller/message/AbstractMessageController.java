@@ -1,9 +1,9 @@
 package pl.matsuo.core.web.controller.message;
 
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.MediaType.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

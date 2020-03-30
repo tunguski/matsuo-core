@@ -1,6 +1,6 @@
 package pl.matsuo.core.web.controller.exception;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

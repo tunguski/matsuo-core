@@ -1,7 +1,7 @@
 package pl.matsuo.core.service.db;
 
-import static org.springframework.beans.factory.config.AutowireCapableBeanFactory.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static org.springframework.beans.factory.config.AutowireCapableBeanFactory.AUTOWIRE_NO;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import java.util.List;
 import org.hibernate.Session;

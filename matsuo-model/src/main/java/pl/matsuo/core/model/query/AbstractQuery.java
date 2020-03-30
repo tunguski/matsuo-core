@@ -1,9 +1,10 @@
 package pl.matsuo.core.model.query;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 import static org.mockito.Mockito.mock;
-import static org.springframework.util.StringUtils.*;
-import static pl.matsuo.core.util.collection.CollectionUtil.*;
+import static org.springframework.util.StringUtils.uncapitalize;
+import static pl.matsuo.core.util.collection.CollectionUtil.merge;
+import static pl.matsuo.core.util.collection.CollectionUtil.removeNulls;
 
 import com.google.common.base.Joiner;
 import java.text.DateFormat;

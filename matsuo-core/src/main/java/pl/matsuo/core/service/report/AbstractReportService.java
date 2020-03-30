@@ -1,7 +1,8 @@
 package pl.matsuo.core.service.report;
 
-import static org.springframework.util.StringUtils.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static org.springframework.util.StringUtils.uncapitalize;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import java.util.Date;
 import java.util.HashMap;

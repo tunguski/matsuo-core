@@ -1,8 +1,35 @@
 package pl.matsuo.core.model.query;
 
-import static java.util.Arrays.*;
-import static org.junit.Assert.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static pl.matsuo.core.model.query.QueryBuilder.and;
+import static pl.matsuo.core.model.query.QueryBuilder.avg;
+import static pl.matsuo.core.model.query.QueryBuilder.between;
+import static pl.matsuo.core.model.query.QueryBuilder.cond;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.eqOrIsNull;
+import static pl.matsuo.core.model.query.QueryBuilder.ge;
+import static pl.matsuo.core.model.query.QueryBuilder.gt;
+import static pl.matsuo.core.model.query.QueryBuilder.ilike;
+import static pl.matsuo.core.model.query.QueryBuilder.in;
+import static pl.matsuo.core.model.query.QueryBuilder.isNotNull;
+import static pl.matsuo.core.model.query.QueryBuilder.isNull;
+import static pl.matsuo.core.model.query.QueryBuilder.join;
+import static pl.matsuo.core.model.query.QueryBuilder.le;
+import static pl.matsuo.core.model.query.QueryBuilder.leftJoin;
+import static pl.matsuo.core.model.query.QueryBuilder.lt;
+import static pl.matsuo.core.model.query.QueryBuilder.max;
+import static pl.matsuo.core.model.query.QueryBuilder.maybe;
+import static pl.matsuo.core.model.query.QueryBuilder.maybeEq;
+import static pl.matsuo.core.model.query.QueryBuilder.memberOf;
+import static pl.matsuo.core.model.query.QueryBuilder.min;
+import static pl.matsuo.core.model.query.QueryBuilder.ne;
+import static pl.matsuo.core.model.query.QueryBuilder.not;
+import static pl.matsuo.core.model.query.QueryBuilder.operator;
+import static pl.matsuo.core.model.query.QueryBuilder.or;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
+import static pl.matsuo.core.model.query.QueryBuilder.select;
 
 import org.hibernate.criterion.MatchMode;
 import org.junit.Test;

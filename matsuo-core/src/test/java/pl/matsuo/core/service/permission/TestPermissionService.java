@@ -1,8 +1,12 @@
 package pl.matsuo.core.service.permission;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.model.user.GroupEnum.*;
-import static pl.matsuo.core.service.permission.IPermissionService.RequestType.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static pl.matsuo.core.model.user.GroupEnum.ADMIN;
+import static pl.matsuo.core.model.user.GroupEnum.GUEST;
+import static pl.matsuo.core.service.permission.IPermissionService.RequestType.POST;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

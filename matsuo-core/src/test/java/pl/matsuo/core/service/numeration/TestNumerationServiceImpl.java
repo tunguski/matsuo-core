@@ -1,8 +1,10 @@
 package pl.matsuo.core.service.numeration;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static pl.matsuo.core.util.DateUtil.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static pl.matsuo.core.util.DateUtil.date;
 
 import java.util.Date;
 import org.junit.Test;

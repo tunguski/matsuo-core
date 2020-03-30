@@ -1,9 +1,9 @@
 package pl.matsuo.core.kv;
 
-import static javax.persistence.EnumType.*;
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.NumberUtil.*;
+import static javax.persistence.EnumType.STRING;
+import static org.junit.Assert.assertEquals;
+import static pl.matsuo.core.util.DateUtil.date;
+import static pl.matsuo.core.util.NumberUtil.bd;
 
 import org.junit.After;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package pl.matsuo.core.web.controller.organization;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 import java.util.List;
 import java.util.function.Function;

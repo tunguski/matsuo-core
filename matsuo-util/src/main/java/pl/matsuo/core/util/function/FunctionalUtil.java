@@ -1,6 +1,5 @@
 package pl.matsuo.core.util.function;
 
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;

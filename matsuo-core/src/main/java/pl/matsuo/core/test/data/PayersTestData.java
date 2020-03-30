@@ -1,7 +1,8 @@
 package pl.matsuo.core.test.data;
 
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.test.data.MediqTestData.*;
+import static pl.matsuo.core.model.query.QueryBuilder.in;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
+import static pl.matsuo.core.test.data.MediqTestData.MEDIQ;
 
 import java.util.Collections;
 import java.util.List;

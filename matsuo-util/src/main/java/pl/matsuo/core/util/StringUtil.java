@@ -1,6 +1,7 @@
 package pl.matsuo.core.util;
 
-import static java.lang.Character.*;
+import static java.lang.Character.isLowerCase;
+import static java.lang.Character.toLowerCase;
 
 /** Pomocnicze metody dla obsługi Stringów. */
 public class StringUtil {

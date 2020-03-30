@@ -1,6 +1,6 @@
 package pl.matsuo.core.service.numeration;
 
-import static java.util.Calendar.*;
+import static java.util.Calendar.DATE;
 
 import java.util.Calendar;
 import java.util.Date;

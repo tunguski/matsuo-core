@@ -1,9 +1,11 @@
 package pl.matsuo.core.test.data;
 
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.SecurityUtil.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.in;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
+import static pl.matsuo.core.util.DateUtil.date;
+import static pl.matsuo.core.util.SecurityUtil.passwordHash;
+import static pl.matsuo.core.util.function.FunctionalUtil.with;
 
 import java.util.List;
 import java.util.Objects;

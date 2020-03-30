@@ -1,11 +1,12 @@
 package pl.matsuo.core.test;
 
-import static freemarker.template.TemplateExceptionHandler.*;
-import static java.lang.Thread.*;
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-import static org.apache.commons.io.IOUtils.*;
-import static org.junit.Assert.*;
+import static freemarker.template.TemplateExceptionHandler.HTML_DEBUG_HANDLER;
+import static java.lang.Thread.currentThread;
+import static java.util.Arrays.asList;
+import static java.util.Collections.reverse;
+import static org.apache.commons.io.IOUtils.write;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;

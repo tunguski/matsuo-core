@@ -1,11 +1,12 @@
 package pl.matsuo.core.web.view;
 
-import static java.beans.Introspector.*;
-import static java.util.Arrays.*;
-import static org.apache.commons.lang3.ArrayUtils.*;
-import static org.springframework.util.StringUtils.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
-import static pl.matsuo.core.util.collection.ArrayUtil.*;
+import static java.beans.Introspector.decapitalize;
+import static java.util.Arrays.asList;
+import static org.apache.commons.lang3.ArrayUtils.addAll;
+import static org.springframework.util.StringUtils.capitalize;
+import static pl.matsuo.core.util.ReflectUtil.getAnnotatedElement;
+import static pl.matsuo.core.util.ReflectUtil.getPropertyType;
+import static pl.matsuo.core.util.collection.ArrayUtil.last;
 
 import com.google.common.base.Joiner;
 import java.lang.annotation.Annotation;

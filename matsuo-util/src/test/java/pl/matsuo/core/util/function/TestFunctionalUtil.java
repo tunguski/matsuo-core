@@ -1,9 +1,21 @@
 package pl.matsuo.core.util.function;
 
-import static java.util.Arrays.*;
-import static java.util.stream.Collectors.*;
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static pl.matsuo.core.util.function.FunctionalUtil.AccessProvider;
+import static pl.matsuo.core.util.function.FunctionalUtil.access;
+import static pl.matsuo.core.util.function.FunctionalUtil.collectList;
+import static pl.matsuo.core.util.function.FunctionalUtil.compose;
+import static pl.matsuo.core.util.function.FunctionalUtil.either;
+import static pl.matsuo.core.util.function.FunctionalUtil.ignoreEx;
+import static pl.matsuo.core.util.function.FunctionalUtil.processEx;
+import static pl.matsuo.core.util.function.FunctionalUtil.repeat;
+import static pl.matsuo.core.util.function.FunctionalUtil.runtimeEx;
+import static pl.matsuo.core.util.function.FunctionalUtil.transform;
+import static pl.matsuo.core.util.function.FunctionalUtil.with;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;

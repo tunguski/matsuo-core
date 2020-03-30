@@ -1,7 +1,10 @@
 package pl.matsuo.core.service.session;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.model.user.GroupEnum.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static pl.matsuo.core.model.user.GroupEnum.GUEST;
+import static pl.matsuo.core.model.user.GroupEnum.USER;
 
 import org.junit.Test;
 import pl.matsuo.core.model.user.User;

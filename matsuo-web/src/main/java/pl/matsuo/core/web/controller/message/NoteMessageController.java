@@ -1,8 +1,10 @@
 package pl.matsuo.core.web.controller.message;
 
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.model.message.NoteStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static pl.matsuo.core.model.message.NoteStatus.CANCELLED;
+import static pl.matsuo.core.model.message.NoteStatus.CLOSED;
+import static pl.matsuo.core.model.message.NoteStatus.OPEN;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,7 +1,7 @@
 package pl.matsuo.core.web.controller;
 
-import static pl.matsuo.core.util.NumberUtil.*;
-import static pl.matsuo.core.util.collection.CollectionUtil.*;
+import static pl.matsuo.core.util.NumberUtil.i;
+import static pl.matsuo.core.util.collection.CollectionUtil.stringMap;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.test.web.servlet.ResultActions;

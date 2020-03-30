@@ -1,6 +1,7 @@
 package pl.matsuo.core.web.controller;
 
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;

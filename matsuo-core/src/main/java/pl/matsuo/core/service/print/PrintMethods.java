@@ -1,6 +1,6 @@
 package pl.matsuo.core.service.print;
 
-import static pl.matsuo.core.util.collection.CollectionUtil.*;
+import static pl.matsuo.core.util.collection.CollectionUtil.last;
 
 import java.util.function.Consumer;
 import pl.matsuo.core.model.print.IPrintElementFacade;

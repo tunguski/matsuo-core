@@ -1,8 +1,10 @@
 package pl.matsuo.core.service.execution;
 
-import static java.lang.System.*;
-import static org.springframework.core.Ordered.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static java.lang.System.currentTimeMillis;
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
+import static org.springframework.core.Ordered.LOWEST_PRECEDENCE;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import java.util.Collections;
 import java.util.Date;

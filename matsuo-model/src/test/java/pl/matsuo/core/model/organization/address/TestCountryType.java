@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.organization.address;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 

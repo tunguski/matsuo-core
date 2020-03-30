@@ -1,10 +1,10 @@
 package pl.matsuo.core.web.controller.report;
 
-import static java.util.Arrays.*;
-import static org.apache.commons.io.IOUtils.*;
-import static org.springframework.core.GenericTypeResolver.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.util.collection.CollectionUtil.*;
+import static java.util.Arrays.asList;
+import static org.apache.commons.io.IOUtils.write;
+import static org.springframework.core.GenericTypeResolver.resolveTypeArgument;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.matsuo.core.util.collection.CollectionUtil.toMap;
 
 import java.util.Map;
 import java.util.function.BiFunction;

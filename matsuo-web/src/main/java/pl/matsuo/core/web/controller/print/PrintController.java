@@ -1,13 +1,20 @@
 package pl.matsuo.core.web.controller.print;
 
-import static java.util.Arrays.*;
-import static javax.servlet.http.HttpServletResponse.*;
-import static org.apache.commons.io.IOUtils.*;
-import static org.springframework.core.GenericTypeResolver.*;
-import static org.springframework.http.MediaType.*;
-import static org.springframework.util.StringUtils.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static java.util.Arrays.asList;
+import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
+import static org.apache.commons.io.IOUtils.write;
+import static org.springframework.core.GenericTypeResolver.resolveTypeArgument;
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE;
+import static org.springframework.util.StringUtils.uncapitalize;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.matsuo.core.model.query.QueryBuilder.cond;
+import static pl.matsuo.core.model.query.QueryBuilder.ge;
+import static pl.matsuo.core.model.query.QueryBuilder.in;
+import static pl.matsuo.core.model.query.QueryBuilder.le;
+import static pl.matsuo.core.model.query.QueryBuilder.maybe;
+import static pl.matsuo.core.model.query.QueryBuilder.maybeEq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
+import static pl.matsuo.core.model.query.QueryBuilder.select;
 
 import java.io.IOException;
 import java.util.ArrayList;

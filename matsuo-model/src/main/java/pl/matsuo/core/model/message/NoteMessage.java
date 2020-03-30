@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.message;
 
-import static pl.matsuo.core.model.message.NoteStatus.*;
+import static pl.matsuo.core.model.message.NoteStatus.OPEN;
 
 import javax.persistence.Entity;
 import lombok.Getter;

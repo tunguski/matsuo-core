@@ -1,6 +1,6 @@
 package pl.matsuo.core.exception;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 

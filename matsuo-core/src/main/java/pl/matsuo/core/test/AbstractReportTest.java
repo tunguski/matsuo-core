@@ -1,6 +1,7 @@
 package pl.matsuo.core.test;
 
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import java.util.Map;
 import org.junit.Before;

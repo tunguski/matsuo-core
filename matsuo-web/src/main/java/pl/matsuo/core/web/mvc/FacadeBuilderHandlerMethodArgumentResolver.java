@@ -1,6 +1,6 @@
 package pl.matsuo.core.web.mvc;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

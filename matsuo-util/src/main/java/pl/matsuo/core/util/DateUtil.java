@@ -1,6 +1,11 @@
 package pl.matsuo.core.util;
 
-import static java.util.Calendar.*;
+import static java.util.Calendar.DATE;
+import static java.util.Calendar.HOUR_OF_DAY;
+import static java.util.Calendar.MILLISECOND;
+import static java.util.Calendar.MINUTE;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.SECOND;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.sql.Time;

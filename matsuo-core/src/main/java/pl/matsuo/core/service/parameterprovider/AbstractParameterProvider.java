@@ -1,7 +1,7 @@
 package pl.matsuo.core.service.parameterprovider;
 
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.NumberUtil.*;
+import static pl.matsuo.core.util.DateUtil.date;
+import static pl.matsuo.core.util.NumberUtil.bd;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.math.BigDecimal;

@@ -1,8 +1,9 @@
 package pl.matsuo.core.service.facade;
 
-import static org.springframework.core.GenericTypeResolver.*;
+import static org.springframework.core.GenericTypeResolver.getTypeVariableMap;
 import static org.springframework.core.GenericTypeResolver.resolveType;
-import static pl.matsuo.core.util.ReflectUtil.*;
+import static pl.matsuo.core.util.ReflectUtil.fieldName;
+import static pl.matsuo.core.util.ReflectUtil.getValue;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -1,8 +1,12 @@
 package pl.matsuo.core.db;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
+import static pl.matsuo.core.util.ReflectUtil.getValue;
 
 import java.util.List;
 import javax.transaction.Transactional;

@@ -1,9 +1,9 @@
 package pl.matsuo.core.service.facade;
 
-import static java.lang.Class.*;
-import static java.lang.reflect.Proxy.*;
-import static org.springframework.core.GenericTypeResolver.*;
-import static org.springframework.util.Assert.*;
+import static java.lang.Class.forName;
+import static java.lang.reflect.Proxy.newProxyInstance;
+import static org.springframework.core.GenericTypeResolver.resolveTypeArgument;
+import static org.springframework.util.Assert.notNull;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;

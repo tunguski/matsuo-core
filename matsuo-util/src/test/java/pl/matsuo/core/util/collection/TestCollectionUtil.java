@@ -1,9 +1,17 @@
 package pl.matsuo.core.util.collection;
 
-import static java.util.Arrays.*;
-import static java.util.stream.Collectors.*;
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.collection.CollectionUtil.*;
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static pl.matsuo.core.util.collection.CollectionUtil.collect;
+import static pl.matsuo.core.util.collection.CollectionUtil.flatten;
+import static pl.matsuo.core.util.collection.CollectionUtil.fold;
+import static pl.matsuo.core.util.collection.CollectionUtil.last;
+import static pl.matsuo.core.util.collection.CollectionUtil.merge;
+import static pl.matsuo.core.util.collection.CollectionUtil.range;
+import static pl.matsuo.core.util.collection.CollectionUtil.reMap;
+import static pl.matsuo.core.util.collection.CollectionUtil.removeNulls;
+import static pl.matsuo.core.util.collection.CollectionUtil.stringMap;
 import static pl.matsuo.core.util.collection.CollectionUtil.toMap;
 
 import java.util.ArrayList;

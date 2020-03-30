@@ -1,7 +1,7 @@
 package pl.matsuo.core.web.controller;
 
-import static org.springframework.util.StringUtils.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.util.StringUtils.uncapitalize;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 package pl.matsuo.core.test.data;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static org.junit.Assert.assertEquals;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import java.util.List;
 import org.junit.Test;

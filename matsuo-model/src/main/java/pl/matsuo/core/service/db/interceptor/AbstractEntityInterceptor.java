@@ -1,6 +1,6 @@
 package pl.matsuo.core.service.db.interceptor;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 import java.io.Serializable;
 import java.util.function.Supplier;

@@ -1,8 +1,10 @@
 package pl.matsuo.core.web.controller.organization;
 
-import static java.util.Arrays.*;
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static java.util.Arrays.asList;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Iterator;
 import java.util.List;

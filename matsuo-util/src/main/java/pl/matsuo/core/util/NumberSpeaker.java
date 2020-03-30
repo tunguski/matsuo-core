@@ -1,6 +1,6 @@
 package pl.matsuo.core.util;
 
-import static java.math.BigDecimal.*;
+import static java.math.BigDecimal.ZERO;
 
 import java.math.BigDecimal;
 

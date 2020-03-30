@@ -1,8 +1,10 @@
 package pl.matsuo.core.web.controller.user;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.SecurityUtil.*;
-import static pl.matsuo.core.web.controller.ControllerTestUtil.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static pl.matsuo.core.util.SecurityUtil.passwordHash;
+import static pl.matsuo.core.web.controller.ControllerTestUtil.idFromLocation;
 
 import java.util.HashMap;
 import org.junit.Before;

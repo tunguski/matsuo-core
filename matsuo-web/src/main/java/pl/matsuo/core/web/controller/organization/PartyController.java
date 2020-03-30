@@ -1,7 +1,8 @@
 package pl.matsuo.core.web.controller.organization;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.matsuo.core.model.query.QueryBuilder.ilike;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import java.util.ArrayList;
 import java.util.List;

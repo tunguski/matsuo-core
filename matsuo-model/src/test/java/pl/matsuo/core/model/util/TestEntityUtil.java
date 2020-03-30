@@ -1,8 +1,13 @@
 package pl.matsuo.core.model.util;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static pl.matsuo.core.model.util.EntityUtil.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static pl.matsuo.core.model.util.EntityUtil.createOrUpdate;
+import static pl.matsuo.core.model.util.EntityUtil.maybeCreate;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Test;

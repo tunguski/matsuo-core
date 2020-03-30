@@ -1,9 +1,11 @@
 package pl.matsuo.core.web.controller.organization;
 
-import static java.util.Arrays.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static pl.matsuo.core.web.controller.ControllerTestUtil.*;
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static pl.matsuo.core.web.controller.ControllerTestUtil.queryFacade;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,9 @@
 package pl.matsuo.core.service.db;
 
-import static java.util.Arrays.*;
-import static org.mockito.Mockito.*;
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
 
 import org.hibernate.Interceptor;
 import org.junit.Test;

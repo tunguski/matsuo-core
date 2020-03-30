@@ -1,9 +1,10 @@
 package pl.matsuo.core.util;
 
-import static java.util.Arrays.*;
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.ComparatorUtil.*;
-import static pl.matsuo.core.util.DateUtil.*;
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static pl.matsuo.core.util.ComparatorUtil.comparator;
+import static pl.matsuo.core.util.DateUtil.date;
 
 import java.util.Date;
 import java.util.List;

@@ -1,7 +1,7 @@
 package pl.matsuo.core.service.permission;
 
-import static java.lang.System.*;
-import static pl.matsuo.core.model.user.GroupEnum.*;
+import static java.lang.System.currentTimeMillis;
+import static pl.matsuo.core.model.user.GroupEnum.ADMIN;
 
 import com.google.gson.Gson;
 import java.io.InputStreamReader;

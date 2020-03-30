@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.numeration;
 
-import static javax.persistence.TemporalType.*;
+import static javax.persistence.TemporalType.DATE;
 
 import java.util.Date;
 import javax.persistence.Entity;

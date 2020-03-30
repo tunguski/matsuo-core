@@ -1,9 +1,16 @@
 package pl.matsuo.core.service.numeration;
 
-import static java.util.Calendar.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import static java.util.Calendar.DATE;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.ge;
+import static pl.matsuo.core.model.query.QueryBuilder.isNull;
+import static pl.matsuo.core.model.query.QueryBuilder.le;
+import static pl.matsuo.core.model.query.QueryBuilder.or;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
+import static pl.matsuo.core.util.DateUtil.cal;
+import static pl.matsuo.core.util.function.FunctionalUtil.runtimeEx;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;

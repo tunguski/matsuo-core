@@ -1,6 +1,6 @@
 package pl.matsuo.core.test.data;
 
-import static pl.matsuo.core.model.user.GroupEnum.*;
+import static pl.matsuo.core.model.user.GroupEnum.ADMIN;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

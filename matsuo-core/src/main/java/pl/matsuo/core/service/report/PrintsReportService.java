@@ -1,6 +1,10 @@
 package pl.matsuo.core.service.report;
 
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.model.query.QueryBuilder.ge;
+import static pl.matsuo.core.model.query.QueryBuilder.le;
+import static pl.matsuo.core.model.query.QueryBuilder.maybe;
+import static pl.matsuo.core.model.query.QueryBuilder.maybeEq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import org.springframework.stereotype.Service;
 import pl.matsuo.core.model.organization.AbstractParty;

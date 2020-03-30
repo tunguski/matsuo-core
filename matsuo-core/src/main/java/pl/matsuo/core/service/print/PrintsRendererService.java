@@ -1,9 +1,10 @@
 package pl.matsuo.core.service.print;
 
-import static com.lowagie.text.pdf.BaseFont.*;
-import static java.util.Arrays.*;
-import static org.xhtmlrenderer.resource.XMLResource.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import static com.lowagie.text.pdf.BaseFont.IDENTITY_H;
+import static com.lowagie.text.pdf.BaseFont.NOT_EMBEDDED;
+import static java.util.Arrays.asList;
+import static org.xhtmlrenderer.resource.XMLResource.load;
+import static pl.matsuo.core.util.function.FunctionalUtil.runtimeEx;
 
 import com.lowagie.text.DocumentException;
 import freemarker.template.Configuration;

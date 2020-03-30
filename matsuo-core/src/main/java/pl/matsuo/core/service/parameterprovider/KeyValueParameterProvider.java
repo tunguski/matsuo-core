@@ -1,8 +1,8 @@
 package pl.matsuo.core.service.parameterprovider;
 
 import static java.util.Optional.ofNullable;
-import static pl.matsuo.core.util.ReflectUtil.*;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import static pl.matsuo.core.util.ReflectUtil.getValue;
+import static pl.matsuo.core.util.function.FunctionalUtil.processEx;
 
 import java.math.BigDecimal;
 import java.util.Date;

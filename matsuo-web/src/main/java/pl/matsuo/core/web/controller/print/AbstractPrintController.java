@@ -1,6 +1,6 @@
 package pl.matsuo.core.web.controller.print;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

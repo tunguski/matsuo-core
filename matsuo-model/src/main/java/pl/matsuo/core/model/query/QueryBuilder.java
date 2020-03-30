@@ -1,9 +1,7 @@
 package pl.matsuo.core.model.query;
 
-import static java.util.Arrays.*;
-import static org.hibernate.criterion.MatchMode.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.util.StringUtils.*;
+import static java.util.Arrays.asList;
+import static org.hibernate.criterion.MatchMode.ANYWHERE;
 
 import com.google.common.base.Joiner;
 import java.util.ArrayList;

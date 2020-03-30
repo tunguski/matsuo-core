@@ -1,14 +1,17 @@
 package pl.matsuo.core.web.controller;
 
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-import static org.hibernate.criterion.MatchMode.*;
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.MediaType.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
-import static pl.matsuo.core.util.StringUtil.*;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static org.hibernate.criterion.MatchMode.ANYWHERE;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.matsuo.core.model.query.QueryBuilder.ilike;
+import static pl.matsuo.core.model.query.QueryBuilder.in;
+import static pl.matsuo.core.model.query.QueryBuilder.or;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
+import static pl.matsuo.core.util.ReflectUtil.resolveType;
+import static pl.matsuo.core.util.StringUtil.notEmpty;
 
 import java.util.ArrayList;
 import java.util.List;

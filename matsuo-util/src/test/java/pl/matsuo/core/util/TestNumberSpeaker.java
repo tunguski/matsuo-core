@@ -1,8 +1,9 @@
 package pl.matsuo.core.util;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.NumberSpeaker.*;
-import static pl.matsuo.core.util.NumberUtil.*;
+import static org.junit.Assert.assertEquals;
+import static pl.matsuo.core.util.NumberSpeaker.speakCashAmount;
+import static pl.matsuo.core.util.NumberSpeaker.speakNumber;
+import static pl.matsuo.core.util.NumberUtil.bd;
 
 import org.junit.Test;
 

@@ -1,7 +1,6 @@
 package pl.matsuo.core.service.report;
 
 import static java.util.Optional.ofNullable;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
 
 import java.util.HashMap;
 import java.util.Map;

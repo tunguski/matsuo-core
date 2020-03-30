@@ -1,7 +1,7 @@
 package pl.matsuo.core.test.data;
 
-import static pl.matsuo.core.util.DateUtil.*;
-import static pl.matsuo.core.util.NumberUtil.*;
+import static pl.matsuo.core.util.DateUtil.date;
+import static pl.matsuo.core.util.NumberUtil.i;
 
 import java.util.Random;
 import org.springframework.stereotype.Component;

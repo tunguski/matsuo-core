@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.organization.address;
 
-import static javax.persistence.EnumType.*;
+import static javax.persistence.EnumType.STRING;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;

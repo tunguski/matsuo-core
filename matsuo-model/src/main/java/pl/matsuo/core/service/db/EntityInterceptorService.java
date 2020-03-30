@@ -1,6 +1,5 @@
 package pl.matsuo.core.service.db;
 
-import static java.util.stream.Collectors.*;
 import static pl.matsuo.core.util.collection.CollectionUtil.filter;
 
 import java.io.Serializable;

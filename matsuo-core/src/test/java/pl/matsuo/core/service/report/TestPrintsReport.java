@@ -1,6 +1,7 @@
 package pl.matsuo.core.service.report;
 
-import static pl.matsuo.core.util.DateUtil.*;
+import static pl.matsuo.core.util.DateUtil.date;
+import static pl.matsuo.core.util.DateUtil.isoFormat;
 
 import java.util.HashMap;
 import org.junit.Test;

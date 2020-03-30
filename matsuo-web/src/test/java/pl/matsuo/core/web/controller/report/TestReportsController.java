@@ -1,10 +1,11 @@
 package pl.matsuo.core.web.controller.report;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
+import static org.mockito.Mockito.when;
+import static pl.matsuo.core.util.ReflectUtil.getValue;
 
 import java.util.HashMap;
 import java.util.Map;

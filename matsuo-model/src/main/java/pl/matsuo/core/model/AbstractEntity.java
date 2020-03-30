@@ -1,6 +1,6 @@
 package pl.matsuo.core.model;
 
-import static javax.persistence.GenerationType.*;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.Date;
 import javax.persistence.GeneratedValue;

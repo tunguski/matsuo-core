@@ -1,7 +1,8 @@
 package pl.matsuo.core.service.session;
 
-import static java.lang.System.*;
-import static pl.matsuo.core.model.user.GroupEnum.*;
+import static java.lang.System.currentTimeMillis;
+import static pl.matsuo.core.model.user.GroupEnum.GUEST;
+import static pl.matsuo.core.model.user.GroupEnum.USER;
 
 import java.util.HashSet;
 import java.util.Set;

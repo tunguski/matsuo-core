@@ -1,8 +1,9 @@
 package pl.matsuo.core.util;
 
-import static com.google.common.collect.Lists.*;
+import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Arrays.asList;
-import static org.springframework.util.StringUtils.*;
+import static org.springframework.util.StringUtils.capitalize;
+import static org.springframework.util.StringUtils.uncapitalize;
 
 import com.google.common.base.Joiner;
 import java.lang.reflect.AccessibleObject;

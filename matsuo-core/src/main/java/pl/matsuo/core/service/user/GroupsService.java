@@ -1,8 +1,7 @@
 package pl.matsuo.core.service.user;
 
-import static java.util.Arrays.*;
-import static pl.matsuo.core.model.query.QueryBuilder.*;
-import static pl.matsuo.core.util.collection.CollectionUtil.*;
+import static java.util.Arrays.asList;
+import static pl.matsuo.core.util.collection.CollectionUtil.toMap;
 
 import java.util.HashSet;
 import java.util.Map;

@@ -1,8 +1,9 @@
 package pl.matsuo.core.web.controller.render;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static pl.matsuo.core.util.StringUtil.*;
-import static pl.matsuo.core.web.view.BootstrapRenderer.*;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static pl.matsuo.core.util.StringUtil.camelCaseToCssName;
+import static pl.matsuo.core.web.view.BootstrapRenderer.BootstrapRenderingBuilder;
+import static pl.matsuo.core.web.view.BootstrapRenderer.renderer;
 
 import java.util.List;
 import java.util.Map;

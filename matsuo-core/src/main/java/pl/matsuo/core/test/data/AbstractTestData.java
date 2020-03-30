@@ -1,6 +1,7 @@
 package pl.matsuo.core.test.data;
 
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.matsuo.core.model.user.User;

@@ -1,6 +1,6 @@
 package pl.matsuo.core.service.db;
 
-import static pl.matsuo.core.model.query.QueryBuilder.*;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

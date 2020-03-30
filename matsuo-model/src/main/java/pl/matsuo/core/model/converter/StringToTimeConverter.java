@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.converter;
 
-import static pl.matsuo.core.util.NumberUtil.*;
+import static pl.matsuo.core.util.NumberUtil.i;
 
 import java.sql.Time;
 import org.springframework.stereotype.Component;

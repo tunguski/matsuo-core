@@ -1,7 +1,7 @@
 package pl.matsuo.core.service.numeration;
 
-import static org.junit.Assert.*;
-import static pl.matsuo.core.util.DateUtil.*;
+import static org.junit.Assert.assertEquals;
+import static pl.matsuo.core.util.DateUtil.date;
 
 import java.util.Date;
 import org.junit.Test;

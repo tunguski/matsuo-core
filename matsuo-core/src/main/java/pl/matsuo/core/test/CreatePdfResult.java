@@ -1,7 +1,7 @@
 package pl.matsuo.core.test;
 
 import static java.util.Optional.ofNullable;
-import static pl.matsuo.core.util.function.FunctionalUtil.*;
+import static pl.matsuo.core.util.function.FunctionalUtil.runtimeEx;
 
 import java.io.ByteArrayInputStream;
 import org.apache.pdfbox.pdmodel.PDDocument;

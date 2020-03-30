@@ -1,6 +1,7 @@
 package pl.matsuo.core.service.numeration;
 
-import static pl.matsuo.core.util.DateUtil.*;
+import static pl.matsuo.core.util.DateUtil.getQuaterEnd;
+import static pl.matsuo.core.util.DateUtil.getQuaterStart;
 
 import java.util.Date;
 import org.springframework.stereotype.Service;

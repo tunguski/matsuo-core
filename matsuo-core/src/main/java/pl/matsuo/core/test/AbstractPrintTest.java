@@ -1,7 +1,7 @@
 package pl.matsuo.core.test;
 
-import static org.springframework.util.StringUtils.*;
-import static pl.matsuo.core.util.ReflectUtil.*;
+import static org.springframework.util.StringUtils.uncapitalize;
+import static pl.matsuo.core.util.ReflectUtil.resolveType;
 
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

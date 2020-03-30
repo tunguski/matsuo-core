@@ -1,8 +1,10 @@
 package pl.matsuo.core.web.mvc;
 
-import static org.junit.Assert.*;
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.springframework.http.HttpStatus.I_AM_A_TEAPOT;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;

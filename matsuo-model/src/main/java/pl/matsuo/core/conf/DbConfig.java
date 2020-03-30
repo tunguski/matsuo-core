@@ -1,6 +1,6 @@
 package pl.matsuo.core.conf;
 
-import static java.lang.System.*;
+import static java.lang.System.currentTimeMillis;
 
 import java.io.IOException;
 import java.util.Properties;

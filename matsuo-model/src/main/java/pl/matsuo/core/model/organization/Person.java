@@ -1,8 +1,8 @@
 package pl.matsuo.core.model.organization;
 
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.EnumType.*;
-import static javax.persistence.TemporalType.*;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.TemporalType.DATE;
 
 import java.util.Date;
 import javax.persistence.Entity;
