@@ -6,7 +6,6 @@ import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 /**
  * Interfejs budowania fasad dla różnych typów obiektów.
  *
- * @author Marek Romanowski
  * @since Aug 25, 2013
  */
 public interface IFacadeBuilder {

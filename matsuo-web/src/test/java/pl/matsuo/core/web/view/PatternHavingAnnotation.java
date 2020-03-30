@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.constraints.Pattern;
 
-/** Created by marek on 10.06.14. */
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
 @Pattern(regexp = "[0-9]{11}")

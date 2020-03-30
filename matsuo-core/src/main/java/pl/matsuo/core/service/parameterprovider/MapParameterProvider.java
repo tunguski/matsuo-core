@@ -5,7 +5,6 @@ import java.util.Map;
 /**
  * Provider bazujący na mapie elementów.
  *
- * @author Marek Romanowski
  * @since Aug 24, 2013
  */
 public class MapParameterProvider extends AbstractParameterProvider<Map<String, Object>> {

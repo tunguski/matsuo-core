@@ -35,7 +35,6 @@ import pl.matsuo.core.service.print.IPrintsRendererService;
 /**
  * Kontroler generowania druków.
  *
- * @author Marek Romanowski
  * @since Aug 28, 2013
  */
 @RestController

@@ -31,7 +31,6 @@ import pl.matsuo.core.util.collection.CollectionUtil;
 /**
  * Abstrakcyjna nadklasa dla zapytań.
  *
- * @author Marek Romanowski
  * @since Aug 23, 2013
  * @param <E>
  */

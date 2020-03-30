@@ -9,7 +9,6 @@ import pl.matsuo.core.model.numeration.Numeration;
 import pl.matsuo.core.model.numeration.NumerationSchema;
 import pl.matsuo.core.util.DateUtil;
 
-/** Created by marek on 23.07.14. */
 @Service
 public class MonthlyNumerationSchemaStrategy implements NumerationSchemaStrategy {
 

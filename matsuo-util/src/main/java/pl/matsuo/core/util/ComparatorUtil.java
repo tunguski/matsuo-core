@@ -3,7 +3,6 @@ package pl.matsuo.core.util;
 import java.util.Comparator;
 import java.util.function.Function;
 
-/** Created by marek on 11.02.15. */
 public class ComparatorUtil {
 
   public static <T> Comparator<T> comparator(Function<T, Comparable>... getters) {

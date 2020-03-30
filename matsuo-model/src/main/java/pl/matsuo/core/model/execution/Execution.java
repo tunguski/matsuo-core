@@ -7,7 +7,6 @@ import pl.matsuo.core.model.AbstractEntity;
 /**
  * Model bazodanowy dla zapisów o wykonaniach serwisów.
  *
- * @author Marek Romanowski
  * @since 11-07-2013
  */
 @Entity

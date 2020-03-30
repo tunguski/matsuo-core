@@ -16,7 +16,7 @@ import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Functional programming utils. Created by marek on 27.03.14. */
+/** Functional programming utils. */
 public class FunctionalUtil {
   private static final Logger logger = LoggerFactory.getLogger(FunctionalUtil.class);
 

@@ -27,7 +27,6 @@ import pl.matsuo.core.service.session.SessionState;
 /**
  * Execute defined (mostly database) changes.
  *
- * @author Marek Romanowski
  * @since 11-07-2013
  */
 @Service

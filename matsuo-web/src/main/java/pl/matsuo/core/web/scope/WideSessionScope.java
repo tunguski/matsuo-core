@@ -11,11 +11,7 @@ import org.springframework.web.context.request.AbstractRequestAttributesScope;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-/**
- * Session scope modification that provides bean even outside of http request processing.
- *
- * <p>Created by marek on 19.07.14.
- */
+/** Session scope modification that provides bean even outside of http request processing. */
 public class WideSessionScope extends AbstractRequestAttributesScope implements Scope {
   private static final Logger logger = LoggerFactory.getLogger(WideSessionScope.class);
 

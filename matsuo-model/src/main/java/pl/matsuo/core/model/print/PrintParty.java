@@ -4,7 +4,6 @@ import pl.matsuo.core.model.kv.IKeyValueFacade;
 import pl.matsuo.core.model.organization.AbstractParty;
 import pl.matsuo.core.model.validation.EntityReference;
 
-/** Created by marek on 31.03.14. */
 public interface PrintParty extends IKeyValueFacade {
 
   @EntityReference(value = AbstractParty.class)

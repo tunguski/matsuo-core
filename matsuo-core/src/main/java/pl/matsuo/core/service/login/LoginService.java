@@ -27,7 +27,6 @@ import pl.matsuo.core.service.mail.IMailService;
 import pl.matsuo.core.service.report.DataModelBuilder;
 import pl.matsuo.core.service.session.SessionState;
 
-/** Created by marek on 12.07.14. */
 @Service
 public class LoginService implements ILoginService {
 

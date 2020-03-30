@@ -1,6 +1,5 @@
 package pl.matsuo.core.model.organization.address;
 
-/** Created by marek on 30.03.14. */
 public class AddressUtil {
 
   /** Zamienia <i>null</i> na pusty string */

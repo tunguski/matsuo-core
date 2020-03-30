@@ -2,7 +2,6 @@ package pl.matsuo.core.util.function;
 
 import java.util.function.Supplier;
 
-/** Created by marek on 22.03.14. */
 public class Success<E> implements Try<E> {
 
   private E value;

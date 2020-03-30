@@ -4,7 +4,6 @@ import static pl.matsuo.core.model.message.NoteStatus.*;
 
 import javax.persistence.Entity;
 
-/** Created by marek on 07.07.14. */
 @Entity
 public class NoteMessage extends AbstractMessage {
 

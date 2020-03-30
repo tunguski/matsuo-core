@@ -8,7 +8,6 @@ import pl.matsuo.core.service.numeration.MonthlyNumerationSchemaStrategy;
 import pl.matsuo.core.service.numeration.NumerationServiceImpl;
 import pl.matsuo.core.service.numeration.QuaterlyNumerationSchemaStrategy;
 
-/** Created by marek on 23.07.14. */
 @Configuration
 public class NumerationConfig {
 

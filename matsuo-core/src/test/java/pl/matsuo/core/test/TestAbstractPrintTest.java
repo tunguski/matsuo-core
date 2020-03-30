@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-/** Created by marek on 20.03.14. */
 public class TestAbstractPrintTest {
 
   @Test

@@ -4,7 +4,6 @@ import java.util.function.Consumer;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.service.db.Database;
 
-/** Created by marek on 29.03.14. */
 public class EntityUtil {
 
   public static Consumer<Database> maybeCreate(

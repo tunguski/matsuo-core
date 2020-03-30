@@ -14,12 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * Pomocnicze metody przy operowaniu na kolekcjach.
- *
- * @author Marek Romanowski
- * @since Aug 13, 2013
- */
+/** Pomocnicze metody przy operowaniu na kolekcjach. */
 public class CollectionUtil {
 
   /**

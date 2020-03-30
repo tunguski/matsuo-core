@@ -16,7 +16,6 @@ import pl.matsuo.core.service.session.SessionState;
 /**
  * Serwis tworzenia raportu z wizyt.
  *
- * @author Marek Romanowski
  * @since Aug 24, 2013
  */
 @Service

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.matsuo.core.model.message.NoteMessage;
 import pl.matsuo.core.model.message.NoteStatus;
 
-/** Created by marek on 16.08.14. */
 @RestController
 @RequestMapping("/noteMessages")
 public class NoteMessageController extends AbstractMessageController<NoteMessage> {

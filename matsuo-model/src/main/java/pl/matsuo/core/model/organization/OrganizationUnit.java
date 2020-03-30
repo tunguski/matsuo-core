@@ -12,7 +12,6 @@ import pl.matsuo.validator.REGON;
 /**
  * Organization unit - describes company, division etc.
  *
- * @author Marek Romanowski
  * @since Jul 23, 2013
  */
 @Entity

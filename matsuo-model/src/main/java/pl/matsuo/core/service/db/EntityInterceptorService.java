@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.matsuo.core.model.interceptor.InterceptorComponent;
 
-/** Created by marek on 25.03.14. */
 @Service
 public class EntityInterceptorService extends EmptyInterceptor {
 

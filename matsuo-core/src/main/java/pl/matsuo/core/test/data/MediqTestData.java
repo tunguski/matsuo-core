@@ -3,7 +3,6 @@ package pl.matsuo.core.test.data;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.organization.OrganizationUnit;
 
-/** Created by marek on 20.07.14. */
 @Component
 public class MediqTestData extends AbstractTestData {
 

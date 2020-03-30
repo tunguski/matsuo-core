@@ -9,7 +9,6 @@ import java.util.function.Function;
 /**
  * Pomocnicze metody przy operacjach na liczbach
  *
- * @author Marek Romanowski
  * @since Jul 22, 2013
  */
 public class NumberUtil {

@@ -21,7 +21,6 @@ import pl.matsuo.core.web.controller.AbstractSimpleController;
 /**
  * Organization unit controller.
  *
- * @author Marek Romanowski
  * @since Jul 18, 2013
  */
 @RestController

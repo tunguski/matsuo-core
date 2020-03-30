@@ -10,7 +10,6 @@ import pl.matsuo.core.model.message.MailMessage;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.print.IPrintsRendererService;
 
-/** Created by marek on 24.01.15. */
 @Service
 public class MailService implements IMailService {
 

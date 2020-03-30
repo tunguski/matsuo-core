@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 
-/** Created by marek on 09.06.14. */
 @RestController
 @Transactional
 @RequestMapping("/bootstrapRenderer")

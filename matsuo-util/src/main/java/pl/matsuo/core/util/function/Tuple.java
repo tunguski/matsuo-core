@@ -1,6 +1,5 @@
 package pl.matsuo.core.util.function;
 
-/** Created by marek on 23.04.14. */
 public class Tuple<A, B> {
 
   public final A left;

@@ -7,7 +7,6 @@ import java.util.Map;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.service.db.Database;
 
-/** Created by marek on 01.04.14. */
 public class DataModelBuilder {
 
   private final Database database;

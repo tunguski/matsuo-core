@@ -1,6 +1,5 @@
 package pl.matsuo.core.service.login;
 
-/** Created by marek on 08.07.14. */
 public class CreateAccountData extends LoginData {
 
   private String companyName;

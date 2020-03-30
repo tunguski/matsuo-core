@@ -26,7 +26,6 @@ import pl.matsuo.core.service.report.DataModelBuilder;
 import pl.matsuo.core.service.report.IReportService;
 import pl.matsuo.core.test.data.TestSessionState;
 
-/** Created by marek on 11.04.14. */
 @RunWith(MockitoJUnitRunner.class)
 public class TestReportsController {
 

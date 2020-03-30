@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.Date;
 import org.junit.Test;
 
-/** Created by marek on 10.04.14. */
 public class TestDateUtil {
 
   @Test

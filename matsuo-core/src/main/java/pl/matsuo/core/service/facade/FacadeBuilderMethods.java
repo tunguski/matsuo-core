@@ -3,7 +3,6 @@ package pl.matsuo.core.service.facade;
 /**
  * Interfejs budowania fasad dla różnych typów obiektów.
  *
- * @author Marek Romanowski
  * @since Aug 25, 2013
  */
 public interface FacadeBuilderMethods extends IFacadeBuilder {

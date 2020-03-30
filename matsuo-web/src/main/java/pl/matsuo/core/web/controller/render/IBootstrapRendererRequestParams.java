@@ -2,7 +2,6 @@ package pl.matsuo.core.web.controller.render;
 
 import pl.matsuo.core.params.IRequestParams;
 
-/** Created by marek on 09.06.14. */
 public interface IBootstrapRendererRequestParams extends IRequestParams {
   String getEntityClass();
 

@@ -11,7 +11,6 @@ import java.util.Date;
 /**
  * Nadklasa dla wszystkich providerów.
  *
- * @author Marek Romanowski
  * @since Aug 24, 2013
  */
 public abstract class AbstractParameterProvider<U> implements IParameterProvider<U> {

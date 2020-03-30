@@ -8,7 +8,6 @@ import pl.matsuo.validator.ValidatorBase;
 /**
  * Waliduje czy przekazana wartość jest identyfikatorem encji istniejącej w bazie danych.
  *
- * @author Marek Romanowski
  * @since 15-06-2013
  */
 public class EntityReferenceValidator extends ValidatorBase<EntityReference, Integer> {

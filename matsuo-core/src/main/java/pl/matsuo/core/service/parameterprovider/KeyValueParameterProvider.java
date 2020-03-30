@@ -10,7 +10,6 @@ import pl.matsuo.core.model.kv.KeyValueEntity;
 /**
  * Provider dla obiektów {@link KeyValueEntity}.
  *
- * @author Marek Romanowski
  * @since Aug 24, 2013
  */
 public class KeyValueParameterProvider extends AbstractParameterProvider<KeyValueEntity> {

@@ -18,7 +18,6 @@ import pl.matsuo.validator.NIP;
  * Nadklasa dla wszystkich obiektów występujących jako podmioty w dowolnym kontekście. Podstawowe
  * przypadki to firma i osoba prywatna.
  *
- * @author Marek Romanowski
  * @since Jul 23, 2013
  */
 @Entity

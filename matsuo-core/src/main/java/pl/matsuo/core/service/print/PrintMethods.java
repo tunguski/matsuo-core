@@ -9,7 +9,6 @@ import pl.matsuo.core.model.print.KeyValuePrint;
 import pl.matsuo.core.model.print.KeyValuePrintElement;
 import pl.matsuo.core.service.facade.IFacadeBuilder;
 
-/** Created by marek on 31.03.14. */
 public interface PrintMethods {
 
   IFacadeBuilder getFacadeBuilder();

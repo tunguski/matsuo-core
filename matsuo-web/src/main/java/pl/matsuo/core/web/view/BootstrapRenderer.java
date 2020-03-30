@@ -36,7 +36,6 @@ import pl.matsuo.core.model.validation.PasswordField;
 /**
  * Zbiór metod automatyzujących generowanie kodu jsp.
  *
- * @author Marek Romanowski
  * @since 09-06-2013
  */
 @Component
