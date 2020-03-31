@@ -6,11 +6,9 @@ import static java.util.Arrays.asList;
 import static org.xhtmlrenderer.resource.XMLResource.load;
 import static pl.matsuo.core.util.function.FunctionalUtil.runtimeEx;
 
-import com.lowagie.text.DocumentException;
 import freemarker.template.Configuration;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStreamWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +26,7 @@ public class PrintsRendererService implements IPrintsRendererService {
 
   @Autowired protected Configuration freeMarkerConfiguration;
 
-  private ITextRenderer initRenderer() throws DocumentException, IOException {
+  private ITextRenderer initRenderer() {
     ITextRenderer renderer = new ITextRenderer();
 
     asList(FONTS)

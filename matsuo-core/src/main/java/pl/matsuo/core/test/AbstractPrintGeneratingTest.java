@@ -1,5 +1,6 @@
 package pl.matsuo.core.test;
 
+import static freemarker.template.Configuration.VERSION_2_3_30;
 import static freemarker.template.TemplateExceptionHandler.HTML_DEBUG_HANDLER;
 import static java.lang.Thread.currentThread;
 import static java.util.Arrays.asList;
@@ -10,8 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Version;
+import freemarker.template.DefaultObjectWrapperBuilder;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Method;
@@ -53,14 +53,15 @@ abstract class AbstractPrintGeneratingTest<E> implements PrintMethods {
     targetDirectory.mkdirs();
 
     try {
-      freeMarkerConfiguration = new Configuration();
+      freeMarkerConfiguration = new Configuration(VERSION_2_3_30);
       freeMarkerConfiguration.setTemplateLoader(new ClassTemplateLoader(Class.class, "/"));
-      // freeMarkerConfiguration.setDirectoryForTemplateLoading(new
-      // File(templateDirectory).getAbsoluteFile());
-      freeMarkerConfiguration.setObjectWrapper(new DefaultObjectWrapper());
+      freeMarkerConfiguration.setDirectoryForTemplateLoading(
+          new File(templateDirectory).getAbsoluteFile());
+      freeMarkerConfiguration.setObjectWrapper(
+          new DefaultObjectWrapperBuilder(VERSION_2_3_30).build());
       freeMarkerConfiguration.setDefaultEncoding("UTF-8");
       freeMarkerConfiguration.setTemplateExceptionHandler(HTML_DEBUG_HANDLER);
-      freeMarkerConfiguration.setIncompatibleImprovements(new Version(2, 3, 20));
+      freeMarkerConfiguration.setIncompatibleImprovements(VERSION_2_3_30);
 
       printsRendererService.setFreeMarkerConfiguration(freeMarkerConfiguration);
     } catch (Exception e) {

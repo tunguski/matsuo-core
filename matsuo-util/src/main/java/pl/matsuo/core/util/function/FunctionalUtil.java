@@ -68,11 +68,7 @@ public class FunctionalUtil {
   /** Create access provider from field on object. */
   public static <E> AccessProvider<E> access(Object object, Field field) {
     return access(
-        () ->
-            ignoreEx(
-                () -> {
-                  return (E) field.get(object);
-                }),
+        () -> ignoreEx(() -> (E) field.get(object)),
         value ->
             ignoreEx(
                 () -> {
