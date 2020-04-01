@@ -55,10 +55,7 @@ public class TestBootstrapRenderer {
 
   @Test
   public void testBooleanRendering() throws Exception {
-    checkConstraints(
-        TestModel.class,
-        "bool",
-        containsAssertions("type=\"checkbox\"", "class=\" col-sm-6 checkbox\""));
+    checkConstraints(TestModel.class, "bool", containsAssertions("type=\"checkbox\""));
   }
 
   @Test
@@ -90,13 +87,13 @@ public class TestBootstrapRenderer {
           containsAssertions("input", "type=\"text\"", "ng-pattern=\"/^([0-9]+([.,][0-9]+)?)?$/\"")
               .accept(rendered);
 
-          assertFalse(rendered.contains("ui-select"));
+          assertFalse(rendered.contains("select"));
         });
   }
 
   @Test
   public void testIdRendering() throws Exception {
-    checkConstraints(TestModel.class, "subModel.id", containsAssertions("ui-select"));
+    checkConstraints(TestModel.class, "subModel.id", containsAssertions("select"));
   }
 
   @Test
@@ -110,23 +107,13 @@ public class TestBootstrapRenderer {
   @Test
   public void testGenereSelectForReferenceId() throws Exception {
     checkConstraints(
-        TestModel.class,
-        "reference",
-        containsAssertions(
-            "ui-select",
-            "ng-model=\"reference.value\"",
-            "ng-disabled=\"reference.options.disabled\""));
+        TestModel.class, "reference", containsAssertions("select", "ng-model=\"reference.value\""));
   }
 
   @Test
   public void testGenereSelectForReference() throws Exception {
     checkConstraints(
-        TestModel.class,
-        "subModel",
-        containsAssertions(
-            "ui-select",
-            "ng-model=\"entity.subModel\"",
-            "ng-disabled=\"subModel.options.disabled\""));
+        TestModel.class, "subModel", containsAssertions("select", "ng-model=\"entity.subModel\""));
   }
 
   @Test

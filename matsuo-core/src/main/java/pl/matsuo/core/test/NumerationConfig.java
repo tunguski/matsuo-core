@@ -1,21 +1,15 @@
 package pl.matsuo.core.test;
 
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.matsuo.core.conf.ClassesAddingBeanFactoryPostProcessor;
+import org.springframework.context.annotation.Import;
 import pl.matsuo.core.service.numeration.MonthlyNumerationSchemaStrategy;
 import pl.matsuo.core.service.numeration.NumerationServiceImpl;
 import pl.matsuo.core.service.numeration.QuaterlyNumerationSchemaStrategy;
 
 @Configuration
-public class NumerationConfig {
-
-  @Bean
-  public static BeanFactoryPostProcessor mvcServices() {
-    return new ClassesAddingBeanFactoryPostProcessor(
-        NumerationServiceImpl.class,
-        MonthlyNumerationSchemaStrategy.class,
-        QuaterlyNumerationSchemaStrategy.class);
-  }
-}
+@Import({
+  NumerationServiceImpl.class,
+  MonthlyNumerationSchemaStrategy.class,
+  QuaterlyNumerationSchemaStrategy.class
+})
+public class NumerationConfig {}

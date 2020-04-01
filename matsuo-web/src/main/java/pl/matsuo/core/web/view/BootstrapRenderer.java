@@ -1,5 +1,12 @@
 package pl.matsuo.core.web.view;
 
+import static j2html.TagCreator.div;
+import static j2html.TagCreator.input;
+import static j2html.TagCreator.label;
+import static j2html.TagCreator.option;
+import static j2html.TagCreator.select;
+import static j2html.TagCreator.span;
+import static j2html.TagCreator.text;
 import static java.beans.Introspector.decapitalize;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.ArrayUtils.addAll;
@@ -9,6 +16,10 @@ import static pl.matsuo.core.util.ReflectUtil.getPropertyType;
 import static pl.matsuo.core.util.collection.ArrayUtil.last;
 
 import com.google.common.base.Joiner;
+import j2html.TagCreator;
+import j2html.attributes.Attr;
+import j2html.tags.ContainerTag;
+import j2html.tags.Tag;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
@@ -78,17 +89,19 @@ public class BootstrapRenderer {
             addAll(builder.cssClasses, lastNameElement(fieldName.split("[.]")))));
   }
 
-  private String createControlGroup(String fullFieldName, HtmlElement controls) {
+  private String createControlGroup(String fullFieldName, ContainerTag controls) {
     return div(
-            asList(
-                "form-group",
-                fullFieldName.replaceAll("[.-]", "_"),
-                bindServerErrorPath(fullFieldName, " && 'error' || ''")),
-            el("label", asList("col-sm-4 control-label"))
+            attrs(
+                asList(
+                        "form-group",
+                        fullFieldName.replaceAll("[.-]", "_"),
+                        bindServerErrorPath(fullFieldName, " && 'error' || ''"))
+                    .toString()),
+            label(attrs(".col-sm-4.control-label"))
                 .attr("for", fullFieldName)
                 .attr("translate", fullFieldName),
             controls)
-        .toString();
+        .renderFormatted();
   }
 
   private String serverErrorPath(String fullFieldName) {
@@ -107,8 +120,12 @@ public class BootstrapRenderer {
     return Joiner.on(".").join(parts);
   }
 
+  private Attr.ShortForm attrs(String... parts) {
+    return TagCreator.attrs("." + Joiner.on(".").join(parts));
+  }
+
   /** Tworzy pole formularza razem z helpem, opisem itp. */
-  private HtmlElement createControls(
+  private ContainerTag createControls(
       Class<?> fieldType,
       AnnotatedElement annotatedElement,
       String fieldName,
@@ -117,12 +134,11 @@ public class BootstrapRenderer {
       BootstrapRenderingBuilder builder,
       String... cssClasses) {
     return div(
-        asList("col-sm-6", isCheckbox(fieldType) ? "checkbox" : ""),
+        attrs("col-sm-6", isCheckbox(fieldType) ? "checkbox" : ""),
         createInput(
             fieldType, annotatedElement, fullFieldName, entityType, fieldName, builder, cssClasses),
-        el(
-            "span",
-            asList("help-inline", bindServerErrorPath(fullFieldName, " ? '' : 'hide'")),
+        span(
+            attrs("help-inline", bindServerErrorPath(fullFieldName, " ? '' : 'hide'")),
             text(bindServerErrorPath(fullFieldName, ""))));
   }
 
@@ -139,26 +155,27 @@ public class BootstrapRenderer {
     return boolean.class.isAssignableFrom(fieldType) || Boolean.class.isAssignableFrom(fieldType);
   }
 
-  protected HtmlElement createSelect(String lastNameElement, String constantValues) {
-    HtmlElement element =
-        el(
-                "ui-select",
-                asList(""),
-                el("ui-select-match", asList(""), text("{{ formatElement($select.selected) }}"))
-                    .attr("placeholder", "{{ options.placeholderText | translate }}"),
-                el(
-                        "ui-select-choices",
-                        asList(""),
-                        div(asList("")).attr("ng-bind-html", "formatElement(item)"))
-                    .attr("repeat", "item in " + constantValues + " | filter: $select.search")
-                    .attr("refresh", "searchElements($select.search)"))
-            .attr("mt-select-options", joinDot(lastNameElement, "options"))
-            .attr("ng-disabled", joinDot(lastNameElement, "options.disabled"));
+  protected ContainerTag createSelect(String lastNameElement, String constantValues) {
+    ContainerTag element = select(option(text(lastNameElement)), option(text(constantValues)));
+    //        el(
+    //                "ui-select",
+    //                asList(""),
+    //                el("ui-select-match", asList(""), text("{{ formatElement($select.selected)
+    // }}"))
+    //                    .attr("placeholder", "{{ options.placeholderText | translate }}"),
+    //                el(
+    //                        "ui-select-choices",
+    //                        asList(""),
+    //                        div().attr("ng-bind-html", "formatElement(item)"))
+    //                    .attr("repeat", "item in " + constantValues + " | filter: $select.search")
+    //                    .attr("refresh", "searchElements($select.search)"))
+    //            .attr("mt-select-options", joinDot(lastNameElement, "options"))
+    //            .attr("ng-disabled", joinDot(lastNameElement, "options.disabled"));
     return element;
   }
 
   /** Tworzy kontrolkę formularza. */
-  private HtmlPart createInput(
+  private Tag createInput(
       Class<?> fieldType,
       AnnotatedElement annotatedElement,
       String fullFieldName,
@@ -167,27 +184,25 @@ public class BootstrapRenderer {
       BootstrapRenderingBuilder builder,
       String... cssClasses) {
     boolean addFormControlStyle = true;
-    HtmlElement el;
-    HtmlElement inputIfNotEl = null;
+    Tag el;
+    Tag inputIfNotEl = null;
     String ngModel = fullFieldName;
 
     if (Enum.class.isAssignableFrom(fieldType)) {
       el =
-          el(
-              "select",
-              asList(""),
+          select(
               getEnumValuesElements(
                   (Class<? extends Enum<?>>) fieldType,
                   !isAnnotationPresent(annotatedElement, NotNull.class)));
     } else if (Time.class.isAssignableFrom(fieldType)) {
       el =
-          el("input", asList("input-size-time", "timepicker"))
+          input(attrs(".input-size-time.timepicker"))
               .attr("type", "text")
               .attr("placeholder", "HH:mm");
       pattern(el, "[0-2][0-9]:[0-5][0-9]");
     } else if (Date.class.isAssignableFrom(fieldType)) {
       el =
-          el("input", asList("input-size-date"))
+          input(attrs(".input-size-date"))
               .attr("type", "text")
               .attr("mt-datepicker", "datepickerOptions");
     } else if (isAnnotationPresent(
@@ -202,12 +217,12 @@ public class BootstrapRenderer {
       }
       addFormControlStyle = false;
     } else if (isCheckbox(fieldType)) {
-      inputIfNotEl = el("input", asList("")).attr("type", "checkbox");
-      el = el("label", asList(""), inputIfNotEl, text("&nbsp;"));
+      inputIfNotEl = input().attr("type", "checkbox");
+      el = label(inputIfNotEl, text("&nbsp;"));
 
       addFormControlStyle = false;
     } else {
-      el = el("input", asList("")).attr("type", "text");
+      el = input().attr("type", "text");
 
       if (Number.class.isAssignableFrom(fieldType)) {
         pattern(el, "[0-9]+([.,][0-9]+)?");
@@ -219,16 +234,17 @@ public class BootstrapRenderer {
     }
 
     addFieldValidation(fieldType, entityType, el, fieldName);
-    HtmlElement val = inputIfNotEl != null ? inputIfNotEl : el;
+    Tag val = inputIfNotEl != null ? inputIfNotEl : el;
 
     val.attr("id", fullFieldName)
         .attr("name", fullFieldName.replaceAll("\\.", "_"))
         .attr("ng-model", ngModel)
         .attr("placeholder", "{{ '" + fullFieldName + "' | translate }}")
-        .style(cssClasses);
+    //        .style(cssClasses)
+    ;
 
     if (addFormControlStyle) {
-      val.style("form-control");
+      //      val.style("form-control");
     }
 
     if (builder != null) {
@@ -254,7 +270,7 @@ public class BootstrapRenderer {
   }
 
   private void addFieldValidation(
-      Class<?> fieldType, Class<?> entityType, HtmlElement el, String fieldName) {
+      Class<?> fieldType, Class<?> entityType, Tag el, String fieldName) {
     if (entityType == null) {
       return;
     }
@@ -305,28 +321,28 @@ public class BootstrapRenderer {
     return null;
   }
 
-  private void pattern(HtmlElement el, String pattern) {
+  private void pattern(Tag el, String pattern) {
     el.attr("ng-pattern", "/^(" + pattern + ")?$/");
   }
 
-  private HtmlPart[] getEnumValuesElements(
+  private ContainerTag[] getEnumValuesElements(
       Class<? extends Enum<?>> propertyType, boolean withEmptyElement) {
-    List<HtmlPart> elements = new ArrayList<>();
+    List<ContainerTag> elements = new ArrayList<>();
 
     if (withEmptyElement) {
-      elements.add(el("option", asList("")));
+      elements.add(option());
     }
 
     for (Enum<?> enumElement : propertyType.getEnumConstants()) {
       elements.add(
-          el("option", asList(""))
+          option()
               .attr(
                   "translate",
                   joinDot("enum", propertyType.getSimpleName(), enumElement.toString()))
               .attr("value", enumElement.name()));
     }
 
-    return elements.toArray(new HtmlPart[0]);
+    return elements.toArray(new ContainerTag[0]);
   }
 
   public BootstrapRenderingBuilder create(Class<?> entityType) {
@@ -400,15 +416,14 @@ public class BootstrapRenderer {
    * - jako generyczne odwowłanie do w/w obiektu.
    */
   private String renderInlineFields(String[] fields, BootstrapRenderingBuilder builder) {
-    List<HtmlPart> elements = new ArrayList<>();
+    List<Tag> elements = new ArrayList<>();
 
     for (String fieldName : fields) {
       String fullFieldName = fullFieldName(builder.entityName, fieldName);
       String simpleElementName = last(fieldName.split("[.]"));
 
       elements.add(
-          el("span", asList("inline-form-text", simpleElementName))
-              .attr("translate", fullFieldName));
+          span(attrs(".inline-form-text." + simpleElementName)).attr("translate", fullFieldName));
 
       elements.add(
           createInput(
@@ -423,12 +438,11 @@ public class BootstrapRenderer {
     }
     elements.remove(0);
 
-    elements.add(
-        el("span", asList("help-inline"), text(bindServerErrorPath(builder.entityName, ""))));
+    elements.add(span(attrs(".help-inline"), text(bindServerErrorPath(builder.entityName, ""))));
 
     return createControlGroup(
         fullFieldName(builder.entityName, fields[0]),
-        div(asList("controls"), elements.toArray(new HtmlPart[0])));
+        div(attrs(".controls"), elements.toArray(new Tag[0])));
   }
 
   /**
@@ -447,18 +461,6 @@ public class BootstrapRenderer {
 
   private String fullFieldName(String entityName, String fieldName) {
     return (entityName != null ? decapitalize(entityName) + "." : "") + fieldName;
-  }
-
-  public HtmlElement div(List<String> classes, HtmlPart... innerElements) {
-    return new HtmlElement("div", innerElements).style(classes);
-  }
-
-  public HtmlElement el(String element, List<String> classes, HtmlPart... innerElements) {
-    return new HtmlElement(element, innerElements).style(classes);
-  }
-
-  public HtmlText text(String text) {
-    return new HtmlText(text);
   }
 
   public static BootstrapRenderer renderer() {

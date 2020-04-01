@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -26,6 +26,12 @@ import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
 import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 
 @Configuration
+@Import({
+  DatabaseImpl.class,
+  EntityInterceptorService.class,
+  AuditTrailInterceptor.class,
+  IdBucketInterceptor.class
+})
 @EnableTransactionManagement
 @Profile("!prod")
 public class DbConfig {
@@ -98,14 +104,5 @@ public class DbConfig {
       transactionManager.setSessionFactory(sessionFactory);
       return transactionManager;
     }
-  }
-
-  @Bean
-  public static BeanFactoryPostProcessor database() {
-    return new ClassesAddingBeanFactoryPostProcessor(
-        DatabaseImpl.class,
-        EntityInterceptorService.class,
-        AuditTrailInterceptor.class,
-        IdBucketInterceptor.class);
   }
 }

@@ -42,7 +42,7 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
       Class<E> clazz, Integer id, Initializer<? super E>... initializers) {
     E element = (E) session().get(clazz, id);
 
-    Assert.notNull(element);
+    Assert.notNull(element, "No entity found");
 
     initializeEntity(element, initializers);
 
