@@ -240,6 +240,7 @@ public class BootstrapRenderer {
         .attr("name", fullFieldName.replaceAll("\\.", "_"))
         .attr("ng-model", ngModel)
         .attr("placeholder", "{{ '" + fullFieldName + "' | translate }}")
+    // .withClasses(cssClasses)
     //        .style(cssClasses)
     ;
 

@@ -24,7 +24,7 @@
     <downloadJavadocs>true</downloadJavadocs>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <asm.version>8.0</asm.version>
+    <asm.version>8.0.1</asm.version>
     <commons-codec.version>1.14</commons-codec.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
     <commons-fileupload.version>1.4</commons-fileupload.version>
@@ -42,12 +42,12 @@
     <hibernate-core.version>5.4.2.Final</hibernate-core.version>
     <hibernate-validator-pl.version>0.1.0</hibernate-validator-pl.version>
     <hsqldb.version>2.5.0</hsqldb.version>
-    <htmlunit.version>2.38.0</htmlunit.version>
+    <htmlunit.version>2.39.0</htmlunit.version>
     <jasperreports.version>5.2.0</jasperreports.version>
     <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
     <javax.mail.version>1.5.0-b01</javax.mail.version>
     <jackson-2.version>2.10.3</jackson-2.version>
-    <jetty.version>9.4.27.v20200227</jetty.version>
+    <jetty.version>9.4.28.v20200408</jetty.version>
     <jgit.version>4.1.0.201509280440-r</jgit.version>
     <json-path.version>2.4.0</json-path.version>
     <junit.version>4.13</junit.version>
@@ -58,6 +58,7 @@
     <slf4j.version>1.7.13</slf4j.version>
     <spring.version>5.2.5.RELEASE</spring.version>
     <super-csv.version>2.4.0</super-csv.version>
+    <undertow.version>2.0.30.Final</undertow.version>
     <xml-apis.version>1.4.01</xml-apis.version>
 
     <site.url>https://tunguski.github.io/maven-core</site.url>

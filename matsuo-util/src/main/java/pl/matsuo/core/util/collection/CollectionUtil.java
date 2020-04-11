@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import org.apache.commons.lang3.tuple.Pair;
 
 /** Pomocnicze metody przy operowaniu na kolekcjach. */
 public class CollectionUtil {
@@ -134,6 +135,18 @@ public class CollectionUtil {
       value = reducer.apply(value, item);
     }
     return value;
+  }
+
+  public static <E> List<Pair<Integer, E>> indexed(Collection<E> collection) {
+    int index = 0;
+    List<Pair<Integer, E>> result = new ArrayList<>(collection.size());
+
+    for (E e : collection) {
+      result.add(Pair.of(index, e));
+      index++;
+    }
+
+    return result;
   }
 
   public static List<Integer> range(final Integer start, final Integer end) {
