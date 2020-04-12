@@ -678,8 +678,9 @@
 
   <distributionManagement>
     <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>matsuo.pl</id>
+      <name>Matsuo</name>
+      <url>http://matsuo.pl:8081/repository/maven-snapshots/</url>
     </snapshotRepository>
     <repository>
       <id>ossrh</id>

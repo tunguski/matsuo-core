@@ -6,8 +6,15 @@
     <mirror>
       <id>matsuo.pl</id>
       <name>Matsuo</name>
-      <url>http://matsuo.pl:8081/repository/maven-central/</url>
+      <url>http://matsuo.pl:8081/repository/maven-matsuo/</url>
       <mirrorOf>*</mirrorOf>
     </mirror>
   </mirrors>
+  <servers>
+    <server>
+      <id>matsuo.pl</id>
+      <username>maven-snapshot-publisher</username>
+      <password>${matsuo.password}</password>
+    </server>
+  </servers>
 </settings>
