@@ -4,7 +4,6 @@
 
 HOST=http://gitlab.matsuo.pl
 
-#PROJECT_ID=$(curl -H "PRIVATE-TOKEN: $USER_PRIVATE_TOKEN" $HOST/api/v4/projects | python -m json.tool | grep -E "gitlab_id|\"id\"" | grep "id\": $CI_PROJECT_ID," -B 1 | grep "\"gitlab_id\"" | cut -d ":" -f 2 | cut -d "," -f 1 | sed -e 's/^[[:space:]]*//')
 COMMIT_ID=$CI_BUILD_REF
 
 CHECKSTYLE=$(for i in `find -name checkstyle-result.xml`; do cat $i; done | grep "<error " | wc -l)
@@ -28,7 +27,7 @@ read -r -d '' NOTE << EOM
 EOM
 
 for i in `cat target/site/cobertura/coverage.xml | grep lines-covered | cut -d " " -f 2- | sed 's/ /\n/g'`
-do 
+do
   TMP=$(echo $i | sed 's/[">]//g' | sed 's/=/ \| /g' | sed 's/^/\| /g' | sed 's/$/ \|/g')
   TMP+=$'\n'
   NOTE="$NOTE$TMP"

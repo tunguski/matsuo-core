@@ -676,6 +676,21 @@
     <url>git@github.com:tunguski/matsuo-core.git</url>
   </scm>
 
+  <repositories>
+    <repository>
+      <id>matsuo.pl</id>
+      <name>Matsuo</name>
+      <url>http://matsuo.pl:8081/repository/maven-matsuo/</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <distributionManagement>
     <snapshotRepository>
       <id>matsuo.pl</id>
