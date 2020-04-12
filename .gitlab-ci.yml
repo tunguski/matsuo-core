@@ -1,7 +1,7 @@
 test:
   stage: build
   script:
-    - mvn -Dmaven.repo.remote=http://matsuo.pl:8081 clean install cobertura:cobertura pmd:pmd findbugs:findbugs checkstyle:checkstyle
+    - mvn -s settings.xml clean install cobertura:cobertura pmd:pmd findbugs:findbugs checkstyle:checkstyle
     - bash add_comments.sh
     - curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=master http://gitlab.matsuo.pl/api/v4/projects/34/trigger/pipeline
   tags:
