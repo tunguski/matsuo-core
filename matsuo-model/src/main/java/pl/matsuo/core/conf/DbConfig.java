@@ -1,10 +1,5 @@
 package pl.matsuo.core.conf;
 
-import static java.lang.System.currentTimeMillis;
-
-import java.io.IOException;
-import java.util.Properties;
-import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -15,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -25,6 +19,13 @@ import pl.matsuo.core.service.db.EntityInterceptorService;
 import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
 import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.function.Function;
+
+import static java.lang.System.currentTimeMillis;
+
 @Configuration
 @Import({
   DatabaseImpl.class,
@@ -33,7 +34,6 @@ import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
   IdBucketInterceptor.class
 })
 @EnableTransactionManagement
-@Profile("!prod")
 public class DbConfig {
   private static Logger logger = LoggerFactory.getLogger(DbConfig.class);
 
@@ -51,26 +51,34 @@ public class DbConfig {
 
   @Bean(name = "default.dataSource")
   @Qualifier("app-ds")
-  public DataSource dataSource() throws IOException, InterruptedException {
+  public DataSource dataSource() throws IOException {
     if (dataSource != null) {
       return dataSource;
     } else {
-      BasicDataSource dataSource = new BasicDataSource();
-
-      Properties properties = new Properties();
-      properties.load(getClass().getResourceAsStream("/db.default.properties"));
-
-      logger.warn("Test environment!");
-      dataSource.setDriverClassName(properties.getProperty("db.default.driverClassName"));
-      dataSource.setUrl(
-          properties
-              .getProperty("db.default.url")
-              .replace("test_db", "test_db_" + currentTimeMillis()));
-      dataSource.setUsername(properties.getProperty("db.default.username"));
-      dataSource.setPassword(properties.getProperty("db.default.password"));
-
-      return dataSource;
+      return createDataSource(DbConfig::getDatabaseUrl, getClass());
     }
+  }
+
+  public static DataSource createDataSource(
+      Function<Properties, String> urlProvider, Class<?> resourceProvider) throws IOException {
+    BasicDataSource dataSource = new BasicDataSource();
+
+    Properties properties = new Properties();
+    properties.load(resourceProvider.getResourceAsStream("/db.default.properties"));
+
+    logger.warn("Test environment!");
+    dataSource.setDriverClassName(properties.getProperty("db.default.driverClassName"));
+    dataSource.setUrl(urlProvider.apply(properties));
+    dataSource.setUsername(properties.getProperty("db.default.username"));
+    dataSource.setPassword(properties.getProperty("db.default.password"));
+
+    return dataSource;
+  }
+
+  private static String getDatabaseUrl(Properties properties) {
+    return properties
+        .getProperty("db.default.url")
+        .replace("test_db", "test_db_" + currentTimeMillis());
   }
 
   @Bean(name = "default.sessionFactory")
