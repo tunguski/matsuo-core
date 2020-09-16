@@ -1,5 +1,11 @@
 package pl.matsuo.core.conf;
 
+import static java.lang.System.currentTimeMillis;
+
+import java.io.IOException;
+import java.util.Properties;
+import java.util.function.Function;
+import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -18,13 +24,6 @@ import pl.matsuo.core.service.db.DatabaseImpl;
 import pl.matsuo.core.service.db.EntityInterceptorService;
 import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
 import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.function.Function;
-
-import static java.lang.System.currentTimeMillis;
 
 @Configuration
 @Import({

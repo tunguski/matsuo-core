@@ -6,8 +6,6 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +19,18 @@ public class PermissionsFilter extends AbstractFilter {
   @Autowired PermissionService permissionService;
 
   @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+  public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws IOException, ServletException {
-    HttpServletRequest httpRequest = (HttpServletRequest) request;
-    HttpServletResponse httpResponse = (HttpServletResponse) response;
 
     // FIXME: weryfikacja uprawnień - jeśli są, zostają przesłane dane
     if (!permissionService.isPermitted(
-        httpRequest.getRequestURI(),
-        IPermissionService.RequestType.valueOf(httpRequest.getMethod()))) {
-      System.out.println("no permissions to: " + httpRequest.getRequestURI());
+        request.getRequestURI(), IPermissionService.RequestType.valueOf(request.getMethod()))) {
+      System.out.println("no permissions to: " + request.getRequestURI());
 
       // jeśli brak zalogowanego użytkownika, zwrócony zostaje status UNAUTHORIZED, jeśli użytkownik
       // jest zalogowany,
       // ale nie ma uprawnień do zasobu, zwrócony zostaje status FORBIDDEN
-      httpResponse.setStatus(
-          sessionState.getUser() == null ? UNAUTHORIZED.value() : FORBIDDEN.value());
+      response.setStatus(sessionState.getUser() == null ? UNAUTHORIZED.value() : FORBIDDEN.value());
     } else {
       chain.doFilter(request, response);
     }

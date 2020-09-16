@@ -1,13 +1,12 @@
 package pl.matsuo.core.web.filter;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
+import javax.servlet.http.HttpFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.session.SessionState;
 
-public abstract class AbstractFilter implements Filter {
+public abstract class AbstractFilter extends HttpFilter {
 
   @Autowired protected SessionState sessionState;
   @Autowired Database database;
@@ -15,7 +14,7 @@ public abstract class AbstractFilter implements Filter {
   private FilterConfig filterConfig;
 
   @Override
-  public void init(FilterConfig filterConfig) throws ServletException {
+  public void init(FilterConfig filterConfig) {
     this.filterConfig = filterConfig;
   }
 

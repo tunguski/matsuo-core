@@ -3,8 +3,6 @@ package pl.matsuo.core.web.filter;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +16,15 @@ public class AccessLogFilter extends AbstractFilter {
   @Autowired PermissionService permissionService;
 
   @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+  public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
       throws IOException, ServletException {
-    HttpServletRequest httpRequest = (HttpServletRequest) request;
-    HttpServletResponse httpResponse = (HttpServletResponse) response;
 
     AccessLog accessLog = new AccessLog();
-    accessLog.setIp(httpRequest.getRemoteAddr());
-    accessLog.setRequest(httpRequest.getRequestURI());
-    accessLog.setMethod(httpRequest.getMethod());
-    if (!httpRequest.getParameterMap().keySet().isEmpty()) {
-      accessLog.setParameters(httpRequest.getParameterMap().toString());
+    accessLog.setIp(request.getRemoteAddr());
+    accessLog.setRequest(request.getRequestURI());
+    accessLog.setMethod(request.getMethod());
+    if (!request.getParameterMap().keySet().isEmpty()) {
+      accessLog.setParameters(request.getParameterMap().toString());
     }
     if (sessionState.getUser() != null) {
       accessLog.setIdUser(sessionState.getUser().getId());
@@ -39,9 +35,9 @@ public class AccessLogFilter extends AbstractFilter {
     try {
       chain.doFilter(request, response);
     } finally {
-      accessLog.setStatus(httpResponse.getStatus());
+      accessLog.setStatus(response.getStatus());
       try {
-        if (httpResponse.getStatus() >= 300 && httpResponse.getStatus() < 400) {
+        if (response.getStatus() >= 300 && response.getStatus() < 400) {
           database.delete(accessLog);
         } else {
           database.update(accessLog);
