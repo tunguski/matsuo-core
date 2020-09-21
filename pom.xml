@@ -678,9 +678,9 @@
 
   <repositories>
     <repository>
-      <id>matsuo.pl</id>
+      <id>repository.matsuo.pl</id>
       <name>Matsuo</name>
-      <url>http://matsuo.pl:8081/repository/maven-matsuo/</url>
+      <url>https://repository.matsuo.pl/repository/maven-matsuo/</url>
       <layout>default</layout>
       <releases>
         <enabled>true</enabled>
@@ -693,9 +693,9 @@
 
   <distributionManagement>
     <snapshotRepository>
-      <id>matsuo.pl</id>
+      <id>repository.matsuo.pl</id>
       <name>Matsuo</name>
-      <url>http://matsuo.pl:8081/repository/maven-snapshots/</url>
+      <url>https://repository.matsuo.pl/repository/maven-snapshots/</url>
     </snapshotRepository>
     <repository>
       <id>ossrh</id>

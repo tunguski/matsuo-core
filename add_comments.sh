@@ -2,7 +2,7 @@
 
 # CI_PROJECT_ID
 
-HOST=http://gitlab.matsuo.pl
+HOST=https://gitlab.matsuo.pl
 
 COMMIT_ID=$CI_BUILD_REF
 
@@ -35,4 +35,5 @@ done
 
 curl --data $"note=$NOTE" \
     -H "PRIVATE-TOKEN: $USER_PRIVATE_TOKEN" \
+    -v \
     $URL
