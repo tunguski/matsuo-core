@@ -2,6 +2,8 @@ package pl.matsuo.core.web.mvc;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.asList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -14,7 +16,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -51,8 +55,18 @@ public class MvcConfig extends WebMvcConfigurationSupport
 
   @Override
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    // default object to json conversion
     converters.add(converter());
+    // utf-8 as default encoding for all the requests
+    converters.add(stringHttpMessageConverter());
     addDefaultHttpMessageConverters(converters);
+  }
+
+  private StringHttpMessageConverter stringHttpMessageConverter() {
+    StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+    stringConverter.setSupportedMediaTypes(asList(new MediaType("text", "plain", UTF_8)));
+    stringConverter.setSupportedMediaTypes(asList(new MediaType("text", "html", UTF_8)));
+    return stringConverter;
   }
 
   @Bean
