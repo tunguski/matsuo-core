@@ -10,7 +10,8 @@ public class RequestContextService {
   ThreadLocal<HttpServletRequest> requestThreadLocal = new ThreadLocal<>();
 
   public String getContextPath() {
-    return requestThreadLocal.get().getContextPath();
+    HttpServletRequest httpServletRequest = requestThreadLocal.get();
+    return httpServletRequest != null ? httpServletRequest.getContextPath() : "/";
   }
 
   public void setRequest(HttpServletRequest request) {
