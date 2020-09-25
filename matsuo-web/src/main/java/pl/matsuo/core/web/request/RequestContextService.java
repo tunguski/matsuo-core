@@ -14,6 +14,11 @@ public class RequestContextService {
     return httpServletRequest != null ? httpServletRequest.getContextPath() : "/";
   }
 
+  public String getPathInfo() {
+    HttpServletRequest httpServletRequest = requestThreadLocal.get();
+    return httpServletRequest != null ? httpServletRequest.getPathInfo() : "/";
+  }
+
   public void setRequest(HttpServletRequest request) {
     requestThreadLocal.set(request);
   }
