@@ -46,6 +46,10 @@
       <groupId>com.j2html</groupId>
       <artifactId>j2html</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-all</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>commons-fileupload</groupId>
