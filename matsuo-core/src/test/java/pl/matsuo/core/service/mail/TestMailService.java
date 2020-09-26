@@ -36,7 +36,7 @@ public class TestMailService {
   @Test
   public void testSendMail() throws Exception {
     MailMessage mailMessage = new MailMessage();
-    mailMessage.setId(55);
+    mailMessage.setId(55L);
 
     doAnswer(invocation -> null).when(mailSender).send(any(MimeMessage.class));
     when(database.create(any(MailMessage.class))).thenReturn(mailMessage);
@@ -44,7 +44,7 @@ public class TestMailService {
     when(printsRendererService.renderHtml("bodyTemplate.ftl", null)).thenReturn("OK".getBytes());
 
     assertEquals(
-        (Integer) 55,
+        (Long) 55L,
         mailService.sendMail(
             new InternetAddress("from@example.com"),
             new InternetAddress("to@example.com"),

@@ -7,9 +7,9 @@ import pl.matsuo.core.model.validation.EntityReference;
 public interface PrintParty extends IKeyValueFacade {
 
   @EntityReference(value = AbstractParty.class)
-  Integer getId();
+  Long getId();
 
-  void setId(Integer id);
+  void setId(Long id);
 
   String getName();
 

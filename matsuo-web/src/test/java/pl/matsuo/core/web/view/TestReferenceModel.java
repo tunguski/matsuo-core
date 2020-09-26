@@ -14,7 +14,7 @@ public class TestReferenceModel extends AbstractEntity {
 
   @EntityReference(value = TestReferenceModel.class)
   @Override
-  public Integer getId() {
+  public Long getId() {
     return super.getId();
   }
 }

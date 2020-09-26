@@ -17,7 +17,7 @@ public abstract class AbstractMessage extends AbstractEntity {
   @EntityReference(value = AbstractParty.class)
   // FIXME: przy multiMessage brak ustawienia
   // @NotNull
-  private Integer idParty;
+  private Long idParty;
 
   @NotEmpty
   @Column(columnDefinition = "clob")

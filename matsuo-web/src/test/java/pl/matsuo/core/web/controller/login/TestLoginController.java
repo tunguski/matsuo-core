@@ -152,7 +152,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
   protected void checkEntitiesCountForBucket(
-      Integer idBucket, Integer size, Class<? extends AbstractEntity> clazz) {
+      Long idBucket, Integer size, Class<? extends AbstractEntity> clazz) {
     List<AbstractEntity> entities =
         database.find(
             query((Class<AbstractEntity>) clazz, eq(AbstractEntity::getIdBucket, idBucket)));

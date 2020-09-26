@@ -141,13 +141,13 @@ public abstract class AbstractSearchController<
       value = "/list/byIds",
       method = GET,
       consumes = {APPLICATION_OCTET_STREAM_VALUE})
-  public List<E> listByIds(@RequestParam("ids") List<Integer> ids) {
+  public List<E> listByIds(@RequestParam("ids") List<Long> ids) {
     return database.find(entityQuery(entityType, in(AbstractEntity::getId, ids)));
   }
 
   /** Pobiera pojedynczą encję danego typu po id. */
   @RequestMapping(value = "/{id}", method = GET)
-  public HttpEntity<E> find(@PathVariable("id") Integer id) {
+  public HttpEntity<E> find(@PathVariable("id") Long id) {
     try {
       return new HttpEntity<E>(database.findById(entityType, id, entityInitializers));
     } catch (IllegalArgumentException e) {
@@ -166,7 +166,7 @@ public abstract class AbstractSearchController<
   public static class EntityNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public EntityNotFoundException(Integer id) {
+    public EntityNotFoundException(Long id) {
       super("Entity '" + id + "' not found.");
     }
   }

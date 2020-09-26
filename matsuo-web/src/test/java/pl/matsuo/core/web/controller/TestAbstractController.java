@@ -161,14 +161,14 @@ public class TestAbstractController {
   @Test
   public void testFind() throws Exception {
     User user = new User();
-    when(database.findById(any(Class.class), any(Integer.class), any(Initializer.class)))
+    when(database.findById(any(Class.class), any(Long.class), any(Initializer.class)))
         .thenReturn(user);
-    assertTrue(controller.find(7).getBody() == user);
+    assertTrue(controller.find(7L).getBody() == user);
   }
 
   @Test
   public void testEntityInitializers() throws Exception {
-    when(database.findById(any(Class.class), any(Integer.class), any(Initializer.class)))
+    when(database.findById(any(Class.class), any(Long.class), any(Initializer.class)))
         .then(
             invocation -> {
               assertEquals(3, invocation.getArguments().length);
@@ -181,7 +181,7 @@ public class TestAbstractController {
 
               return user;
             });
-    assertEquals("tester", ((User) controller.find(7).getBody()).getUsername());
+    assertEquals("tester", ((User) controller.find(7L).getBody()).getUsername());
   }
 
   @Test

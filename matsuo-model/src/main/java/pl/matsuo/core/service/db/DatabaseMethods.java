@@ -10,7 +10,7 @@ public interface DatabaseMethods {
   Database getDatabase();
 
   default <E extends AbstractEntity> E findById(
-      Class<E> clazz, Integer id, Initializer<E>... initializers) {
+      Class<E> clazz, Long id, Initializer<E>... initializers) {
     return getDatabase().findById(clazz, id, initializers);
   };
 

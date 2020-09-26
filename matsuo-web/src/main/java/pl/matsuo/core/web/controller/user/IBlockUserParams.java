@@ -4,9 +4,9 @@ import pl.matsuo.core.params.IRequestParams;
 
 public interface IBlockUserParams extends IRequestParams {
 
-  Integer getId();
+  Long getId();
 
-  void setId(Integer id);
+  void setId(Long id);
 
   Boolean getBlock();
 

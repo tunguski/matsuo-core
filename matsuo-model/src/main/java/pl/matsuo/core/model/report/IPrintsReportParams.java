@@ -8,9 +8,9 @@ public interface IPrintsReportParams extends IPeriodQueryRequestParams {
 
   Class getPrintClass();
 
-  Integer getIdPatient();
+  Long getIdPatient();
 
-  Integer getIdPayer();
+  Long getIdPayer();
 
   Person getPatient();
 

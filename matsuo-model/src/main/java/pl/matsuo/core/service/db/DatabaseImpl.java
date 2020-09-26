@@ -39,7 +39,7 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
 
   @Override
   public <E extends AbstractEntity> E findById(
-      Class<E> clazz, Integer id, Initializer<? super E>... initializers) {
+      Class<E> clazz, Long id, Initializer<? super E>... initializers) {
     E element = (E) session().get(clazz, id);
 
     Assert.notNull(element, "No entity found");
@@ -87,7 +87,7 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
   }
 
   @Override
-  public void delete(Class<? extends AbstractEntity> clazz, Integer id) {
+  public void delete(Class<? extends AbstractEntity> clazz, Long id) {
     session().delete(findById(clazz, id));
   }
 

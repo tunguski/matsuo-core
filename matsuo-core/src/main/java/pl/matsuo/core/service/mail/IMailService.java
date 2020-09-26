@@ -4,6 +4,6 @@ import javax.mail.internet.InternetAddress;
 
 public interface IMailService {
 
-  Integer sendMail(
+  Long sendMail(
       InternetAddress from, InternetAddress to, String subject, String bodyTemplate, Object model);
 }

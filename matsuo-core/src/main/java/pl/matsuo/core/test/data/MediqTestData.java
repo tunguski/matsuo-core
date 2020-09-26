@@ -6,7 +6,7 @@ import pl.matsuo.core.model.organization.OrganizationUnit;
 @Component
 public class MediqTestData extends AbstractTestData {
 
-  private Integer idMediq;
+  private Long idMediq;
 
   public static final String MEDIQ = "MEDIQ";
 

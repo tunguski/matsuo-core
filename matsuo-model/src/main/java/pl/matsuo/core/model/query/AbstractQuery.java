@@ -29,12 +29,7 @@ import pl.matsuo.core.model.query.condition.QueryPart;
 import pl.matsuo.core.model.query.condition.SelectPart;
 import pl.matsuo.core.util.collection.CollectionUtil;
 
-/**
- * Abstrakcyjna nadklasa dla zapytań.
- *
- * @since Aug 23, 2013
- * @param <E>
- */
+/** Abstract superclass for queries. */
 public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   private static final Logger logger = LoggerFactory.getLogger(AbstractQuery.class);
 
@@ -198,15 +193,15 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
     }
   }
 
-  protected ThreadLocal<Integer> idBucket = new ThreadLocal();
+  protected ThreadLocal<Long> idBucket = new ThreadLocal();
 
   @Override
-  public List<E> query(Integer idBucketValue) {
+  public List<E> query(Long idBucketValue) {
     try {
       idBucket.set(idBucketValue);
       String queryString = printQuery();
 
-      // wyszukaj w bazie danych
+      // search in database
       try {
         org.hibernate.query.Query query =
             sessionFactory.getCurrentSession().createQuery(queryString);

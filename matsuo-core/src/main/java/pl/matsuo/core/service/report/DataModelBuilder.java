@@ -23,7 +23,7 @@ public class DataModelBuilder {
   }
 
   public DataModelBuilder maybePut(
-      Integer id, String propertyName, Class<? extends AbstractEntity> entityClass) {
+      Long id, String propertyName, Class<? extends AbstractEntity> entityClass) {
     ofNullable(id)
         .ifPresent(
             idEntity -> dataModel.put(propertyName, database.findById(entityClass, idEntity)));

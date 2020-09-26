@@ -10,12 +10,12 @@ import pl.matsuo.validator.ValidatorBase;
  *
  * @since 15-06-2013
  */
-public class EntityReferenceValidator extends ValidatorBase<EntityReference, Integer> {
+public class EntityReferenceValidator extends ValidatorBase<EntityReference, Long> {
 
   @Autowired protected Database database;
 
   @Override
-  public boolean isValid(Integer value, ConstraintValidatorContext context) {
+  public boolean isValid(Long value, ConstraintValidatorContext context) {
     //		if (value == null) {
     //			return true;
     //		}

@@ -41,7 +41,7 @@ public class TestUserController extends AbstractControllerTest {
     user.setPassword("password");
     user.setPerson(person);
 
-    Integer idUser = idFromLocation(userController.create(user, new StringBuffer("")));
+    Long idUser = idFromLocation(userController.create(user, new StringBuffer("")));
 
     user = database.findById(User.class, idUser);
 
@@ -111,7 +111,7 @@ public class TestUserController extends AbstractControllerTest {
     IChangePasswordParams params =
         facadeBuilder.createFacade(new HashMap<>(), IChangePasswordParams.class);
 
-    params.setId(0);
+    params.setId(0L);
     params.setActualPassword("6%86P#WnukNp2gBm");
     params.setNewPassword("kredka111");
     params.setConfirmationPassword("kredka111");

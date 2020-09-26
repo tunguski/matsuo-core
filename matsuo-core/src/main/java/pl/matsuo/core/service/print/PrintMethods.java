@@ -23,7 +23,7 @@ public interface PrintMethods {
 
   default <E extends IPrintFacade<F>, F extends IPrintElementFacade> KeyValuePrint initializePrint(
       Class<E> printClass,
-      Integer idEntity,
+      Long idEntity,
       Consumer<E> initializePrint,
       Consumer<? super F>... elementInitializations) {
     KeyValuePrint print = KeyValuePrint.print(printClass, idEntity).get();
@@ -42,7 +42,7 @@ public interface PrintMethods {
 
   default <E extends IPrintFacade<F>, F extends IPrintElementFacade> E initializeFacade(
       Class<E> printClass,
-      Integer idEntity,
+      Long idEntity,
       Consumer<E> initializePrint,
       Consumer<? super F>... elementInitializations) {
     return getFacadeBuilder()

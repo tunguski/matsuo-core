@@ -21,7 +21,7 @@ public class Numeration extends AbstractEntity implements TemporalEntity {
 
   @NotNull protected Integer value;
   /** Owning entity id. May be null if this numeration is 'general' (depending on the context). */
-  protected Integer idEntity;
+  protected Long idEntity;
 
   @NotNull protected Integer minValue;
   protected Integer maxValue;

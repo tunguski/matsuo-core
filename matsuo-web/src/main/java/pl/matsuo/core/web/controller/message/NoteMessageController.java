@@ -23,7 +23,7 @@ public class NoteMessageController extends AbstractMessageController<NoteMessage
     return message;
   }
 
-  protected HttpEntity<String> changeAppointmentStatus(Integer id, NoteStatus status) {
+  protected HttpEntity<String> changeAppointmentStatus(Long id, NoteStatus status) {
     NoteMessage appointment = database.findById(NoteMessage.class, id);
     appointment.setStatus(status);
     database.update(appointment);
@@ -32,19 +32,19 @@ public class NoteMessageController extends AbstractMessageController<NoteMessage
 
   @RequestMapping(value = "/{id}/close", method = POST)
   @ResponseStatus(CREATED)
-  public HttpEntity<String> close(@PathVariable("id") Integer id) {
+  public HttpEntity<String> close(@PathVariable("id") Long id) {
     return changeAppointmentStatus(id, CLOSED);
   }
 
   @RequestMapping(value = "/{id}/cancel", method = POST)
   @ResponseStatus(CREATED)
-  public HttpEntity<String> cancel(@PathVariable("id") Integer id) {
+  public HttpEntity<String> cancel(@PathVariable("id") Long id) {
     return changeAppointmentStatus(id, CANCELLED);
   }
 
   @RequestMapping(value = "/{id}/open", method = POST)
   @ResponseStatus(CREATED)
-  public HttpEntity<String> open(@PathVariable("id") Integer id) {
+  public HttpEntity<String> open(@PathVariable("id") Long id) {
     return changeAppointmentStatus(id, OPEN);
   }
 }

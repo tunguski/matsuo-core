@@ -25,7 +25,7 @@ public class TestAbstractTestData {
   @Test
   public void testDataInDatabase() {
     User user = new User();
-    user.setIdBucket(17);
+    user.setIdBucket(17L);
     when(database.findOne(any())).thenReturn(user);
 
     testData.execute();
@@ -33,7 +33,7 @@ public class TestAbstractTestData {
 
     verify(database).findOne(any());
     verify(sessionState).setUser(user);
-    verify(sessionState).setIdBucket(17);
+    verify(sessionState).setIdBucket(17L);
 
     verify(sessionState).setUser(null);
     verify(sessionState).setIdBucket(null);

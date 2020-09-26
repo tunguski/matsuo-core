@@ -14,7 +14,7 @@ public abstract class AbstractTestData implements IExecuteService {
   @Autowired protected Database database;
   @Autowired protected SessionState sessionState;
 
-  protected void withIdBucket(Integer idBucket, Runnable runnable) {
+  protected void withIdBucket(Long idBucket, Runnable runnable) {
     sessionState.setIdBucket(idBucket);
     try {
       runnable.run();

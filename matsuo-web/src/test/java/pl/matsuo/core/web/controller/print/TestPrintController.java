@@ -1,6 +1,7 @@
 package pl.matsuo.core.web.controller.print;
 
-import java.util.Arrays;
+import static java.util.Arrays.asList;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
@@ -73,7 +74,7 @@ public class TestPrintController extends AbstractDbTest {
 
   @Test
   public void testListByIdEntities() throws Exception {
-    printController.listByIdEntities(Arrays.asList(17));
+    printController.listByIdEntities(asList(17L));
   }
 
   public static interface TemplateName extends IPrintFacade {}

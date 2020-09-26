@@ -2,11 +2,11 @@ package pl.matsuo.core.web.controller.organization;
 
 public class SimpleParty {
 
-  private Integer id;
+  private Long id;
   private String name;
   private Class type;
 
-  public SimpleParty(Integer id, String name, Class type) {
+  public SimpleParty(Long id, String name, Class type) {
     this.id = id;
     this.name = name;
     this.type = type;
@@ -14,11 +14,11 @@ public class SimpleParty {
 
   public SimpleParty() {}
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

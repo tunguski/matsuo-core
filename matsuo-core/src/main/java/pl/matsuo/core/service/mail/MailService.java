@@ -17,7 +17,8 @@ public class MailService implements IMailService {
   @Autowired JavaMailSender mailSender;
   @Autowired Database database;
 
-  public Integer sendMail(
+  @Override
+  public Long sendMail(
       InternetAddress from, InternetAddress to, String subject, String bodyTemplate, Object model) {
     try {
       MimeMessage message = mailSender.createMimeMessage();

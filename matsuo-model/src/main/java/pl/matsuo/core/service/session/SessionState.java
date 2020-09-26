@@ -16,7 +16,7 @@ import pl.matsuo.core.model.user.User;
 public class SessionState {
 
   private User user;
-  private Integer idBucket;
+  private Long idBucket;
   private long lastRequestTime;
   private long loginTime;
   private Set<String> userGroups = new HashSet<>();
@@ -44,7 +44,7 @@ public class SessionState {
     loginTime = lastRequestTime;
   }
 
-  public Integer getIdBucket() {
+  public Long getIdBucket() {
     return idBucket;
   }
 
@@ -68,7 +68,7 @@ public class SessionState {
     return loginTime;
   }
 
-  public void setIdBucket(Integer idBucket) {
+  public void setIdBucket(Long idBucket) {
     this.idBucket = idBucket;
   }
 }

@@ -41,7 +41,7 @@ public class TestDatabaseImpl {
     database.beanFactory = beanFactory;
 
     when(sessionFactory.getCurrentSession()).thenReturn(session);
-    when(sessionState.getIdBucket()).thenReturn(10);
+    when(sessionState.getIdBucket()).thenReturn(10L);
     doAnswer(
             invocation -> {
               AbstractQuery query = invocation.getArgument(0);
@@ -63,20 +63,20 @@ public class TestDatabaseImpl {
         .when(beanFactory)
         .autowireBeanProperties(anyObject(), anyInt(), anyBoolean());
 
-    testUser.setIdBucket(10);
-    testUser2.setIdBucket(11);
+    testUser.setIdBucket(10L);
+    testUser2.setIdBucket(11L);
   }
 
   @Test
   public void testFindById() throws Exception {
-    when(session.get(User.class, 7)).thenReturn(testUser);
-    assertEquals(testUser, database.findById(User.class, 7));
+    when(session.get(User.class, 7L)).thenReturn(testUser);
+    assertEquals(testUser, database.findById(User.class, 7L));
   }
 
   @Test(expected = RuntimeException.class)
   public void testFindById2() throws Exception {
-    when(session.get(User.class, 7)).thenReturn(testUser2);
-    database.findById(User.class, 7);
+    when(session.get(User.class, 7L)).thenReturn(testUser2);
+    database.findById(User.class, 7L);
   }
 
   @Test
@@ -117,15 +117,15 @@ public class TestDatabaseImpl {
 
   @Test(expected = RuntimeException.class)
   public void testDelete1() throws Exception {
-    when(session.get(User.class, 7)).thenReturn(testUser2);
-    database.delete(User.class, 7);
+    when(session.get(User.class, 7L)).thenReturn(testUser2);
+    database.delete(User.class, 7L);
     verify(session).delete(testUser2);
   }
 
   @Test
   public void testDelete2() throws Exception {
-    when(session.get(User.class, 7)).thenReturn(testUser);
-    database.delete(User.class, 7);
+    when(session.get(User.class, 7L)).thenReturn(testUser);
+    database.delete(User.class, 7L);
     verify(session).delete(testUser);
   }
 

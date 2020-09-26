@@ -8,7 +8,7 @@ import pl.matsuo.core.model.query.Query;
 public interface Database {
 
   <E extends AbstractEntity> E findById(
-      Class<E> clazz, Integer id, Initializer<? super E>... initializers);
+      Class<E> clazz, Long id, Initializer<? super E>... initializers);
 
   <E extends AbstractEntity> List<E> findAll(
       Class<E> clazz, Initializer<? super E>... initializers);
@@ -27,7 +27,7 @@ public interface Database {
 
   <E extends AbstractEntity> E update(E element);
 
-  void delete(Class<? extends AbstractEntity> clazz, Integer id);
+  void delete(Class<? extends AbstractEntity> clazz, Long id);
 
   void delete(AbstractEntity abstractEntity);
 

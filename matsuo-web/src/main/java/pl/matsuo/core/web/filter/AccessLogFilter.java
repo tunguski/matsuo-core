@@ -23,7 +23,8 @@ public class AccessLogFilter extends AbstractFilter {
     accessLog.setIp(request.getRemoteAddr());
     accessLog.setRequest(request.getRequestURI());
     accessLog.setMethod(request.getMethod());
-    if (!request.getParameterMap().keySet().isEmpty()) {
+    if (request.getMethod().equalsIgnoreCase("get")
+        && !request.getParameterMap().keySet().isEmpty()) {
       accessLog.setParameters(request.getParameterMap().toString());
     }
     if (sessionState.getUser() != null) {

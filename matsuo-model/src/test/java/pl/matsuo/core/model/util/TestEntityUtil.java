@@ -45,7 +45,7 @@ public class TestEntityUtil {
     AtomicBoolean value = new AtomicBoolean();
 
     User user = new User();
-    user.setId(7);
+    user.setId(7L);
     createOrUpdate(user, entity -> value.set(true)).accept(database);
 
     verify(database).update(any(User.class));
@@ -75,7 +75,7 @@ public class TestEntityUtil {
     AtomicBoolean onUpdate = new AtomicBoolean();
 
     User user = new User();
-    user.setId(7);
+    user.setId(7L);
     createOrUpdate(user, entity -> onCreate.set(true), entity -> onUpdate.set(true))
         .accept(database);
 

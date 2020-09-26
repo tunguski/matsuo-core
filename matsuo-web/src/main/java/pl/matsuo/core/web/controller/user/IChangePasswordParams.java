@@ -4,9 +4,9 @@ import pl.matsuo.core.params.IRequestParams;
 
 public interface IChangePasswordParams extends IRequestParams {
 
-  Integer getId();
+  Long getId();
 
-  void setId(Integer id);
+  void setId(Long id);
 
   String getActualPassword();
 

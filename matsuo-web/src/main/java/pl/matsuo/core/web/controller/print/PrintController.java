@@ -61,7 +61,7 @@ public class PrintController {
   //  }
 
   @RequestMapping(value = "/{id}", method = GET)
-  public void generatePrint(@PathVariable("id") Integer id, HttpServletResponse response) {
+  public void generatePrint(@PathVariable("id") Long id, HttpServletResponse response) {
     try {
       KeyValuePrint print = database.findById(KeyValuePrint.class, id, new PrintInitializer());
       if (print == null) {
@@ -134,7 +134,7 @@ public class PrintController {
     // prints connected directly to somebody
     List<KeyValuePrint> prints = findPrints(params, "keyValuePrint.idEntity");
 
-    Map<Integer, KeyValuePrint> printsMap = new HashMap<>();
+    Map<Long, KeyValuePrint> printsMap = new HashMap<>();
     asList(prints, prints2)
         .forEach(collection -> collection.forEach(print -> printsMap.put(print.getId(), print)));
 
@@ -163,12 +163,12 @@ public class PrintController {
     }
   }
 
-  /** Pobiera listę druków dla przekazanych identyfikatorów wizyt. */
+  /** Load prints for ids. */
   @RequestMapping(
       value = "/list/byIdEntities",
       method = GET,
       consumes = {APPLICATION_OCTET_STREAM_VALUE})
-  public List<KeyValuePrint> listByIdEntities(@RequestParam("ids") List<Integer> ids) {
+  public List<KeyValuePrint> listByIdEntities(@RequestParam("ids") List<Long> ids) {
     return database.find(
         query(KeyValuePrint.class, in(KeyValuePrint::getIdEntity, ids))
             .initializer(new PrintInitializer()));

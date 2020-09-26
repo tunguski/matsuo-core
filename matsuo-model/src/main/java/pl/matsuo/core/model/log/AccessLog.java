@@ -21,5 +21,5 @@ public class AccessLog extends AbstractEntity {
 
   String ip;
   Integer status;
-  Integer idUser;
+  Long idUser;
 }

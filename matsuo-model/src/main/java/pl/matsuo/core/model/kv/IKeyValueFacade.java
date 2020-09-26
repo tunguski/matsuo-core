@@ -4,7 +4,7 @@ import java.util.Date;
 
 public interface IKeyValueFacade {
 
-  Integer getId();
+  Long getId();
 
   Date getCreatedTime();
 }

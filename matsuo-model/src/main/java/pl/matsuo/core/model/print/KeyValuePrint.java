@@ -29,10 +29,10 @@ public class KeyValuePrint extends KeyValueEntity implements IFacadeAware {
 
   @NotNull private Class<? extends IPrintFacade> printClass;
   /** Reference to entity on which print is based. */
-  private Integer idEntity;
+  private Long idEntity;
 
   @EntityReference(User.class)
-  private Integer idUserCreated;
+  private Long idUserCreated;
 
   @OneToMany(cascade = ALL)
   @OrderColumn
@@ -46,12 +46,12 @@ public class KeyValuePrint extends KeyValueEntity implements IFacadeAware {
   }
 
   public static Supplier<? extends KeyValuePrint> print(
-      Class<? extends IPrintFacade> clazz, Integer id) {
+      Class<? extends IPrintFacade> clazz, Long id) {
     return () -> printInitializer(clazz, id).apply(new KeyValuePrint());
   }
 
   public static <E extends KeyValuePrint> Function<E, E> printInitializer(
-      Class<? extends IPrintFacade> clazz, Integer id) {
+      Class<? extends IPrintFacade> clazz, Long id) {
     return print -> {
       print.setPrintClass(clazz);
       print.setIdEntity(id);

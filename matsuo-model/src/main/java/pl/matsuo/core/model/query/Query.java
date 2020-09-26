@@ -5,5 +5,5 @@ import pl.matsuo.core.model.AbstractEntity;
 
 public interface Query<E extends AbstractEntity> {
 
-  List<E> query(Integer idBucket);
+  List<E> query(Long idBucket);
 }

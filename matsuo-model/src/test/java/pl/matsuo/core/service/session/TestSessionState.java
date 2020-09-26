@@ -16,11 +16,11 @@ public class TestSessionState {
     SessionState sessionState = new SessionState();
 
     User user = new User();
-    user.setIdBucket(11);
+    user.setIdBucket(11L);
 
     sessionState.setUser(user);
 
-    assertEquals((Integer) 11, user.getIdBucket());
+    assertEquals((Long) 11L, user.getIdBucket());
     assertTrue(sessionState.isInGroup(USER.name()));
     assertFalse(sessionState.isInGroup(GUEST.name()));
   }

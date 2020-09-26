@@ -47,13 +47,13 @@ public abstract class AbstractController<E extends AbstractEntity, P extends IQu
 
   @RequestMapping(value = "/{id}", method = DELETE)
   @ResponseStatus(NO_CONTENT)
-  public void delete(@PathVariable("id") Integer id) {
+  public void delete(@PathVariable("id") Long id) {
     database.delete(entityType, id);
   }
 
   @RequestMapping(value = "/{id}", method = PUT)
   @ResponseStatus(NO_CONTENT)
-  public void update(@PathVariable("id") Integer id, @RequestBody E entity) {
+  public void update(@PathVariable("id") Long id, @RequestBody E entity) {
     entity.setId(id);
     database.create(entity);
   }

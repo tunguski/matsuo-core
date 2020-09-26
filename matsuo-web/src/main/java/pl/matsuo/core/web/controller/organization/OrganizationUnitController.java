@@ -41,7 +41,7 @@ public class OrganizationUnitController extends AbstractSimpleController<Organiz
 
   @Override
   @RequestMapping(value = "/{id}", method = GET)
-  public HttpEntity<OrganizationUnit> find(@PathVariable("id") Integer id) {
+  public HttpEntity<OrganizationUnit> find(@PathVariable("id") Long id) {
     HttpEntity<OrganizationUnit> entity = super.find(id);
     entity.getBody().getEmployees().size();
     return entity;
@@ -50,7 +50,7 @@ public class OrganizationUnitController extends AbstractSimpleController<Organiz
   @RequestMapping(value = "/{id}/employee/{idEmployee}", method = POST)
   @ResponseStatus(OK)
   public Person addEmployee(
-      @PathVariable("id") Integer id, @PathVariable("idEmployee") Integer idEmployee) {
+      @PathVariable("id") Long id, @PathVariable("idEmployee") Long idEmployee) {
     Person person = database.findById(Person.class, idEmployee);
     OrganizationUnit organizationUnit =
         database.findById(OrganizationUnit.class, id, entityInitializers);
@@ -64,7 +64,7 @@ public class OrganizationUnitController extends AbstractSimpleController<Organiz
   @RequestMapping(value = "/{id}/employee/{idEmployee}", method = DELETE)
   @ResponseStatus(OK)
   public void removeEmployee(
-      @PathVariable("id") Integer id, @PathVariable("idEmployee") Integer idEmployee) {
+      @PathVariable("id") Long id, @PathVariable("idEmployee") Long idEmployee) {
     OrganizationUnit organizationUnit =
         database.findById(OrganizationUnit.class, id, entityInitializers);
 
