@@ -20,12 +20,14 @@ import static pl.matsuo.core.util.function.FunctionalUtil.with;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import lombok.Getter;
+import lombok.Setter;
 import org.junit.Test;
 
 public class TestFunctionalUtil {
 
   @Test
-  public void testAccess() throws Exception {
+  public void testAccess() throws NoSuchFieldException {
     AccessProvider<Integer> invocations = access(new Z(), Z.class.getField("invocations"));
     assertEquals((Integer) 0, invocations.get());
     invocations.accept(7);
@@ -33,7 +35,7 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testAccess1() throws Exception {
+  public void testAccess1() {
     Z z = new Z();
     AccessProvider<Z> access = access(z::getComplex, z::setComplex);
     assertNull(access.get());
@@ -42,7 +44,7 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testWith() throws Exception {
+  public void testWith() {
     AtomicBoolean invoked = new AtomicBoolean(false);
     with(
         "string",
@@ -54,12 +56,12 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testTransform() throws Exception {
+  public void testTransform() {
     assertEquals((Integer) 7, transform("string", value -> value.equals("string") ? 7 : null));
   }
 
   @Test
-  public void testWith1() throws Exception {
+  public void testWith1() {
     AtomicBoolean invoked = new AtomicBoolean(false);
     with(
         "string",
@@ -73,7 +75,7 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testIgnoreEx() throws Exception {
+  public void testIgnoreEx() {
     ignoreEx(
         () -> {
           throw new RuntimeException("Should be ignored");
@@ -81,7 +83,7 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testIgnoreEx1() throws Exception {
+  public void testIgnoreEx1() {
     assertEquals("val", ignoreEx(() -> "val"));
     assertEquals(
         (Object) null,
@@ -92,7 +94,7 @@ public class TestFunctionalUtil {
   }
 
   @Test(expected = RuntimeException.class)
-  public void testRuntimeEx() throws Exception {
+  public void testRuntimeEx() {
     runtimeEx(
         () -> {
           throw new Exception("Should be wrapped into RuntimeException");
@@ -100,7 +102,7 @@ public class TestFunctionalUtil {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testRuntimeEx1() throws Exception {
+  public void testRuntimeEx1() {
     runtimeEx(
         () -> {
           throw new Exception("Should be wrapped into RuntimeException");
@@ -111,12 +113,12 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testRuntimeEx2() throws Exception {
+  public void testRuntimeEx2() {
     assertEquals("val", runtimeEx(() -> "val"));
   }
 
   @Test(expected = RuntimeException.class)
-  public void testRuntimeEx3() throws Exception {
+  public void testRuntimeEx3() {
     assertEquals(
         "val",
         runtimeEx(
@@ -126,7 +128,7 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testProcessEx() throws Exception {
+  public void testProcessEx() {
     AtomicBoolean invoked = new AtomicBoolean(false);
     processEx(
         () -> {
@@ -139,7 +141,7 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testProcessEx1() throws Exception {
+  public void testProcessEx1() {
     AtomicBoolean invoked = new AtomicBoolean(false);
     assertEquals(
         "y",
@@ -155,7 +157,7 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testProcessEx2() throws Exception {
+  public void testProcessEx2() {
     AtomicBoolean invoked = new AtomicBoolean(false);
     assertEquals(
         "x",
@@ -169,7 +171,7 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testCompose() throws Exception {
+  public void testCompose() {
     AtomicBoolean invoked1 = new AtomicBoolean(false);
     AtomicBoolean invoked2 = new AtomicBoolean(false);
 
@@ -180,13 +182,13 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testEither() throws Exception {
+  public void testEither() {
     assertEquals((Integer) 1, either(true, () -> 1, () -> 2));
     assertEquals((Integer) 2, either(false, () -> 1, () -> 2));
   }
 
   @Test
-  public void testRepeat() throws Exception {
+  public void testRepeat() {
     AtomicInteger counter = new AtomicInteger(3);
     AtomicInteger value = new AtomicInteger(0);
 
@@ -202,7 +204,7 @@ public class TestFunctionalUtil {
   }
 
   @Test
-  public void testCollectList() throws Exception {
+  public void testCollectList() {
     AtomicInteger counter = new AtomicInteger(3);
 
     List<Integer> integers =
@@ -217,17 +219,10 @@ public class TestFunctionalUtil {
     assertEquals(asList(2, 1, 0), integers);
   }
 
+  @Getter
+  @Setter
   class Z {
-
     public int invocations = 0;
     public Z complex;
-
-    public Z getComplex() {
-      return complex;
-    }
-
-    public void setComplex(Z complex) {
-      this.complex = complex;
-    }
   }
 }

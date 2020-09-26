@@ -8,7 +8,9 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
+import java.io.IOException;
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class TestPermissionsFilter {
   @Autowired SessionState sessionState;
 
   @Test
-  public void testPassLoggedOff() throws Exception {
+  public void testPassLoggedOff() throws IOException, ServletException {
     MockHttpServletRequest servletRequest = new MockHttpServletRequest("GET", "/index.html");
     MockHttpServletResponse servletResponse = new MockHttpServletResponse();
     FilterChain filterChain = mock(FilterChain.class);
@@ -50,7 +52,7 @@ public class TestPermissionsFilter {
   }
 
   @Test
-  public void testRejectLoggedOff() throws Exception {
+  public void testRejectLoggedOff() throws IOException, ServletException {
     MockHttpServletRequest servletRequest = new MockHttpServletRequest("GET", "/api/lists/AA");
     MockHttpServletResponse servletResponse = new MockHttpServletResponse();
     FilterChain filterChain = mock(FilterChain.class);
@@ -72,7 +74,7 @@ public class TestPermissionsFilter {
 
   @Test
   @DirtiesContext
-  public void testPassLoggedOn() throws Exception {
+  public void testPassLoggedOn() throws IOException, ServletException {
     configureSessionState("ADMIN");
 
     MockHttpServletRequest servletRequest = new MockHttpServletRequest("GET", "/api/lists/AA");
@@ -86,7 +88,7 @@ public class TestPermissionsFilter {
   }
 
   @Test
-  public void testRejectLoggedOn() throws Exception {
+  public void testRejectLoggedOn() throws IOException, ServletException {
     configureSessionState("REGISTRATION");
 
     MockHttpServletRequest servletRequest = new MockHttpServletRequest("GET", "/api_xxx/lists/AA");

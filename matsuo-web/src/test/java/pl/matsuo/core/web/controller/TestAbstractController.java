@@ -48,7 +48,7 @@ public class TestAbstractController {
   }
 
   @Test
-  public void testListQuery() throws Exception {
+  public void testListQuery() {
     IQueryRequestParams params = mock(IQueryRequestParams.class);
     when(params.getQuery()).thenReturn("some text");
 
@@ -61,7 +61,7 @@ public class TestAbstractController {
   }
 
   @Test
-  public void testList() throws Exception {
+  public void testList() {
     IQueryRequestParams params = mock(IQueryRequestParams.class);
     when(params.getQuery()).thenReturn("some text");
 
@@ -82,7 +82,7 @@ public class TestAbstractController {
   }
 
   @Test
-  public void testList_limitAndOffset() throws Exception {
+  public void testList_limitAndOffset() {
     IQueryRequestParams params = mock(IQueryRequestParams.class);
     when(params.getQuery()).thenReturn("some text");
     when(params.getLimit()).thenReturn(20);
@@ -120,7 +120,7 @@ public class TestAbstractController {
   }
 
   @Test
-  public void testList1() throws Exception {
+  public void testList1() {
     when(database.find(any(Query.class)))
         .then(
             invocation -> {
@@ -136,14 +136,14 @@ public class TestAbstractController {
   }
 
   @Test
-  public void testEntityQuery() throws Exception {
+  public void testEntityQuery() {
     assertEquals(
         "FROM pl.matsuo.core.model.user.User user WHERE test_x AND test_y",
         controller.entityQuery(User.class, q -> "test_x", q -> "test_y").printQuery());
   }
 
   @Test
-  public void testListByIds() throws Exception {
+  public void testListByIds() {
     when(database.find(any(Query.class)))
         .then(
             invocation -> {
@@ -159,7 +159,7 @@ public class TestAbstractController {
   }
 
   @Test
-  public void testFind() throws Exception {
+  public void testFind() {
     User user = new User();
     when(database.findById(any(Class.class), any(Long.class), any(Initializer.class)))
         .thenReturn(user);
@@ -167,7 +167,7 @@ public class TestAbstractController {
   }
 
   @Test
-  public void testEntityInitializers() throws Exception {
+  public void testEntityInitializers() {
     when(database.findById(any(Class.class), any(Long.class), any(Initializer.class)))
         .then(
             invocation -> {
@@ -185,20 +185,20 @@ public class TestAbstractController {
   }
 
   @Test
-  public void testCreate() throws Exception {}
+  public void testCreate() {}
 
   @Test
-  public void testUpdate() throws Exception {}
+  public void testUpdate() {}
 
   @Test
-  public void testDelete() throws Exception {}
+  public void testDelete() {}
 
   @Test
-  public void testUpdate1() throws Exception {}
+  public void testUpdate1() {}
 
   @Test
-  public void testChildLocation() throws Exception {}
+  public void testChildLocation() {}
 
   @Test
-  public void testHttpEntity() throws Exception {}
+  public void testHttpEntity() {}
 }

@@ -47,7 +47,7 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testDate1() throws Exception {
+  public void testDate1() {
     Date date = date(new Date(100, 1, 2), 10, 20);
     assertEquals(100, date.getYear());
     assertEquals(1, date.getMonth());
@@ -57,7 +57,7 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testDate2() throws Exception {
+  public void testDate2() {
     Date date = date(2020, 1, 2);
     assertEquals(120, date.getYear());
     assertEquals(1, date.getMonth());
@@ -67,13 +67,13 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testMaybeDate() throws Exception {
+  public void testMaybeDate() {
     assertNull(maybeDate("test"));
     assertNotNull(maybeDate("2020-01-02T15:19:21+00:00"));
   }
 
   @Test
-  public void testDate3() throws Exception {
+  public void testDate3() {
     Date date = date(2020, 1, 2, 8, 25);
     assertEquals(120, date.getYear());
     assertEquals(1, date.getMonth());
@@ -83,7 +83,7 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testDate4() throws Exception {
+  public void testDate4() {
     Date date = date("2020-01-02T15:19:21+00:00");
     assertEquals(120, date.getYear());
     assertEquals(0, date.getMonth());
@@ -93,14 +93,14 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testAddTime() throws Exception {
+  public void testAddTime() {
     Date date = addTime(date(2000, 7, 10), MINUTE, 17);
     assertEquals(0, date.getHours());
     assertEquals(17, date.getMinutes());
   }
 
   @Test
-  public void testCal() throws Exception {
+  public void testCal() {
     Calendar cal = cal(2015, 4, 22, 10, 20);
     assertEquals(2015, cal.get(YEAR));
     assertEquals(4, cal.get(MONTH));
@@ -110,7 +110,7 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testCal1() throws Exception {
+  public void testCal1() {
     Calendar cal = cal(2015, 4, 22);
     assertEquals(2015, cal.get(YEAR));
     assertEquals(4, cal.get(MONTH));
@@ -120,7 +120,7 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testCal2() throws Exception {
+  public void testCal2() {
     Calendar cal = cal(date(2015, 4, 22, 10, 20));
     assertEquals(2015, cal.get(YEAR));
     assertEquals(4, cal.get(MONTH));
@@ -130,7 +130,7 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testCal3() throws Exception {
+  public void testCal3() {
     Calendar cal = cal(date(2015, 4, 22, 10, 20).getTime());
     assertEquals(2015, cal.get(YEAR));
     assertEquals(4, cal.get(MONTH));
@@ -140,7 +140,7 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testCal4() throws Exception {
+  public void testCal4() {
     Calendar cal = cal(date(2015, 4, 22), 10, 20);
     assertEquals(2015, cal.get(YEAR));
     assertEquals(4, cal.get(MONTH));
@@ -150,14 +150,14 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testTime() throws Exception {
+  public void testTime() {
     Time time = time(10, 20);
     assertEquals(10, time.getHours());
     assertEquals(20, time.getMinutes());
   }
 
   @Test
-  public void testDateAndTime() throws Exception {
+  public void testDateAndTime() {
     Date date = dateAndTime(date(2015, 4, 22), time(10, 20));
     assertEquals(115, date.getYear());
     assertEquals(4, date.getMonth());
@@ -167,51 +167,51 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testMin() throws Exception {
+  public void testMin() {
     assertEquals(date(2014, 7, 12), min(date(2015, 1, 7), date(2014, 7, 12)));
   }
 
   @Test
-  public void testMax() throws Exception {
+  public void testMax() {
     assertEquals(date(2015, 1, 7), max(date(2015, 1, 7), date(2014, 7, 12)));
   }
 
   @Test
-  public void testMin1() throws Exception {
+  public void testMin1() {
     assertEquals(cal(2014, 7, 12), min(cal(2015, 1, 7), cal(2014, 7, 12)));
   }
 
   @Test
-  public void testMax1() throws Exception {
+  public void testMax1() {
     assertEquals(cal(2015, 1, 7), max(cal(2015, 1, 7), cal(2014, 7, 12)));
   }
 
   @Test
-  public void testBetween() throws Exception {
+  public void testBetween() {
     assertTrue(between(date(2014, 9, 12), date(2014, 7, 12), date(2015, 1, 7)));
     assertFalse(between(date(2012, 9, 12), date(2014, 7, 12), date(2015, 1, 7)));
   }
 
   @Test
-  public void testSqlDate() throws Exception {}
+  public void testSqlDate() {}
 
   @Test
-  public void testSqlDate1() throws Exception {}
+  public void testSqlDate1() {}
 
   @Test
-  public void testSqlDate2() throws Exception {}
+  public void testSqlDate2() {}
 
   @Test
-  public void testSqlDate3() throws Exception {}
+  public void testSqlDate3() {}
 
   @Test
-  public void testIsoFormat1() throws Exception {}
+  public void testIsoFormat1() {}
 
   @Test
-  public void testLocalDate() throws Exception {}
+  public void testLocalDate() {}
 
   @Test
-  public void testGetQuaterStart() throws Exception {
+  public void testGetQuaterStart() {
     assertEquals(date(2014, 0, 1), getQuaterStart(date(2014, 0, 15)));
     assertEquals(date(2014, 0, 1), getQuaterStart(date(2014, 2, 30)));
     assertEquals(date(2014, 3, 1), getQuaterStart(date(2014, 4, 15)));
@@ -220,7 +220,7 @@ public class TestDateUtil {
   }
 
   @Test
-  public void testGetQuaterEnd() throws Exception {
+  public void testGetQuaterEnd() {
     assertEquals(date(2014, 2, 31), getQuaterEnd(date(2014, 0, 15)));
     assertEquals(date(2014, 2, 31), getQuaterEnd(date(2014, 2, 30)));
     assertEquals(date(2014, 5, 30), getQuaterEnd(date(2014, 4, 15)));

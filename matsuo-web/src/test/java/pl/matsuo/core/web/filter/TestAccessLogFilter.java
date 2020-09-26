@@ -3,7 +3,9 @@ package pl.matsuo.core.web.filter;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
+import java.io.IOException;
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,7 +28,7 @@ public class TestAccessLogFilter {
   @InjectMocks AccessLogFilter accessLogFilter = new AccessLogFilter();
 
   @Test
-  public void testDoFilter() throws Exception {
+  public void testDoFilter() throws IOException, ServletException {
     MockHttpServletRequest request = new MockHttpServletRequest();
     MockHttpServletResponse response = new MockHttpServletResponse();
 

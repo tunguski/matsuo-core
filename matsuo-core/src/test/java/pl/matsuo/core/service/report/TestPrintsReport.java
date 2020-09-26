@@ -17,14 +17,14 @@ public class TestPrintsReport extends AbstractReportTest<IPrintsReportParams> {
 
   // FIXME: create test data and restore test
   //  @Test
-  //  public void full() throws Exception {
+  //  public void full() {
   //    HashMap<String,Object> params = new HashMap<>();
   //
   //    testCreatePDF(facadeBuilder.createFacade(params, IPrintsReportParams.class));
   //  }
 
   @Test
-  public void empty() throws Exception {
+  public void empty() {
     HashMap<String, Object> params = new HashMap<>();
     params.put("startDate", isoFormat(date(3000, 0, 1)));
 

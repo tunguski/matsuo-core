@@ -47,7 +47,7 @@ public class TestComparatorUtil {
   }
 
   @Test
-  public void testComparator() throws Exception {
+  public void testComparator() {
     asList(comparator(X::getInteger), comparator(X::getDate), comparator(X::getString))
         .forEach(
             comparator -> {

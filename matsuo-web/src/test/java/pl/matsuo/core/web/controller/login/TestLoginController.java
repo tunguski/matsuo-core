@@ -53,7 +53,7 @@ public class TestLoginController extends AbstractControllerTest {
   @Autowired TestLoginController.LoginServiceExtension loginServiceExtension;
 
   @Test
-  public void testLoggedUsername() throws Exception {
+  public void testLoggedUsername() {
     User user = new User();
     user.getGroups().add(new Group());
     sessionState.setUser(user);
@@ -63,7 +63,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
   @Test
-  public void testCorrectLogin() throws Exception {
+  public void testCorrectLogin() {
     LoginData loginData = new LoginData();
     loginData.setUsername("admin");
     loginData.setPassword("6%86P#WnukNp2gBm");
@@ -75,7 +75,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
   @Test(expected = UnauthorizedException.class)
-  public void testFalseLogin() throws Exception {
+  public void testFalseLogin() {
     LoginData loginData = new LoginData();
     loginData.setUsername("test");
     loginData.setPassword("test");
@@ -84,7 +84,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
   @Test
-  public void testLogoff() throws Exception {
+  public void testLogoff() {
     // zapewnienie autoryzacji przed właściwym testem
     testCorrectLogin();
 
@@ -95,7 +95,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
   @Test
-  public void testLoggedUser() throws Exception {
+  public void testLoggedUser() {
     // zapewnienie autoryzacji przed właściwym testem
     testCorrectLogin();
 
@@ -103,7 +103,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
   @Test
-  public void testLoginTime() throws Exception {
+  public void testLoginTime() {
     // zapewnienie autoryzacji przed właściwym testem
     testCorrectLogin();
 
@@ -111,7 +111,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
   @Test
-  public void testActivateAccount() throws Exception {
+  public void testActivateAccount() {
     CreateAccountData createAccountData = new CreateAccountData();
     createAccountData.setUsername("tristan");
     createAccountData.setPassword("tristan");
@@ -160,7 +160,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
   @Test
-  public void testCreateAccount() throws Exception {
+  public void testCreateAccount() {
     CreateAccountData createAccountData = new CreateAccountData();
     createAccountData.setUsername("kryspin");
     createAccountData.setPassword("kryspin");
@@ -195,7 +195,7 @@ public class TestLoginController extends AbstractControllerTest {
   }
 
   @Test
-  public void testRemindPassword() throws Exception {
+  public void testRemindPassword() {
     // FIXME: test przesłania hasła poprzez maila - wywołanie odpowiedniej funkcji z parametrami
   }
 }

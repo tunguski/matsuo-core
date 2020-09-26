@@ -10,14 +10,14 @@ import pl.matsuo.core.model.query.condition.SelectPart;
 public class TestAbstractQuery {
 
   @Test
-  public void testSelect() throws Exception {
+  public void testSelect() {
     AbstractQuery query = new AbstractQuery(TheModel.class).select("sth");
     assertEquals(
         "SELECT sth FROM pl.matsuo.core.model.query.TheModel theModel", query.printQuery());
   }
 
   @Test
-  public void testCondition() throws Exception {
+  public void testCondition() {
     AbstractQuery query =
         new AbstractQuery(TheModel.class)
             .condition(
@@ -33,7 +33,7 @@ public class TestAbstractQuery {
   }
 
   @Test
-  public void testParts() throws Exception {
+  public void testParts() {
     AbstractQuery query =
         new AbstractQuery(TheModel.class)
             .parts(
@@ -51,47 +51,47 @@ public class TestAbstractQuery {
   }
 
   @Test
-  public void testGroupBy() throws Exception {
+  public void testGroupBy() {
     AbstractQuery query = new AbstractQuery(TheModel.class).groupBy("test");
     assertEquals(
         "FROM pl.matsuo.core.model.query.TheModel theModel GROUP BY test", query.printQuery());
   }
 
   @Test
-  public void testHaving() throws Exception {
+  public void testHaving() {
     AbstractQuery query = new AbstractQuery(TheModel.class).having(query1 -> "having");
     assertEquals(
         "FROM pl.matsuo.core.model.query.TheModel theModel HAVING having", query.printQuery());
   }
 
   @Test
-  public void testOrderBy() throws Exception {
+  public void testOrderBy() {
     AbstractQuery query = new AbstractQuery(TheModel.class).orderBy("having");
     assertEquals(
         "FROM pl.matsuo.core.model.query.TheModel theModel ORDER BY having", query.printQuery());
   }
 
   @Test
-  public void testLimit() throws Exception {
+  public void testLimit() {
     AbstractQuery query = new AbstractQuery(TheModel.class).limit(99);
     assertEquals("FROM pl.matsuo.core.model.query.TheModel theModel", query.printQuery());
   }
 
   //  @Test
-  //  public void testOffset() throws Exception {
+  //  public void testOffset() {
   //    AbstractQuery query = new AbstractQuery(TheModel.class).offset(77);
   //    assertEquals("FROM pl.matsuo.core.model.query.TheModel theModel ",
   //        query.printQuery());
   //  }
 
   @Test
-  public void testInitializer() throws Exception {
+  public void testInitializer() {
     AbstractQuery query = new AbstractQuery(TheModel.class).initializer(element -> {});
     assertEquals(1, query.initializers.size());
   }
 
   //  @Test
-  //  public void testQuery() throws Exception {
+  //  public void testQuery() {
   //    AbstractQuery query = new AbstractQuery(TheModel.class).select("sth");
   //
   //    query.sessionFactory = mock(SessionFactory.class);

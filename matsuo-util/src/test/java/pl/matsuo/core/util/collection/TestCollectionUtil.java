@@ -17,22 +17,25 @@ import static pl.matsuo.core.util.collection.CollectionUtil.toMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.junit.Test;
 
 public class TestCollectionUtil {
 
   @Test
-  public void testCollect() throws Exception {
+  public void testCollect() {
     assertEquals(asList(7, 3), collect(asList(new X(7), new X(3)), "value"));
   }
 
   @Test
-  public void testFlatten() throws Exception {
+  public void testFlatten() {
     assertEquals(asList(1, 2, 3, 4), flatten(asList(1, 2), asList(3, 4)));
   }
 
   @Test
-  public void testToMap() throws Exception {
+  public void testToMap() {
     Map<Integer, X> map = toMap(asList(new X(7), new X(3)), "value");
 
     assertEquals(2, map.size());
@@ -41,7 +44,7 @@ public class TestCollectionUtil {
   }
 
   @Test
-  public void testReMap() throws Exception {
+  public void testReMap() {
     Map<Integer, X> map = toMap(asList(new X(7), new X(3)), "value");
     Map<String, X> map2 = reMap(map, key -> key.toString());
 
@@ -51,22 +54,22 @@ public class TestCollectionUtil {
   }
 
   @Test
-  public void testLast() throws Exception {
+  public void testLast() {
     assertEquals((Integer) 3, last(asList(1, 2, 3)));
   }
 
   @Test
-  public void testMerge() throws Exception {
+  public void testMerge() {
     assertEquals(asList(1, 2, 3, 4), merge(asList(1, 2), asList(3, 4)));
   }
 
   @Test
-  public void testRemoveNulls() throws Exception {
+  public void testRemoveNulls() {
     assertEquals(asList(1, 3), removeNulls(new ArrayList<Integer>(asList(1, null, 3))));
   }
 
   @Test
-  public void testStringMap() throws Exception {
+  public void testStringMap() {
     Map<String, String> map = stringMap("1", "one", "2", "two");
 
     assertEquals(2, map.size());
@@ -75,32 +78,22 @@ public class TestCollectionUtil {
   }
 
   @Test
-  public void testFold() throws Exception {
+  public void testFold() {
     assertEquals((Integer) 24, fold(asList(1, 2, 3, 4), 1, (val, next) -> val * next));
   }
 
   @Test
-  public void testRange() throws Exception {
+  public void testRange() {
     List<Integer> list = range(0, 28);
     assertEquals(28, list.size());
     assertEquals((Integer) 0, list.get(0));
     assertEquals((Integer) 27, list.get(27));
   }
 
+  @Getter
+  @Setter
+  @AllArgsConstructor
   class X {
-
     private Integer value;
-
-    public X(Integer value) {
-      this.value = value;
-    }
-
-    public Integer getValue() {
-      return value;
-    }
-
-    public void setValue(Integer value) {
-      this.value = value;
-    }
   }
 }

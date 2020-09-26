@@ -10,7 +10,7 @@ import org.junit.Test;
 public class TestNumberSpeaker {
 
   @Test
-  public void testCurrencySpeaker() throws Exception {
+  public void testCurrencySpeaker() {
     checkSpeakCashAmount("1.00", "jeden złoty zero groszy");
     checkSpeakCashAmount("0.01", "jeden grosz");
     checkSpeakCashAmount("0.21", "dwadzieścia jeden groszy");
@@ -21,21 +21,21 @@ public class TestNumberSpeaker {
   }
 
   @Test
-  public void testCurrencySpeakerWithNegativeValue() throws Exception {
+  public void testCurrencySpeakerWithNegativeValue() {
     checkSpeakCashAmount("-7.7", "minus siedem złotych siedemdziesiąt groszy");
     checkSpeakCashAmount("-0.03", "minus trzy grosze");
   }
 
-  protected void checkSpeakCashAmount(String value, String expected) throws Exception {
+  protected void checkSpeakCashAmount(String value, String expected) {
     assertEquals(expected, speakCashAmount(bd(value)));
   }
 
   @Test
-  public void testSpeakNumber() throws Exception {
+  public void testSpeakNumber() {
     checkSpeakNumber(1, "jeden");
   }
 
-  protected void checkSpeakNumber(long value, String expected) throws Exception {
+  protected void checkSpeakNumber(long value, String expected) {
     assertEquals(expected, speakNumber(value));
   }
 }

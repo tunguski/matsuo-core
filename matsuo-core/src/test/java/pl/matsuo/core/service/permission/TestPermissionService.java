@@ -27,7 +27,7 @@ public class TestPermissionService {
   @Autowired SessionState sessionState;
 
   @Test
-  public void testGetPermissions() throws Exception {
+  public void testGetPermissions() {
     Permissions permissions = permissionService.getPermissions();
     assertNotNull(permissions);
     assertNotNull(permissions.getPermissions());

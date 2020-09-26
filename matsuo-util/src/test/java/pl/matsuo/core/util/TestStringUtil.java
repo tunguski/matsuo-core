@@ -11,13 +11,13 @@ import org.junit.Test;
 public class TestStringUtil {
 
   @Test
-  public void testNotEmpty() throws Exception {
+  public void testNotEmpty() {
     assertTrue(notEmpty(" f"));
     assertFalse(notEmpty(" "));
   }
 
   @Test
-  public void testCamelCaseToCssName() throws Exception {
+  public void testCamelCaseToCssName() {
     assertEquals("figzy-smally", camelCaseToCssName("FigzySmally"));
   }
 }

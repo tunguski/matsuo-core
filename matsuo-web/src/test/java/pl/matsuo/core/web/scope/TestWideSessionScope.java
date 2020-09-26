@@ -16,7 +16,7 @@ public class TestWideSessionScope {
   @Autowired SessionState sessionState;
 
   @Test
-  public void testAutowiringOutsideWebRequest() throws Exception {
+  public void testAutowiringOutsideWebRequest() {
     sessionState.getIdBucket();
   }
 

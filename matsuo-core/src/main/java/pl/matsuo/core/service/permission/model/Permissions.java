@@ -2,7 +2,11 @@ package pl.matsuo.core.service.permission.model;
 
 import java.util.List;
 import java.util.Map;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Permissions {
 
   private Map<String, List<String>> functions;
@@ -10,28 +14,4 @@ public class Permissions {
   private Map<String, Map<String, List<String>>> functionSets;
 
   private Map<String, List<String>> permissions;
-
-  public Map<String, List<String>> getFunctions() {
-    return functions;
-  }
-
-  public void setFunctions(Map<String, List<String>> functions) {
-    this.functions = functions;
-  }
-
-  public Map<String, Map<String, List<String>>> getFunctionSets() {
-    return functionSets;
-  }
-
-  public void setFunctionSets(Map<String, Map<String, List<String>>> functionSets) {
-    this.functionSets = functionSets;
-  }
-
-  public Map<String, List<String>> getPermissions() {
-    return permissions;
-  }
-
-  public void setPermissions(Map<String, List<String>> permissions) {
-    this.permissions = permissions;
-  }
 }

@@ -30,31 +30,31 @@ public class TestFacadeBuilder {
   }
 
   @Test
-  public void testIntegerReadWrite() throws Exception {
+  public void testIntegerReadWrite() {
     facade.setInteger(7);
     assertEquals((Object) 7, facade.getInteger());
   }
 
   @Test
-  public void testStringReadWrite() throws Exception {
+  public void testStringReadWrite() {
     facade.setString("test");
     assertEquals("test", facade.getString());
   }
 
   @Test
-  public void testDateReadWrite() throws Exception {
+  public void testDateReadWrite() {
     facade.setDate(date(2013, 4, 4));
     assertEquals(date(2013, 4, 4), facade.getDate());
   }
 
   @Test
-  public void testBigDecimalReadWrite() throws Exception {
+  public void testBigDecimalReadWrite() {
     facade.setBigDecimal(bd("700.43"));
     assertEquals(bd("700.43"), facade.getBigDecimal());
   }
 
   @Test
-  public void testBooleanReadWrite() throws Exception {
+  public void testBooleanReadWrite() {
     facade.setBoolean(true);
     assertTrue(facade.getBoolean());
     facade.setBoolean(false);
@@ -62,7 +62,7 @@ public class TestFacadeBuilder {
   }
 
   @Test
-  public void testSubEntity() throws Exception {
+  public void testSubEntity() {
     PrintTestSubFacade subEntity = facade.getSubEntity();
 
     facade.setBigDecimal(bd("0.00"));
@@ -77,7 +77,7 @@ public class TestFacadeBuilder {
   }
 
   @Test
-  public void testCreateParameterProvider() throws Exception {
+  public void testCreateParameterProvider() {
     IParameterProvider<String> parameterProvider =
         facadeBuilder.createParameterProvider(CollectionUtil.stringMap("1", "one", "2", "two"));
     assertEquals("one", parameterProvider.get("1"));
@@ -85,7 +85,7 @@ public class TestFacadeBuilder {
   }
 
   @Test
-  public void testInitializeProviders() throws Exception {
+  public void testInitializeProviders() {
     facadeBuilder.initializeProviders();
     Map<Class, Class<? extends AbstractParameterProvider>> parameterProviders =
         getValue(facadeBuilder, "parameterProviders");

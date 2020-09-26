@@ -42,38 +42,38 @@ public class TestPrintController extends AbstractDbTest {
   }
 
   @Test
-  public void testGeneratePrint() throws Exception {
+  public void testGeneratePrint() {
     MockHttpServletResponse response = new MockHttpServletResponse();
     printController.generatePrint(print.getId(), response);
   }
 
   @Test
-  public void testGeneratePrint1() throws Exception {
+  public void testGeneratePrint1() {
     MockHttpServletResponse response = new MockHttpServletResponse();
     printController.generatePrint(print, response);
   }
 
   @Test
-  public void testGeneratePrint2() throws Exception {
+  public void testGeneratePrint2() {
     MockHttpServletResponse response = new MockHttpServletResponse();
     Map<String, Object> dataModel = new HashMap<>();
     printController.generatePrint("templateName.ftl", "fileName", dataModel, response);
   }
 
   @Test
-  public void testFindPrints() throws Exception {
+  public void testFindPrints() {
     printController.findPrints(
         facadeBuilder.createFacade(new HashMap<>(), IPrintsReportParams.class),
         "keyValuePrint.idEntity");
   }
 
   @Test
-  public void testList() throws Exception {
+  public void testList() {
     printController.list(facadeBuilder.createFacade(new HashMap<>(), IPrintsReportParams.class));
   }
 
   @Test
-  public void testListByIdEntities() throws Exception {
+  public void testListByIdEntities() {
     printController.listByIdEntities(asList(17L));
   }
 

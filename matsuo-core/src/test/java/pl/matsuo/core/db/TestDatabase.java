@@ -32,7 +32,7 @@ public class TestDatabase {
   @Autowired protected EntityInterceptorService entityInterceptorService;
 
   @Test
-  public void testEntityInterceptor() throws Exception {
+  public void testEntityInterceptor() {
     List<Interceptor> interceptors = getValue(entityInterceptorService, "interceptors");
     assertEquals(2, interceptors.size());
 
@@ -53,7 +53,7 @@ public class TestDatabase {
 
   @Test
   @Transactional
-  public void testBasicDatabaseOperations() throws Exception {
+  public void testBasicDatabaseOperations() {
     // FIXME: test sample basic CRUD operations
     Group group = new Group();
     group.setName("test-group");

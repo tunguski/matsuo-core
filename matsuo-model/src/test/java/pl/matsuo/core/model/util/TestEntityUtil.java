@@ -18,7 +18,7 @@ import pl.matsuo.core.service.db.Database;
 public class TestEntityUtil {
 
   @Test
-  public void testMaybeCreate() throws Exception {
+  public void testMaybeCreate() {
     Database database = mock(Database.class);
 
     maybeCreate(new User(), d -> d.create(new Group())).accept(database);
@@ -27,7 +27,7 @@ public class TestEntityUtil {
   }
 
   @Test
-  public void testCreateOrUpdate() throws Exception {
+  public void testCreateOrUpdate() {
     Database database = mock(Database.class);
 
     AtomicBoolean value = new AtomicBoolean();
@@ -39,7 +39,7 @@ public class TestEntityUtil {
   }
 
   @Test
-  public void testCreateOrUpdate1() throws Exception {
+  public void testCreateOrUpdate1() {
     Database database = mock(Database.class);
 
     AtomicBoolean value = new AtomicBoolean();
@@ -53,7 +53,7 @@ public class TestEntityUtil {
   }
 
   @Test
-  public void testCreateOrUpdate2() throws Exception {
+  public void testCreateOrUpdate2() {
     Database database = mock(Database.class);
 
     AtomicBoolean onCreate = new AtomicBoolean();
@@ -68,7 +68,7 @@ public class TestEntityUtil {
   }
 
   @Test
-  public void testCreateOrUpdate3() throws Exception {
+  public void testCreateOrUpdate3() {
     Database database = mock(Database.class);
 
     AtomicBoolean onCreate = new AtomicBoolean();

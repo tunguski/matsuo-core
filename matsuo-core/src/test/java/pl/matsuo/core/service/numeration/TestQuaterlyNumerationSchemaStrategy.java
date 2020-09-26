@@ -13,7 +13,7 @@ public class TestQuaterlyNumerationSchemaStrategy {
   QuaterlyNumerationSchemaStrategy strategy = new QuaterlyNumerationSchemaStrategy();
 
   @Test
-  public void testCreateNumeration() throws Exception {
+  public void testCreateNumeration() {
     NumerationSchema numerationSchema = new NumerationSchema();
     numerationSchema.setCode("test_code");
 

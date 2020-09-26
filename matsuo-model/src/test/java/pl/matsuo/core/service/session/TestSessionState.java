@@ -12,7 +12,7 @@ import pl.matsuo.core.model.user.User;
 public class TestSessionState {
 
   @Test
-  public void testSetUser() throws Exception {
+  public void testSetUser() {
     SessionState sessionState = new SessionState();
 
     User user = new User();
@@ -26,7 +26,7 @@ public class TestSessionState {
   }
 
   @Test
-  public void testGuestUser() throws Exception {
+  public void testGuestUser() {
     SessionState sessionState = new SessionState();
 
     assertFalse(sessionState.isInGroup(USER.name()));

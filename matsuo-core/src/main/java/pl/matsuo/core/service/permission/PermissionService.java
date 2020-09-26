@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
   private static final Logger logger = LoggerFactory.getLogger(PermissionService.class);
 
   @Autowired protected SessionState sessionState;
-  private ResourceLoader resourceLoader;
+
+  @Setter private ResourceLoader resourceLoader;
 
   protected String permissionFilePath = "/permissions.json";
   protected Permissions permissions;
@@ -174,10 +176,5 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
     }
 
     return functionDefinitions;
-  }
-
-  @Override
-  public void setResourceLoader(ResourceLoader resourceLoader) {
-    this.resourceLoader = resourceLoader;
   }
 }

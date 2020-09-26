@@ -31,7 +31,7 @@ public class TestUserController extends AbstractControllerTest {
   }
 
   @Test
-  public void testCreateUser() throws Exception {
+  public void testCreateUser() {
     Person person = new Person();
     person.setFirstName("Ryszard");
     person.setLastName("Monty");
@@ -52,7 +52,7 @@ public class TestUserController extends AbstractControllerTest {
   }
 
   @Test(expected = RestProcessingException.class)
-  public void testUpdatePassword_PasswordTooShort() throws Exception {
+  public void testUpdatePassword_PasswordTooShort() {
     IChangePasswordParams params =
         facadeBuilder.createFacade(new HashMap<>(), IChangePasswordParams.class);
 
@@ -64,7 +64,7 @@ public class TestUserController extends AbstractControllerTest {
   }
 
   @Test(expected = RestProcessingException.class)
-  public void testUpdatePassword_ConfirmationMissmatch() throws Exception {
+  public void testUpdatePassword_ConfirmationMissmatch() {
     IChangePasswordParams params =
         facadeBuilder.createFacade(new HashMap<>(), IChangePasswordParams.class);
 
@@ -76,7 +76,7 @@ public class TestUserController extends AbstractControllerTest {
   }
 
   @Test(expected = RestProcessingException.class)
-  public void testUpdateOwnPassword_WrongPassword() throws Exception {
+  public void testUpdateOwnPassword_WrongPassword() {
     sessionState.setUser(user);
 
     IChangePasswordParams params =
@@ -91,7 +91,7 @@ public class TestUserController extends AbstractControllerTest {
 
   @Test
   @DirtiesContext
-  public void testUpdatePassword() throws Exception {
+  public void testUpdatePassword() {
     IChangePasswordParams params =
         facadeBuilder.createFacade(new HashMap<>(), IChangePasswordParams.class);
 
@@ -105,7 +105,7 @@ public class TestUserController extends AbstractControllerTest {
 
   @Test
   @DirtiesContext
-  public void testUpdateOwnPassword() throws Exception {
+  public void testUpdateOwnPassword() {
     sessionState.setUser(user);
 
     IChangePasswordParams params =
@@ -124,7 +124,7 @@ public class TestUserController extends AbstractControllerTest {
 
   @Test
   @DirtiesContext
-  public void testBlockUser() throws Exception {
+  public void testBlockUser() {
     IBlockUserParams params = facadeBuilder.createFacade(new HashMap<>(), IBlockUserParams.class);
 
     params.setId(user.getId());

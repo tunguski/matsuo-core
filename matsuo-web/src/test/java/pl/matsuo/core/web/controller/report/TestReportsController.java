@@ -69,13 +69,13 @@ public class TestReportsController {
   }
 
   @Test
-  public void testGenerateReportPdf() throws Exception {
+  public void testGenerateReportPdf() {
     MockHttpServletResponse response = new MockHttpServletResponse();
     reportsController.generateReportPdf("testReport", new HashMap<>(), response);
   }
 
   @Test
-  public void testGenerateReportXls() throws Exception {
+  public void testGenerateReportXls() {
     MockHttpServletResponse response = new MockHttpServletResponse();
     reportsController.generateReportXls("testReport", new HashMap<>(), response);
   }

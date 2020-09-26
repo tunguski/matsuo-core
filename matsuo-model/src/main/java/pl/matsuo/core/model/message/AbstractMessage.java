@@ -2,9 +2,9 @@ package pl.matsuo.core.model.message;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.AbstractParty;
 import pl.matsuo.core.model.validation.EntityReference;

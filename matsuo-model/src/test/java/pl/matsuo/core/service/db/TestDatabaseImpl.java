@@ -68,19 +68,19 @@ public class TestDatabaseImpl {
   }
 
   @Test
-  public void testFindById() throws Exception {
+  public void testFindById() {
     when(session.get(User.class, 7L)).thenReturn(testUser);
     assertEquals(testUser, database.findById(User.class, 7L));
   }
 
   @Test(expected = RuntimeException.class)
-  public void testFindById2() throws Exception {
+  public void testFindById2() {
     when(session.get(User.class, 7L)).thenReturn(testUser2);
     database.findById(User.class, 7L);
   }
 
   @Test
-  public void testFindAll() throws Exception {
+  public void testFindAll() {
     org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
@@ -91,52 +91,52 @@ public class TestDatabaseImpl {
   }
 
   @Test
-  public void testInitializeEntity() throws Exception {
+  public void testInitializeEntity() {
     AtomicBoolean invoked = new AtomicBoolean();
     database.initializeEntity(testUser, user -> invoked.set(true));
     assertTrue(invoked.get());
   }
 
   @Test
-  public void testCreate() throws Exception {
+  public void testCreate() {
     assertEquals(testUser2, database.create(testUser2));
     verify(session).save(testUser2);
   }
 
   @Test
-  public void testUpdate() throws Exception {
+  public void testUpdate() {
     assertEquals(testUser2, database.update(testUser2));
     verify(session).update(testUser2);
   }
 
   @Test
-  public void testDelete() throws Exception {
+  public void testDelete() {
     database.delete(testUser2);
     verify(session).delete(testUser2);
   }
 
   @Test(expected = RuntimeException.class)
-  public void testDelete1() throws Exception {
+  public void testDelete1() {
     when(session.get(User.class, 7L)).thenReturn(testUser2);
     database.delete(User.class, 7L);
     verify(session).delete(testUser2);
   }
 
   @Test
-  public void testDelete2() throws Exception {
+  public void testDelete2() {
     when(session.get(User.class, 7L)).thenReturn(testUser);
     database.delete(User.class, 7L);
     verify(session).delete(testUser);
   }
 
   @Test
-  public void testEvict() throws Exception {
+  public void testEvict() {
     database.evict(testUser);
     verify(session).evict(testUser);
   }
 
   @Test
-  public void testFind() throws Exception {
+  public void testFind() {
     org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
@@ -147,7 +147,7 @@ public class TestDatabaseImpl {
   }
 
   @Test
-  public void testFindAsAdmin() throws Exception {
+  public void testFindAsAdmin() {
     org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));
@@ -158,7 +158,7 @@ public class TestDatabaseImpl {
   }
 
   @Test
-  public void testFindOne() throws Exception {
+  public void testFindOne() {
     org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
     when(session.createQuery(anyString())).thenReturn(hQuery);
     when(hQuery.list()).thenReturn(asList(testUser));

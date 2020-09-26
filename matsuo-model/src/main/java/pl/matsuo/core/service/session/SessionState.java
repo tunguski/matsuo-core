@@ -6,6 +6,8 @@ import static pl.matsuo.core.model.user.GroupEnum.USER;
 
 import java.util.HashSet;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.user.Group;
@@ -13,6 +15,8 @@ import pl.matsuo.core.model.user.User;
 
 @Component
 @Scope(value = "wideSession")
+@Getter
+@Setter
 public class SessionState {
 
   private User user;
@@ -44,31 +48,7 @@ public class SessionState {
     loginTime = lastRequestTime;
   }
 
-  public Long getIdBucket() {
-    return idBucket;
-  }
-
   public boolean isInGroup(String groupName) {
     return userGroups.contains(groupName);
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public long getLastRequestTime() {
-    return lastRequestTime;
-  }
-
-  public void setLastRequestTime(long lastRequestTime) {
-    this.lastRequestTime = lastRequestTime;
-  }
-
-  public long getLoginTime() {
-    return loginTime;
-  }
-
-  public void setIdBucket(Long idBucket) {
-    this.idBucket = idBucket;
   }
 }

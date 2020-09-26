@@ -8,7 +8,7 @@ import org.junit.Test;
 public class TestSecurityUtil {
 
   @Test
-  public void testPasswordHash() throws Exception {
+  public void testPasswordHash() {
     assertEquals(
         "CXd0FAUCwX5fjbqPpbVruf5sIXSuGdzrGD1aaDp/qVw=",
         passwordHash("SHA (Secure Hash Algorithm)"));

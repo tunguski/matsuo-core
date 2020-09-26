@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class TestMailService {
   }
 
   @Test
-  public void testSendMail() throws Exception {
+  public void testSendMail() throws AddressException {
     MailMessage mailMessage = new MailMessage();
     mailMessage.setId(55L);
 

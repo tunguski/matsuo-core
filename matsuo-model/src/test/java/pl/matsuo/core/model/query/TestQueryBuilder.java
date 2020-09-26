@@ -51,32 +51,32 @@ public class TestQueryBuilder {
   }
 
   @Test
-  public void testQuery() throws Exception {
+  public void testQuery() {
     // podstawowe zapytani
     assertEquals(
         "FROM pl.matsuo.core.model.query.TheModel theModel", query(TheModel.class).printQuery());
   }
 
   @Test
-  public void testMaybe() throws Exception {
+  public void testMaybe() {
     assertEquals("test = '1'", maybe(true, eq(TheModel::getTest, "1")).print(abstractQuery));
     assertNull(maybe(false, eq(TheModel::getTest, "1")));
   }
 
   @Test
-  public void testMaybeEq() throws Exception {
+  public void testMaybeEq() {
     assertEquals("test = '1'", maybeEq("1", TheModel::getTest).print(abstractQuery));
     assertNull(maybeEq(null, TheModel::getTest));
   }
 
   @Test
-  public void testMaybe1() throws Exception {
+  public void testMaybe1() {
     assertEquals("test = '1'", maybe("1", eq(TheModel::getTest, "1")).print(abstractQuery));
     assertNull(maybe(null, eq(TheModel::getTest, null)));
   }
 
   @Test
-  public void testSelect() throws Exception {
+  public void testSelect() {
     // klauzula select
     assertEquals(
         "SELECT theModel.id, theModel FROM pl.matsuo.core.model.query.TheModel theModel",
@@ -84,47 +84,47 @@ public class TestQueryBuilder {
   }
 
   @Test
-  public void testOperator() throws Exception {
+  public void testOperator() {
     assertEquals("field %% 1", operator(TheModel::getField, "%%", 1).print(abstractQuery));
   }
 
   @Test
-  public void testEq() throws Exception {
+  public void testEq() {
     assertEquals("field = 1", eq(TheModel::getField, 1).print(abstractQuery));
   }
 
   @Test
-  public void testNe() throws Exception {
+  public void testNe() {
     assertEquals("field != 1", ne(TheModel::getField, 1).print(abstractQuery));
   }
 
   @Test
-  public void testGt() throws Exception {
+  public void testGt() {
     assertEquals("field > 1", gt(TheModel::getField, 1).print(abstractQuery));
   }
 
   @Test
-  public void testGe() throws Exception {
+  public void testGe() {
     assertEquals("field >= 1", ge(TheModel::getField, 1).print(abstractQuery));
   }
 
   @Test
-  public void testLt() throws Exception {
+  public void testLt() {
     assertEquals("field < 1", lt(TheModel::getField, 1).print(abstractQuery));
   }
 
   @Test
-  public void testLe() throws Exception {
+  public void testLe() {
     assertEquals("field <= 1", le(TheModel::getField, 1).print(abstractQuery));
   }
 
   @Test
-  public void testIlike() throws Exception {
+  public void testIlike() {
     assertEquals("lower(field) like '%1%'", ilike(TheModel::getField, 1).print(abstractQuery));
   }
 
   @Test
-  public void testIlike1() throws Exception {
+  public void testIlike1() {
     assertEquals(
         "lower(field) like '1%'",
         ilike(TheModel::getField, 1, MatchMode.START).print(abstractQuery));
@@ -133,54 +133,54 @@ public class TestQueryBuilder {
   }
 
   @Test
-  public void testIn() throws Exception {
+  public void testIn() {
     assertEquals(
         "field in (1, 2, 3)", in(TheModel::getField, asList(1, 2, 3)).print(abstractQuery));
   }
 
   @Test
-  public void testIn1() throws Exception {
+  public void testIn1() {
     assertEquals(
         "field in (1, 2, 3)", in(TheModel::getField, new Object[] {1, 2, 3}).print(abstractQuery));
   }
 
   @Test
-  public void testIn2() throws Exception {
+  public void testIn2() {
     assertEquals(
         "field in (FROM pl.matsuo.core.model.query.TheModel theModel WHERE id = 7)",
         in(TheModel::getField, query(TheModel.class, eq(TheModel::getId, 7))).print(abstractQuery));
   }
 
   @Test
-  public void testBetween() throws Exception {
+  public void testBetween() {
     assertEquals("field BETWEEN 1 AND 10", between(TheModel::getField, 1, 10).print(abstractQuery));
   }
 
   @Test
-  public void testIsNull() throws Exception {
+  public void testIsNull() {
     assertEquals("field IS NULL", isNull(TheModel::getField).print(abstractQuery));
   }
 
   @Test
-  public void testIsNotNull() throws Exception {
+  public void testIsNotNull() {
     assertEquals("field IS NOT NULL", isNotNull(TheModel::getField).print(abstractQuery));
   }
 
   @Test
-  public void testEqOrIsNull() throws Exception {
+  public void testEqOrIsNull() {
     assertEquals(
         "(field = 1 OR field IS NULL)", eqOrIsNull(TheModel::getField, 1).print(abstractQuery));
   }
 
   @Test
-  public void testOr() throws Exception {
+  public void testOr() {
     assertEquals(
         "(f1 = 1 OR f2 = 2)",
         or(eq(TheModel::getF1, 1), eq(TheModel::getF2, 2)).print(abstractQuery));
   }
 
   @Test
-  public void testAnd() throws Exception {
+  public void testAnd() {
     // warunek and
     assertEquals(
         "FROM pl.matsuo.core.model.query.TheModel theModel WHERE (id = 12 AND id < 200)",
@@ -188,37 +188,37 @@ public class TestQueryBuilder {
   }
 
   @Test
-  public void testNot() throws Exception {
+  public void testNot() {
     assertEquals("NOT field = 1", not(eq(TheModel::getField, 1)).print(abstractQuery));
   }
 
   @Test
-  public void testCond() throws Exception {
+  public void testCond() {
     assertEquals("(test_condition)", cond("test_condition").print(abstractQuery));
   }
 
   @Test
-  public void testMemberOf() throws Exception {
+  public void testMemberOf() {
     assertEquals("field MEMBER OF 7", memberOf(TheModel::getField, 7).print(abstractQuery));
   }
 
   @Test
-  public void testMax() throws Exception {
+  public void testMax() {
     assertEquals("max(field)", max(TheModel::getField).print(abstractQuery));
   }
 
   @Test
-  public void testMin() throws Exception {
+  public void testMin() {
     assertEquals("min(field)", min(TheModel::getField).print(abstractQuery));
   }
 
   @Test
-  public void testAvg() throws Exception {
+  public void testAvg() {
     assertEquals("avg(field)", avg(TheModel::getField).print(abstractQuery));
   }
 
   @Test
-  public void testLeftJoin() throws Exception {
+  public void testLeftJoin() {
     // theta join
     assertEquals(
         "FROM pl.matsuo.core.model.query.TheModel theModel , "
@@ -228,7 +228,7 @@ public class TestQueryBuilder {
   }
 
   @Test
-  public void testJoin() throws Exception {
+  public void testJoin() {
     // theta join
     assertEquals(
         "FROM pl.matsuo.core.model.query.TheModel theModel JOIN theModel.subModel appointment",

@@ -7,7 +7,7 @@ import org.junit.Test;
 public class TestAbstractPrintTest {
 
   @Test
-  public void testLookupTestName() throws Exception {
+  public void testLookupTestName() {
     AbstractPrintTest abstractPrintTest =
         new AbstractPrintTest() {
           @Override

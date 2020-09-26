@@ -31,7 +31,7 @@ public class TestLoginService extends AbstractDbTest {
   @Autowired IMailService mailService;
 
   @Test
-  public void testLogin() throws Exception {
+  public void testLogin() {
     LoginData loginData = new LoginData();
     loginData.setUsername("admin");
     loginData.setPassword("6%86P#WnukNp2gBm");
@@ -41,7 +41,7 @@ public class TestLoginService extends AbstractDbTest {
   }
 
   @Test(expected = UnauthorizedException.class)
-  public void testIncorrectLogin() throws Exception {
+  public void testIncorrectLogin() {
     LoginData loginData = new LoginData();
     loginData.setUsername("admin");
     loginData.setPassword("xxx");
@@ -49,7 +49,7 @@ public class TestLoginService extends AbstractDbTest {
   }
 
   @Test
-  public void testActivateAccount() throws Exception {
+  public void testActivateAccount() {
     CreateAccountData createAccountData = new CreateAccountData();
     createAccountData.setUsername("blicky2");
     createAccountData.setCompanyName("test2");
@@ -67,7 +67,7 @@ public class TestLoginService extends AbstractDbTest {
   }
 
   @Test
-  public void testRemindPassword() throws Exception {
+  public void testRemindPassword() {
     loginService.remindPassword("admin");
 
     verify(mailService)
@@ -81,7 +81,7 @@ public class TestLoginService extends AbstractDbTest {
   }
 
   @Test
-  public void testCreateAccount() throws Exception {
+  public void testCreateAccount() {
     CreateAccountData createAccountData = new CreateAccountData();
     createAccountData.setUsername("blicky");
     createAccountData.setCompanyName("test");

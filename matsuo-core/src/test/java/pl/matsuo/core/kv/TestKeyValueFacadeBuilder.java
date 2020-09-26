@@ -27,49 +27,49 @@ public class TestKeyValueFacadeBuilder {
   }
 
   @Test
-  public void testIntegerReadWrite() throws Exception {
+  public void testIntegerReadWrite() {
     facade.setInteger(7);
     assertEquals((Object) 7, facade.getInteger());
   }
 
   @Test
-  public void testEnumReadWrite() throws Exception {
+  public void testEnumReadWrite() {
     facade.setEnumType(STRING);
     assertEquals(STRING, facade.getEnumType());
   }
 
   @Test
-  public void testStringReadWrite() throws Exception {
+  public void testStringReadWrite() {
     facade.setString("test");
     assertEquals("test", facade.getString());
   }
 
   @Test
-  public void testDateReadWrite() throws Exception {
+  public void testDateReadWrite() {
     facade.setDate(date(2013, 4, 4));
     assertEquals(date(2013, 4, 4), facade.getDate());
   }
 
   @Test
-  public void testBigDecimalReadWrite() throws Exception {
+  public void testBigDecimalReadWrite() {
     facade.setBigDecimal(bd("700.43"));
     assertEquals(bd("700.43"), facade.getBigDecimal());
   }
 
   @Test
-  public void tesDoubleToInteger() throws Exception {
+  public void tesDoubleToInteger() {
     facade.setDoubleToInteger(7.3);
     assertEquals((Object) 7, facade.getDoubleToInteger());
   }
 
   @Test
-  public void testDoubleToBigDecimal() throws Exception {
+  public void testDoubleToBigDecimal() {
     facade.setDoubleToBigDecimal(7.7);
     assertEquals(bd("7.7"), facade.getDoubleToBigDecimal());
   }
 
   @Test
-  public void testElements() throws Exception {
+  public void testElements() {
     keyValueEntity.getInternalElements().add(new TestKeyValueSubEntity());
     ITestKeyValueFacade keyValueElementFacade = facade.getInternalElements().get(0);
     keyValueElementFacade.setString("test2");
