@@ -11,10 +11,9 @@ import static pl.matsuo.core.model.query.QueryBuilder.query;
 import static pl.matsuo.core.model.user.GroupEnum.GUEST;
 
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
@@ -36,6 +35,7 @@ import pl.matsuo.core.service.login.LoginService;
 import pl.matsuo.core.service.permission.PermissionService;
 import pl.matsuo.core.web.controller.AbstractControllerTest;
 
+@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(
@@ -47,7 +47,6 @@ import pl.matsuo.core.web.controller.AbstractControllerTest;
       TestMailConfig.class
     })
 public class TestLoginController extends AbstractControllerTest {
-  private static final Logger logger = LoggerFactory.getLogger(TestLoginController.class);
 
   @Autowired LoginController controller;
   @Autowired TestLoginController.LoginServiceExtension loginServiceExtension;
@@ -120,7 +119,7 @@ public class TestLoginController extends AbstractControllerTest {
     createAccountData.setCompanyNip("692-000-00-13");
 
     String result = controller.createAccount(createAccountData);
-    logger.info(result);
+    log.info(result);
     assertFalse(result.isEmpty());
 
     User user = database.findOne(query(User.class, eq(User::getUsername, "tristan")));
@@ -171,7 +170,7 @@ public class TestLoginController extends AbstractControllerTest {
     loginServiceExtension.counter = 0;
 
     String result = controller.createAccount(createAccountData);
-    logger.info(result);
+    log.info(result);
     assertFalse(result.isEmpty());
     assertEquals(1, loginServiceExtension.counter);
 

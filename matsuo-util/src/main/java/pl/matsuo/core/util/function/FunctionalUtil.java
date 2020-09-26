@@ -7,12 +7,11 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /** Functional programming utils. */
+@Slf4j
 public class FunctionalUtil {
-  private static final Logger logger = LoggerFactory.getLogger(FunctionalUtil.class);
 
   /**
    * Objects provide access to some element. It may be getter/setter pair or get/set field directly.
@@ -95,7 +94,7 @@ public class FunctionalUtil {
 
   /** Consumer of exception that logs error. */
   public static final Consumer<Exception> ignoringExConsumer =
-      e -> logger.warn("Ignoring exception", e);
+      e -> log.warn("Ignoring exception", e);
   /** Consumer that throws RuntimeException with passed exception as root cause. */
   public static final Consumer<Exception> runtimeExConsumer =
       e -> {
@@ -107,7 +106,7 @@ public class FunctionalUtil {
     return processEx(
         throwsExceptions,
         e -> {
-          logger.warn("Ignoring exception", e);
+          log.warn("Ignoring exception", e);
           return null;
         });
   }

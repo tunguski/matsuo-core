@@ -6,10 +6,9 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.function.Function;
 import javax.sql.DataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +24,7 @@ import pl.matsuo.core.service.db.EntityInterceptorService;
 import pl.matsuo.core.service.db.interceptor.AuditTrailInterceptor;
 import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 
+@Slf4j
 @Configuration
 @Import({
   DatabaseImpl.class,
@@ -34,7 +34,6 @@ import pl.matsuo.core.service.db.interceptor.IdBucketInterceptor;
 })
 @EnableTransactionManagement
 public class DbConfig {
-  private static Logger logger = LoggerFactory.getLogger(DbConfig.class);
 
   @Autowired(required = false)
   @Qualifier("prod")
@@ -65,7 +64,7 @@ public class DbConfig {
     Properties properties = new Properties();
     properties.load(resourceProvider.getResourceAsStream("/db.default.properties"));
 
-    logger.warn("Test environment!");
+    log.warn("Test environment!");
     dataSource.setDriverClassName(properties.getProperty("db.default.driverClassName"));
     dataSource.setUrl(urlProvider.apply(properties));
     dataSource.setUsername(properties.getProperty("db.default.username"));

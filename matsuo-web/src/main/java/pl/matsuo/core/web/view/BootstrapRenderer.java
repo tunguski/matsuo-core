@@ -30,7 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -41,18 +40,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.metadata.BeanDescriptor;
 import javax.validation.metadata.ConstraintDescriptor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.validation.EntityReference;
 import pl.matsuo.core.model.validation.PasswordField;
 
-/**
- * Zbiór metod automatyzujących generowanie kodu jsp.
- *
- * @since 09-06-2013
- */
+/** Rendering bootstrap pages. */
+@Slf4j
 @Component
 public class BootstrapRenderer {
-  private static Logger logger = Logger.getLogger(BootstrapRenderer.class.getName());
 
   private static BootstrapRenderer bootstrapRenderer;
 
@@ -61,7 +57,7 @@ public class BootstrapRenderer {
   @PostConstruct
   public void init() {
     if (bootstrapRenderer != null) {
-      logger.severe("Second spring bean BootstrapRenderer");
+      log.error("Second spring bean BootstrapRenderer");
     }
 
     bootstrapRenderer = this;

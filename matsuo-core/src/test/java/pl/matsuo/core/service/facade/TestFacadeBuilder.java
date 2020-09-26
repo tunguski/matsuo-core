@@ -9,16 +9,15 @@ import static pl.matsuo.core.util.ReflectUtil.getValue;
 
 import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.matsuo.core.service.parameterprovider.AbstractParameterProvider;
 import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 import pl.matsuo.core.util.collection.CollectionUtil;
 
+@Slf4j
 public class TestFacadeBuilder {
-  private static final Logger logger = LoggerFactory.getLogger(TestFacadeBuilder.class);
 
   private final FacadeBuilder facadeBuilder = new FacadeBuilder();
   private final Map print = new HashMap();
@@ -26,7 +25,7 @@ public class TestFacadeBuilder {
 
   @After
   public void logPrintState() {
-    logger.info(print.toString());
+    log.info(print.toString());
   }
 
   @Test

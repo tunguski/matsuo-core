@@ -12,8 +12,6 @@ import static pl.matsuo.core.model.query.QueryBuilder.query;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -38,7 +36,6 @@ import pl.matsuo.core.web.controller.AbstractDbControllerRequestTest;
       TestMailConfig.class
     })
 public class TestLoginControllerRequest extends AbstractDbControllerRequestTest {
-  private static final Logger logger = LoggerFactory.getLogger(TestLoginControllerRequest.class);
 
   @Autowired LoginController controller;
 

@@ -9,8 +9,7 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AssignableTypeFilter;
@@ -18,9 +17,9 @@ import org.springframework.stereotype.Service;
 import pl.matsuo.core.service.parameterprovider.AbstractParameterProvider;
 import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 
+@Slf4j
 @Service
 public class FacadeBuilder implements IFacadeBuilder {
-  private static final Logger logger = LoggerFactory.getLogger(FacadeBuilder.class);
 
   protected Map<Class, Class<? extends AbstractParameterProvider>> parameterProviders;
 
@@ -98,7 +97,7 @@ public class FacadeBuilder implements IFacadeBuilder {
 
         Class<?> baseObjectType = resolveTypeArgument(clazz, IParameterProvider.class);
         if (baseObjectType == null) {
-          logger.warn("Could not resolve type argument for class: " + clazz.getName());
+          log.warn("Could not resolve type argument for class: " + clazz.getName());
         } else {
           parameterProviders.put(
               baseObjectType, (Class<? extends AbstractParameterProvider>) clazz);

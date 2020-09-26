@@ -4,16 +4,12 @@ import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.util.NestedServletException;
 import pl.matsuo.core.web.controller.AbstractControllerRequestTest;
 
 @ContextConfiguration(classes = {BootstrapRendererController.class})
 public class TestBootstrapRendererControllerRequest extends AbstractControllerRequestTest {
-  private static final Logger logger =
-      LoggerFactory.getLogger(TestBootstrapRendererControllerRequest.class);
 
   @Test
   public void testBasicEntityField() throws Exception {

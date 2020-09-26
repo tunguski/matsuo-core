@@ -13,11 +13,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import pl.matsuo.core.model.AbstractEntity;
@@ -30,8 +29,8 @@ import pl.matsuo.core.model.query.condition.SelectPart;
 import pl.matsuo.core.util.collection.CollectionUtil;
 
 /** Abstract superclass for queries. */
+@Slf4j
 public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
-  private static final Logger logger = LoggerFactory.getLogger(AbstractQuery.class);
 
   public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
@@ -221,7 +220,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
         return result;
       } catch (RuntimeException e) {
-        logger.error("Error in query: " + queryString);
+        log.error("Error in query: " + queryString);
         throw e;
       }
     } finally {

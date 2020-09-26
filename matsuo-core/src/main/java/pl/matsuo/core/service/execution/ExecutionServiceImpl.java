@@ -9,8 +9,7 @@ import static pl.matsuo.core.model.query.QueryBuilder.query;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -26,15 +25,11 @@ import pl.matsuo.core.model.execution.Execution;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.session.SessionState;
 
-/**
- * Execute defined (mostly database) changes.
- *
- * @since 11-07-2013
- */
+/** Execute defined (mostly database) changes. */
+@Slf4j
 @Service
 public class ExecutionServiceImpl
     implements ApplicationListener<ContextRefreshedEvent>, ApplicationContextAware {
-  private static final Logger logger = LoggerFactory.getLogger(ExecutionServiceImpl.class);
 
   @Autowired(required = false)
   List<IExecuteService> executeServices;
@@ -87,12 +82,12 @@ public class ExecutionServiceImpl
         if (noSuccessExecutions) {
           try {
             long startTime = currentTimeMillis();
-            logger.info("Processing execution: " + executeServiceName);
+            log.info("Processing execution: " + executeServiceName);
 
             executeService.execute();
 
             long endTime = currentTimeMillis();
-            logger.info(
+            log.info(
                 "Processed execution: "
                     + executeServiceName
                     + " in "
@@ -100,7 +95,7 @@ public class ExecutionServiceImpl
                     + " seconds");
           } catch (Exception e) {
             // TODO: save information about unsuccessful script execution
-            logger.error("Error while processing execution: " + executeServiceName, e);
+            log.error("Error while processing execution: " + executeServiceName, e);
           } finally {
             sessionState.setUser(null);
           }
@@ -110,7 +105,7 @@ public class ExecutionServiceImpl
           transactionManager.commit(transaction);
         }
       } catch (Exception e) {
-        logger.error("Error while processing execution: " + executeServiceName, e);
+        log.error("Error while processing execution: " + executeServiceName, e);
         transactionManager.rollback(transaction);
         transaction = transactionManager.getTransaction(new DefaultTransactionDefinition());
         execution.setSuccess(false);

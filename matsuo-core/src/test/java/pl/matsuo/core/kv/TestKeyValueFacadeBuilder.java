@@ -5,15 +5,14 @@ import static org.junit.Assert.assertEquals;
 import static pl.matsuo.core.util.DateUtil.date;
 import static pl.matsuo.core.util.NumberUtil.bd;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.parameterprovider.KeyValueParameterProvider;
 
+@Slf4j
 public class TestKeyValueFacadeBuilder {
-  private static final Logger logger = LoggerFactory.getLogger(TestKeyValueFacadeBuilder.class);
 
   private final FacadeBuilder facadeBuilder = new FacadeBuilder();
   private final TestKeyValueSubEntity keyValueEntity = new TestKeyValueSubEntity();
@@ -23,7 +22,7 @@ public class TestKeyValueFacadeBuilder {
 
   @After
   public void logPrintState() {
-    logger.info(keyValueEntity.getFields().toString());
+    log.info(keyValueEntity.getFields().toString());
   }
 
   @Test

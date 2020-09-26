@@ -10,16 +10,15 @@ import freemarker.template.Configuration;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+@Slf4j
 @Service
 public class PrintsRendererService implements IPrintsRendererService {
-  private static final Logger logger = LoggerFactory.getLogger(PrintsRendererService.class);
 
   // Fonts used in flying saucer have to be specified here
   private static String[] FONTS = {"/font/verdana.ttf"};
@@ -40,7 +39,7 @@ public class PrintsRendererService implements IPrintsRendererService {
                                 getClass().getResource(font).toURI().toString(),
                                 IDENTITY_H,
                                 NOT_EMBEDDED),
-                    e -> logger.error("Error while configuring fonts", e)));
+                    e -> log.error("Error while configuring fonts", e)));
 
     return renderer;
   }

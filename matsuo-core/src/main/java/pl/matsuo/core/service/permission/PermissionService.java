@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.Resource;
@@ -20,9 +19,9 @@ import org.springframework.stereotype.Service;
 import pl.matsuo.core.service.permission.model.Permissions;
 import pl.matsuo.core.service.session.SessionState;
 
+@Slf4j
 @Service
 public class PermissionService implements IPermissionService, ResourceLoaderAware {
-  private static final Logger logger = LoggerFactory.getLogger(PermissionService.class);
 
   @Autowired protected SessionState sessionState;
 
@@ -42,7 +41,7 @@ public class PermissionService implements IPermissionService, ResourceLoaderAwar
       if (permissions == null
           || ((lastCheckTime + interval < currentTimeMillis())
               && lastReadTime < resource.getFile().lastModified())) {
-        logger.info("reading new permissions from: " + resource.getFile().getAbsolutePath());
+        log.info("reading new permissions from: " + resource.getFile().getAbsolutePath());
 
         permissions =
             new Gson()

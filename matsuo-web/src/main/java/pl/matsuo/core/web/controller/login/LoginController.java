@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +25,6 @@ import pl.matsuo.core.service.session.SessionState;
 @RestController
 @RequestMapping("/login")
 public class LoginController {
-  private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
   @Autowired SessionState sessionState;
   @Autowired Database database;
