@@ -14,6 +14,7 @@
   <modules>
     <module>matsuo-util</module>
     <module>matsuo-model</module>
+    <module>matsuo-model/matsuo-model-generator-history</module>
     <module>matsuo-core</module>
     <module>matsuo-web</module>
     <module>matsuo-web-test</module>
@@ -407,7 +408,27 @@
       </dependency>
       <dependency>
         <groupId>pl.matsuo</groupId>
+        <artifactId>matsuo-util-common</artifactId>
+        <version>0.1.3-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>pl.matsuo</groupId>
+        <artifactId>matsuo-util-freemarker</artifactId>
+        <version>0.1.3-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>pl.matsuo</groupId>
+        <artifactId>matsuo-util-functional</artifactId>
+        <version>0.1.3-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>pl.matsuo</groupId>
         <artifactId>matsuo-model</artifactId>
+        <version>0.1.3-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>pl.matsuo</groupId>
+        <artifactId>matsuo-model-generator-history</artifactId>
         <version>0.1.3-SNAPSHOT</version>
       </dependency>
       <dependency>

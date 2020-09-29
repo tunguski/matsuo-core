@@ -17,7 +17,7 @@
   <dependencies>
     <dependency>
       <groupId>pl.matsuo</groupId>
-      <artifactId>matsuo-util</artifactId>
+      <artifactId>matsuo-util-common</artifactId>
     </dependency>
 
     <dependency>
