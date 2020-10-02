@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.SessionFactory;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.api.Initializer;
@@ -34,7 +34,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
   public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
-  @Autowired protected SessionFactory sessionFactory;
+  @PersistenceContext protected EntityManager entityManager;
 
   private List<SelectPart> select = new ArrayList<>();
   private List<FromPart> from = new ArrayList<>();
@@ -62,26 +62,25 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
               private Object innerMock(InvocationOnMock base) {
                 return mock(
                     base.getMethod().getReturnType(),
-                    (Answer)
-                        invocation -> {
-                          if (invocation.getMethod().getName().startsWith("get")) {
-                            methodName.set(
-                                methodName.get()
-                                    + "."
-                                    + uncapitalize(invocation.getMethod().getName().substring(3)));
-                          }
+                    invocation -> {
+                      if (invocation.getMethod().getName().startsWith("get")) {
+                        methodName.set(
+                            methodName.get()
+                                + "."
+                                + uncapitalize(invocation.getMethod().getName().substring(3)));
+                      }
 
-                          if (AbstractEntity.class.isAssignableFrom(
-                              invocation.getMethod().getReturnType())) {
-                            return innerMock(invocation);
-                          }
+                      if (AbstractEntity.class.isAssignableFrom(
+                          invocation.getMethod().getReturnType())) {
+                        return innerMock(invocation);
+                      }
 
-                          return null;
-                        });
+                      return null;
+                    });
               }
 
               @Override
-              public Object answer(InvocationOnMock invocation) throws Throwable {
+              public Object answer(InvocationOnMock invocation) {
                 if (invocation.getMethod().getName().startsWith("get")) {
                   methodName.set(uncapitalize(invocation.getMethod().getName().substring(3)));
                 }
@@ -192,7 +191,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
     }
   }
 
-  protected ThreadLocal<Long> idBucket = new ThreadLocal();
+  protected ThreadLocal<Long> idBucket = new ThreadLocal<>();
 
   @Override
   public List<E> query(Long idBucketValue) {
@@ -202,15 +201,14 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
       // search in database
       try {
-        org.hibernate.query.Query query =
-            sessionFactory.getCurrentSession().createQuery(queryString);
+        javax.persistence.Query query = entityManager.createQuery(queryString);
         if (limit != null && limit >= 0) {
           query.setMaxResults(limit);
         }
         if (offset != null && offset >= 0) {
           query.setFirstResult(offset);
         }
-        List<E> result = query.list();
+        List<E> result = query.getResultList();
 
         for (E element : result) {
           for (Initializer<? super E> initializer : initializers) {

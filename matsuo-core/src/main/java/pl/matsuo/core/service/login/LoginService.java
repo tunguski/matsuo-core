@@ -131,6 +131,7 @@ public class LoginService implements ILoginService {
     sessionState.setIdBucket(organizationUnit.getId());
 
     Person person = new Person();
+    person.setFirstName(createAccountData.getUsername());
     database.create(person);
 
     User user = new User();

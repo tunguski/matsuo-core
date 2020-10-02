@@ -13,8 +13,8 @@ import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import javax.persistence.EntityManager;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import pl.matsuo.core.model.api.Initializer;
@@ -91,27 +91,26 @@ public class TestAbstractController {
     when(database.find(any(Query.class)))
         .then(
             invocation -> {
-              SessionFactory sessionFactory = mock(SessionFactory.class);
-              org.hibernate.query.Query hQuery = mock(org.hibernate.query.Query.class);
+              EntityManager entityManager = mock(EntityManager.class);
+              javax.persistence.Query jpaQuery = mock(javax.persistence.Query.class);
               Session session = mock(Session.class);
 
-              when(sessionFactory.getCurrentSession()).thenReturn(session);
-              when(session.createQuery(anyString())).thenReturn(hQuery);
+              when(entityManager.createQuery(anyString())).thenReturn(jpaQuery);
 
               AbstractQuery query = (AbstractQuery) invocation.getArguments()[0];
 
-              Field field = query.getClass().getDeclaredField("sessionFactory");
+              Field field = query.getClass().getDeclaredField("entityManager");
               try {
                 field.setAccessible(true);
-                field.set(query, sessionFactory);
+                field.set(query, entityManager);
               } finally {
                 field.setAccessible(false);
               }
 
               query.query(null);
 
-              verify(hQuery).setMaxResults(20);
-              verify(hQuery).setFirstResult(10);
+              verify(jpaQuery).setMaxResults(20);
+              verify(jpaQuery).setFirstResult(10);
 
               return Collections.nCopies(5, new User());
             });

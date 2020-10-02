@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import pl.matsuo.core.service.db.DatabaseImpl;
@@ -49,7 +51,7 @@ public class DbConfig {
 
   @Bean(name = "default.dataSource")
   @Qualifier("app-ds")
-  public DataSource dataSource() throws IOException {
+  public DataSource dataSource() {
     if (dataSource != null) {
       return dataSource;
     } else {
@@ -58,11 +60,10 @@ public class DbConfig {
   }
 
   public static DataSource createDataSource(
-      Function<Properties, String> urlProvider, Class<?> resourceProvider) throws IOException {
+      Function<Properties, String> urlProvider, Class<?> resourceProvider) {
     BasicDataSource dataSource = new BasicDataSource();
 
-    Properties properties = new Properties();
-    properties.load(resourceProvider.getResourceAsStream("/db.default.properties"));
+    Properties properties = getDbProperties(resourceProvider);
 
     log.warn("Test environment!");
     dataSource.setDriverClassName(properties.getProperty("db.default.driverClassName"));
@@ -79,35 +80,43 @@ public class DbConfig {
         .replace("test_db", "test_db_" + currentTimeMillis());
   }
 
-  @Bean(name = "default.sessionFactory")
-  @Qualifier("app-sessionFactory")
-  public FactoryBean<SessionFactory> sessionFactoryBean(
-      EntityInterceptorService interceptor, @Qualifier("app-ds") DataSource dataSource)
-      throws IOException {
-    if (sessionFactory != null) {
-      return sessionFactory;
-    } else {
-      LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-      sessionFactoryBean.setDataSource(dataSource);
-      sessionFactoryBean.setPackagesToScan("pl.matsuo.**.model");
+  @Bean
+  @Qualifier("app-entityManagerFactory")
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+      @Qualifier("app-ds") DataSource dataSource,
+      EntityInterceptorService entityInterceptorService) {
+    LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+    em.setDataSource(dataSource);
+    em.setPackagesToScan("pl.matsuo");
 
+    JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+    em.setJpaVendorAdapter(vendorAdapter);
+    Properties dbProperties = getDbProperties(getClass());
+    dbProperties.put("hibernate.ejb.interceptor", entityInterceptorService);
+    em.setJpaProperties(dbProperties);
+
+    return em;
+  }
+
+  private static Properties getDbProperties(Class<?> aClass) {
+    try {
       Properties properties = new Properties();
-      properties.load(getClass().getResourceAsStream("/db.default.properties"));
-      sessionFactoryBean.setHibernateProperties(properties);
-      sessionFactoryBean.setEntityInterceptor(interceptor);
-
-      return sessionFactoryBean;
+      properties.load(aClass.getResourceAsStream("/db.default.properties"));
+      return properties;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 
   @Bean(name = "default.transactionManager")
   public PlatformTransactionManager transactionManager(
-      @Qualifier("app-sessionFactory") SessionFactory sessionFactory) {
+      @Qualifier("app-entityManagerFactory")
+          LocalContainerEntityManagerFactoryBean entityManagerFactory) {
     if (transactionManager != null) {
       return transactionManager;
     } else {
-      HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-      transactionManager.setSessionFactory(sessionFactory);
+      JpaTransactionManager transactionManager = new JpaTransactionManager();
+      transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
       return transactionManager;
     }
   }

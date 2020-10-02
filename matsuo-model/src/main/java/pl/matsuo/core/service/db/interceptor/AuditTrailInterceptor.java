@@ -1,7 +1,7 @@
 package pl.matsuo.core.service.db.interceptor;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.function.Supplier;
 import org.hibernate.type.Type;
 import pl.matsuo.core.model.interceptor.InterceptorComponent;
@@ -24,7 +24,7 @@ public class AuditTrailInterceptor extends AbstractEntityInterceptor {
       String[] propertyNames,
       Type[] types) {
     setValue(currentState, propertyNames, "idUserUpdated", idUserSupplier);
-    setValue(currentState, propertyNames, "updatedTime", () -> new Date());
+    setValue(currentState, propertyNames, "updatedTime", Instant::now);
     return true;
   }
 
@@ -32,7 +32,7 @@ public class AuditTrailInterceptor extends AbstractEntityInterceptor {
   public boolean onSave(
       Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
     setValue(state, propertyNames, "idUserCreated", idUserSupplier);
-    setValue(state, propertyNames, "createdTime", () -> new Date());
+    setValue(state, propertyNames, "createdTime", Instant::now);
     return true;
   }
 }

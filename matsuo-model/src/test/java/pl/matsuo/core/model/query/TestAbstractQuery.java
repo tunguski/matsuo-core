@@ -18,15 +18,7 @@ public class TestAbstractQuery {
 
   @Test
   public void testCondition() {
-    AbstractQuery query =
-        new AbstractQuery(TheModel.class)
-            .condition(
-                new Condition() {
-                  @Override
-                  public String print(AbstractQuery query) {
-                    return "test_condition";
-                  }
-                });
+    AbstractQuery query = new AbstractQuery(TheModel.class).condition(query1 -> "test_condition");
     assertEquals(
         "FROM pl.matsuo.core.model.query.TheModel theModel WHERE test_condition",
         query.printQuery());
@@ -37,12 +29,7 @@ public class TestAbstractQuery {
     AbstractQuery query =
         new AbstractQuery(TheModel.class)
             .parts(
-                new Condition() {
-                  @Override
-                  public String print(AbstractQuery query) {
-                    return "test_condition";
-                  }
-                },
+                (Condition) query1 -> "test_condition",
                 new FromPart("testJoin", "alias", "joinPath"),
                 new SelectPart("test_select"));
     assertEquals(

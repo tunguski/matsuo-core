@@ -3,9 +3,19 @@ package pl.matsuo.core.service.db;
 import static org.springframework.beans.factory.config.AutowireCapableBeanFactory.AUTOWIRE_NO;
 import static pl.matsuo.core.model.query.QueryBuilder.query;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.HashMap;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -23,13 +33,9 @@ import pl.matsuo.core.service.session.SessionState;
 @Transactional
 public class DatabaseImpl implements Database, BeanFactoryAware {
 
-  @Autowired protected SessionFactory sessionFactory;
+  @PersistenceContext protected EntityManager entityManager;
   protected AutowireCapableBeanFactory beanFactory;
   @Autowired protected SessionState sessionState;
-
-  private Session session() {
-    return sessionFactory.getCurrentSession();
-  }
 
   //  @PostConstruct
   //  public void startDbGui() {
@@ -38,9 +44,19 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
   //  }
 
   @Override
+  public long count(Class<? extends AbstractEntity> clazz, Predicate predicate) {
+    return queryDslQueryBase(clazz, predicate).fetchCount();
+  }
+
+  @Override
+  public boolean exists(Class<? extends AbstractEntity> clazz, Predicate predicate) {
+    return queryDslQueryBase(clazz, predicate).fetchFirst() != null;
+  }
+
+  @Override
   public <E extends AbstractEntity> E findById(
       Class<E> clazz, Long id, Initializer<? super E>... initializers) {
-    E element = (E) session().get(clazz, id);
+    E element = (E) entityManager.find(clazz, id);
 
     Assert.notNull(element, "No entity found");
 
@@ -52,7 +68,11 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
   @Override
   public <E extends AbstractEntity> List<E> findAll(
       Class<E> clazz, Initializer<? super E>... initializers) {
-    List<E> list = find(query(clazz));
+    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    CriteriaQuery<E> query = criteriaBuilder.createQuery(clazz);
+    CriteriaQuery<E> select = query.select(query.from(clazz));
+    TypedQuery<E> typedQuery = entityManager.createQuery(select);
+    List<E> list = typedQuery.getResultList();
 
     for (E element : list) {
       initializeEntity(element, initializers);
@@ -76,30 +96,29 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
 
   @Override
   public <E extends AbstractEntity> E create(E element) {
-    session().save(element);
+    entityManager.persist(element);
     return element;
   }
 
   @Override
   public <E extends AbstractEntity> E update(E element) {
-    session().update(element);
-    return element;
+    return entityManager.merge(element);
   }
 
   @Override
   public void delete(Class<? extends AbstractEntity> clazz, Long id) {
-    session().delete(findById(clazz, id));
+    delete(findById(clazz, id));
   }
 
   @Override
   public void delete(AbstractEntity entity) {
-    session().delete(entity);
+    entityManager.remove(entity);
   }
 
   @Override
   public void evict(Object... objects) {
     for (Object object : objects) {
-      session().evict(object);
+      entityManager.detach(object);
     }
   }
 
@@ -107,6 +126,47 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
   public <E extends AbstractEntity> List<E> find(Query<E> query) {
     beanFactory.autowireBeanProperties(query, AUTOWIRE_NO, true);
     return query.query(sessionState.getIdBucket());
+  }
+
+  @Override
+  public <E> List<E> customSelect(ISelectDefinition<E> query) {
+    return query.apply(new JPAQueryFactory(entityManager)).fetch();
+  }
+
+  Map<Class<?>, EntityPathBase<?>> tables = new HashMap<>();
+
+  <E extends AbstractEntity> EntityPathBase<E> getTable(Class<?> clazz) {
+    if (tables.containsKey(clazz)) {
+      return (EntityPathBase<E>) tables.get(clazz);
+    } else {
+      synchronized (this) {
+        try {
+          Class<?> qClass =
+              getClass()
+                  .getClassLoader()
+                  .loadClass(clazz.getPackage().getName() + ".Q" + clazz.getSimpleName());
+          EntityPathBase<E> pathBase =
+              (EntityPathBase<E>)
+                  qClass.getField(StringUtils.uncapitalize(clazz.getSimpleName())).get(null);
+
+          tables.put(clazz, pathBase);
+          return pathBase;
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
+    }
+  }
+
+  @Override
+  public <E extends AbstractEntity> List<E> find(Class<E> clazz, Predicate predicate) {
+    return queryDslQueryBase(clazz, predicate).fetch();
+  }
+
+  private <E extends AbstractEntity> JPAQuery<E> queryDslQueryBase(
+      Class<E> clazz, Predicate predicate) {
+    EntityPathBase<E> pathBase = getTable(clazz);
+    return new JPAQueryFactory(entityManager).selectFrom(pathBase).where(predicate);
   }
 
   @Override
@@ -118,6 +178,17 @@ public class DatabaseImpl implements Database, BeanFactoryAware {
   @Override
   public <E extends AbstractEntity> E findOne(Query<E> query) {
     List<E> result = find(query);
+    if (result.isEmpty()) {
+      return null;
+    } else {
+      return result.get(0);
+    }
+  }
+
+  @Override
+  public <E extends AbstractEntity> E findOne(Class<E> clazz, Predicate predicate) {
+    List<E> result = find(clazz, predicate);
+
     if (result.isEmpty()) {
       return null;
     } else {
