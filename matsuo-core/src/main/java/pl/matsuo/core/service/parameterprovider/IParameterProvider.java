@@ -9,7 +9,7 @@ public interface IParameterProvider<U> {
 
   default <E> E get(String key) {
     return (E) get(key, Object.class);
-  };
+  }
 
   <E> E get(String key, Class<E> expectedClass);
 

@@ -18,11 +18,11 @@ public interface IFacadeBuilder {
 
   default <E> void doWithFacade(Object object, Class<E> clazz, Consumer<E> callable) {
     callable.accept(createFacade(object, clazz));
-  };
+  }
 
   default <E> void doWithFacade(IFacadeAware facadeAware, Consumer<E> callable) {
     callable.accept(createFacade(facadeAware));
-  };
+  }
 
   IParameterProvider<?> createParameterProvider(Object object);
 }
