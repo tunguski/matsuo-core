@@ -31,7 +31,8 @@ import pl.matsuo.core.service.parameterprovider.IParameterProvider;
 import pl.matsuo.core.service.parameterprovider.MapParameterProvider;
 
 /**
- * Mapping request body to IRequestParams subinterfaces, allowing to use them in controller methods:
+ * Mapping request body to IRequestParams sub interfaces, allowing to use them in controller
+ * methods:
  *
  * <pre>
  * \@RequestMapping(value = "updateOwnPassword", method = PUT, consumes = { APPLICATION_JSON_VALUE })
