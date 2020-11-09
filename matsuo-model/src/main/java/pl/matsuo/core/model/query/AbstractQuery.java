@@ -3,6 +3,7 @@ package pl.matsuo.core.model.query;
 import static java.util.Arrays.asList;
 import static org.mockito.Mockito.mock;
 import static org.springframework.util.StringUtils.uncapitalize;
+import static pl.matsuo.core.util.ReflectCollectionUtil.collect;
 import static pl.matsuo.core.util.collection.CollectionUtil.merge;
 import static pl.matsuo.core.util.collection.CollectionUtil.removeNulls;
 
@@ -26,7 +27,6 @@ import pl.matsuo.core.model.query.condition.FromPart;
 import pl.matsuo.core.model.query.condition.QueryFunction;
 import pl.matsuo.core.model.query.condition.QueryPart;
 import pl.matsuo.core.model.query.condition.SelectPart;
-import pl.matsuo.core.util.collection.CollectionUtil;
 
 /** Abstract superclass for queries. */
 @Slf4j
@@ -248,8 +248,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
       sb.append(" " + fromPart.print(this).trim());
     }
 
-    List<Condition> conditions =
-        removeNulls(merge(CollectionUtil.<Condition>collect(from, "joinCondition"), where));
+    List<Condition> conditions = removeNulls(merge(collect(from, "joinCondition"), where));
 
     boolean hasWhere = false;
 

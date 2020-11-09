@@ -1,7 +1,5 @@
 package pl.matsuo.core.util.collection;
 
-import static pl.matsuo.core.util.ReflectUtil.getValue;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,14 +14,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 /** Helper methods for collection operations */
 public class CollectionUtil {
-
-  /**
-   * Creates new list by collecting value of property <code>property</code> from all elements of
-   * <code>collection</code>.
-   */
-  public static <E> List<E> collect(Collection<?> collection, String property) {
-    return map(collection, object -> getValue(object, property));
-  }
 
   /**
    * Flatten collection of collections <b>with removal of duplicates</b>. Rather do not use, as
@@ -87,21 +77,18 @@ public class CollectionUtil {
     return resultList;
   }
 
-  /**
-   * Create map where keys are values of <code>property</code> from <code>collection</code>
-   * elements.
-   */
-  public static <E, F> Map<E, F> toMap(Collection<F> collection, String property) {
-    Map<E, F> resultMap = new HashMap<>();
-    for (F object : collection) {
-      resultMap.put((E) getValue(object, property), object);
+  /** Create map from collection. */
+  public static <E, F, G> Map<F, G> toMap(
+      Collection<E> collection, Function<E, F> keyMapper, Function<E, G> valueMapper) {
+    Map<F, G> resultMap = new HashMap<>();
+    for (E element : collection) {
+      resultMap.put(keyMapper.apply(element), valueMapper.apply(element));
     }
 
     return resultMap;
   }
 
   /** Create map in which keys are mapped using <code>mapping</code>. */
-  /** Tworzy mapę w której klucze zostają przetworzone */
   public static <D, E, F> Map<D, F> reMap(Map<? extends E, F> sourceMap, Function<E, D> mapping) {
     Map<D, F> resultMap = new HashMap<>();
     for (E key : sourceMap.keySet()) {

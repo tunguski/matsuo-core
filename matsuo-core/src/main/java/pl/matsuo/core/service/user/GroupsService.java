@@ -1,7 +1,7 @@
 package pl.matsuo.core.service.user;
 
 import static java.util.Arrays.asList;
-import static pl.matsuo.core.util.collection.CollectionUtil.toMap;
+import static pl.matsuo.core.util.ReflectCollectionUtil.toMap;
 
 import java.util.HashSet;
 import java.util.Map;

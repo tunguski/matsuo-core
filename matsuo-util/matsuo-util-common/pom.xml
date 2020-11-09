@@ -19,6 +19,10 @@
       <groupId>pl.matsuo</groupId>
       <artifactId>matsuo-util-functional</artifactId>
     </dependency>
+    <dependency>
+      <groupId>pl.matsuo</groupId>
+      <artifactId>matsuo-util-collection</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
