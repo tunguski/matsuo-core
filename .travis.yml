@@ -1,6 +1,6 @@
 language: java
 sudo: false
-script: mvn package
+script: mvn install
 after_success: mvn cobertura:cobertura coveralls:report
 jdk:
   - openjdk10
