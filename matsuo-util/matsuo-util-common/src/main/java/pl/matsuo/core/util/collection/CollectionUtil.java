@@ -5,31 +5,31 @@ import static pl.matsuo.core.util.ReflectUtil.getValue;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import org.apache.commons.lang3.tuple.Pair;
 
-/** Pomocnicze metody przy operowaniu na kolekcjach. */
+/** Helper methods for collection operations */
 public class CollectionUtil {
 
   /**
-   * Tworzy nową listę na bazie przekazanej kolekcji, poprzez pobranie wartości <code>property
-   * </code>. Powtórzenia identycznych wartości zostają usunięte.
+   * Creates new list by collecting value of property <code>property</code> from all elements of
+   * <code>collection</code>.
    */
-  public static final <E> List<E> collect(Collection<?> collection, String property) {
-    return (List<E>) map(collection, (Object object) -> getValue(object, property));
+  public static <E> List<E> collect(Collection<?> collection, String property) {
+    return map(collection, object -> getValue(object, property));
   }
 
   /**
-   * Tworzy kolekcję wartości na podstawie przekazanej listy kolekcji poprzez pobranie wszystkich
-   * wartości z przekazanych kolekcji.
+   * Flatten collection of collections <b>with removal of duplicates</b>. Rather do not use, as
+   * behaviour of duplicates removal will be changed.
    */
-  public static final <E> List<E> flatten(Collection<?>... collections) {
+  public static <E> List<E> flatten(Collection<?>... collections) {
     List<E> resultList = new ArrayList<>();
 
     for (Collection<?> collection : collections) {
@@ -39,8 +39,7 @@ public class CollectionUtil {
     return new ArrayList<>(new LinkedHashSet<>(resultList));
   }
 
-  public static final <F, T> List<T> map(
-      Collection<? extends F> collection, Function<F, T> mapper) {
+  public static <F, T> List<T> map(Collection<? extends F> collection, Function<F, T> mapper) {
     List<T> resultList = new ArrayList<>(collection.size());
 
     for (F element : collection) {
@@ -50,7 +49,7 @@ public class CollectionUtil {
     return resultList;
   }
 
-  public static final <E> List<E> filter(Collection<E> collection, Predicate<E> condition) {
+  public static <E> List<E> filter(Collection<E> collection, Predicate<E> condition) {
     List<E> resultList = new ArrayList<>(collection.size());
 
     for (E element : collection) {
@@ -62,12 +61,38 @@ public class CollectionUtil {
     return resultList;
   }
 
+  public static <E, F> List<F> filterMap(Collection<E> collection, Function<E, F> mapper) {
+    List<F> resultList = new ArrayList<>(collection.size());
+
+    for (E element : collection) {
+      F mapped = mapper.apply(element);
+      if (mapped != null) {
+        resultList.add(mapped);
+      }
+    }
+
+    return resultList;
+  }
+
+  public static <E, F> List<F> filterMap(
+      Collection<E> collection, Predicate<E> condition, Function<E, F> mapper) {
+    List<F> resultList = new ArrayList<>(collection.size());
+
+    for (E element : collection) {
+      if (condition.test(element)) {
+        resultList.add(mapper.apply(element));
+      }
+    }
+
+    return resultList;
+  }
+
   /**
-   * Tworzy mapę w której kluczem jest wartość pola <code>property</code> z obiektu kolekcji <code>
-   * collection</code>, a wartością jest tenże obiekt.
+   * Create map where keys are values of <code>property</code> from <code>collection</code>
+   * elements.
    */
-  public static final <E, F> Map<E, F> toMap(Collection<F> collection, String property) {
-    Map<E, F> resultMap = new HashMap<E, F>();
+  public static <E, F> Map<E, F> toMap(Collection<F> collection, String property) {
+    Map<E, F> resultMap = new HashMap<>();
     for (F object : collection) {
       resultMap.put((E) getValue(object, property), object);
     }
@@ -75,13 +100,10 @@ public class CollectionUtil {
     return resultMap;
   }
 
-  public static final Function<Object, String> toStringMapping =
-      (Object object) -> object.toString();
-
+  /** Create map in which keys are mapped using <code>mapping</code>. */
   /** Tworzy mapę w której klucze zostają przetworzone */
-  public static final <D, E, F> Map<D, F> reMap(
-      Map<? extends E, F> sourceMap, Function<E, D> mapping) {
-    Map<D, F> resultMap = new HashMap<D, F>();
+  public static <D, E, F> Map<D, F> reMap(Map<? extends E, F> sourceMap, Function<E, D> mapping) {
+    Map<D, F> resultMap = new HashMap<>();
     for (E key : sourceMap.keySet()) {
       resultMap.put(mapping.apply(key), sourceMap.get(key));
     }
@@ -93,22 +115,16 @@ public class CollectionUtil {
     return list.get(list.size() - 1);
   }
 
-  public static final <E> List<E> merge(Collection<E>... collections) {
+  public static <E> List<E> merge(Collection<E>... collections) {
     return flatten(collections);
   }
 
-  public static final <E, F extends Collection<E>> F removeNulls(F collection) {
-    Iterator<E> iterator = collection.iterator();
-    while (iterator.hasNext()) {
-      if (iterator.next() == null) {
-        iterator.remove();
-      }
-    }
-
+  public static <E, F extends Collection<E>> F removeNulls(F collection) {
+    collection.removeIf(Objects::isNull);
     return collection;
   }
 
-  public static final Map<String, String> stringMap(String... keyValues) {
+  public static Map<String, String> stringMap(String... keyValues) {
     Map<String, String> map = new HashMap<>();
 
     for (int i = 0; i < (keyValues.length / 2); i++) {
@@ -118,15 +134,7 @@ public class CollectionUtil {
     return map;
   }
 
-  /**
-   * Metoda dokonujaca redukcji na kolekcji
-   *
-   * @param list redukowana kolekcja
-   * @param reducer reduktor
-   * @param <F> typ elementu w kolekcji
-   * @param <T> typ wartosci zwracanej
-   * @return
-   */
+  /** Reduce <code>list</code> elements. */
   public static <F, T> T fold(
       Collection<? extends F> list, final T startValue, BiFunction<T, F, T> reducer) {
     T value = startValue;
