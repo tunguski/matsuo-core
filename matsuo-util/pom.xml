@@ -1,42 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <packaging>pom</packaging>
-  <groupId>pl.matsuo</groupId>
-  <artifactId>matsuo-util</artifactId>
-
-  <parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
     <groupId>pl.matsuo</groupId>
-    <artifactId>matsuo-core-parent</artifactId>
-    <version>0.1.4-SNAPSHOT</version>
-  </parent>
+    <artifactId>matsuo-util</artifactId>
 
-  <modules>
-    <module>matsuo-util-collection</module>
-    <module>matsuo-util-common</module>
-    <module>matsuo-util-desktop</module>
-    <module>matsuo-util-freemarker</module>
-    <module>matsuo-util-functional</module>
-  </modules>
+    <parent>
+        <groupId>pl.matsuo</groupId>
+        <artifactId>matsuo-core-parent</artifactId>
+        <version>0.1.4-SNAPSHOT</version>
+    </parent>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>${commons-codec.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${jackson-2.version}</version>
-    </dependency>
-  </dependencies>
-
+    <modules>
+        <module>matsuo-util-collection</module>
+        <module>matsuo-util-common</module>
+        <module>matsuo-util-desktop</module>
+        <module>matsuo-util-freemarker</module>
+        <module>matsuo-util-functional</module>
+    </modules>
 </project>

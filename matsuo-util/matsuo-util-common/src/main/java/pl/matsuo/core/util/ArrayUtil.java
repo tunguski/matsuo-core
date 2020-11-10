@@ -1,4 +1,4 @@
-package pl.matsuo.core.util.collection;
+package pl.matsuo.core.util;
 
 import com.google.common.collect.ObjectArrays;
 

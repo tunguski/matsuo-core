@@ -11,9 +11,9 @@ import static java.beans.Introspector.decapitalize;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.ArrayUtils.addAll;
 import static org.springframework.util.StringUtils.capitalize;
+import static pl.matsuo.core.util.ArrayUtil.last;
 import static pl.matsuo.core.util.ReflectUtil.getAnnotatedElement;
 import static pl.matsuo.core.util.ReflectUtil.getPropertyType;
-import static pl.matsuo.core.util.collection.ArrayUtil.last;
 
 import com.google.common.base.Joiner;
 import j2html.TagCreator;

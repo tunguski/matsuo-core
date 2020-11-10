@@ -248,7 +248,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
       sb.append(" " + fromPart.print(this).trim());
     }
 
-    List<Condition> conditions = removeNulls(merge(collect(from, "joinCondition"), where));
+    List<Condition> conditions = removeNulls(merge(asList(collect(from, "joinCondition"), where)));
 
     boolean hasWhere = false;
 

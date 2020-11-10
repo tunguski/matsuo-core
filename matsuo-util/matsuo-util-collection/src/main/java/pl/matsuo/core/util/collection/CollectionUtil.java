@@ -1,33 +1,22 @@
 package pl.matsuo.core.util.collection;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+import static java.util.function.Function.identity;
+import static pl.matsuo.core.util.collection.Pair.pair;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import org.apache.commons.lang3.tuple.Pair;
 
 /** Helper methods for collection operations */
 public class CollectionUtil {
-
-  /**
-   * Flatten collection of collections <b>with removal of duplicates</b>. Rather do not use, as
-   * behaviour of duplicates removal will be changed.
-   */
-  public static <E> List<E> flatten(Collection<?>... collections) {
-    List<E> resultList = new ArrayList<>();
-
-    for (Collection<?> collection : collections) {
-      resultList.addAll((Collection<? extends E>) collection);
-    }
-
-    return new ArrayList<>(new LinkedHashSet<>(resultList));
-  }
 
   public static <F, T> List<T> map(Collection<? extends F> collection, Function<F, T> mapper) {
     List<T> resultList = new ArrayList<>(collection.size());
@@ -52,7 +41,7 @@ public class CollectionUtil {
   }
 
   public static <E, F> List<F> filterMap(Collection<E> collection, Function<E, F> mapper) {
-    List<F> resultList = new ArrayList<>(collection.size());
+    List<F> resultList = new ArrayList<>();
 
     for (E element : collection) {
       F mapped = mapper.apply(element);
@@ -66,7 +55,7 @@ public class CollectionUtil {
 
   public static <E, F> List<F> filterMap(
       Collection<E> collection, Predicate<E> condition, Function<E, F> mapper) {
-    List<F> resultList = new ArrayList<>(collection.size());
+    List<F> resultList = new ArrayList<>();
 
     for (E element : collection) {
       if (condition.test(element)) {
@@ -88,27 +77,16 @@ public class CollectionUtil {
     return resultMap;
   }
 
-  /** Create map in which keys are mapped using <code>mapping</code>. */
-  public static <D, E, F> Map<D, F> reMap(Map<? extends E, F> sourceMap, Function<E, D> mapping) {
-    Map<D, F> resultMap = new HashMap<>();
-    for (E key : sourceMap.keySet()) {
-      resultMap.put(mapping.apply(key), sourceMap.get(key));
-    }
-
-    return resultMap;
-  }
-
   public static <E> E last(List<E> list) {
     return list.get(list.size() - 1);
   }
 
-  public static <E> List<E> merge(Collection<E>... collections) {
-    return flatten(collections);
+  public static <E> List<E> merge(Collection<Collection<E>> collections) {
+    return flatMap(collections, identity());
   }
 
-  public static <E, F extends Collection<E>> F removeNulls(F collection) {
-    collection.removeIf(Objects::isNull);
-    return collection;
+  public static <E> List<E> removeNulls(Collection<E> collection) {
+    return filterMap(collection, identity());
   }
 
   public static Map<String, String> stringMap(String... keyValues) {
@@ -132,12 +110,23 @@ public class CollectionUtil {
     return value;
   }
 
+  public static <F, T> List<T> flatMap(
+      Collection<? extends F> collection, Function<F, Collection<T>> mapper) {
+    List<T> resultList = new ArrayList<>(collection.size());
+
+    for (F element : collection) {
+      resultList.addAll(mapper.apply(element));
+    }
+
+    return resultList;
+  }
+
   public static <E> List<Pair<Integer, E>> indexed(Collection<E> collection) {
     int index = 0;
     List<Pair<Integer, E>> result = new ArrayList<>(collection.size());
 
     for (E e : collection) {
-      result.add(Pair.of(index, e));
+      result.add(pair(index, e));
       index++;
     }
 
@@ -152,5 +141,55 @@ public class CollectionUtil {
     }
 
     return range;
+  }
+
+  public static <E> E getFirst(Collection<E> collection, Predicate<E> condition) {
+    for (E element : collection) {
+      if (condition.test(element)) {
+        return element;
+      }
+    }
+
+    return null;
+  }
+
+  public static <E> Optional<E> findFirst(Collection<E> collection, Predicate<E> condition) {
+    for (E element : collection) {
+      if (condition.test(element)) {
+        return of(element);
+      }
+    }
+
+    return empty();
+  }
+
+  public static <E> boolean anyMatch(Collection<E> collection, Predicate<E> condition) {
+    for (E element : collection) {
+      if (condition.test(element)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public static <E> boolean allMatch(Collection<E> collection, Predicate<E> condition) {
+    for (E element : collection) {
+      if (!condition.test(element)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  public static <E> boolean noneMatch(Collection<E> collection, Predicate<E> condition) {
+    for (E element : collection) {
+      if (condition.test(element)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }

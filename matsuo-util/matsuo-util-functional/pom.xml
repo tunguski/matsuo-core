@@ -10,4 +10,12 @@
     <artifactId>matsuo-util</artifactId>
     <version>0.1.4-SNAPSHOT</version>
   </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+  </dependencies>
 </project>
