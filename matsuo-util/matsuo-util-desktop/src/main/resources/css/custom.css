@@ -1,7 +1,40 @@
 html {
-    font-size: 12px;
+    margin-top: 0.5rem;
 }
 
 table {
-    font-size: 12px;
+}
+
+.table th {
+    border-top: 0;
+}
+
+h1, .h1 {
+    margin-top: 1rem;
+    font-size: 1.75rem;
+}
+
+h2, .h2 {
+    margin-top: 1rem;
+    font-size: 1.6rem;
+}
+
+h3, .h3 {
+    margin-top: 1rem;
+    font-size: 1.45rem;
+}
+
+h4, .h4 {
+    margin-top: 0.5rem;
+    font-size: 1.3rem;
+}
+
+h5, .h5 {
+    margin-top: 0.5rem;
+    font-size: 1.15rem;
+}
+
+h6, .h6 {
+    margin-top: 0.5rem;
+    font-size: 1rem;
 }

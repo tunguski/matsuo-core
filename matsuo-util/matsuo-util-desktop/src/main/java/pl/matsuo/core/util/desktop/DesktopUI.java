@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,14 +21,14 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventTarget;
 
 @Slf4j
-public abstract class DesktopUI extends Application {
+public abstract class DesktopUI<M> extends Application {
 
   private final WebView webView = new WebView();
 
-  final DesktopUIData data;
+  @Getter final DesktopUIData<M> data;
   Stage stage;
 
-  public DesktopUI(DesktopUIData data) {
+  public DesktopUI(DesktopUIData<M> data) {
     this.data = data;
   }
 
@@ -50,7 +51,7 @@ public abstract class DesktopUI extends Application {
               }
             });
 
-    webEngine.loadContent(pageContent("/main"));
+    webEngine.loadContent(pageContent("/"));
     BorderPane page = new BorderPane(webView);
     Scene scene = new Scene(page);
     stage.setScene(scene);
@@ -93,10 +94,10 @@ public abstract class DesktopUI extends Application {
   private String pageContent(String path) {
     if (data.views.containsKey(path)) {
       log.info("Rendering page " + path);
-      return data.views.get(path).view(request(path, emptyMap())).renderFormatted();
+      return data.views.get(path).view(request(path, emptyMap()), data.model).renderFormatted();
     } else if (data.views.containsKey("/404")) {
       // view not found - render 404 view
-      return data.views.get("/404").view(request(path, emptyMap())).renderFormatted();
+      return data.views.get("/404").view(request(path, emptyMap()), data.model).renderFormatted();
     } else {
       return "Not found " + path;
     }

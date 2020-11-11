@@ -16,15 +16,15 @@ import pl.matsuo.core.util.desktop.showcase.view.SampleView;
 public class ShowcaseApplication extends DesktopUI {
 
   public ShowcaseApplication() {
-    super(new DesktopUIData(views(), controllers()));
+    super(new DesktopUIData(views(), controllers(), null));
   }
 
-  private static Map<String, IView<IRequest>> views() {
-    Map<String, IView<IRequest>> views = new HashMap<>();
+  private static Map<String, IView<IRequest, Object>> views() {
+    Map<String, IView<IRequest, Object>> views = new HashMap<>();
 
     ViewComponents viewComponents = new ViewComponents();
 
-    views.put("/main", new SampleView(viewComponents));
+    views.put("/", new SampleView(viewComponents));
     views.put("/menu", new BasicMenuView(viewComponents));
     views.put("/404", new NotFoundView(viewComponents));
 

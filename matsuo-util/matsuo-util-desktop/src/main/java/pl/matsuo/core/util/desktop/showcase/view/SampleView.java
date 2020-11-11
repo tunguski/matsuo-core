@@ -17,12 +17,12 @@ import pl.matsuo.core.util.desktop.IView;
 import pl.matsuo.core.util.desktop.ViewComponents;
 
 @RequiredArgsConstructor
-public class SampleView implements IView<IRequest> {
+public class SampleView implements IView<IRequest, Object> {
 
   final ViewComponents viewComponents;
 
   @Override
-  public ContainerTag view(IRequest model) {
+  public ContainerTag view(IRequest request, Object model) {
     return viewComponents.pageTemplate(
         "Menu",
         viewComponents.rowCol(

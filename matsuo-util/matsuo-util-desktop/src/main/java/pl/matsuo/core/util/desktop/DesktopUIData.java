@@ -6,8 +6,9 @@ import lombok.Value;
 
 @Value
 @RequiredArgsConstructor
-public class DesktopUIData {
+public class DesktopUIData<M> {
 
-  public Map<String, IView<IRequest>> views;
+  public Map<String, IView<IRequest, M>> views;
   public Map<String, IActionController<IRequest>> controllers;
+  public M model;
 }

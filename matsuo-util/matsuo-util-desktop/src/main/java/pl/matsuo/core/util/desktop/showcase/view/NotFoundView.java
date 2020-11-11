@@ -11,14 +11,15 @@ import pl.matsuo.core.util.desktop.IView;
 import pl.matsuo.core.util.desktop.ViewComponents;
 
 @RequiredArgsConstructor
-public class NotFoundView implements IView<IRequest> {
+public class NotFoundView implements IView<IRequest, Object> {
 
   final ViewComponents viewComponents;
 
   @Override
-  public ContainerTag view(IRequest model) {
+  public ContainerTag view(IRequest request, Object model) {
     return viewComponents.pageTemplate(
         "Page not found",
-        viewComponents.rowCol(h1("Page not found"), hr(), b("Missing: '" + model.getPath() + "'")));
+        viewComponents.rowCol(
+            h1("Page not found"), hr(), b("Missing: '" + request.getPath() + "'")));
   }
 }

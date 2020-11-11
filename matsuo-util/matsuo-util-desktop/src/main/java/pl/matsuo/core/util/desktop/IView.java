@@ -2,7 +2,7 @@ package pl.matsuo.core.util.desktop;
 
 import j2html.tags.ContainerTag;
 
-public interface IView<M extends IRequest> {
+public interface IView<R extends IRequest, M> {
 
-  ContainerTag view(M model);
+  ContainerTag view(R request, M model);
 }

@@ -13,7 +13,7 @@ public class TestBasicMenuView extends TestCase {
   @Test
   public void testGenerateView() {
     BasicMenuView view = new BasicMenuView(new ViewComponents());
-    String rendered = view.view(request("/menu", emptyMap())).renderFormatted();
+    String rendered = view.view(request("/menu", emptyMap()), null).renderFormatted();
 
     storeView("basicMenu.html", rendered);
   }
