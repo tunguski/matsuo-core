@@ -1,19 +1,7 @@
 package pl.matsuo.core.util.desktop;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyMap;
-import static pl.matsuo.core.util.desktop.IRequest.request;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
-import java.util.HashMap;
-import java.util.Map;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
@@ -32,6 +20,19 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLInputElement;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyMap;
+import static pl.matsuo.core.util.desktop.IRequest.request;
 
 @Slf4j
 public abstract class DesktopUI<M> extends Application {
@@ -105,13 +106,21 @@ public abstract class DesktopUI<M> extends Application {
     EventTarget target = ev.getTarget();
     Node node = (Node) target;
     log.info("Click " + node);
+    processClick(node);
+  }
+
+  private void processClick(Node node) {
     if (node.getNodeName().equalsIgnoreCase("a")) {
       processLink(node);
     } else if (node.getNodeName().equalsIgnoreCase("button")
         || node.getNodeName().equalsIgnoreCase("input")) {
       processFormSubmit(node);
     } else {
-      throw new RuntimeException("Unknown event source");
+      if (node.getParentNode() != null) {
+        processClick(node.getParentNode());
+      } else {
+        throw new RuntimeException("Unknown event source");
+      }
     }
   }
 
@@ -201,7 +210,30 @@ public abstract class DesktopUI<M> extends Application {
 
   private void processLink(Node node) {
     String href = node.getAttributes().getNamedItem("href").getTextContent();
-    Platform.runLater(() -> webView.getEngine().loadContent(pageContent(href, emptyMap())));
+    IRequest request = parseHref(href);
+    Platform.runLater(
+        () -> webView.getEngine().loadContent(pageContent(request.getPath(), request.getParams())));
+  }
+
+  private IRequest parseHref(String href) {
+    if (href.contains("?")) {
+      String[] split = href.split("[?]", 2);
+
+      Map<String, String> params = new HashMap<>();
+
+      for (String param : split[1].split("[&]")) {
+        String[] paramSplit = param.split("[=]", 2);
+        if (paramSplit.length == 1) {
+          params.put(paramSplit[0], "");
+        } else {
+          params.put(paramSplit[0], paramSplit[1]);
+        }
+      }
+
+      return IRequest.request(split[0], params);
+    } else {
+      return IRequest.request(href, emptyMap());
+    }
   }
 
   private String pageContent(String path, Map<String, String> params) {
@@ -250,9 +282,6 @@ public abstract class DesktopUI<M> extends Application {
       File file = new File("." + getClass().getSimpleName());
       if (file.exists()) {
         String fileContent = FileUtils.readFileToString(file, UTF_8);
-        log.info("maybe overwrite: " + gson);
-        log.info("maybe overwrite: " + data);
-        log.info("maybe overwrite: " + data.model);
         M deserializedModel = (M) gson.fromJson(fileContent, data.model.getClass());
         data.model = deserializedModel;
 
