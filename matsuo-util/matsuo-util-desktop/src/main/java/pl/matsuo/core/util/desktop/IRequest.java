@@ -8,6 +8,14 @@ public interface IRequest {
 
   Map<String, String> getParams();
 
+  default boolean hasParam(String name) {
+    return getParams().containsKey(name);
+  }
+
+  default String getParam(String name) {
+    return getParams().get(name);
+  }
+
   static IRequest request(String path, Map<String, String> params) {
     return new IRequest() {
       @Override

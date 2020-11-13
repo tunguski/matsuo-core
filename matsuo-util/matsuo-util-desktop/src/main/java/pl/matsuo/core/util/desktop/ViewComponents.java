@@ -38,6 +38,7 @@ public class ViewComponents {
   }
 
   public ContainerTag pageTemplate(String title, DomContent... bodyContent) {
+    rawHtml("fds");
     return html(
         head(
             title(title),

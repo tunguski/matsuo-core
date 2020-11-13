@@ -1,10 +1,12 @@
 package pl.matsuo.core.util.desktop;
 
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 
-@Value
+@Data
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class DesktopUIData<M> {
 

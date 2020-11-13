@@ -1,9 +1,17 @@
 package pl.matsuo.core.util.desktop;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
 import static pl.matsuo.core.util.desktop.IRequest.request;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Application;
@@ -16,6 +24,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,6 +37,7 @@ import org.w3c.dom.html.HTMLInputElement;
 public abstract class DesktopUI<M> extends Application {
 
   private final WebView webView = new WebView();
+  private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
   @Getter final DesktopUIData<M> data;
   Stage stage;
@@ -35,6 +45,8 @@ public abstract class DesktopUI<M> extends Application {
 
   public DesktopUI(DesktopUIData<M> data) {
     this.data = data;
+
+    maybeOverwriteModelFromFile();
   }
 
   @Override
@@ -111,11 +123,14 @@ public abstract class DesktopUI<M> extends Application {
 
     log.info("Processing form submit action: " + action + " params: " + values);
 
-    IRequest result =
-        data.getControllers().get(action).execute(request(action, values), data.model);
+    IRequest result = request(action, values);
     while (result != null) {
       if (data.getControllers().containsKey(result.getPath())) {
-        result = data.getControllers().get(result.getPath()).execute(result, data.model);
+        IActionController<IRequest, M> actionController =
+            data.getControllers().get(result.getPath());
+        result = actionController.execute(result, data.model);
+
+        maybePersistResult(actionController);
       } else {
         final IRequest getRequest = result;
         Platform.runLater(
@@ -201,6 +216,50 @@ public abstract class DesktopUI<M> extends Application {
     } else {
       currentUrl = null;
       return "Not found " + path;
+    }
+  }
+
+  private void maybePersistResult(IActionController<IRequest, M> actionController) {
+    if (actionController.getClass().getAnnotation(PersistResult.class) != null) {
+      storeState();
+    }
+  }
+
+  private void storeState() {
+    try {
+      File file = new File("." + getClass().getSimpleName());
+      if (!file.exists()) {
+        file.createNewFile();
+      }
+
+      try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+        FileChannel channel = fileOutputStream.getChannel();
+        FileLock lock = channel.lock();
+        // write to the channel
+        channel.write(UTF_8.encode(gson.toJson(data.model)));
+      }
+
+      log.info("State stored");
+    } catch (IOException e) {
+      log.error("Exception while persisting state", e);
+    }
+  }
+
+  private void maybeOverwriteModelFromFile() {
+    try {
+      File file = new File("." + getClass().getSimpleName());
+      if (file.exists()) {
+        String fileContent = FileUtils.readFileToString(file, UTF_8);
+        log.info("maybe overwrite: " + gson);
+        log.info("maybe overwrite: " + data);
+        log.info("maybe overwrite: " + data.model);
+        M deserializedModel = (M) gson.fromJson(fileContent, data.model.getClass());
+        data.model = deserializedModel;
+
+        log.info("State read from disk: " + file.getAbsolutePath());
+      }
+    } catch (IOException e) {
+      log.error("Exception while reading state", e);
     }
   }
 }
