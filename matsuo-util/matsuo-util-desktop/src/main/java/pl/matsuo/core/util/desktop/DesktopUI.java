@@ -1,8 +1,11 @@
 package pl.matsuo.core.util.desktop;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
 import static pl.matsuo.core.util.desktop.IRequest.request;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
@@ -19,6 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.html.HTMLInputElement;
 
 @Slf4j
 public abstract class DesktopUI<M> extends Application {
@@ -27,6 +31,7 @@ public abstract class DesktopUI<M> extends Application {
 
   @Getter final DesktopUIData<M> data;
   Stage stage;
+  String currentUrl;
 
   public DesktopUI(DesktopUIData<M> data) {
     this.data = data;
@@ -51,7 +56,7 @@ public abstract class DesktopUI<M> extends Application {
               }
             });
 
-    webEngine.loadContent(pageContent("/"));
+    webEngine.loadContent(pageContent("/", emptyMap()));
     BorderPane page = new BorderPane(webView);
     Scene scene = new Scene(page);
     stage.setScene(scene);
@@ -62,12 +67,7 @@ public abstract class DesktopUI<M> extends Application {
     Document doc = webView.getEngine().getDocument();
 
     // add click listener for anchor elements
-    NodeList links = doc.getElementsByTagName("a");
-    for (int i = 0; i < links.getLength(); i++) {
-      log.info("Found link. Adding listen function.");
-      Element el = (Element) links.item(i);
-      ((EventTarget) el).addEventListener("click", this::handleEvent, false);
-    }
+    addClickHandler(doc);
 
     // update window title using page title
     NodeList titles = doc.getElementsByTagName("title");
@@ -76,29 +76,130 @@ public abstract class DesktopUI<M> extends Application {
     }
   }
 
+  private void addClickHandler(Document doc) {
+    asList("a", "button").forEach(type -> addClickHandler(doc, type));
+  }
+
+  private void addClickHandler(Document doc, String type) {
+    NodeList links = doc.getElementsByTagName(type);
+    for (int i = 0; i < links.getLength(); i++) {
+      log.info("Found link. Adding listen function.");
+      Element el = (Element) links.item(i);
+      ((EventTarget) el).addEventListener("click", this::handleEvent, false);
+    }
+  }
+
   void handleEvent(Event ev) {
     EventTarget target = ev.getTarget();
-
     Node node = (Node) target;
-    String href = node.getAttributes().getNamedItem("href").getTextContent();
-    if (!href.contains("#")) {
-      Platform.runLater(() -> webView.getEngine().loadContent(pageContent(href)));
+    log.info("Click " + node);
+    if (node.getNodeName().equalsIgnoreCase("a")) {
+      processLink(node);
+    } else if (node.getNodeName().equalsIgnoreCase("button")
+        || node.getNodeName().equalsIgnoreCase("input")) {
+      processFormSubmit(node);
     } else {
-      String nextView = data.getControllers().get(href).execute(null);
-      if (nextView != null) {
-        Platform.runLater(() -> webView.getEngine().loadContent(pageContent(nextView)));
+      throw new RuntimeException("Unknown event source");
+    }
+  }
+
+  private void processFormSubmit(Node node) {
+    String action = findAction(node);
+    Node form = findForm(node);
+    Map<String, String> values = new HashMap<>();
+    gatherFormValues(form, values);
+
+    log.info("Processing form submit action: " + action + " params: " + values);
+
+    IRequest result =
+        data.getControllers().get(action).execute(request(action, values), data.model);
+    while (result != null) {
+      if (data.getControllers().containsKey(result.getPath())) {
+        result = data.getControllers().get(result.getPath()).execute(result, data.model);
+      } else {
+        final IRequest getRequest = result;
+        Platform.runLater(
+            () ->
+                webView
+                    .getEngine()
+                    .loadContent(pageContent(getRequest.getPath(), getRequest.getParams())));
+        result = null;
       }
     }
   }
 
-  private String pageContent(String path) {
+  private void gatherFormValues(Node node, Map<String, String> values) {
+    if (node.getNodeName().equalsIgnoreCase("input")) {
+      HTMLInputElement input = (HTMLInputElement) node;
+      if (input.getName() != null && input.getValue() != null) {
+        values.put(input.getName(), input.getValue());
+      } else {
+        log.info(
+            "Found input but has no data; name: "
+                + input.getName()
+                + " value: "
+                + input.getValue());
+      }
+    }
+
+    for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+      gatherFormValues(node.getChildNodes().item(i), values);
+    }
+  }
+
+  private Node findForm(Node node) {
+    Node parentNode = node.getParentNode();
+    while (parentNode != null) {
+      if (parentNode.getNodeName().equalsIgnoreCase("form")) {
+        return parentNode;
+      } else {
+        parentNode = parentNode.getParentNode();
+      }
+    }
+
+    throw new RuntimeException("No form for node " + node);
+  }
+
+  private String findAction(Node node) {
+    Node formaction = node.getAttributes().getNamedItem("formaction");
+    if (formaction != null) {
+      return formaction.getTextContent();
+    }
+
+    Node parentNode = node.getParentNode();
+    while (parentNode != null) {
+      if (parentNode.getNodeName().equalsIgnoreCase("form")) {
+        Node action = parentNode.getAttributes().getNamedItem("action");
+        if (action != null) {
+          return action.getTextContent();
+        } else {
+          // form was found, but it has default action
+          break;
+        }
+      }
+
+      parentNode = parentNode.getParentNode();
+    }
+
+    return currentUrl;
+  }
+
+  private void processLink(Node node) {
+    String href = node.getAttributes().getNamedItem("href").getTextContent();
+    Platform.runLater(() -> webView.getEngine().loadContent(pageContent(href, emptyMap())));
+  }
+
+  private String pageContent(String path, Map<String, String> params) {
     if (data.views.containsKey(path)) {
       log.info("Rendering page " + path);
-      return data.views.get(path).view(request(path, emptyMap()), data.model).renderFormatted();
+      currentUrl = path;
+      return data.views.get(path).view(request(path, params), data.model).renderFormatted();
     } else if (data.views.containsKey("/404")) {
+      currentUrl = "/404";
       // view not found - render 404 view
-      return data.views.get("/404").view(request(path, emptyMap()), data.model).renderFormatted();
+      return data.views.get("/404").view(request(path, params), data.model).renderFormatted();
     } else {
+      currentUrl = null;
       return "Not found " + path;
     }
   }

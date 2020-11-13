@@ -9,6 +9,6 @@ import lombok.Value;
 public class DesktopUIData<M> {
 
   public Map<String, IView<IRequest, M>> views;
-  public Map<String, IActionController<IRequest>> controllers;
+  public Map<String, IActionController<IRequest, M>> controllers;
   public M model;
 }

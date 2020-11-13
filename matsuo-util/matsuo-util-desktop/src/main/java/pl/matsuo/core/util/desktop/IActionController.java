@@ -1,6 +1,6 @@
 package pl.matsuo.core.util.desktop;
 
-public interface IActionController<Q extends IRequest> {
+public interface IActionController<Q extends IRequest, M> {
 
-  String execute(Q queryData);
+  IRequest execute(Q queryData, M model);
 }

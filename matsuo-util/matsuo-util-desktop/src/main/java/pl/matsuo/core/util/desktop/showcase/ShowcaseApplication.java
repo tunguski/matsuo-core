@@ -31,8 +31,8 @@ public class ShowcaseApplication extends DesktopUI {
     return views;
   }
 
-  private static Map<String, IActionController<IRequest>> controllers() {
-    Map<String, IActionController<IRequest>> controllers = new HashMap<>();
+  private static Map<String, IActionController<IRequest, Object>> controllers() {
+    Map<String, IActionController<IRequest, Object>> controllers = new HashMap<>();
 
     return controllers;
   }
