@@ -8,7 +8,7 @@ import pl.matsuo.core.util.desktop.DesktopUIData;
 import pl.matsuo.core.util.desktop.IActionController;
 import pl.matsuo.core.util.desktop.IRequest;
 import pl.matsuo.core.util.desktop.IView;
-import pl.matsuo.core.util.desktop.ViewComponents;
+import pl.matsuo.core.util.desktop.component.ViewComponents;
 import pl.matsuo.core.util.desktop.showcase.view.BasicMenuView;
 import pl.matsuo.core.util.desktop.showcase.view.NotFoundView;
 import pl.matsuo.core.util.desktop.showcase.view.SampleView;

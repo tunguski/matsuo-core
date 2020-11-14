@@ -77,6 +77,17 @@ public class CollectionUtil {
     return resultMap;
   }
 
+  /** Create map from array of key value pairs. */
+  public static <E, F> Map<E, F> toMap(Pair<E, F>... entries) {
+    Map<E, F> result = new HashMap<>();
+
+    for (Pair<E, F> entry : entries) {
+      result.put(entry.getKey(), entry.getValue());
+    }
+
+    return result;
+  }
+
   public static <E> E last(List<E> list) {
     return list.get(list.size() - 1);
   }

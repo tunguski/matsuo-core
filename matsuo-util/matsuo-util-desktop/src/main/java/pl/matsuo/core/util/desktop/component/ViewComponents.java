@@ -1,4 +1,4 @@
-package pl.matsuo.core.util.desktop;
+package pl.matsuo.core.util.desktop.component;
 
 import static j2html.TagCreator.attrs;
 import static j2html.TagCreator.body;

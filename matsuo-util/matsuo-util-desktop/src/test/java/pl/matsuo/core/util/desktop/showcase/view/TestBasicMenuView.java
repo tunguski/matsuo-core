@@ -6,7 +6,7 @@ import static pl.matsuo.core.util.desktop.ViewTestUtil.storeView;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import pl.matsuo.core.util.desktop.ViewComponents;
+import pl.matsuo.core.util.desktop.component.ViewComponents;
 
 public class TestBasicMenuView extends TestCase {
 
