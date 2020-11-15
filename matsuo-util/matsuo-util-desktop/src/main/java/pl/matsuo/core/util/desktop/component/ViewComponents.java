@@ -9,6 +9,7 @@ import static j2html.TagCreator.html;
 import static j2html.TagCreator.rawHtml;
 import static j2html.TagCreator.style;
 import static j2html.TagCreator.tbody;
+import static j2html.TagCreator.text;
 import static j2html.TagCreator.thead;
 import static j2html.TagCreator.title;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -20,30 +21,36 @@ import j2html.tags.DomContent;
 import java.io.IOException;
 import java.util.List;
 import java.util.function.Function;
+import lombok.NoArgsConstructor;
 import org.apache.commons.io.IOUtils;
+import pl.matsuo.core.util.desktop.IRequest;
 
+@NoArgsConstructor
 public class ViewComponents {
 
-  String bootstrapCss;
-  String customCss;
+  String bootstrapCss = loadResource(ViewComponents.class, "/css/custom.css");
+  String customCss = loadResource(ViewComponents.class, "/css/bootstrap-4.5.3.css");
+  String additionalCss = "";
 
-  {
+  public ViewComponents(String additionalCss) {
+    this.additionalCss = additionalCss;
+  }
+
+  public static String loadResource(Class<?> clazz, String path) {
     try {
-      customCss = IOUtils.toString(getClass().getResourceAsStream("/css/custom.css"), UTF_8);
-      bootstrapCss =
-          IOUtils.toString(getClass().getResourceAsStream("/css/bootstrap-4.5.3.css"), UTF_8);
+      return IOUtils.toString(clazz.getResourceAsStream(path), UTF_8);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
 
   public ContainerTag pageTemplate(String title, DomContent... bodyContent) {
-    rawHtml("fds");
     return html(
         head(
             title(title),
             style(rawHtml(bootstrapCss)).attr("type", "text/css"),
-            style(rawHtml(customCss)).attr("type", "text/css")),
+            style(rawHtml(customCss)).attr("type", "text/css"),
+            style(rawHtml(additionalCss)).attr("type", "text/css")),
         body(div(attrs(".container-fluid"), each(stream(bodyContent)))));
   }
 
@@ -55,5 +62,13 @@ public class ViewComponents {
       DomContent headerRow, List<E> rows, Function<? super E, DomContent> mapper) {
     return TagCreator.table(
         attrs(".table.table-sm.table-hover"), thead(headerRow), tbody(each(rows, mapper)));
+  }
+
+  public DomContent maybeShowAlert(IRequest request, String param, AlertType type) {
+    if (request.hasParam(param)) {
+      return div(attrs(".alert.alert-" + type.name()), text(request.getParam(param)));
+    } else {
+      return null;
+    }
   }
 }
