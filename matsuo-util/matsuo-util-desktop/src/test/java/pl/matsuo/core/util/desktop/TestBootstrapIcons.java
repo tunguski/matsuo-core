@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import pl.matsuo.core.util.desktop.component.BootstrapIcons;
 
 @Slf4j
 public class TestBootstrapIcons {

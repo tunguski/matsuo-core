@@ -11,8 +11,9 @@ import static j2html.TagCreator.text;
 import static java.util.Arrays.asList;
 
 import j2html.tags.ContainerTag;
+import j2html.tags.DomContent;
 import pl.matsuo.core.util.collection.Pair;
-import pl.matsuo.core.util.desktop.IRequest;
+import pl.matsuo.core.util.desktop.mvc.IRequest;
 
 public class FormComponents {
 
@@ -39,6 +40,11 @@ public class FormComponents {
 
   public ContainerTag formAsLink(
       String linkText, String actionUrl, Pair<String, String>... hiddenInputs) {
+    return formAsLink(text(linkText), actionUrl, hiddenInputs);
+  }
+
+  public ContainerTag formAsLink(
+      DomContent label, String actionUrl, Pair<String, String>... hiddenInputs) {
     ContainerTag form =
         form(
             attrs(".d-inline-block.m-0"),
@@ -49,8 +55,7 @@ public class FormComponents {
                         .withType("hidden")
                         .withName(param.getKey())
                         .withValue(param.getValue())),
-            button(attrs(".btn.btn-link.p-0.border-0.align-baseline"), text(linkText))
-                .withType("submit"));
+            button(attrs(".btn.btn-link.p-0.border-0.align-baseline"), label).withType("submit"));
 
     if (actionUrl != null) {
       form = form.withAction(actionUrl);

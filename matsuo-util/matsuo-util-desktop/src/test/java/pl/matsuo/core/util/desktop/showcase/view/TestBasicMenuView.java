@@ -1,8 +1,8 @@
 package pl.matsuo.core.util.desktop.showcase.view;
 
 import static java.util.Collections.emptyMap;
-import static pl.matsuo.core.util.desktop.IRequest.request;
 import static pl.matsuo.core.util.desktop.ViewTestUtil.storeView;
+import static pl.matsuo.core.util.desktop.mvc.IRequest.request;
 
 import junit.framework.TestCase;
 import org.junit.Test;

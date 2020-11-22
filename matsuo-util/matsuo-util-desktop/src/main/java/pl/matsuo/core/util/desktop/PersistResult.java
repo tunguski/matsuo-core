@@ -7,4 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface PersistResult {}
+public @interface PersistResult {
+
+  int interval() default 0;
+}

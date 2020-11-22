@@ -1,4 +1,4 @@
-package pl.matsuo.core.util.desktop;
+package pl.matsuo.core.util.desktop.component;
 
 import static j2html.TagCreator.rawHtml;
 import static java.lang.String.join;

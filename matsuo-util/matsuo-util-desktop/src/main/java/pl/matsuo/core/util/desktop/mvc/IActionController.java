@@ -1,4 +1,4 @@
-package pl.matsuo.core.util.desktop;
+package pl.matsuo.core.util.desktop.mvc;
 
 public interface IActionController<Q extends IRequest, M> {
 

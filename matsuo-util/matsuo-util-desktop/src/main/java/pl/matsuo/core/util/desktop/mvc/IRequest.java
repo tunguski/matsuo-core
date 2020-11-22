@@ -1,4 +1,4 @@
-package pl.matsuo.core.util.desktop;
+package pl.matsuo.core.util.desktop.mvc;
 
 import java.util.Map;
 

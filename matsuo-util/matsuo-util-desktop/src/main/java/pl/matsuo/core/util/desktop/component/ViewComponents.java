@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.function.Function;
 import lombok.NoArgsConstructor;
 import org.apache.commons.io.IOUtils;
-import pl.matsuo.core.util.desktop.IRequest;
+import pl.matsuo.core.util.desktop.mvc.IRequest;
 
 @NoArgsConstructor
 public class ViewComponents {

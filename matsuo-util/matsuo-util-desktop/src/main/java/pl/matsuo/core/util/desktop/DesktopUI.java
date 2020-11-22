@@ -3,7 +3,7 @@ package pl.matsuo.core.util.desktop;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
-import static pl.matsuo.core.util.desktop.IRequest.request;
+import static pl.matsuo.core.util.desktop.mvc.IRequest.request;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,6 +14,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
@@ -30,8 +31,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLInputElement;
+import pl.matsuo.core.util.desktop.mvc.IActionController;
+import pl.matsuo.core.util.desktop.mvc.IActiveMonitor;
+import pl.matsuo.core.util.desktop.mvc.IRequest;
+import pl.matsuo.core.util.desktop.mvc.IView;
 
 @Slf4j
 public abstract class DesktopUI<M> extends Application {
@@ -42,6 +48,8 @@ public abstract class DesktopUI<M> extends Application {
   @Getter final DesktopUIData<M> data;
   Stage stage;
   String currentUrl;
+  long lastPersistTime = System.currentTimeMillis();
+  IView<IRequest, M> currentView;
 
   public DesktopUI(DesktopUIData<M> data) {
     this.data = data;
@@ -61,14 +69,18 @@ public abstract class DesktopUI<M> extends Application {
         .addListener(
             (ov, oldState, newState) -> {
               if (newState == Worker.State.SUCCEEDED) {
-                log.info("Page loaded");
                 setupAfterPageLoad();
-              } else {
-                log.info("State changed " + newState);
               }
             });
+    Runtime.getRuntime()
+        .addShutdownHook(
+            new Thread(
+                () -> {
+                  log.info("Save on shutdown");
+                  maybePersistResult(null);
+                }));
 
-    webEngine.loadContent(pageContent("/", emptyMap()));
+    updateView(request("/", emptyMap()));
     BorderPane page = new BorderPane(webView);
     Scene scene = new Scene(page);
     stage.setScene(scene);
@@ -89,22 +101,48 @@ public abstract class DesktopUI<M> extends Application {
   }
 
   private void addClickHandler(Document doc) {
-    asList("a", "button").forEach(type -> addClickHandler(doc, type));
-  }
+    asList("a", "button")
+        .forEach(
+            type ->
+                processElementsOfType(
+                    doc, type, addEventListener("click", this::handleClickEvent, false)));
 
-  private void addClickHandler(Document doc, String type) {
-    NodeList links = doc.getElementsByTagName(type);
-    for (int i = 0; i < links.getLength(); i++) {
-      log.info("Found link. Adding listen function.");
-      Element el = (Element) links.item(i);
-      ((EventTarget) el).addEventListener("click", this::handleEvent, false);
+    if (currentView instanceof IActiveMonitor) {
+      asList("input", "textarea", "select")
+          .forEach(type -> processElementsOfType(doc, type, this::addInputHandler));
     }
   }
 
-  void handleEvent(Event ev) {
+  private void addInputHandler(Element el) {
+    addEventListener(
+            "input",
+            event -> {
+              boolean modelChanged =
+                  ((IActiveMonitor) currentView)
+                      .onChange(el.getAttribute("name"), event, data.getModel());
+              if (modelChanged) {
+                maybePersistResult(currentView);
+              }
+            },
+            false)
+        .accept(el);
+  }
+
+  private Consumer<Element> addEventListener(
+      String type, EventListener listener, boolean useCapture) {
+    return el -> ((EventTarget) el).addEventListener(type, listener, useCapture);
+  }
+
+  private void processElementsOfType(Document doc, String type, Consumer<Element> handler) {
+    NodeList links = doc.getElementsByTagName(type);
+    for (int i = 0; i < links.getLength(); i++) {
+      handler.accept((Element) links.item(i));
+    }
+  }
+
+  void handleClickEvent(Event ev) {
     EventTarget target = ev.getTarget();
     Node node = (Node) target;
-    log.info("Click " + node);
     processClick(node);
   }
 
@@ -129,8 +167,6 @@ public abstract class DesktopUI<M> extends Application {
     Map<String, String> values = new HashMap<>();
     gatherFormValues(form, values);
 
-    log.info("Processing form submit action: " + action + " params: " + values);
-
     IRequest result = request(action, values);
     while (result != null) {
       if (data.getControllers().containsKey(result.getPath())) {
@@ -140,12 +176,7 @@ public abstract class DesktopUI<M> extends Application {
 
         maybePersistResult(actionController);
       } else {
-        final IRequest getRequest = result;
-        Platform.runLater(
-            () ->
-                webView
-                    .getEngine()
-                    .loadContent(pageContent(getRequest.getPath(), getRequest.getParams())));
+        updateView(result);
         result = null;
       }
     }
@@ -156,12 +187,6 @@ public abstract class DesktopUI<M> extends Application {
       HTMLInputElement input = (HTMLInputElement) node;
       if (input.getName() != null && input.getValue() != null) {
         values.put(input.getName(), input.getValue());
-      } else {
-        log.info(
-            "Found input but has no data; name: "
-                + input.getName()
-                + " value: "
-                + input.getValue());
       }
     }
 
@@ -210,8 +235,15 @@ public abstract class DesktopUI<M> extends Application {
   private void processLink(Node node) {
     String href = node.getAttributes().getNamedItem("href").getTextContent();
     IRequest request = parseHref(href);
+    updateView(request);
+  }
+
+  private void updateView(IRequest request) {
     Platform.runLater(
-        () -> webView.getEngine().loadContent(pageContent(request.getPath(), request.getParams())));
+        () -> {
+          String content = pageContent(request.getPath(), request.getParams());
+          webView.getEngine().loadContent(content);
+        });
   }
 
   private IRequest parseHref(String href) {
@@ -229,30 +261,43 @@ public abstract class DesktopUI<M> extends Application {
         }
       }
 
-      return IRequest.request(split[0], params);
+      return request(split[0], params);
     } else {
-      return IRequest.request(href, emptyMap());
+      return request(href, emptyMap());
     }
   }
 
   private String pageContent(String path, Map<String, String> params) {
     if (data.views.containsKey(path)) {
-      log.info("Rendering page " + path);
       currentUrl = path;
-      return data.views.get(path).view(request(path, params), data.model).renderFormatted();
+      currentView = data.views.get(path);
+      // return data.views.get(path).view(request(path, params), data.model).renderFormatted();
     } else if (data.views.containsKey("/404")) {
       currentUrl = "/404";
+      currentView = data.views.get("/404");
       // view not found - render 404 view
-      return data.views.get("/404").view(request(path, params), data.model).renderFormatted();
+      // return data.views.get("/404").view(request(path, params), data.model).renderFormatted();
     } else {
       currentUrl = null;
       return "Not found " + path;
     }
+
+    return currentView.view(request(path, params), data.model).renderFormatted();
   }
 
-  private void maybePersistResult(IActionController<IRequest, M> actionController) {
-    if (actionController.getClass().getAnnotation(PersistResult.class) != null) {
+  private synchronized void maybePersistResult(Object actionController) {
+    if (actionController == null) {
       storeState();
+      lastPersistTime = System.currentTimeMillis();
+    } else {
+      PersistResult persistResult = actionController.getClass().getAnnotation(PersistResult.class);
+      if (persistResult != null) {
+        if (persistResult.interval() <= 0
+            || (lastPersistTime + (persistResult.interval() * 1000) < System.currentTimeMillis())) {
+          storeState();
+          lastPersistTime = System.currentTimeMillis();
+        }
+      }
     }
   }
 
@@ -269,8 +314,6 @@ public abstract class DesktopUI<M> extends Application {
         // write to the channel
         channel.write(UTF_8.encode(gson.toJson(data.model)));
       }
-
-      log.info("State stored");
     } catch (IOException e) {
       log.error("Exception while persisting state", e);
     }
@@ -283,8 +326,6 @@ public abstract class DesktopUI<M> extends Application {
         String fileContent = FileUtils.readFileToString(file, UTF_8);
         M deserializedModel = (M) gson.fromJson(fileContent, data.model.getClass());
         data.model = deserializedModel;
-
-        log.info("State read from disk: " + file.getAbsolutePath());
       }
     } catch (IOException e) {
       log.error("Exception while reading state", e);
