@@ -12,6 +12,7 @@ import static java.util.Arrays.asList;
 
 import j2html.tags.ContainerTag;
 import j2html.tags.DomContent;
+import j2html.tags.specialized.FormTag;
 import pl.matsuo.core.util.collection.Pair;
 import pl.matsuo.core.util.desktop.mvc.IRequest;
 
@@ -45,7 +46,7 @@ public class FormComponents {
 
   public ContainerTag formAsLink(
       DomContent label, String actionUrl, Pair<String, String>... hiddenInputs) {
-    ContainerTag form =
+    FormTag form =
         form(
             attrs(".d-inline-block.m-0"),
             each(

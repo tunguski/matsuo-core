@@ -1,21 +1,12 @@
 package pl.matsuo.core.web.controller.report;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-import static pl.matsuo.core.util.ReflectUtil.getValue;
-
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletResponse;
 import pl.matsuo.core.model.report.IPrintsReportParams;
 import pl.matsuo.core.service.db.Database;
@@ -26,6 +17,16 @@ import pl.matsuo.core.service.report.AbstractReportService;
 import pl.matsuo.core.service.report.DataModelBuilder;
 import pl.matsuo.core.service.report.IReportService;
 import pl.matsuo.core.test.data.TestSessionState;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+import static pl.matsuo.core.util.ReflectUtil.getValue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestReportsController {
@@ -55,7 +56,7 @@ public class TestReportsController {
     TestReportService testReportService = new TestReportService();
     reportsController.setReportServices(new IReportService[] {testReportService});
 
-    when(printsRendererService.renderHtml(anyString(), anyObject()))
+    when(printsRendererService.renderHtml(anyString(), any()))
         .thenReturn("Rendered OK".getBytes());
   }
 

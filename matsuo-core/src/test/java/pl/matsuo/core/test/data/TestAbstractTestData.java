@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.session.SessionState;

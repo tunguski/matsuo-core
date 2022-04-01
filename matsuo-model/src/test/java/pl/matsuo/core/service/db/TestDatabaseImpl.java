@@ -1,25 +1,34 @@
 package pl.matsuo.core.service.db;
 
-import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-import static pl.matsuo.core.model.query.QueryBuilder.eq;
-import static pl.matsuo.core.model.query.QueryBuilder.query;
-import static pl.matsuo.core.util.function.FunctionalUtil.with;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaQuery;
 import org.junit.Test;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import pl.matsuo.core.model.query.AbstractQuery;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.service.session.SessionState;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.RETURNS_MOCKS;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
+import static pl.matsuo.core.model.query.QueryBuilder.eq;
+import static pl.matsuo.core.model.query.QueryBuilder.query;
+import static pl.matsuo.core.util.function.FunctionalUtil.with;
 
 public class TestDatabaseImpl {
 
@@ -56,7 +65,7 @@ public class TestDatabaseImpl {
               return null;
             })
         .when(beanFactory)
-        .autowireBeanProperties(anyObject(), anyInt(), anyBoolean());
+        .autowireBeanProperties(any(), anyInt(), anyBoolean());
 
     testUser.setIdBucket(10L);
     testUser2.setIdBucket(11L);
