@@ -3,7 +3,7 @@
   <packaging>pom</packaging>
   <groupId>pl.matsuo</groupId>
   <artifactId>matsuo-core-parent</artifactId>
-  <version>0.1.7-SNAPSHOT</version>
+  <version>0.1.7</version>
   <name>matsuo-parent</name>
   <url>${site.url}</url>
   <description>Common code for building server and web applications.</description>
@@ -23,7 +23,7 @@
     <downloadJavadocs>true</downloadJavadocs>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <matsuo-core.version>0.1.7-SNAPSHOT</matsuo-core.version>
+    <matsuo-core.version>0.1.7</matsuo-core.version>
 
     <asm.version>9.2</asm.version>
     <commons-codec.version>1.15</commons-codec.version>
@@ -775,7 +775,7 @@
     <connection>scm:git:git@github.com:tunguski/matsuo-core.git</connection>
     <developerConnection>scm:git:git@github.com:tunguski/matsuo-core.git</developerConnection>
     <url>git@github.com:tunguski/matsuo-core.git</url>
-    <tag>HEAD</tag>
+    <tag>matsuo-core-parent-0.1.7</tag>
   </scm>
 
   <repositories>
