@@ -1,5 +1,14 @@
 package pl.matsuo.core.web.controller.report;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+import static pl.matsuo.core.util.ReflectUtil.getValue;
+
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,16 +26,6 @@ import pl.matsuo.core.service.report.AbstractReportService;
 import pl.matsuo.core.service.report.DataModelBuilder;
 import pl.matsuo.core.service.report.IReportService;
 import pl.matsuo.core.test.data.TestSessionState;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static pl.matsuo.core.util.ReflectUtil.getValue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestReportsController {
@@ -56,8 +55,7 @@ public class TestReportsController {
     TestReportService testReportService = new TestReportService();
     reportsController.setReportServices(new IReportService[] {testReportService});
 
-    when(printsRendererService.renderHtml(anyString(), any()))
-        .thenReturn("Rendered OK".getBytes());
+    when(printsRendererService.renderHtml(anyString(), any())).thenReturn("Rendered OK".getBytes());
   }
 
   @Test

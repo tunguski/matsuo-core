@@ -69,7 +69,9 @@ abstract class AbstractPrintGeneratingTest<E> implements PrintMethods {
     }
   }
 
-  /** @return Zwraca parę - wyrenderowany html i binarny pdf. */
+  /**
+   * @return Zwraca parę - wyrenderowany html i binarny pdf.
+   */
   CreatePdfResult testCreatePDF(String htmlInputPath, Map<String, Object> dataModel)
       throws Exception {
     // w poszczególnych testach nie trzeba ustawiać formatu

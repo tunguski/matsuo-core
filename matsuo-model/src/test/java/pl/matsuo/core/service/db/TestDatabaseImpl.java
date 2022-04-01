@@ -1,18 +1,5 @@
 package pl.matsuo.core.service.db;
 
-import org.junit.Test;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import pl.matsuo.core.model.query.AbstractQuery;
-import pl.matsuo.core.model.user.User;
-import pl.matsuo.core.service.session.SessionState;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -29,6 +16,18 @@ import static org.mockito.Mockito.withSettings;
 import static pl.matsuo.core.model.query.QueryBuilder.eq;
 import static pl.matsuo.core.model.query.QueryBuilder.query;
 import static pl.matsuo.core.util.function.FunctionalUtil.with;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
+import org.junit.Test;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import pl.matsuo.core.model.query.AbstractQuery;
+import pl.matsuo.core.model.user.User;
+import pl.matsuo.core.service.session.SessionState;
 
 public class TestDatabaseImpl {
 
