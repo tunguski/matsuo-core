@@ -12,12 +12,6 @@
     <context:include-filter type="annotation" expression="pl.matsuo.core.web.annotation.WebConfiguration" />
   </context:component-scan>
 
-  <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-    <property name="cache" value="false"/>
-    <property name="prefix" value=""/>
-    <property name="suffix" value=".ftl"/>
-  </bean>
-
   <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
     <!-- chyba nie zadziałało; chodzi o to aby requesty o Jsona miały content-length - wtedy będą wysyłane skompresowane,
          bez tego są przesyłane jako zwykły tekst -->

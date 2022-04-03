@@ -11,7 +11,6 @@ pl.matsuo.core
     │   └── CollectionUtil.java
     ├── DateUtil.java
     ├── EnumUtil.java
-    ├── FreemarkerUtils.java
     ├── function
     │   ├── Failure.java
     │   ├── FunctionalUtil.java

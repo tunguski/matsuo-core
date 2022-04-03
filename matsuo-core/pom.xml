@@ -19,19 +19,10 @@
 
     <!-- pdf reports -->
     <dependency>
-      <groupId>org.xhtmlrenderer</groupId>
-      <artifactId>flying-saucer-core</artifactId>
-      <version>${flying-saucer.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.xhtmlrenderer</groupId>
-      <artifactId>flying-saucer-pdf</artifactId>
-      <version>${flying-saucer.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pdfbox</groupId>
-      <artifactId>pdfbox</artifactId>
-      <version>${pdfbox.version}</version>
+      <!-- Required for PDF output. -->
+      <groupId>com.openhtmltopdf</groupId>
+      <artifactId>openhtmltopdf-pdfbox</artifactId>
+      <version>${openhtml.version}</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
@@ -57,15 +48,14 @@
     </dependency>
 
     <dependency>
-      <groupId>net.sf.supercsv</groupId>
-      <artifactId>super-csv</artifactId>
-      <version>${super-csv.version}</version>
+      <groupId>com.j2html</groupId>
+      <artifactId>j2html</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.freemarker</groupId>
-      <artifactId>freemarker</artifactId>
-      <version>${freemarker.version}</version>
+      <groupId>net.sf.supercsv</groupId>
+      <artifactId>super-csv</artifactId>
+      <version>${super-csv.version}</version>
     </dependency>
 
     <dependency>

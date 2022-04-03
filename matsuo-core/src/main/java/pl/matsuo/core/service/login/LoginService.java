@@ -24,6 +24,7 @@ import pl.matsuo.core.model.user.GroupEnum;
 import pl.matsuo.core.model.user.User;
 import pl.matsuo.core.model.user.initializer.UserInitializer;
 import pl.matsuo.core.service.db.Database;
+import pl.matsuo.core.service.login.model.LoginEmailData;
 import pl.matsuo.core.service.mail.IMailService;
 import pl.matsuo.core.service.report.DataModelBuilder;
 import pl.matsuo.core.service.session.SessionState;
@@ -107,7 +108,7 @@ public class LoginService implements ILoginService {
                             new InternetAddress(generalMailAccount, appName),
                             new InternetAddress(user.getUsername()),
                             "Przypomnienie hasła",
-                            "remindPassword.ftl",
+                            "remindPassword",
                             new DataModelBuilder().put("user", user).getDataModel())));
   }
 
@@ -161,8 +162,8 @@ public class LoginService implements ILoginService {
                   new InternetAddress(generalMailAccount, appName),
                   new InternetAddress(user.getUsername()),
                   "Witamy! Prosimy o weryfikację adresu e-mail",
-                  "createAccount.ftl",
-                  new DataModelBuilder().put("user", user).getDataModel()));
+                  "createAccount",
+                  new LoginEmailData(user)));
     }
 
     return user.getUnblockTicket();

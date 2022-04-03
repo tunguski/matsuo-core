@@ -36,8 +36,8 @@ public class TestReportsController {
   IPrintsRendererService printsRendererService =
       new PrintsRendererService() {
         @Override
-        public byte[] renderHtml(String templateName, Object dataModel) {
-          return "Rendered Html OK".getBytes();
+        public String renderHtml(String templateName, Object dataModel) {
+          return "Rendered Html OK";
         }
 
         @Override
@@ -55,7 +55,7 @@ public class TestReportsController {
     TestReportService testReportService = new TestReportService();
     reportsController.setReportServices(new IReportService[] {testReportService});
 
-    when(printsRendererService.renderHtml(anyString(), any())).thenReturn("Rendered OK".getBytes());
+    when(printsRendererService.renderHtml(anyString(), any())).thenReturn("Rendered OK");
   }
 
   @Test

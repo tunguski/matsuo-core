@@ -15,7 +15,6 @@
         <module>matsuo-util-collection</module>
         <module>matsuo-util-common</module>
         <module>matsuo-util-desktop</module>
-        <module>matsuo-util-freemarker</module>
         <module>matsuo-util-functional</module>
     </modules>
 </project>

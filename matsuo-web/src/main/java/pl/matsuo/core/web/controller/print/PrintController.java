@@ -91,7 +91,7 @@ public class PrintController {
       model.put("outputFormat", "pdf");
 
       generatePrint(
-          uncapitalize(print.getPrintClass().getSimpleName()) + ".ftl",
+          uncapitalize(print.getPrintClass().getSimpleName()),
           printService.getFileName(printFacade),
           model,
           response);

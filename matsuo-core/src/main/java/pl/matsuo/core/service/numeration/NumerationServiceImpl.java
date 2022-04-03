@@ -10,10 +10,8 @@ import static pl.matsuo.core.model.query.QueryBuilder.le;
 import static pl.matsuo.core.model.query.QueryBuilder.or;
 import static pl.matsuo.core.model.query.QueryBuilder.query;
 import static pl.matsuo.core.util.DateUtil.cal;
-import static pl.matsuo.core.util.function.FunctionalUtil.runtimeEx;
+import static pl.matsuo.core.util.collection.CollectionUtil.findFirst;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,8 +28,6 @@ import pl.matsuo.core.service.report.DataModelBuilder;
 public class NumerationServiceImpl implements NumerationService {
 
   @Autowired protected Database database;
-  // @Autowired
-  protected Configuration freeMarkerConfiguration = new Configuration();
   @Autowired protected List<NumerationSchemaStrategy> numerationSchemaStrategies;
 
   @Override
@@ -65,13 +61,18 @@ public class NumerationServiceImpl implements NumerationService {
             .put("eventDate", "" + eventCal.get(DATE))
             .getDataModel();
 
-    runtimeEx(
-        () ->
-            new Template(
-                    "" + numeration.getId() + "-" + numeration.getCode(),
-                    numeration.getPattern(),
-                    freeMarkerConfiguration)
-                .process(dataModel, writer));
+    String generated =
+        numeration
+            .getPattern()
+            .replace("${value}", "" + numeration.getValue())
+            .replace("${numerationYear}", "" + numerationCal.get(YEAR))
+            .replace("${numerationMonth}", "" + (numerationCal.get(MONTH) + 1))
+            .replace("${numerationDate}", "" + numerationCal.get(DATE))
+            .replace("${eventYear}", "" + eventCal.get(YEAR))
+            .replace("${eventMonth}", "" + (eventCal.get(MONTH) + 1))
+            .replace("${eventDate}", "" + eventCal.get(DATE));
+
+    writer.write(generated);
 
     return writer.getBuffer().toString();
   }
@@ -112,10 +113,10 @@ public class NumerationServiceImpl implements NumerationService {
   protected Numeration createNumerationInstance(NumerationSchema numerationSchema, Date date) {
     String creationStrategy = numerationSchema.getCreationStrategy();
     NumerationSchemaStrategy numerationSchemaStrategy =
-        numerationSchemaStrategies.stream()
-            .filter(strategy -> strategy.getClass().getSimpleName().equals(creationStrategy))
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException());
+        findFirst(
+                numerationSchemaStrategies,
+                strategy -> strategy.getClass().getSimpleName().equals(creationStrategy))
+            .orElseThrow(RuntimeException::new);
 
     Numeration numeration = numerationSchemaStrategy.createNumeration(numerationSchema, date);
 

@@ -1,5 +1,6 @@
 package pl.matsuo.core.web.controller.report;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.asList;
 import static org.apache.commons.io.IOUtils.write;
 import static org.springframework.core.GenericTypeResolver.resolveTypeArgument;
@@ -53,7 +54,8 @@ public class ReportsController {
     generateReport(
         "xls",
         "application/vnd.ms-excel",
-        printsRendererService::renderHtml,
+        (templateName, dataModel) ->
+            printsRendererService.renderHtml(templateName, dataModel).getBytes(UTF_8),
         reportName,
         params,
         response);

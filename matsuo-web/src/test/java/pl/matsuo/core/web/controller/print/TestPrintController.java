@@ -18,13 +18,16 @@ import pl.matsuo.core.model.report.IPrintsReportParams;
 import pl.matsuo.core.service.facade.FacadeBuilder;
 import pl.matsuo.core.service.print.AbstractPrintService;
 import pl.matsuo.core.service.print.PrintsRendererService;
+import pl.matsuo.core.service.template.TemplateRegistryImpl;
 
 @ContextConfiguration(
     classes = {
       PrintController.class,
       PrintsRendererService.class,
       GeneralConfig.class,
-      TestPrintController.TemplateNamePrintService.class
+      TestPrintController.TemplateNamePrintService.class,
+      TemplateRegistryImpl.class,
+      SampleTemplate.class
     })
 public class TestPrintController extends AbstractDbTest {
 
@@ -36,7 +39,7 @@ public class TestPrintController extends AbstractDbTest {
   @Before
   public void setupDatabase() {
     print = new KeyValuePrint();
-    print.setPrintClass(TemplateName.class);
+    print.setPrintClass(SampleTemplate.class);
 
     database.create(print);
   }
@@ -57,7 +60,7 @@ public class TestPrintController extends AbstractDbTest {
   public void testGeneratePrint2() {
     MockHttpServletResponse response = new MockHttpServletResponse();
     Map<String, Object> dataModel = new HashMap<>();
-    printController.generatePrint("templateName.ftl", "fileName", dataModel, response);
+    printController.generatePrint("sampleTemplate", "fileName", dataModel, response);
   }
 
   @Test
@@ -77,16 +80,16 @@ public class TestPrintController extends AbstractDbTest {
     printController.listByIdEntities(asList(17L));
   }
 
-  public static interface TemplateName extends IPrintFacade {}
+  public static interface SampleTemplate extends IPrintFacade {}
 
   @Service
-  public static class TemplateNamePrintService extends AbstractPrintService<TemplateName> {
+  public static class TemplateNamePrintService extends AbstractPrintService<SampleTemplate> {
 
     @Override
-    protected void buildModel(TemplateName print, Map dataModel) {}
+    protected void buildModel(SampleTemplate print, Map dataModel) {}
 
     @Override
-    public String getFileName(TemplateName print) {
+    public String getFileName(SampleTemplate print) {
       return "templateName";
     }
   }

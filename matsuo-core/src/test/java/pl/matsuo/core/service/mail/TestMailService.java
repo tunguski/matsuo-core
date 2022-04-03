@@ -42,7 +42,7 @@ public class TestMailService {
     doAnswer(invocation -> null).when(mailSender).send(any(MimeMessage.class));
     when(database.create(any(MailMessage.class))).thenReturn(mailMessage);
 
-    when(printsRendererService.renderHtml("bodyTemplate.ftl", null)).thenReturn("OK".getBytes());
+    when(printsRendererService.renderHtml("bodyTemplate", null)).thenReturn("OK");
 
     assertEquals(
         (Long) 55L,
@@ -50,7 +50,7 @@ public class TestMailService {
             new InternetAddress("from@example.com"),
             new InternetAddress("to@example.com"),
             "subject",
-            "bodyTemplate.ftl",
+            "bodyTemplate",
             null));
 
     verify(mailSender).send(any(MimeMessage.class));

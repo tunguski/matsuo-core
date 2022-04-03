@@ -8,21 +8,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.convert.support.GenericConversionService;
-import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 @Import({GenericConversionService.class, LocalValidatorFactoryBean.class})
 @PropertySource("classpath:/app.properties")
 public class GeneralConfig {
-
-  @Bean
-  public FreeMarkerConfigurationFactoryBean freeMarkerConfigurationFactoryBean() {
-    FreeMarkerConfigurationFactoryBean configurationBean = new FreeMarkerConfigurationFactoryBean();
-    configurationBean.setTemplateLoaderPath("classpath:/print");
-
-    return configurationBean;
-  }
 
   @Bean
   public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
