@@ -46,8 +46,8 @@
     <jasperreports.version>5.2.0</jasperreports.version>
     <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
     <javax.mail.version>1.5.0-b01</javax.mail.version>
-    <jackson.version>2.13.2</jackson.version>
-    <jackson-databind.version>2.13.2.2</jackson-databind.version>
+    <jackson.version>2.13.4.1</jackson.version>
+    <jackson-databind.version>2.13.4.1</jackson-databind.version>
     <jetty.version>9.4.45.v20220203</jetty.version>
     <jgit.version>6.1.0.202203080745-r</jgit.version>
     <json-path.version>2.4.0</json-path.version>
