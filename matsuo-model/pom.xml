@@ -8,7 +8,7 @@
   <parent>
     <groupId>pl.matsuo</groupId>
     <artifactId>matsuo-core-parent</artifactId>
-    <version>0.1.8</version>
+    <version>0.1.9-SNAPSHOT</version>
   </parent>
 
   <dependencies>
