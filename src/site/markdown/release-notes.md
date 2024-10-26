@@ -7,7 +7,6 @@ The history of Matsuo Core releases is documented below. For details of changes 
 
 [github-report]: github-report.html
 
-
 ## 1.0.0 / 2015-??-??
 
 ### Major enhancements

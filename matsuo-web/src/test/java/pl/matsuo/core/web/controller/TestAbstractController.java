@@ -9,11 +9,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import jakarta.persistence.EntityManager;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
-import javax.persistence.EntityManager;
 import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,7 +92,7 @@ public class TestAbstractController {
         .then(
             invocation -> {
               EntityManager entityManager = mock(EntityManager.class);
-              javax.persistence.Query jpaQuery = mock(javax.persistence.Query.class);
+              jakarta.persistence.Query jpaQuery = mock(jakarta.persistence.Query.class);
               Session session = mock(Session.class);
 
               when(entityManager.createQuery(anyString())).thenReturn(jpaQuery);

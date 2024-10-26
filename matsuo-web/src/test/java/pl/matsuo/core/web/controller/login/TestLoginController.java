@@ -155,7 +155,7 @@ public class TestLoginController extends AbstractControllerTest {
     List<AbstractEntity> entities =
         database.find(
             query((Class<AbstractEntity>) clazz, eq(AbstractEntity::getIdBucket, idBucket)));
-    assertEquals(1, entities.size());
+    assertEquals((int) size, entities.size());
   }
 
   @Test

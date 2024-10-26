@@ -1,7 +1,7 @@
 package pl.matsuo.core.model.log;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import pl.matsuo.core.model.AbstractEntity;

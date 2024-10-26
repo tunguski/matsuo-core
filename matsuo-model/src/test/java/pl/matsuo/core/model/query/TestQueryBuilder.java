@@ -31,7 +31,6 @@ import static pl.matsuo.core.model.query.QueryBuilder.or;
 import static pl.matsuo.core.model.query.QueryBuilder.query;
 import static pl.matsuo.core.model.query.QueryBuilder.select;
 
-import org.hibernate.criterion.MatchMode;
 import org.junit.Test;
 
 public class TestQueryBuilder {

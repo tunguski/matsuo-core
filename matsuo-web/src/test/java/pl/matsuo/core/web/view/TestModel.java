@@ -1,9 +1,9 @@
 package pl.matsuo.core.web.view;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.ManyToOne;
 import java.sql.Time;
 import java.util.Date;
-import javax.persistence.EnumType;
-import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import pl.matsuo.core.model.validation.EntityReference;

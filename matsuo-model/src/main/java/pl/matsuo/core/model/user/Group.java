@@ -1,7 +1,7 @@
 package pl.matsuo.core.model.user;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import pl.matsuo.core.model.AbstractEntity;

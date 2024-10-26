@@ -1,18 +1,17 @@
 package pl.matsuo.core.model.organization;
 
-import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.TemporalType.DATE;
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.TemporalType.DATE;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Temporal;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 import lombok.Getter;
 import lombok.Setter;
 import pl.matsuo.core.model.organization.address.Address;
-import pl.matsuo.validator.PESEL;
 
 @Entity
 // @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"firstName", "secondName", "pesel"}))
@@ -27,7 +26,7 @@ public class Person extends AbstractParty {
   @Enumerated(STRING)
   private Sex sex;
 
-  @PESEL private String pesel;
+  private String pesel;
 
   @Temporal(DATE)
   private Date birthDate;

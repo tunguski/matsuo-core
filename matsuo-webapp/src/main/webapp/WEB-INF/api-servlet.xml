@@ -7,14 +7,17 @@
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
   <context:component-scan use-default-filters="false" base-package="pl.matsuo">
-    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-    <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
-    <context:include-filter type="annotation" expression="pl.matsuo.core.web.annotation.WebConfiguration" />
+    <context:include-filter type="annotation"
+                            expression="org.springframework.stereotype.Controller"/>
+    <context:include-filter type="annotation"
+                            expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    <context:include-filter type="annotation"
+                            expression="pl.matsuo.core.web.annotation.WebConfiguration"/>
   </context:component-scan>
 
   <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
     <!-- chyba nie zadziałało; chodzi o to aby requesty o Jsona miały content-length - wtedy będą wysyłane skompresowane,
          bez tego są przesyłane jako zwykły tekst -->
-    <property name="updateContentLength" value="true" />
+    <property name="updateContentLength" value="true"/>
   </bean>
 </beans>

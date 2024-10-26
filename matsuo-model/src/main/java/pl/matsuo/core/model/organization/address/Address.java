@@ -1,10 +1,10 @@
 package pl.matsuo.core.model.organization.address;
 
-import static javax.persistence.EnumType.STRING;
+import static jakarta.persistence.EnumType.STRING;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.Pattern;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import pl.matsuo.core.model.AbstractEntity;

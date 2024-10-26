@@ -1,20 +1,19 @@
 package pl.matsuo.core.model.organization;
 
-import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.InheritanceType.SINGLE_TABLE;
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.InheritanceType.SINGLE_TABLE;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.organization.address.Address;
-import pl.matsuo.validator.NIP;
 
 /**
  * Nadklasa dla wszystkich obiektów występujących jako podmioty w dowolnym kontekście. Podstawowe
@@ -28,7 +27,7 @@ import pl.matsuo.validator.NIP;
 @Setter
 public abstract class AbstractParty extends AbstractEntity {
 
-  @NIP private String nip;
+  private String nip;
 
   @NotNull
   @Valid

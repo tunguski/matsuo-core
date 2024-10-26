@@ -1,6 +1,6 @@
 package pl.matsuo.core.kv;
 
-import static javax.persistence.EnumType.STRING;
+import static jakarta.persistence.EnumType.STRING;
 import static org.junit.Assert.assertEquals;
 import static pl.matsuo.core.util.DateUtil.date;
 import static pl.matsuo.core.util.NumberUtil.bd;

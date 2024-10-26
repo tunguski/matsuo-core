@@ -62,8 +62,8 @@
           <markPageHeader>false</markPageHeader>
           <sections>
             <columns>2</columns>
-            <body />
-            <sidebar />
+            <body/>
+            <sidebar/>
           </sections>
         </index>
         <contribute>
@@ -90,36 +90,36 @@
 
   <body>
     <links>
-      <item name="GitHub project" href="https://github.com/tunguski/matsuo-core" />
+      <item name="GitHub project" href="https://github.com/tunguski/matsuo-core"/>
     </links>
 
     <breadcrumbs>
-      <item name="Matsuo Core" href="/" />
+      <item name="Matsuo Core" href="/"/>
     </breadcrumbs>
 
     <menu name="Main" inherit="top">
-      <item name="Home" href="./" />
-      <item name="GitHub project" href="https://github.com/tunguski/matsuo-core" />
-      <item name="Blog" href="https://tunguski.github.io/matsuo-core/blog" />
-      <item name="Release notes" href="release-notes.html" />
+      <item name="Home" href="./"/>
+      <item name="GitHub project" href="https://github.com/tunguski/matsuo-core"/>
+      <item name="Blog" href="https://tunguski.github.io/matsuo-core/blog"/>
+      <item name="Release notes" href="release-notes.html"/>
     </menu>
     <menu name="Usage" inherit="top">
-      <item name="Maven dependency" href="skin/index.html#Usage" />
-      <item name="License" href="license.html" />
+      <item name="Maven dependency" href="skin/index.html#Usage"/>
+      <item name="License" href="license.html"/>
     </menu>
     <menu name="Documentation" inherit="bottom">
-      <item name="Getting started" href="getting_started.html" />
-      <item name="Util" href="util.html" />
-      <item name="Model" href="model.html" />
-      <item name="Core" href="core.html" />
-      <item name="Web" href="web.html" />
-      <item name="Webapp" href="webapp.html" />
+      <item name="Getting started" href="getting_started.html"/>
+      <item name="Util" href="util.html"/>
+      <item name="Model" href="model.html"/>
+      <item name="Core" href="core.html"/>
+      <item name="Web" href="web.html"/>
+      <item name="Webapp" href="webapp.html"/>
       <!--<item name="Local resources" href="skin/resources.html" />-->
     </menu>
     <menu name="Contribute" inherit="bottom">
-      <item name="Contribute" href="contribute.html" />
-      <item name="Issues" href="https://github.com/tunguski/matsuo-core/issues" />
-      <item name="Fork on GitHub" href="https://github.com/tunguski/matsuo-core" />
+      <item name="Contribute" href="contribute.html"/>
+      <item name="Issues" href="https://github.com/tunguski/matsuo-core/issues"/>
+      <item name="Fork on GitHub" href="https://github.com/tunguski/matsuo-core"/>
     </menu>
     <menu name="Reports" ref="reports" inherit="bottom"/>
   </body>

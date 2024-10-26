@@ -1,6 +1,6 @@
 package pl.matsuo.core.model.message;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 

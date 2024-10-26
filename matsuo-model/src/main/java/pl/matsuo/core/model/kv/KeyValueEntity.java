@@ -1,12 +1,12 @@
 package pl.matsuo.core.model.kv;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Lob;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OrderColumn;
 import java.util.HashMap;
 import java.util.Map;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Lob;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OrderColumn;
 import pl.matsuo.core.model.AbstractEntity;
 
 @MappedSuperclass

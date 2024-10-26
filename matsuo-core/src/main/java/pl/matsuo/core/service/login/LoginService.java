@@ -7,9 +7,9 @@ import static pl.matsuo.core.util.SecurityUtil.passwordHash;
 import static pl.matsuo.core.util.StringUtil.notEmpty;
 import static pl.matsuo.core.util.function.FunctionalUtil.runtimeEx;
 
+import jakarta.mail.internet.InternetAddress;
 import java.util.Date;
 import java.util.List;
-import javax.mail.internet.InternetAddress;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -124,7 +124,7 @@ public class LoginService implements ILoginService {
     organizationUnit.setShortName(createAccountData.getCompanyShortName());
     organizationUnit.setNip(createAccountData.getCompanyNip());
     database.create(organizationUnit);
-    Assert.notNull(organizationUnit.getId());
+    Assert.notNull(organizationUnit.getId(), "Failed to create organizationUnit");
     // update idBucket for newly created organization
     organizationUnit.setIdBucket(organizationUnit.getId());
     database.update(organizationUnit);
@@ -139,7 +139,7 @@ public class LoginService implements ILoginService {
     user.setPerson(person);
     List<Group> groups =
         database.findAsAdmin(query(Group.class, eq(Group::getName, GroupEnum.SUPERVISOR.name())));
-    Assert.isTrue(groups.size() == 1);
+    Assert.isTrue(groups.size() == 1, "Incorrect number of groups: " + groups.size());
     user.getGroups().add(groups.get(0));
     user.setUsername(createAccountData.getUsername());
     user.setPassword(passwordHash(createAccountData.getPassword()));

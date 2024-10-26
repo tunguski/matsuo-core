@@ -22,10 +22,10 @@ Configure
 
 Last
 
-
 ## Utils
 
-Provides common utilities used in all layers. Generally they do not depend on application layer implementation.
+Provides common utilities used in all layers. Generally they do not depend on application layer
+implementation.
 
 Most important are:
 

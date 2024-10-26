@@ -1,16 +1,16 @@
 package pl.matsuo.core.model.validation;
 
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.matsuo.core.service.db.Database;
-import pl.matsuo.validator.ValidatorBase;
 
 /**
  * Waliduje czy przekazana wartość jest identyfikatorem encji istniejącej w bazie danych.
  *
  * @since 15-06-2013
  */
-public class EntityReferenceValidator extends ValidatorBase<EntityReference, Long> {
+public class EntityReferenceValidator implements ConstraintValidator<EntityReference, Long> {
 
   @Autowired protected Database database;
 

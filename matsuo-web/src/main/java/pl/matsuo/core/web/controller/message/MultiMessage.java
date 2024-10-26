@@ -1,7 +1,7 @@
 package pl.matsuo.core.web.controller.message;
 
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 import pl.matsuo.core.model.message.AbstractMessage;

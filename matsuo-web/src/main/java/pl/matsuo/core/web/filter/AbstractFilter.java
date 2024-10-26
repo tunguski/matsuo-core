@@ -1,7 +1,7 @@
 package pl.matsuo.core.web.filter;
 
-import javax.servlet.FilterConfig;
-import javax.servlet.http.HttpFilter;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.http.HttpFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.matsuo.core.service.db.Database;
 import pl.matsuo.core.service.session.SessionState;

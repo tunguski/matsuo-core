@@ -20,6 +20,16 @@ import j2html.TagCreator;
 import j2html.attributes.Attr;
 import j2html.tags.ContainerTag;
 import j2html.tags.Tag;
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.metadata.BeanDescriptor;
+import jakarta.validation.metadata.ConstraintDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
@@ -30,16 +40,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.PostConstruct;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.metadata.BeanDescriptor;
-import javax.validation.metadata.ConstraintDescriptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pl.matsuo.core.model.validation.EntityReference;
@@ -61,7 +61,6 @@ public class BootstrapRenderer {
     }
 
     bootstrapRenderer = this;
-
     validator = Validation.buildDefaultValidatorFactory().getValidator();
   }
 
@@ -278,7 +277,7 @@ public class BootstrapRenderer {
     }
 
     BeanDescriptor constraintsForClass = validator.getConstraintsForClass(entityType);
-    javax.validation.metadata.PropertyDescriptor constraintsForProperty =
+    jakarta.validation.metadata.PropertyDescriptor constraintsForProperty =
         constraintsForClass.getConstraintsForProperty(propertyName);
 
     if (constraintsForProperty != null) {

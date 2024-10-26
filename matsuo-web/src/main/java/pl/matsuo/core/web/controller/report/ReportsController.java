@@ -9,7 +9,7 @@ import static pl.matsuo.core.util.ReflectCollectionUtil.toMap;
 
 import java.util.Map;
 import java.util.function.BiFunction;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;

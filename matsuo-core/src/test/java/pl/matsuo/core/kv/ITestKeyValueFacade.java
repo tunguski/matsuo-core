@@ -1,9 +1,9 @@
 package pl.matsuo.core.kv;
 
+import jakarta.persistence.EnumType;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EnumType;
 import pl.matsuo.core.model.kv.IKeyValueFacade;
 
 public interface ITestKeyValueFacade extends IKeyValueFacade {

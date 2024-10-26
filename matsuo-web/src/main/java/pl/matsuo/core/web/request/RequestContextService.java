@@ -1,6 +1,6 @@
 package pl.matsuo.core.web.request;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 

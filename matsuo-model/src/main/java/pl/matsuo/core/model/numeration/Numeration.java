@@ -1,13 +1,13 @@
 package pl.matsuo.core.model.numeration;
 
-import static javax.persistence.TemporalType.DATE;
+import static jakarta.persistence.TemporalType.DATE;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.UniqueConstraint;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import pl.matsuo.core.model.AbstractEntity;
@@ -20,6 +20,7 @@ import pl.matsuo.core.model.api.TemporalEntity;
 public class Numeration extends AbstractEntity implements TemporalEntity {
 
   @NotNull protected Integer value;
+
   /** Owning entity id. May be null if this numeration is 'general' (depending on the context). */
   protected Long idEntity;
 

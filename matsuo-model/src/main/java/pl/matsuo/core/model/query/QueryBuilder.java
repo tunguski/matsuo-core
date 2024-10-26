@@ -1,14 +1,13 @@
 package pl.matsuo.core.model.query;
 
 import static java.util.Arrays.asList;
-import static org.hibernate.criterion.MatchMode.ANYWHERE;
+import static pl.matsuo.core.model.query.MatchMode.ANYWHERE;
 
 import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
-import org.hibernate.criterion.MatchMode;
 import pl.matsuo.core.model.AbstractEntity;
 import pl.matsuo.core.model.query.condition.AbstractQueryFunction;
 import pl.matsuo.core.model.query.condition.ComplexCondition;

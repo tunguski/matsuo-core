@@ -2,7 +2,7 @@ package pl.matsuo.core.model.message;
 
 import static pl.matsuo.core.model.message.NoteStatus.OPEN;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 

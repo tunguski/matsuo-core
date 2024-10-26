@@ -7,7 +7,7 @@ import static java.util.Arrays.asList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeansException;
@@ -21,7 +21,6 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import pl.matsuo.core.web.annotation.WebConfiguration;
@@ -82,17 +81,12 @@ public class MvcConfig extends WebMvcConfigurationSupport
     objectMapper.setDateFormat(new CustomDateFormat());
 
     objectMapper.registerModule(new CustomJacksonModule());
-    objectMapper.registerModule(new Hibernate5Module());
+    objectMapper.registerModule(new Hibernate6Module());
     objectMapper.setSerializationInclusion(NON_NULL);
     objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     objectMapper.enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
     objectMapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     return converter;
-  }
-
-  @Bean
-  public CommonsMultipartResolver multipartResolver() {
-    return new CommonsMultipartResolver();
   }
 }

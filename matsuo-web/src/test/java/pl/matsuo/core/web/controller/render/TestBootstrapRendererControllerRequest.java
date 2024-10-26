@@ -3,9 +3,9 @@ package pl.matsuo.core.web.controller.render;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import jakarta.servlet.ServletException;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.web.util.NestedServletException;
 import pl.matsuo.core.web.controller.AbstractControllerRequestTest;
 
 @ContextConfiguration(classes = {BootstrapRendererController.class})
@@ -44,7 +44,7 @@ public class TestBootstrapRendererControllerRequest extends AbstractControllerRe
   }
 
   /** FIXME! It should work. */
-  @Test(expected = NestedServletException.class)
+  @Test(expected = ServletException.class)
   public void testCustomHtmlFieldName_toFix() throws Exception {
     performAndCheck(
         get("/bootstrapRenderer")

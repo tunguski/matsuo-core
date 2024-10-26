@@ -10,6 +10,7 @@ import lombok.Setter;
 public class Permissions {
 
   private Map<String, List<String>> functions;
+
   /** Nazwa zbioru funkcji -> zbiór funkcji -> dla każdej lista typów zapytań */
   private Map<String, Map<String, List<String>>> functionSets;
 

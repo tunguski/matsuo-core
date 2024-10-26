@@ -8,8 +8,8 @@ import static pl.matsuo.core.model.query.QueryBuilder.eq;
 import static pl.matsuo.core.model.query.QueryBuilder.query;
 import static pl.matsuo.core.util.ReflectUtil.getValue;
 
+import jakarta.transaction.Transactional;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.hibernate.Interceptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;

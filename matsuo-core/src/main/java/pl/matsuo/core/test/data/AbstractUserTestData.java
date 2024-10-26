@@ -8,7 +8,6 @@ import static pl.matsuo.core.util.SecurityUtil.passwordHash;
 import static pl.matsuo.core.util.function.FunctionalUtil.with;
 
 import java.util.List;
-import java.util.Objects;
 import org.springframework.util.Assert;
 import pl.matsuo.core.conf.DiscoverTypes;
 import pl.matsuo.core.model.organization.Person;
@@ -53,7 +52,9 @@ public abstract class AbstractUserTestData extends AbstractTestData {
 
     List<Group> groups = database.find(query(Group.class, in(Group::getName, groupNames)));
 
-    Assert.isTrue(Objects.equals(groups.size(), groupNames.length));
+    Assert.isTrue(
+        groups.size() == groupNames.length,
+        "Incorrect number of groups " + groups + " expected " + groupNames);
 
     user.getGroups().addAll(groups);
     user.setPerson(person);

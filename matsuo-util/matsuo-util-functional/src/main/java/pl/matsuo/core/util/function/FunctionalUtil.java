@@ -95,6 +95,7 @@ public class FunctionalUtil {
   /** Consumer of exception that logs error. */
   public static final Consumer<Exception> ignoringExConsumer =
       e -> log.warn("Ignoring exception", e);
+
   /** Consumer that throws RuntimeException with passed exception as root cause. */
   public static final Consumer<Exception> runtimeExConsumer =
       e -> {

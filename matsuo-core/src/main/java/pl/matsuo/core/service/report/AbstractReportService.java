@@ -25,6 +25,7 @@ public abstract class AbstractReportService<E> implements IReportService<E> {
   @Autowired protected Database database;
   @Autowired protected I18nService i18nService;
   @Autowired protected SessionState sessionState;
+
   /** Default template file name. It is lowercased class name with "Service" cut from the end. */
   private String defaultTemplateName = getDefaultTemplateName();
 

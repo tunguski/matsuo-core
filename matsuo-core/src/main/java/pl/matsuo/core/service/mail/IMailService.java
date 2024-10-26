@@ -1,6 +1,6 @@
 package pl.matsuo.core.service.mail;
 
-import javax.mail.internet.InternetAddress;
+import jakarta.mail.internet.InternetAddress;
 
 public interface IMailService {
 

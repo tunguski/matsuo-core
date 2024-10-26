@@ -8,14 +8,14 @@ import static pl.matsuo.core.util.collection.CollectionUtil.merge;
 import static pl.matsuo.core.util.collection.CollectionUtil.removeNulls;
 
 import com.google.common.base.Joiner;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -51,7 +51,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
   private final E mock;
 
   public AbstractQuery(Class<E> clazz) {
-    Assert.notNull(clazz);
+    Assert.notNull(clazz, "Class cannot be null");
 
     this.clazz = clazz;
     mock =
@@ -201,7 +201,7 @@ public class AbstractQuery<E extends AbstractEntity> implements Query<E> {
 
       // search in database
       try {
-        javax.persistence.Query query = entityManager.createQuery(queryString);
+        jakarta.persistence.Query query = entityManager.createQuery(queryString);
         if (limit != null && limit >= 0) {
           query.setMaxResults(limit);
         }

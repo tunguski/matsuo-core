@@ -1,7 +1,7 @@
 package pl.matsuo.core.model.execution;
 
+import jakarta.persistence.Entity;
 import java.util.Date;
-import javax.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import pl.matsuo.core.model.AbstractEntity;

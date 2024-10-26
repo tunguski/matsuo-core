@@ -1,8 +1,8 @@
 package pl.matsuo.core.web.view;
 
+import jakarta.persistence.EnumType;
 import java.sql.Time;
 import java.util.Date;
-import javax.persistence.EnumType;
 
 public interface ITestModel {
 

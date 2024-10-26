@@ -7,8 +7,11 @@
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
   <context:component-scan base-package="pl.matsuo">
-    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
-    <context:exclude-filter type="annotation" expression="pl.matsuo.core.web.annotation.WebConfiguration"/>
+    <context:exclude-filter type="annotation"
+                            expression="org.springframework.stereotype.Controller"/>
+    <context:exclude-filter type="annotation"
+                            expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    <context:exclude-filter type="annotation"
+                            expression="pl.matsuo.core.web.annotation.WebConfiguration"/>
   </context:component-scan>
 </beans>

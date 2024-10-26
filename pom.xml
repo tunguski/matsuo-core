@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <packaging>pom</packaging>
   <groupId>pl.matsuo</groupId>
@@ -13,9 +15,9 @@
     <module>matsuo-model</module>
     <module>matsuo-model/matsuo-model-generator-history</module>
     <module>matsuo-core</module>
-    <module>matsuo-web</module>
-    <module>matsuo-web-test</module>
-    <module>matsuo-webapp</module>
+    <!--module>matsuo-web</module-->
+    <!--module>matsuo-web-test</module-->
+    <!--module>matsuo-webapp</module-->
   </modules>
 
   <properties>
@@ -25,50 +27,50 @@
 
     <matsuo-core.version>0.1.8-SNAPSHOT</matsuo-core.version>
 
-    <asm.version>9.2</asm.version>
-    <commons-codec.version>1.15</commons-codec.version>
+    <asm.version>9.7.1</asm.version>
+    <commons-codec.version>1.17.1</commons-codec.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
-    <commons-fileupload.version>1.4</commons-fileupload.version>
-    <commons-io.version>2.11.0</commons-io.version>
-    <commons-lang3.version>3.12.0</commons-lang3.version>
-    <cors-filter.version>2.9</cors-filter.version>
+    <commons-fileupload.version>1.5</commons-fileupload.version>
+    <commons-io.version>2.17.0</commons-io.version>
+    <commons-lang3.version>3.17.0</commons-lang3.version>
+    <cors-filter.version>3.0</cors-filter.version>
     <el-api.version>3.0.0</el-api.version>
-    <el-ri.version>1.0</el-ri.version>
-    <flexmark.version>0.62.2</flexmark.version>
-    <gson.version>2.9.0</gson.version>
-    <guava.version>31.0-jre</guava.version>
+    <el-ri.version>3.0.4</el-ri.version>
+    <flexmark.version>0.64.8</flexmark.version>
+    <gson.version>2.11.0</gson.version>
+    <guava.version>33.3.1-jre</guava.version>
     <h2.version>1.3.172</h2.version>
-    <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
-    <hibernate-core.version>5.6.7.Final</hibernate-core.version>
-    <hibernate-validator-pl.version>0.1.0</hibernate-validator-pl.version>
-    <hsqldb.version>2.5.1</hsqldb.version>
-    <htmlunit.version>2.60.0</htmlunit.version>
+    <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
+    <hibernate-core.version>6.6.1.Final</hibernate-core.version>
+    <hsqldb.version>2.7.3</hsqldb.version>
+    <htmlunit.version>2.70.0</htmlunit.version>
     <jasperreports.version>5.2.0</jasperreports.version>
     <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
-    <javax.mail.version>1.5.0-b01</javax.mail.version>
-    <jackson.version>2.13.2</jackson.version>
-    <jackson-databind.version>2.13.2.2</jackson-databind.version>
-    <jetty.version>9.4.45.v20220203</jetty.version>
-    <jgit.version>6.1.0.202203080745-r</jgit.version>
-    <json-path.version>2.4.0</json-path.version>
+    <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
+    <jakarta.mail.version>2.0.1</jakarta.mail.version>
+    <jackson.version>2.18.0</jackson.version>
+    <jackson-databind.version>2.18.0</jackson-databind.version>
+    <jetty.version>11.0.24</jetty.version>
+    <jgit.version>7.0.0.202409031743-r</jgit.version>
+    <json-path.version>2.9.0</json-path.version>
     <junit.version>4.13.2</junit.version>
-    <mockito.version>4.4.0</mockito.version>
-    <pdfbox.version>2.0.25</pdfbox.version>
+    <mockito.version>5.14.2</mockito.version>
+    <pdfbox.version>3.0.3</pdfbox.version>
     <openhtml.version>1.0.10</openhtml.version>
-    <poi.version>5.2.2</poi.version>
+    <poi.version>5.3.0</poi.version>
     <selenium.version>2.48.2</selenium.version>
-    <slf4j.version>1.7.36</slf4j.version>
-    <spring.version>5.3.18</spring.version>
+    <slf4j.version>2.0.16</slf4j.version>
+    <spring.version>6.1.14</spring.version>
     <super-csv.version>2.4.0</super-csv.version>
     <undertow.version>2.2.16.Final</undertow.version>
     <xml-apis.version>1.4.01</xml-apis.version>
-    <querydsl.version>4.4.0</querydsl.version>
+    <querydsl.version>5.1.0</querydsl.version>
     <apt-maven-plugin.version>1.1.3</apt-maven-plugin.version>
 
     <site.url>https://tunguski.github.io/maven-core</site.url>
     <github.global.server>github</github.global.server>
     <site.deploy.id>gh-pages</site.deploy.id>
-    <site.deploy.url />
+    <site.deploy.url/>
 
     <repositoryName>maven-core</repositoryName>
     <repositoryOwner>tunguski</repositoryOwner>
@@ -83,8 +85,8 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>17</source>
+          <target>17</target>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
@@ -95,7 +97,7 @@
 
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.2</version>
+        <version>3.4.2</version>
         <executions>
           <execution>
             <goals>
@@ -172,11 +174,11 @@
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>2.21.0</version>
+        <version>2.43.0</version>
         <configuration>
           <java>
             <googleJavaFormat>
-              <version>1.15.0</version>
+              <version>1.24.0</version>
               <style>GOOGLE</style>
             </googleJavaFormat>
           </java>
@@ -188,27 +190,27 @@
       <plugins>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.4.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>
+          <version>3.13.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.2</version>
+          <version>3.5.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-source-plugin</artifactId>
-          <version>3.2.1</version>
+          <version>3.3.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.10.1</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.jetty</groupId>
@@ -228,7 +230,9 @@
             </dependency>
           </dependencies>
           <configuration>
-            <jvmArgs>-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n</jvmArgs>
+            <jvmArgs>-Xdebug -Xnoagent -Djava.compiler=NONE
+              -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n
+            </jvmArgs>
             <stopPort>54334</stopPort>
             <stopKey>stopKey</stopKey>
           </configuration>
@@ -241,13 +245,13 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>jaxb2-maven-plugin</artifactId>
-          <version>2.4</version>
+          <version>3.2.0</version>
         </plugin>
 
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>properties-maven-plugin</artifactId>
-          <version>1.0.0</version>
+          <version>1.2.1</version>
           <executions>
             <execution>
               <id>set-additional-system-properties</id>
@@ -298,7 +302,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.11.0</version>
+          <version>3.20.0</version>
           <dependencies>
             <dependency>
               <groupId>pl.matsuo.maven.skins</groupId>
@@ -316,20 +320,20 @@
 
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.2.2</version>
+          <version>3.4.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
+          <version>3.1.3</version>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
+          <version>3.1.3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.2.2</version>
+          <version>3.8.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -347,7 +351,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.22</version>
+      <version>1.18.34</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -402,21 +406,21 @@
       </dependency>
 
       <dependency>
-        <groupId>javax.annotation</groupId>
-        <artifactId>javax.annotation-api</artifactId>
-        <version>1.3.2</version>
+        <groupId>jakarta.annotation</groupId>
+        <artifactId>jakarta.annotation-api</artifactId>
+        <version>3.0.0</version>
         <scope>compile</scope>
       </dependency>
 
       <dependency>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-controls</artifactId>
-        <version>15.0.1</version>
+        <version>17.0.13</version>
       </dependency>
       <dependency>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-web</artifactId>
-        <version>15.0.1</version>
+        <version>17.0.13</version>
       </dependency>
 
       <dependency>
@@ -551,18 +555,20 @@
       <dependency>
         <groupId>com.j2html</groupId>
         <artifactId>j2html</artifactId>
-        <version>1.5.0</version>
+        <version>1.6.0</version>
       </dependency>
       <dependency>
         <groupId>com.querydsl</groupId>
         <artifactId>querydsl-apt</artifactId>
         <version>${querydsl.version}</version>
+        <classifier>jakarta</classifier>
         <scope>provided</scope>
       </dependency>
 
       <dependency>
         <groupId>com.querydsl</groupId>
         <artifactId>querydsl-jpa</artifactId>
+        <classifier>jakarta</classifier>
         <version>${querydsl.version}</version>
       </dependency>
       <dependency>
@@ -580,29 +586,29 @@
         <artifactId>cobertura-maven-plugin</artifactId>
       </plugin>
       <!--<plugin>-->
-        <!--<groupId>org.apache.maven.plugins</groupId>-->
-        <!--<artifactId>maven-javadoc-plugin</artifactId>-->
+      <!--<groupId>org.apache.maven.plugins</groupId>-->
+      <!--<artifactId>maven-javadoc-plugin</artifactId>-->
       <!--</plugin>-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.5.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M5</version>
+        <version>3.5.1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.16.0</version>
+        <version>3.25.0</version>
         <configuration>
           <targetjdk>1.8</targetjdk>
           <linkXref>true</linkXref>
           <!--<rulesets>-->
-            <!--<ruleset>/rulesets/basic.xml</ruleset>-->
-            <!--<ruleset>/rulesets/controversial.xml</ruleset>-->
+          <!--<ruleset>/rulesets/basic.xml</ruleset>-->
+          <!--<ruleset>/rulesets/controversial.xml</ruleset>-->
           <!--</rulesets>-->
           <format>xml</format>
           <sourceEncoding>utf-8</sourceEncoding>
@@ -612,7 +618,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.2.1</version>
       </plugin>
     </plugins>
   </reporting>
@@ -654,7 +660,7 @@
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.12</version>
+            <version>1.7.0</version>
             <extensions>true</extensions>
             <configuration>
               <serverId>ossrh</serverId>
@@ -674,7 +680,7 @@
               </execution>
             </executions>
           </plugin>
-    
+
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
             <executions>
@@ -694,7 +700,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
+            <version>3.2.7</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -709,7 +715,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-release-plugin</artifactId>
-            <version>2.5.3</version>
+            <version>3.1.1</version>
             <configuration>
               <pushChanges>false</pushChanges>
               <localCheckout>true</localCheckout>
@@ -723,7 +729,7 @@
               </dependency>
             </dependencies>
           </plugin>
- 
+
         </plugins>
       </build>
     </profile>
@@ -741,7 +747,7 @@
 
   <licenses>
     <license>
-      <name> GNU Lesser General Public License, Version 3, 29 June 2007</name>
+      <name>GNU Lesser General Public License, Version 3, 29 June 2007</name>
       <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
     </license>
   </licenses>
@@ -771,31 +777,4 @@
     <url>git@github.com:tunguski/matsuo-core.git</url>
     <tag>HEAD</tag>
   </scm>
-
-  <repositories>
-    <repository>
-      <id>repository.matsuo.pl</id>
-      <name>Matsuo</name>
-      <url>https://repository.matsuo.pl/repository/maven-matsuo/</url>
-      <layout>default</layout>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>repository.matsuo.pl</id>
-      <name>Matsuo</name>
-      <url>https://repository.matsuo.pl/repository/maven-snapshots/</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
 </project>
